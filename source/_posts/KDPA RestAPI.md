@@ -1,7 +1,7 @@
 ---
 title: xxx
-tags: xxx
-categories: xxx
+tags: [python]
+categories: Python
 description: xxx
 date: 2018/7/12 22:00:00
 ---
