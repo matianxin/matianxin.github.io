@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="xxx,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="xxx">
+<meta name="keywords" content="xxx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xxx">
+<meta property="og:url" content="https://matianxin.github.io/2018/07/12/KDPA RestAPI/index.html">
+<meta property="og:site_name" content="Matx">
+<meta property="og:description" content="xxx">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-19T08:12:47.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xxx">
+<meta name="twitter:description" content="xxx">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://matianxin.github.io/2018/07/12/KDPA RestAPI/">
+
+
+
+
+
+  <title>xxx | Matx</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Matx</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            Schedule
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2018/07/12/KDPA RestAPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ma tianxin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Matx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">xxx</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-12T22:00:00+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  xxx
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+
+<p><a href="https://" target="_blank" rel="noopener">内容</a></p>
+<h1 id="KDPA-RestAPI定义及说明"><a href="#KDPA-RestAPI定义及说明" class="headerlink" title="KDPA RestAPI定义及说明"></a>KDPA RestAPI定义及说明</h1><ul>
+<li><a href="#1主机实例">1 主机实例</a><ul>
+<li><a href="#1-1创建主机实例">1-1 创建主机实例</a></li>
+<li><a href="#1-2删除主机实例">1-2 删除主机实例</a></li>
+<li><a href="#1-3配置主机实例">1-3 配置主机实例</a></li>
+<li><a href="#1-4启动主机实例">1-4 启动主机实例</a></li>
+<li><a href="#1-5关闭主机实例">1-5 关闭主机实例</a></li>
+<li><a href="#1-6挂起主机实例">1-6 挂起主机实例</a></li>
+<li><a href="#1-7恢复主机实例">1-7 恢复主机实例</a></li>
+<li><a href="#1-7获取主机实例基本信息">1-8 获取主机实例基本信息</a></li>
+<li><a href="#1-9主机实例控制台">1-9 主机实例控制台</a></li>
+<li><a href="#1-10重命名主机实例">1-10 重命名主机实例</a></li>
+<li><a href="#1-11创建浮动IP">1-11 创建浮动IP</a></li>
+<li><a href="#1-12删除浮动IP">1-12 删除浮动IP</a></li>
+<li><a href="#1-13获取浮动IP信息">1-13 获取浮动IP信息</a></li>
+<li><a href="#1-14批量关闭实例组件">1-14 批量关闭实例组件</a></li>
+<li><a href="#1-15获取所有组件的状态">1-15 获取所有组件的状态</a></li>
+</ul>
+</li>
+<li><a href="#2网线">2 网线</a><ul>
+<li><a href="#2-1创建网线">2-1 创建网线</a></li>
+<li><a href="#2-2删除网线">2-2 删除网线</a></li>
+</ul>
+</li>
+<li><a href="#3通用">3 通用</a><ul>
+<li><a href="#3-1清除当前用户的实验室环境">3-1 清除当前用户的实验室环境</a></li>
+<li><a href="#3-2设置实训平台系统配置">3-2 设置实训平台系统配置</a></li>
+<li><a href="#3-3获取系统网卡信息及预留网段信息">3-3 获取系统网卡信息及预留网段信息</a></li>
+<li><a href="#3-4用户实验室环境未保存退出">3-4 用户实验室环境未保存退出</a></li>
+<li><a href="#3-5获取系统资源">3-5 获取系统资源</a></li>
+<li><a href="#3-6获取系统资源使用率">3-6 获取系统资源使用率</a></li>
+<li><a href="#3-7按日期获取系统资源使用率">3-7 按日期获取系统资源使用率</a></li>
+</ul>
+</li>
+<li><a href="#4系统">4 系统</a><ul>
+<li><a href="#4-1创建镜像">4-1 创建镜像</a></li>
+<li><a href="#4-2删除镜像">4-2 删除镜像</a></li>
+</ul>
+</li>
+<li><a href="#5纵向">5 纵向</a><ul>
+<li><a href="#5-1创建纵向">5-1 创建纵向</a></li>
+<li><a href="#5-2删除纵向">5-2 删除纵向</a></li>
+</ul>
+</li>
+<li><a href="#6串口线">6 串口线</a><ul>
+<li><a href="#6-1创建串口线连接">6-1 创建串口线连接</a></li>
+<li><a href="#6-2删除串口线连接">6-2 删除串口线连接</a></li>
+</ul>
+</li>
+<li><a href="#7UKEY">7 UKEY</a><ul>
+<li><a href="#7-1创建UKEY">7-1 创建UKEY</a></li>
+<li><a href="#7-2删除UKEY">7-2 删除UKEY</a></li>
+<li><a href="#7-3创建UKEY与纵向实例的连接">7-3 创建UKEY与纵向实例的连接</a></li>
+<li><a href="#7-4删除UKEY与纵向实例的连接">7-4 删除UKEY与纵向实例的连接</a></li>
+</ul>
+</li>
+<li><a href="#8隔离">8 隔离</a><ul>
+<li><a href="#8-1创建隔离">8-1 创建隔离</a></li>
+<li><a href="#8-2删除隔离">8-2 删除隔离</a></li>
+<li><a href="#8-3启动隔离">8-3 启动隔离</a></li>
+<li><a href="#8-4关闭隔离">8-4 关闭隔离</a></li>
+<li><a href="#8-5挂起隔离">8-5 挂起隔离</a></li>
+<li><a href="#8-6恢复隔离">8-6 恢复隔离</a></li>
+<li><a href="#8-7隔离控制台">8-7 隔离控制台</a></li>
+<li><a href="#8-8隔离创建浮动IP">8-8 隔离创建浮动IP</a></li>
+<li><a href="#8-9隔离删除浮动IP">8-9 隔离删除浮动IP</a></li>
+<li><a href="#8-10创建隔离镜像">8-10 创建隔离镜像</a></li>
+<li><a href="#8-11删除隔离镜像">8-11 删除隔离镜像</a></li>
+<li><a href="#6-2删除串口线连接">6-2 删除串口线连接</a></li>
+</ul>
+</li>
+<li><a href="#9虚拟交换机">9 虚拟交换机</a><ul>
+<li><a href="#9-1创建Untag虚拟交换机">9-1 创建Untag虚拟交换机</a></li>
+<li><a href="#9-2删除Untag虚拟交换机">9-2 删除Untag虚拟交换机</a></li>
+<li><a href="#9-3创建虚拟交换机">9-3 创建虚拟交换机</a></li>
+<li><a href="#9-4删除虚拟交换机">9-4 删除虚拟交换机</a></li>
+<li><a href="#9-5启动虚拟交换机">9-5 启动虚拟交换机</a></li>
+<li><a href="#9-6关闭虚拟交换机">9-6 关闭虚拟交换机</a></li>
+<li><a href="#9-7设置虚拟交换机端口">9-7 设置虚拟交换机端口</a></li>
+<li><a href="#9-8获取被占用vlan">9-8 获取被占用vlan</a></li>
+</ul>
+</li>
+<li><a href="#10虚拟路由器">10 虚拟路由器</a><ul>
+<li><a href="#10-1创建虚拟路由器">10-1 创建虚拟路由器</a></li>
+<li><a href="#10-2删除虚拟路由器">10-2 删除虚拟路由器</a></li>
+<li><a href="#10-3查看虚拟路由器配置">10-3 查看虚拟路由器配置    </a></li>
+<li><a href="#10-4虚拟路由器上传镜像">10-4 虚拟路由器上传镜像</a></li>
+<li><a href="#10-5虚拟路由器删除镜像">10-5 虚拟路由器删除镜像</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Notice:</strong></p>
+<ul>
+<li>1.以下所有API的方法都为POST</li>
+<li>2.传参及返回值都为json格式，通用返回值格式为: {“code”: 状态码, “data”: 数据 }。<ul>
+<li>状态码为 0 代表操作成功，其他代表操作失败</li>
+</ul>
+</li>
+<li>3.api地址中，controller为计算节点的IP地址（已配置在主机配置文件中。<br>8000为系统默认提供服务的端口号。</li>
+<li>4.*参数为必填参数，其余为非必填，非必填参数系统传参默认值。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>限制:</strong></p>
+<ul>
+<li>1.所有组件:<ul>
+<li>所有组件在关机状态下不能连接网线，不能删除网线。</li>
+<li>实验室环境在未点击保存时会被清理，如有需要，手动点击保存按钮。 </li>
+</ul>
+</li>
+<li>2.主机:<ul>
+<li>处于有网线连接或者关机状态下的主机不能修改配置。</li>
+<li>处于挂起状态下的主机只能执行恢复操作，不能执行其他操作。</li>
+</ul>
+</li>
+<li>3.纵向:<ul>
+<li>UKEY与纵向连接后，不能直接删除纵向，必须先拔出UKEY。</li>
+<li>纵向与纵向之间通过网卡1连接，处理业务，如果纵向与纵向之间通过其他网卡连接，不予处理。</li>
+</ul>
+</li>
+<li>4.串口线:<ul>
+<li>串口线目前仅支持主机、隔离。</li>
+</ul>
+</li>
+<li>5.虚拟路由器:<ul>
+<li>虚拟路由器定义的配置在初始化后不能修改。</li>
+<li>虚拟路由器与主机通过网线连接两端的网段必须相同。</li>
+</ul>
+</li>
+<li>6.虚拟交换机:<ul>
+<li>虚拟交换机与虚拟交换机不能通过网线连接。</li>
+<li>虚拟交换机VLAN接口只能连接虚拟组件，虚实接口只能连接实体组件。</li>
+<li>不同虚拟交换机中的VLAN ID不能重复。</li>
+<li>在接口有连接的情况下，不能修改虚拟交换机端口的类型（VLAN接口/虚实接口）。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>7.其他问题:<ul>
+<li>虚拟路由器与虚拟交换机网线连接后，目前虚拟路由器重启DHCP获取不到IP，导致虚拟路由器不可用。</li>
+<li>虚拟路由器与主机组件之间有其他组件的情况下，需要手动为主机配置远端静态路由。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="1主机实例"><a href="#1主机实例" class="headerlink" title="1主机实例"></a>1主机实例</h2><h3 id="1-1创建主机实例"><a href="#1-1创建主机实例" class="headerlink" title="1-1创建主机实例"></a>1-1创建主机实例</h3><h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **name**(str.)*: 主机名称，必填，长度1~63</span><br><span class="line">    - **imageName**(str.)*: 镜像名称，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line">    - template(int.): 模板类型，非必填，</span><br><span class="line">       - 1代表 1 vcpu, 1G ram, 10G disk</span><br><span class="line">       - 2代表 2 vcpu, 2G ram, 20G disk</span><br><span class="line"></span><br><span class="line">### 1-2删除主机实例</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/delete</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 主机UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3配置主机实例"><a href="#1-3配置主机实例" class="headerlink" title="1-3配置主机实例"></a>1-3配置主机实例</h3><h4 id="Request-1"><a href="#Request-1" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **ipAddr**(str.)*: IPv4地址，必填，例如:192.168.1.100 </span><br><span class="line">    - netmask(str.): 掩码地址，非必填，默认值为”255.255.255.0”</span><br><span class="line">    - gateway(str.): 网关地址，非必填</span><br><span class="line">    - number(int.): 网卡编号，非必填，默认值为1，表示主机目前都为1块网卡</span><br><span class="line"></span><br><span class="line">### 1-4启动主机实例</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/start</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 主机UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-5关闭主机实例"><a href="#1-5关闭主机实例" class="headerlink" title="1-5关闭主机实例"></a>1-5关闭主机实例</h3><h4 id="Request-2"><a href="#Request-2" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">### 1-6挂起主机实例</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/suspend</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 主机UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-7恢复主机实例"><a href="#1-7恢复主机实例" class="headerlink" title="1-7恢复主机实例"></a>1-7恢复主机实例</h3><h4 id="Request-3"><a href="#Request-3" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">### 1-8获取主机实例基本信息</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/show</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 主机UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h4 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h4><ul>
+<li>Body<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;code&quot;: 0, </span><br><span class="line">    &quot;data&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &quot;HOST_1&quot;,</span><br><span class="line">        &quot;state&quot;: &quot;Up&quot;,</span><br><span class="line">        &quot;interface&quot;: [&#123;</span><br><span class="line">            &quot;macAddr&quot;: &quot;fa:16:3e:62:7b:cb&quot;,   // MAC地址</span><br><span class="line">            &quot;ipAddr&quot;: &quot;192.168.1.5&quot;,          //  IP地址</span><br><span class="line">            &quot;number&quot;: 0,                    // 网卡编号</span><br><span class="line">            &quot;netmask&quot;: &quot;255.255.255.0&quot;,      // 掩码地址</span><br><span class="line">            &quot;cidr&quot;: &quot;192.168.1.0/24&quot;,          // 网段地址</span><br><span class="line">            &quot;gateway&quot;: &quot;192.168.1.1&quot;         // 网关地址</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="1-9主机实例控制台"><a href="#1-9主机实例控制台" class="headerlink" title="1-9主机实例控制台"></a>1-9主机实例控制台</h3><h4 id="Request-4"><a href="#Request-4" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>Method: <strong>POST</strong></li>
+<li>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">#### Response</span><br><span class="line">- Body</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>{
+    “code”: 0,<br>    “data”: {<br>        “console”: {<br>            “url”: “<a href="http://controller:6080/vnc_auto.html?token=aca31aec-fd05-46e4-9618-0e409c1e8b1e&quot;" target="_blank" rel="noopener">http://controller:6080/vnc_auto.html?token=aca31aec-fd05-46e4-9618-0e409c1e8b1e&quot;</a>, 
+            “type”: “novnc”<br>        }<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 1-10重命名主机实例</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/rename</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Params:<ul>
+<li><strong>uuid</strong>(str.)*: 主机UUID，唯一标识，必填，长度1~63</li>
+<li><strong>currentName</strong>(str.)*: 修改后主机名称，必填，长度1~63 </li>
+</ul>
+</li>
+</ul>
+<h3 id="1-11创建浮动IP"><a href="#1-11创建浮动IP" class="headerlink" title="1-11创建浮动IP"></a>1-11创建浮动IP</h3><h4 id="Request-5"><a href="#Request-5" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line">    </span><br><span class="line">### 1-12删除主机浮动IP</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/deleteFIP</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 主机UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-13获取浮动IP信息"><a href="#1-13获取浮动IP信息" class="headerlink" title="1-13获取浮动IP信息"></a>1-13获取浮动IP信息</h3><h4 id="Request-6"><a href="#Request-6" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>Method: <strong>POST</strong></li>
+<li>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 主机UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">#### Response</span><br><span class="line">- Body</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>{
+    “code”: 0,<br>    “data”: {<br>        “ftpHost”: “192.100.10.146”,<br>        “ftpPath”: <a href="ftp://192.100.10.146/" target="_blank" rel="noopener">ftp://192.100.10.146/</a><br>        “username”: “ftpuser”,<br>        “passwd”: “ftpuser123”,<br>        “windowsPath”: “c:\ftpuser\“,<br>        “linuxPath”: “/home/ftpuser/“,<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 1-14批量关闭实例组件</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/instance/batchStop</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Params:<ul>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-15获取所有组件的状态"><a href="#1-15获取所有组件的状态" class="headerlink" title="1-15获取所有组件的状态"></a>1-15获取所有组件的状态</h3><h4 id="Request-7"><a href="#Request-7" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>Method: <strong>POST</strong></li>
+<li>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line"></span><br><span class="line">#### Response</span><br><span class="line">- Body</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>{
+    “code”: 0,<br>    “data”: {<br>        “lineList”: [],<br>        “instanceList”: [{
+            “state”: “Up”,<br>            “uuid”: “n-djsgs10124o”,<br>            “ukeyid”: “n-fds52326574vf”<br>        }]<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">state: 包括 ”UP”: 开机，”Down”：关机，“Suspend”：挂起。</span><br><span class="line"></span><br><span class="line">## 2网线</span><br><span class="line"></span><br><span class="line">### 2-1创建网线</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/netline/create</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Params:<ul>
+<li><strong>uuid</strong>(str.)*: 源组件UUID，唯一标识，必填，长度1~63</li>
+<li><strong>dstUuid</strong>(str.)*: 网线对端组件UUID，必填，长度1~63</li>
+<li><strong>netlineUuid</strong>(int.)*: 网线UUID，必填，网线的唯一标识</li>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+<li>number(int.): 网卡编号，非必填，默认值为1，表示主机的第1块网卡</li>
+<li>dstNumber(int.): 网线对端网设备卡编号，非必填，默认值为1</li>
+<li>vlan(int.): 连接网线时所占用的vlan标签，非必填，默认值为0<ul>
+<li>0: 默认值，表示当前连接的网线为常规网线，即虚拟组件与虚拟组件连接</li>
+<li>1<del>4094: 当vlan为1</del>4094之前的正整数时，表示此网线为虚实连线，vlan标签表示外部实体设备实际的vlan标签，此标签每个实体设备间不能相同。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2删除网线"><a href="#2-2删除网线" class="headerlink" title="2-2删除网线"></a>2-2删除网线</h3><h4 id="Request-8"><a href="#Request-8" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 网线UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line"></span><br><span class="line">## 3通用</span><br><span class="line"></span><br><span class="line">### 3-1清除当前用户的实验室环境</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/env/clear</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2设置实训平台系统配置"><a href="#3-2设置实训平台系统配置" class="headerlink" title="3-2设置实训平台系统配置"></a>3-2设置实训平台系统配置</h3><h4 id="Request-9"><a href="#Request-9" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **maxVmNumber**(str.)*: 用户最大创建虚拟机数量，默认值为10</span><br><span class="line"></span><br><span class="line">### 3-3获取系统网卡信息及预留网段信息</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/system/info</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li>无</li>
+</ul>
+</li>
+</ul>
+<h4 id="Response-1"><a href="#Response-1" class="headerlink" title="Response"></a>Response</h4><ul>
+<li>Body<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;code&quot;: 0,</span><br><span class="line">    &quot;data&quot;: &#123;</span><br><span class="line">        &quot;networkParameters&quot;: [&#123;</span><br><span class="line">                &quot;nodeType&quot;: &quot;控制节点&quot;,</span><br><span class="line">                &quot;nodeName&quot;: &quot;controller&quot;,</span><br><span class="line">                &quot;interfaceInfo&quot;: [&#123;</span><br><span class="line">                    &quot;ethName&quot;: &quot;enp2s0&quot;,</span><br><span class="line">                    &quot;ipAddr&quot;: &quot;192.100.10.58&quot;</span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    &quot;ethName&quot;: &quot;enp3s0&quot;,</span><br><span class="line">                    &quot;ipAddr&quot;: &quot;10.0.0.11&quot;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;,&#123;</span><br><span class="line">                &quot;nodeType&quot;: &quot;计算节点&quot;,</span><br><span class="line">                &quot;nodeName&quot;: &quot;compute1&quot;,</span><br><span class="line">                &quot;interfaceInfo&quot;: [&#123;</span><br><span class="line">                    &quot;ethName&quot;: &quot;enp0s31f6&quot;,</span><br><span class="line">                    &quot;ipAddr&quot;: &quot;192.100.10.160&quot;</span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    &quot;ethName&quot;: &quot;enp0s20f0u8&quot;,</span><br><span class="line">                    &quot;ipAddr&quot;: &quot;10.0.0.31&quot;</span><br><span class="line">                &#125;]</span><br><span class="line">        &#125;] ,</span><br><span class="line">        &quot;reserveCidr&quot;: [ &#123;</span><br><span class="line">                &quot;name&quot;: &quot;浮动IP网段&quot;,</span><br><span class="line">                &quot;cidr&quot;: [&#123;</span><br><span class="line">                    &quot;start&quot;: &quot;192.100.10.140&quot;, &quot;end&quot;: &quot;192.100.10.141&quot;</span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    &quot;start&quot;: &quot;192.100.10.161&quot;, &quot;end&quot;: &quot;192.100.10.169&quot;</span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    &quot;start&quot;: &quot;192.100.10.144&quot;, &quot;end&quot;: &quot;192.100.10.149&quot;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;,&#123;</span><br><span class="line">                &quot;name&quot;: &quot;Overlay网段&quot;,</span><br><span class="line">                &quot;cidr&quot;: [&#123;</span><br><span class="line">                    &quot;start&quot;: &quot;10.0.0.11&quot;, &quot;end&quot;: &quot;10.0.0.30&quot;</span><br><span class="line">                &#125; ]</span><br><span class="line">            &#125;,&#123;</span><br><span class="line">                &quot;name&quot;: &quot;内部网段&quot;,</span><br><span class="line">                &quot;cidr&quot;: [&#123;</span><br><span class="line">                    &quot;start&quot;: &quot;20.0.0.2&quot;, &quot;end&quot;: &quot;20.0.0.254&quot;</span><br><span class="line">                &#125; ]</span><br><span class="line">        &#125; ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-4用户实验室环境未保存退出"><a href="#3-4用户实验室环境未保存退出" class="headerlink" title="3-4用户实验室环境未保存退出"></a>3-4用户实验室环境未保存退出</h3><h4 id="Request-10"><a href="#Request-10" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **instanceList**(list.)*: 实例组件uuid列表，必填</span><br><span class="line">    - **netlineList**(list.)*: 网线组件uuid列表，必填</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line">    - **clickF5**(str)*: 是否点击F5进行刷新，默认为&quot;False&quot;,非必填</span><br><span class="line">    </span><br><span class="line">### 3-5获取系统资源</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/system/resource</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li>无</li>
+</ul>
+</li>
+</ul>
+<h4 id="Response-2"><a href="#Response-2" class="headerlink" title="Response"></a>Response</h4><ul>
+<li>Body<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;code&quot;: 0,</span><br><span class="line">	&quot;data&quot;: &#123;</span><br><span class="line">		&quot;nodeNumber&quot;: 2,             # 节点数量</span><br><span class="line">		&quot;runningNodeNumber&quot;: 2,      # 正在运行的节点数量</span><br><span class="line">		&quot;instanceNumber&quot;: 2,          # 实例数量</span><br><span class="line">		&quot;vcpuUsed&quot;: 3,                # VCPU使用量        个数</span><br><span class="line">		&quot;vcpuTotal&quot;: 24,               # VCPU总量          个数</span><br><span class="line">		&quot;vcpu&quot;: &quot;3/24&quot;,                # VCPU使用情况       个数</span><br><span class="line">		&quot;memoryUsed&quot;: 4.0,           # 内存使用量           GB</span><br><span class="line">		&quot;memoryTotal&quot;: 23.8,          # 内存总量             GB</span><br><span class="line">		&quot;memory&quot;: &quot;4.0/23.8&quot;,          # 内存使用情况         GB</span><br><span class="line">		&quot;diskUsed&quot;: 30,               # 磁盘使用量           GB</span><br><span class="line">		&quot;diskTotal&quot;: 2198,             # 磁盘总量             GB</span><br><span class="line">		&quot;disk&quot;: &quot;30/2198&quot;              # 磁盘使用情况         GB</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-6获取系统资源使用率"><a href="#3-6获取系统资源使用率" class="headerlink" title="3-6获取系统资源使用率"></a>3-6获取系统资源使用率</h3><h4 id="Request-11"><a href="#Request-11" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>Method: <strong>POST</strong></li>
+<li>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - 无</span><br><span class="line">    </span><br><span class="line">#### Response</span><br><span class="line">- Body</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>{
+    “code”: 0,<br>    “data”: {<br>        “cpu”: [“4.1”, “4.1”, “3.9”, “4.6”],<br>        “memory”: [“67.6”, “67.8”, “67.8”, “67.9”],<br>        “disk”: [“5.7”, “5.7”, “5.7”, “5.7”],<br>        “net_out”: [“0”, “653”, “17702”, “0”],<br>        “net_in”: [“0”, “2203”, “18517”, “0”],<br>        “time”: [<br>            “2019-06-14 07:38:01”,<br>            “2019-06-14 07:38:10”,<br>            “2019-06-14 07:38:20”,<br>            “2019-06-14 07:38:30”]<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3-7按日期获取系统资源使用率</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/system/dateUsage</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Params:<ul>
+<li><strong>date</strong>(str.)*: 日期，例：”2019-06-17”</li>
+</ul>
+</li>
+</ul>
+<h4 id="Response-3"><a href="#Response-3" class="headerlink" title="Response"></a>Response</h4><ul>
+<li>Body<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;code&quot;: 0, </span><br><span class="line">    &quot;data&quot;: &#123;</span><br><span class="line">        &quot;memory&quot;: [&quot;71.8&quot;, &quot;74.5&quot;, &quot;74.5&quot;, &quot;74.5&quot;, &quot;74.1&quot;], </span><br><span class="line">        &quot;net_out&quot;: [&quot;0&quot;, &quot;772940&quot;, &quot;130350&quot;, &quot;167966&quot;, &quot;172898&quot;], </span><br><span class="line">        &quot;net_in&quot;: [&quot;0&quot;, &quot;14704&quot;, &quot;3530&quot;, &quot;4194&quot;, &quot;4442&quot;], </span><br><span class="line">        &quot;time&quot;: [</span><br><span class="line">            &quot;2019-06-17 02:00:02&quot;, </span><br><span class="line">            &quot;2019-06-17 03:00:02&quot;, </span><br><span class="line">            &quot;2019-06-17 04:00:02&quot;, </span><br><span class="line">            &quot;2019-06-17 05:00:02&quot;, </span><br><span class="line">            &quot;2019-06-17 06:00:02&quot;</span><br><span class="line">           ], </span><br><span class="line">        &quot;disk&quot;: [&quot;5.7&quot;, &quot;5.7&quot;, &quot;5.7&quot;, &quot;5.7&quot;, &quot;5.7&quot;], </span><br><span class="line">        &quot;cpu&quot;: [&quot;4.6&quot;, &quot;13.2&quot;, &quot;13.8&quot;, &quot;13.6&quot;, &quot;13.5&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="4系统"><a href="#4系统" class="headerlink" title="4系统"></a>4系统</h2><h3 id="4-1创建镜像"><a href="#4-1创建镜像" class="headerlink" title="4-1创建镜像"></a>4-1创建镜像</h3><h4 id="Request-12"><a href="#Request-12" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **name**(str.)*: 镜像名称，必填</span><br><span class="line">    - **url**(str.)*: 镜像路径，必填</span><br><span class="line">    - defaultVCPU(int.): 默认虚拟CPU个数，非必填，默认值1</span><br><span class="line">    - defaultRAM(int.): 默认内存大小，非必填，单位MB，默认值1024</span><br><span class="line">    - defaultDISK (int.): 默认磁盘大小，非必填，单位GB，默认值10</span><br><span class="line">    - advancedVCPU(int.): 高级虚拟CPU个数，非必填，默认值2</span><br><span class="line">    - advancedRAM (int.): 高级内存大小，非必填，默认值2048</span><br><span class="line">    - advancedDISK (int.): 高级磁盘大小，非必填，单位GB，默认值20</span><br><span class="line">    </span><br><span class="line">### 4-2删除镜像</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/image/delete</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>name</strong>(str.)*: 镜像名称，必填</li>
+</ul>
+</li>
+</ul>
+<h2 id="5纵向"><a href="#5纵向" class="headerlink" title="5纵向"></a>5纵向</h2><h3 id="5-1创建纵向"><a href="#5-1创建纵向" class="headerlink" title="5-1创建纵向"></a>5-1创建纵向</h3><h4 id="Request-13"><a href="#Request-13" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 纵向UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **name**(str.)*: 纵向名称，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line">    - template(int.): 模板类型，非必填，</span><br><span class="line">        - 1代表 1 vcpu, 1G ram, 10G disk</span><br><span class="line">        - 2代表 2 vcpu, 2G ram, 20G disk</span><br><span class="line"></span><br><span class="line">### 5-2删除纵向</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/pstunnel/delete</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 纵向UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h2 id="6串口线"><a href="#6串口线" class="headerlink" title="6串口线"></a>6串口线</h2><h3 id="6-1创建串口线连接"><a href="#6-1创建串口线连接" class="headerlink" title="6-1创建串口线连接"></a>6-1创建串口线连接</h3><h4 id="Request-14"><a href="#Request-14" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 实例组件UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **dstUuid**(str.)*: 目的实例组件UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **seriallineUuid**(str.)*: 串口线UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line">    - number(int.): 默认值为0。对于主机，数值无意义。对于隔离，0==内隔离串口，1==外隔离串口</span><br><span class="line">    - dstNumber(int.): 默认值为0。对于主机，数值无意义。对于隔离，0==内隔离串口，1==外隔离串口</span><br><span class="line"></span><br><span class="line">### 6-2删除串口线连接</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/serline/delete</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 串口线UUID，唯一标识，必填，长度1~63</li>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h2 id="7UKEY"><a href="#7UKEY" class="headerlink" title="7UKEY"></a>7UKEY</h2><h3 id="7-1创建UKEY"><a href="#7-1创建UKEY" class="headerlink" title="7-1创建UKEY"></a>7-1创建UKEY</h3><h4 id="Request-15"><a href="#Request-15" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: UKEY UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **name**(str.)*: UKEY 名称，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line"></span><br><span class="line">### 7-2删除UKEY</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/ukey/delete</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: UKEY UUID，唯一标识，必填，长度1~63</li>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-3创建UKEY与纵向实例的连接"><a href="#7-3创建UKEY与纵向实例的连接" class="headerlink" title="7-3创建UKEY与纵向实例的连接"></a>7-3创建UKEY与纵向实例的连接</h3><h4 id="Request-16"><a href="#Request-16" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: UKEY UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **psUuid**(str.)*: 纵向UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line"></span><br><span class="line">### 7-4删除UKEY与纵向实例的连接</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/ukey/disconnect</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: UKEY UUID，唯一标识，必填，长度1~63</li>
+<li><strong>psUuid</strong>(str.)*: 纵向UUID，唯一标识，必填，长度1~63</li>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h2 id="8隔离"><a href="#8隔离" class="headerlink" title="8隔离"></a>8隔离</h2><h3 id="8-1创建隔离"><a href="#8-1创建隔离" class="headerlink" title="8-1创建隔离"></a>8-1创建隔离</h3><h4 id="Request-17"><a href="#Request-17" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 隔离UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - **name**(str.)*: 隔离名称，必填，长度1~63</span><br><span class="line">    - **imageName**(str.)*: 隔离镜像名称，必填，长度1~63</span><br><span class="line">    - **userId**(int.)*: 用户ID，必填</span><br><span class="line">    - template(int.): 模板类型，非必填，</span><br><span class="line">        - 1代表 1 vcpu, 1G ram, 10G disk</span><br><span class="line">        - 2代表 2 vcpu, 2G ram, 20G disk</span><br><span class="line"></span><br><span class="line">### 8-2删除隔离</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/stonewall/delete</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 隔离UUID，唯一标识，必填，长度1~63</li>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-3启动隔离"><a href="#8-3启动隔离" class="headerlink" title="8-3启动隔离"></a>8-3启动隔离</h3><h4 id="Request-18"><a href="#Request-18" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 隔离UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">### 8-4关闭隔离</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/stonewall/stop</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 隔离UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-5挂起隔离"><a href="#8-5挂起隔离" class="headerlink" title="8-5挂起隔离"></a>8-5挂起隔离</h3><h4 id="Request-19"><a href="#Request-19" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 隔离UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">### 8-6恢复隔离</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/stonewall/resume</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 隔离UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-7隔离控制台"><a href="#8-7隔离控制台" class="headerlink" title="8-7隔离控制台"></a>8-7隔离控制台</h3><h4 id="Request-20"><a href="#Request-20" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>Method: <strong>POST</strong></li>
+<li>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 隔离UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - number(int.): 标识内网/外网隔离，值范围：0/1，0代表内，1代表外，默认值为0</span><br><span class="line"></span><br><span class="line">#### Response</span><br><span class="line">- Body</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>{
+    “code”: 0,<br>    “data”: {<br>        “console”: {<br>            “url”: “<a href="http://controller:6080/vnc_auto.html?token=aca31aec-fd05-46e4-9618-0e409c1e8b1e&quot;" target="_blank" rel="noopener">http://controller:6080/vnc_auto.html?token=aca31aec-fd05-46e4-9618-0e409c1e8b1e&quot;</a>, 
+            “type”: “novnc”<br>        }<br>    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 8-8隔离创建浮动IP</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/stonewall/createFIP</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Params:<ul>
+<li><strong>uuid</strong>(str.)*: 隔离UUID，唯一标识，必填，长度1~63</li>
+<li>number(int.): 标识内网/外网隔离，值范围：0/1，0代表内，1代表外，默认值为0</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-9隔离删除浮动IP"><a href="#8-9隔离删除浮动IP" class="headerlink" title="8-9隔离删除浮动IP"></a>8-9隔离删除浮动IP</h3><h4 id="Request-21"><a href="#Request-21" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 隔离UUID，唯一标识，必填，长度1~63</span><br><span class="line">    - number(int.): 标识内网/外网隔离，值范围：0/1，0代表内，1代表外，默认值为0</span><br><span class="line"></span><br><span class="line">### 8-10创建隔离镜像</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/stonewall/createImg</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>name</strong>(str.)*: 镜像名称，必填</li>
+<li><strong>urlInt</strong>(str.)*: 内镜像路径，必填</li>
+<li><strong>urlExt</strong>(str.)*: 外镜像路径，必填</li>
+<li>defaultVCPU(int.): 默认虚拟CPU个数，非必填，默认值1</li>
+<li>defaultRAM(int.): 默认内存大小，非必填，单位MB，默认值1024</li>
+<li>defaultDISK (int.): 默认磁盘大小，非必填，单位GB，默认值10</li>
+<li>advancedVCPU(int.): 高级虚拟CPU个数，非必填，默认值2</li>
+<li>advancedRAM (int.): 高级内存大小，非必填，默认值2048</li>
+<li>advancedDISK (int.): 高级磁盘大小，非必填，单位GB，默认值20</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-11删除隔离镜像"><a href="#8-11删除隔离镜像" class="headerlink" title="8-11删除隔离镜像"></a>8-11删除隔离镜像</h3><h4 id="Request-22"><a href="#Request-22" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>Method: <strong>POST</strong></li>
+<li>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **name**(str.)*: 镜像名称，必填</span><br><span class="line"></span><br><span class="line">## 9虚拟交换机</span><br><span class="line">### 9-1创建Untag虚拟交换机</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/createUntagSwitch`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">  - **name&lt;str, 必填&gt;**: 虚拟交换机名称</span><br><span class="line">  - **userId&lt;str, 必填&gt;**: 用户ID</span><br><span class="line">  - *number&lt;str, 非必填&gt;*: 虚拟交换机网口数量，默认值8</span><br><span class="line"></span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 9-2删除Untag虚拟交换机</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/deleteUntagSwitch`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">### 9-3创建虚拟交换机</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/create`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">  - **name&lt;str, 必填&gt;**: 虚拟交换机名称</span><br><span class="line">  - **userId&lt;str, 必填&gt;**: 用户ID</span><br><span class="line">  - *number&lt;str, 非必填&gt;*: 虚拟交换机网口数量，默认值8</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 9-4删除虚拟交换机</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/delete`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 9-5启动虚拟交换机</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/start`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 9-6关闭虚拟交换机</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/stop`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">### 9-7设置虚拟交换机端口</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/configSwitchPort`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">  - **number&lt;str, 必填&gt;**: 虚拟交换机端口序号，从0开始，最大值由交换机端口数量决定，必填</span><br><span class="line">  - **vlan&lt;str, 必填&gt;**: 端口将要设置的具体vlan标签</span><br><span class="line">    - *-1*：表示端口要设置成为【虚实口】</span><br><span class="line">    - *0*： 表示端口默认状态，此状态下端口不可用，即不能连接网线</span><br><span class="line">    - *1~4094*：表示端口设置为【vlan口】，vlan标签为1至4094之间的任意正整数</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 9-8获取被占用vlan</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: `http://controller:8000/api/switch/getUsedVlanList`</span><br><span class="line">- Params:</span><br><span class="line">  - **uuid&lt;str, 必填&gt;**: 虚拟交换机UUID，唯一标识吗</span><br><span class="line">#### Response</span><br></pre></td></tr></table></figure>
+
+<p>{
+    “code”: <int> API执行结果码，0-执行成功，其他正整数-执行失败的错误信息编码;<br>    “data”: [1, 23, 129, …]<br>}</int></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 10虚拟路由器</span><br><span class="line"></span><br><span class="line">### 10-1创建虚拟路由器</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/router/create</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Params:<ul>
+<li><strong>uuid</strong>(str.)*: 虚拟路由器UUID，唯一标识，必填，长度1~63</li>
+<li><strong>name</strong>(str.)*: 虚拟路由器名称，必填，长度1~63</li>
+<li><strong>number</strong>(int.)*: 虚拟路由器接口数量，默认值为2，必填</li>
+<li><strong>cidrList</strong>(list.)*: 虚拟路由器网段列表，必填<ul>
+<li>例如：[“192.168.1.0/24”, “192.168.2.0/24”]</li>
+<li>网段的格式：网段地址/掩码位数， 网段不能重复。</li>
+</ul>
+</li>
+<li><strong>imageName</strong>(str.)*: 镜像名称，必填，长度1~63</li>
+<li><strong>userId</strong>(int.)*: 用户ID，必填</li>
+</ul>
+</li>
+</ul>
+<h3 id="10-2删除虚拟路由器"><a href="#10-2删除虚拟路由器" class="headerlink" title="10-2删除虚拟路由器"></a>10-2删除虚拟路由器</h3><h4 id="Request-23"><a href="#Request-23" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **uuid**(str.)*: 虚拟路由器UUID，唯一标识，必填，长度1~63</span><br><span class="line"></span><br><span class="line">### 10-3查看虚拟路由器配置	</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/router/show</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>uuid</strong>(str.)*: 虚拟路由器UUID，唯一标识，必填，长度1~63</li>
+</ul>
+</li>
+</ul>
+<h4 id="Response-4"><a href="#Response-4" class="headerlink" title="Response"></a>Response</h4><ul>
+<li>Body<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;code&quot;: 0, </span><br><span class="line">    &quot;data&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;number&quot;: 0,</span><br><span class="line">            &quot;cidr&quot;: &quot;192.168.1.0/24&quot;,</span><br><span class="line">            &quot;gateway&quot;: &quot;192.168.1.1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;number&quot;: 1,</span><br><span class="line">            &quot;cidr&quot;: &quot;192.168.2.0/24&quot;,</span><br><span class="line">            &quot;gateway&quot;: &quot;192.168.2.1&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="10-4虚拟路由器上传镜像"><a href="#10-4虚拟路由器上传镜像" class="headerlink" title="10-4虚拟路由器上传镜像"></a>10-4虚拟路由器上传镜像</h3><h4 id="Request-24"><a href="#Request-24" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><p>Method: <strong>POST</strong></p>
+</li>
+<li><p>API: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- Params:</span><br><span class="line">    - **name**(str.)*: 镜像名称，必填</span><br><span class="line">    - **url**(str.)*: 镜像路径，必填</span><br><span class="line">    </span><br><span class="line">虚拟路由器镜像默认1VCPU，1G内存，10G磁盘</span><br><span class="line"></span><br><span class="line">### 10-5虚拟路由器删除镜像	</span><br><span class="line">#### Request</span><br><span class="line">- Method: **POST**</span><br><span class="line">- API: ```http://controller:8000/api/router/deleteImg</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>Params:</p>
+<ul>
+<li><strong>name</strong>(str.)*: 镜像名称，必填</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xxx/" rel="tag"># xxx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/19/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ma tianxin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KDPA-RestAPI定义及说明"><span class="nav-number">1.</span> <span class="nav-text">KDPA RestAPI定义及说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1主机实例"><span class="nav-number">1.1.</span> <span class="nav-text">1主机实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1创建主机实例"><span class="nav-number">1.1.1.</span> <span class="nav-text">1-1创建主机实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3配置主机实例"><span class="nav-number">1.1.2.</span> <span class="nav-text">1-3配置主机实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5关闭主机实例"><span class="nav-number">1.1.3.</span> <span class="nav-text">1-5关闭主机实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-2"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7恢复主机实例"><span class="nav-number">1.1.4.</span> <span class="nav-text">1-7恢复主机实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-3"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Response"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">Response</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9主机实例控制台"><span class="nav-number">1.1.5.</span> <span class="nav-text">1-9主机实例控制台</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-4"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11创建浮动IP"><span class="nav-number">1.1.6.</span> <span class="nav-text">1-11创建浮动IP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-5"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-13获取浮动IP信息"><span class="nav-number">1.1.7.</span> <span class="nav-text">1-13获取浮动IP信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-6"><span class="nav-number">1.1.7.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-15获取所有组件的状态"><span class="nav-number">1.1.8.</span> <span class="nav-text">1-15获取所有组件的状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-7"><span class="nav-number">1.1.8.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2删除网线"><span class="nav-number">1.1.9.</span> <span class="nav-text">2-2删除网线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-8"><span class="nav-number">1.1.9.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2设置实训平台系统配置"><span class="nav-number">1.1.10.</span> <span class="nav-text">3-2设置实训平台系统配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-9"><span class="nav-number">1.1.10.1.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Response-1"><span class="nav-number">1.1.10.2.</span> <span class="nav-text">Response</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4用户实验室环境未保存退出"><span class="nav-number">1.1.11.</span> <span class="nav-text">3-4用户实验室环境未保存退出</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-10"><span class="nav-number">1.1.11.1.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Response-2"><span class="nav-number">1.1.11.2.</span> <span class="nav-text">Response</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6获取系统资源使用率"><span class="nav-number">1.1.12.</span> <span class="nav-text">3-6获取系统资源使用率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-11"><span class="nav-number">1.1.12.1.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Response-3"><span class="nav-number">1.1.12.2.</span> <span class="nav-text">Response</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4系统"><span class="nav-number">1.2.</span> <span class="nav-text">4系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1创建镜像"><span class="nav-number">1.2.1.</span> <span class="nav-text">4-1创建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-12"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Request</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5纵向"><span class="nav-number">1.3.</span> <span class="nav-text">5纵向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1创建纵向"><span class="nav-number">1.3.1.</span> <span class="nav-text">5-1创建纵向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-13"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Request</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6串口线"><span class="nav-number">1.4.</span> <span class="nav-text">6串口线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1创建串口线连接"><span class="nav-number">1.4.1.</span> <span class="nav-text">6-1创建串口线连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-14"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Request</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7UKEY"><span class="nav-number">1.5.</span> <span class="nav-text">7UKEY</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1创建UKEY"><span class="nav-number">1.5.1.</span> <span class="nav-text">7-1创建UKEY</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-15"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3创建UKEY与纵向实例的连接"><span class="nav-number">1.5.2.</span> <span class="nav-text">7-3创建UKEY与纵向实例的连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-16"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">Request</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8隔离"><span class="nav-number">1.6.</span> <span class="nav-text">8隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1创建隔离"><span class="nav-number">1.6.1.</span> <span class="nav-text">8-1创建隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-17"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3启动隔离"><span class="nav-number">1.6.2.</span> <span class="nav-text">8-3启动隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-18"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5挂起隔离"><span class="nav-number">1.6.3.</span> <span class="nav-text">8-5挂起隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-19"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-7隔离控制台"><span class="nav-number">1.6.4.</span> <span class="nav-text">8-7隔离控制台</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-20"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-9隔离删除浮动IP"><span class="nav-number">1.6.5.</span> <span class="nav-text">8-9隔离删除浮动IP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-21"><span class="nav-number">1.6.5.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-11删除隔离镜像"><span class="nav-number">1.6.6.</span> <span class="nav-text">8-11删除隔离镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-22"><span class="nav-number">1.6.6.1.</span> <span class="nav-text">Request</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2删除虚拟路由器"><span class="nav-number">1.6.7.</span> <span class="nav-text">10-2删除虚拟路由器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-23"><span class="nav-number">1.6.7.1.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Response-4"><span class="nav-number">1.6.7.2.</span> <span class="nav-text">Response</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4虚拟路由器上传镜像"><span class="nav-number">1.6.8.</span> <span class="nav-text">10-4虚拟路由器上传镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Request-24"><span class="nav-number">1.6.8.1.</span> <span class="nav-text">Request</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ma tianxin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
