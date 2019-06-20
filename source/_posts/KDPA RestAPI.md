@@ -1,16 +1,12 @@
 ---
-title: xxx
+title: KDPA RestAPI
 tags: [python]
 categories: Python
-description: xxx
-date: 2018/7/12 22:00:00
+description: 实验室提供API服务详解
+date: 2019/3/10 10:00:00
 ---
 
-
 <!--more-->
-
-[内容](https://)
-
 
 # KDPA RestAPI定义及说明
 
@@ -132,7 +128,6 @@ date: 2018/7/12 22:00:00
     - template(int.): 模板类型，非必填，
        - 1代表 1 vcpu, 1G ram, 10G disk
        - 2代表 2 vcpu, 2G ram, 20G disk
-
 ### 1-2删除主机实例
 #### Request
 - Method: **POST**

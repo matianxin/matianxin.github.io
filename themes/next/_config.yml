@@ -93,15 +93,15 @@ index_with_subtitle: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
   home: / || home
-  about: /about/ || user
   tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
-  technology: /technology/ || chalkboard
+  #technology: /technology/ || box
   photos: /photos/ || photo
   schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
+  about: /about/ || user
 
 # Enable/Disable menu icons.
 menu_icons:
@@ -218,7 +218,7 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Post meta display settings
@@ -565,6 +565,12 @@ busuanzi_count:
   page_pv_header: <i class="fa fa-file-o"></i>
   page_pv_footer:
 
+  #total_visitors: false
+  #total_visitors_icon: user
+  #total_views: false
+  #total_views_icon: eye
+  #post_views: true
+  #post_views_icon: eye
 
 # Tencent analytics ID
 # tencent_analytics:
@@ -606,12 +612,18 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/flashlab/hexo-generator-search
 local_search:
-  enable: false
+  enable: true
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
   trigger: auto
   # show top n results per article, show all results by setting to -1
   top_n_per_article: 1
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
 
 
 # ---------------------------------------------------------------
@@ -804,7 +816,6 @@ vendors:
   # needMoreShare2
   # https://github.com/revir/need-more-share2
   needMoreShare2:
-
 
 # Assets
 css: css

@@ -1,14 +1,14 @@
-# Hexo Configuration
+﻿# Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Matx
-subtitle:
-description:
-keywords:
-author: Ma tianxin
-language:
+title: 圣特伦特星
+subtitle: 差以毫厘，谬以千里。
+description: “在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？
+keywords: Matx
+author: 圣特伦特星
+language: zh-Hans
 timezone:
 
 # URL
@@ -43,7 +43,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-  
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -52,7 +52,7 @@ index_generator:
   path: ''
   per_page: 10
   order_by: -date
-  
+
 # Category & Tag
 default_category: uncategorized
 category_map:
@@ -81,3 +81,11 @@ deploy:
   type: git
   repo: https://github.com/matianxin/matianxin.github.io.git
   branch: master
+
+# hexo-tag-cloud
+tag_cloud:
+    textFont: 'Trebuchet MS, Helvetica'
+    textColor: '#3333'
+    textHeight: 30
+    outlineColor: '#D5D5D5'
+    maxSpeed: 0.5 # range from [0.01 ~ 1]

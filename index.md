@@ -5,6 +5,7 @@ title: Hello World
 title: '''tags'''
 date: 2019-06-19 16:11:09
 type: tags
+layout: "tags"
 ---
 
 ---

@@ -1,4 +1,4 @@
-{% macro render(is_post) %}
+﻿{% macro render(is_post) %}
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -169,6 +169,18 @@
           {% endif %}
         </div>
       {% endif %}
+	  
+	  {% if site.tags.length > 1 %}
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="200" height="200" id="resCanvas" style="width=100%">
+					{{ list_tags() }}
+				</canvas>
+			</div>
+		</div>
+		{% endif %}	  
 
     </div>
   </aside>
