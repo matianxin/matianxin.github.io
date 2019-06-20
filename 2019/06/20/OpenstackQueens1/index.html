@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Linux系统可以使用的文件描述符不够导致">
+<meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openstack Queens 环境搭建（一）环境准备">
 <meta property="og:url" content="https://matianxin.github.io/2019/06/20/OpenstackQueens1/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="Linux系统可以使用的文件描述符不够导致">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-20T09:20:03.550Z">
+<meta property="og:updated_time" content="2019-06-20T09:26:57.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Openstack Queens 环境搭建（一）环境准备">
-<meta name="twitter:description" content="Linux系统可以使用的文件描述符不够导致">
+<meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 
 
 
@@ -385,7 +385,7 @@
 
           
               <div class="post-description">
-                  Linux系统可以使用的文件描述符不够导致
+                  OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。
               </div>
           
 
@@ -402,20 +402,47 @@
       
 
       
-        <p>Openstack WebUI页面无法打开，页面报500错误，查看httpd-&gt;error_log日志报如下错误:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Tue Apr 02 14:01:05.658276 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/sessions.py&quot;, line 518, in request</span><br><span class="line">[Tue Apr 02 14:01:05.658280 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/sessions.py&quot;, line 639, in send</span><br><span class="line">[Tue Apr 02 14:01:05.658284 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/adapters.py&quot;, line 438, in send</span><br><span class="line">[Tue Apr 02 14:01:05.658287 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/connectionpool.py&quot;, line 588, in urlopen</span><br><span class="line">[Tue Apr 02 14:01:05.658291 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/connectionpool.py&quot;, line 241, in _get_conn</span><br><span class="line">[Tue Apr 02 14:01:05.658296 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/util/connection.py&quot;, line 27, in is_connection_dropped</span><br><span class="line">[Tue Apr 02 14:01:05.658300 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/util/wait.py&quot;, line 33, in wait_for_read</span><br><span class="line">[Tue Apr 02 14:01:05.658304 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/util/wait.py&quot;, line 22, in _wait_for_io_events</span><br><span class="line">[Tue Apr 02 14:01:05.658308 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/util/selectors.py&quot;, line 581, in DefaultSelector</span><br><span class="line">[Tue Apr 02 14:01:05.658312 2019] [:error] [pid 9245]   File &quot;/usr/lib/python2.7/site-packages/requests/packages/urllib3/util/selectors.py&quot;, line 394, in __init__</span><br><span class="line">[Tue Apr 02 14:01:05.658316 2019] [:error] [pid 9245] IOError: [Errno 24] Too many open files</span><br></pre></td></tr></table></figure>
+        <p>环境准备：<br>基于CentOS Linux release 7.6.1810 (Core)</p>
+<p>控制节点（Controller）：<br>eth0：192.100.10.160/24<br>eth1：10.0.0.11/24<br>eth2：预留</p>
+<p>计算节点（Compute):<br>eth0：192.100.10.161/24<br>eth1：10.0.0.12/24<br>eth2：预留</p>
+<p>网卡0接口为管理网络 -&gt; 交换机 + 路由器<br>网卡1接口为Overlay网络 -&gt; 目前直连 / 交换机连接<br>网卡2接口为外部网络 -&gt; 路由器<br> -（可以先使用eth1作为外部网络下载Openstack安装所需资源，后修改）</p>
+<p>通用密码： 123456</p>
+<h3 id="Controller节点："><a href="#Controller节点：" class="headerlink" title="Controller节点："></a>Controller节点：</h3><p>配置网卡信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.100.10.160</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.100.10.1</span><br></pre></td></tr></table></figure>
 
-<p>解决方式：<br>修改操作系统打开的文件数；登录到Controller节点，执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># ulimit -a</span></span><br><span class="line">core file size          (blocks, -c) 0</span><br><span class="line">data seg size           (kbytes, -d) unlimited</span><br><span class="line">scheduling priority             (-e) 0</span><br><span class="line">file size               (blocks, -f) unlimited</span><br><span class="line">pending signals                 (-i) 60587</span><br><span class="line">max locked memory       (kbytes, -l) 64</span><br><span class="line">max memory size         (kbytes, -m) unlimited</span><br><span class="line">open files                      (-n) 1024</span><br><span class="line">pipe size            (512 bytes, -p) 8</span><br><span class="line">POSIX message queues     (bytes, -q) 819200</span><br><span class="line">real-time priority              (-r) 0</span><br><span class="line">stack size              (kbytes, -s) 8192</span><br><span class="line">cpu time               (seconds, -t) unlimited</span><br><span class="line">max user processes              (-u) 60587</span><br><span class="line">virtual memory          (kbytes, -v) unlimited</span><br><span class="line">file locks                      (-x) unlimited</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysconfig/network-scripts/ifcfg-eth1</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=10.0.0.11</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
 
-<p>系统默认设置为1024。</p>
-<p>使用命令查看当前打开文件数:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># lsof | wc -l</span></span><br><span class="line">174911</span><br></pre></td></tr></table></figure>
+<p>配置主机信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/hosts</span><br><span class="line"># controller</span><br><span class="line">192.100.10.160     controller</span><br><span class="line"># compute</span><br><span class="line">192.100.10.161     compute</span><br></pre></td></tr></table></figure>
 
-<p>修改vim /etc/security/limits.conf，在文件最后加入如下信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*               soft    nofile            1024000</span><br><span class="line">*               hard    nofile            1024000</span><br></pre></td></tr></table></figure>
+<p>配置主机名：<br>控制节点的主机名为controller，设置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# hostnamectl set-hostname controller</span><br></pre></td></tr></table></figure>
 
-<p>*表示所有用户，<br>修改后重启服务器，配置生效。</p>
+<p>对主机名进行验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# hostname</span><br></pre></td></tr></table></figure>
+
+<p>看到输出为controller即可</p>
+<p>配置DNS：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/resolv.conf</span><br><span class="line">nameserver 114.114.114.114</span><br></pre></td></tr></table></figure>
+
+<h3 id="Compute节点："><a href="#Compute节点：" class="headerlink" title="Compute节点："></a>Compute节点：</h3><p>配置管理网络：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.100.10.161</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.100.10.1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysconfig/network-scripts/ifcfg-eth1</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=10.0.0.21</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<p>配置主机信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/hosts</span><br><span class="line"># controller</span><br><span class="line">192.100.10.160     controller</span><br><span class="line"># compute</span><br><span class="line">192.100.10.161     compute</span><br></pre></td></tr></table></figure>
+
+<p>配置主机名：<br>计算节点的主机名为compute，设置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# hostnamectl set-hostname compute</span><br></pre></td></tr></table></figure>
+
+<p>对主机名进行验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~# hostname</span><br></pre></td></tr></table></figure>
+
+<p>看到输出为compute即可</p>
+<p>配置DNS：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/resolv.conf</span><br><span class="line">nameserver 114.114.114.114</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -506,8 +533,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -567,6 +603,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller节点："><span class="nav-number">1.</span> <span class="nav-text">Controller节点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute节点："><span class="nav-number">2.</span> <span class="nav-text">Compute节点：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
