@@ -97,8 +97,8 @@ menu:
   categories: /categories/ || th
   archives: /archives/ || archive
   #technology: /technology/ || box
-  photos: /photos/ || photo
-  schedule: /schedule/ || calendar
+  # photos: /photos/ || photo
+  # schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
   about: /about/ || user
@@ -128,10 +128,12 @@ scheme: Gemini
 # Key is the link label showing to end users.
 # Value before `||` delimeter is the target permalink.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
-#social:
+social:
+  SegmentFault: https://segmentfault.com/u/shengteluntexing || coffee
+  Github: https://github.com/matianxin || github
   #GitHub: https://github.com/yourname || github
-  #E-Mail: mailto:yourname@gmail.com || envelope
-  #Google: https://plus.google.com/yourname || google
+  E-Mail: mailto:trentmtx@163.com || envelope
+  Google: https://plus.google.com/matianxin || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
   #VK Group: https://vk.com/yourname || vk
@@ -142,8 +144,8 @@ scheme: Gemini
 
 social_icons:
   enable: true
-  icons_only: false
-  transition: false
+  icons_only: true
+  transition: true
 
 # Blog rolls
 links_icon: link
@@ -156,7 +158,7 @@ links_layout: block
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-#avatar: /images/avatar.gif
+avatar: /images/matx.jpg
 
 # Table Of Contents in the Sidebar
 toc:
