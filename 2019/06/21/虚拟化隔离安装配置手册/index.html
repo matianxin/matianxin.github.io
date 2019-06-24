@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="实验室全虚拟化场景中隔离的具体配置">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-21T12:55:47.378Z">
+<meta property="og:updated_time" content="2019-06-24T02:55:11.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚拟化隔离安装配置说明">
 <meta name="twitter:description" content="实验室全虚拟化场景中隔离的具体配置">
@@ -424,6 +424,7 @@
 <li>(外网)IP地址： 192.100.1.20</li>
 <li>(外网)虚拟IP： 192.100.1.20</li>
 <li>(外网)网口号： ETH0/网口0</li>
+<li>协议：        UDP（反向）   TCP正向</li>
 </ul>
 <h3 id="证书互导"><a href="#证书互导" class="headerlink" title="证书互导"></a>证书互导</h3><ul>
 <li>设备密钥 √ RSA -&gt; 导出设备证书文件 -&gt; dev.cer</li>
@@ -433,6 +434,9 @@
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>管理工具配置好隔离之后，正反向隔离需重启生效。<br>主机信息位置：/etc/mac.conf<br>连接信息位置：/etc/rules</p>
+</blockquote>
 <h3 id="传输软件配置"><a href="#传输软件配置" class="headerlink" title="传输软件配置"></a>传输软件配置</h3><ul>
 <li><p>检查config目录下是否有**.p12文件，若存在，则删除。</p>
 </li>
@@ -504,8 +508,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/20/OpenstackQueens1/" rel="next" title="Openstack Queens 环境搭建（一）环境准备">
-                <i class="fa fa-chevron-left"></i> Openstack Queens 环境搭建（一）环境准备
+              <a href="/2019/06/20/TooManyFiles/" rel="next" title="Openstack Too many open files 错误与解决办法">
+                <i class="fa fa-chevron-left"></i> Openstack Too many open files 错误与解决办法
               </a>
             
           </div>
@@ -591,7 +595,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -690,7 +694,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>
