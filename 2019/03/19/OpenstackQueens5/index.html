@@ -1,0 +1,1172 @@
+﻿<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openstack,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack Queens 环境搭建（五）Nova服务">
+<meta property="og:url" content="https://matianxin.github.io/2019/03/19/OpenstackQueens5/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-23T09:07:19.998Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Openstack Queens 环境搭建（五）Nova服务">
+<meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://matianxin.github.io/2019/03/19/OpenstackQueens5/">
+
+
+
+
+
+  <title>Openstack Queens 环境搭建（五）Nova服务 | 圣特伦特星</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
+	
+	<a href="https://github.com/matianxin" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">圣特伦特星</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">差以毫厘，谬以千里。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/03/19/OpenstackQueens5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Openstack Queens 环境搭建（五）Nova服务</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T16:40:00+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Controller节点："><a href="#Controller节点：" class="headerlink" title="Controller节点："></a>Controller节点：</h3><h4 id="创建-nova-api-nova-和-nova-cell0-的数据库，授予权限："><a href="#创建-nova-api-nova-和-nova-cell0-的数据库，授予权限：" class="headerlink" title="创建 nova_api, nova,和 nova_cell0 的数据库，授予权限："></a>创建 nova_api, nova,和 nova_cell0 的数据库，授予权限：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root -p</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt;CREATE DATABASE nova_api;</span><br><span class="line">MariaDB [(none)]&gt; CREATE DATABASE nova;</span><br><span class="line">MariaDB [(none)]&gt; CREATE DATABASE nova_cell0;</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON nova_api.* TO <span class="string">'nova'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line">MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON nova_api.* TO <span class="string">'nova'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line">MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON nova.* TO <span class="string">'nova'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line">MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON nova.* TO <span class="string">'nova'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line">MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON nova_cell0.* TO <span class="string">'nova'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line">MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON nova_cell0.* TO <span class="string">'nova'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'123456'</span>;</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; <span class="keyword">exit</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建nova用户："><a href="#创建nova用户：" class="headerlink" title="创建nova用户："></a>创建nova用户：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ . admin-openrc</span><br><span class="line"></span><br><span class="line">$ openstack user create --domain <span class="keyword">default</span> --password-prompt nova</span><br><span class="line">User Password: <span class="number">123456</span></span><br><span class="line">Repeat User Password: <span class="number">123456</span></span><br><span class="line">+---------------------+----------------------------------+</span><br><span class="line">| Field               | Value                            |</span><br><span class="line">+---------------------+----------------------------------+</span><br><span class="line">| domain_id           | <span class="keyword">default</span>                          |</span><br><span class="line">| enabled             | <span class="keyword">True</span>                             |</span><br><span class="line">| id                  | <span class="number">81</span>f1d5dfad5a42bb806d197ceb9881ce |</span><br><span class="line">| name                | nova                             |</span><br><span class="line">| options             | &#123;&#125;                               |</span><br><span class="line">| password_expires_at | None                             |</span><br><span class="line">+---------------------+----------------------------------+</span><br><span class="line"></span><br><span class="line">$ openstack role add --project service --user nova admin</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建nova服务实体："><a href="#创建nova服务实体：" class="headerlink" title="创建nova服务实体："></a>创建nova服务实体：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ openstack service create --name nova --description <span class="string">"OpenStack Compute"</span> compute</span><br><span class="line">+-------------+----------------------------------+</span><br><span class="line">| Field       | Value                            |</span><br><span class="line">+-------------+----------------------------------+</span><br><span class="line">| description | OpenStack Compute                |</span><br><span class="line">| enabled     | <span class="keyword">True</span>                             |</span><br><span class="line">| id          | <span class="number">3e011</span>d345e4442fe8a232ab5ab1f8323 |</span><br><span class="line">| name        | nova                             |</span><br><span class="line">| type        | compute                          |</span><br><span class="line">+-------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建Compute-API服务端点："><a href="#创建Compute-API服务端点：" class="headerlink" title="创建Compute API服务端点："></a>创建Compute API服务端点：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ openstack endpoint create --region RegionOne compute <span class="keyword">public</span> http:<span class="comment">//controller:8774/v2.1</span></span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| Field        | Value                            |</span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| enabled      | <span class="keyword">True</span>                             |</span><br><span class="line">| id           | <span class="number">343</span>b6a8fc9564623aca0097b2383650d |</span><br><span class="line">| <span class="class"><span class="keyword">interface</span>    | <span class="title">public</span>                           |</span></span><br><span class="line"><span class="class">| <span class="title">region</span>       | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">region_id</span>    | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_id</span>   | 3<span class="title">e011d345e4442fe8a232ab5ab1f8323</span> |</span></span><br><span class="line"><span class="class">| <span class="title">service_name</span> | <span class="title">nova</span>                             |</span></span><br><span class="line"><span class="class">| <span class="title">service_type</span> | <span class="title">compute</span>                          |</span></span><br><span class="line">| url          | http://controller:8774/v2.1      |</span><br><span class="line">+--------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ openstack endpoint create --region RegionOne compute internal http:<span class="comment">//controller:8774/v2.1</span></span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| Field        | Value                            |</span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| enabled      | <span class="keyword">True</span>                             |</span><br><span class="line">| id           | <span class="number">3458</span>cf55ac8b44d58c949fe88bf9afe3 |</span><br><span class="line">| <span class="class"><span class="keyword">interface</span>    | <span class="title">internal</span>                         |</span></span><br><span class="line"><span class="class">| <span class="title">region</span>       | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">region_id</span>    | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_id</span>   | 3<span class="title">e011d345e4442fe8a232ab5ab1f8323</span> |</span></span><br><span class="line"><span class="class">| <span class="title">service_name</span> | <span class="title">nova</span>                             |</span></span><br><span class="line"><span class="class">| <span class="title">service_type</span> | <span class="title">compute</span>                          |</span></span><br><span class="line">| url          | http://controller:8774/v2.1      |</span><br><span class="line">+--------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ openstack endpoint create --region RegionOne compute admin http:<span class="comment">//controller:8774/v2.1</span></span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| Field        | Value                            |</span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| enabled      | <span class="keyword">True</span>                             |</span><br><span class="line">| id           | <span class="number">9</span>f9115389c2a49a2874761b92c849bb0 |</span><br><span class="line">| <span class="class"><span class="keyword">interface</span>    | <span class="title">admin</span>                            |</span></span><br><span class="line"><span class="class">| <span class="title">region</span>       | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">region_id</span>    | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_id</span>   | 3<span class="title">e011d345e4442fe8a232ab5ab1f8323</span> |</span></span><br><span class="line"><span class="class">| <span class="title">service_name</span> | <span class="title">nova</span>                             |</span></span><br><span class="line"><span class="class">| <span class="title">service_type</span> | <span class="title">compute</span>                          |</span></span><br><span class="line">| url          | http://controller:8774/v2.1      |</span><br><span class="line">+--------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建Placement服务相关："><a href="#创建Placement服务相关：" class="headerlink" title="创建Placement服务相关："></a>创建Placement服务相关：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ openstack user create --domain <span class="keyword">default</span> --password-prompt placement</span><br><span class="line">User Password: <span class="number">123456</span></span><br><span class="line">Repeat User Password: <span class="number">123456</span></span><br><span class="line">+---------------------+----------------------------------+</span><br><span class="line">| Field               | Value                            |</span><br><span class="line">+---------------------+----------------------------------+</span><br><span class="line">| domain_id           | <span class="keyword">default</span>                          |</span><br><span class="line">| enabled             | <span class="keyword">True</span>                             |</span><br><span class="line">| id                  | <span class="number">74870</span>bc86a7c4108869c620099bffc30 |</span><br><span class="line">| name                | placement                        |</span><br><span class="line">| options             | &#123;&#125;                               |</span><br><span class="line">| password_expires_at | None                             |</span><br><span class="line">+---------------------+----------------------------------+</span><br><span class="line"></span><br><span class="line">$ openstack role add --project service --user placement admin</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ openstack service create --name placement --description <span class="string">"Placement API"</span> placement</span><br><span class="line">+-------------+----------------------------------+</span><br><span class="line">| Field       | Value                            |</span><br><span class="line">+-------------+----------------------------------+</span><br><span class="line">| description | Placement API                    |</span><br><span class="line">| enabled     | <span class="keyword">True</span>                             |</span><br><span class="line">| id          | bbd270a97c3a499fb73765120094e9da |</span><br><span class="line">| name        | placement                        |</span><br><span class="line">| type        | placement                        |</span><br><span class="line">+-------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ openstack endpoint create --region RegionOne placement <span class="keyword">public</span> http:<span class="comment">//controller:8778</span></span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| Field        | Value                            |</span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| enabled      | <span class="keyword">True</span>                             |</span><br><span class="line">| id           | d79b3b62302a4055924762ac676fc9b4 |</span><br><span class="line">| <span class="class"><span class="keyword">interface</span>    | <span class="title">public</span>                           |</span></span><br><span class="line"><span class="class">| <span class="title">region</span>       | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">region_id</span>    | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_id</span>   | <span class="title">bbd270a97c3a499fb73765120094e9da</span> |</span></span><br><span class="line"><span class="class">| <span class="title">service_name</span> | <span class="title">placement</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_type</span> | <span class="title">placement</span>                        |</span></span><br><span class="line">| url          | http://controller:8778           |</span><br><span class="line">+--------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ openstack endpoint create --region RegionOne placement internal http:<span class="comment">//controller:8778</span></span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| Field        | Value                            |</span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| enabled      | <span class="keyword">True</span>                             |</span><br><span class="line">| id           | <span class="number">5424919</span>fbee34a7a92946c607706b38a |</span><br><span class="line">| <span class="class"><span class="keyword">interface</span>    | <span class="title">internal</span>                         |</span></span><br><span class="line"><span class="class">| <span class="title">region</span>       | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">region_id</span>    | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_id</span>   | <span class="title">bbd270a97c3a499fb73765120094e9da</span> |</span></span><br><span class="line"><span class="class">| <span class="title">service_name</span> | <span class="title">placement</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_type</span> | <span class="title">placement</span>                        |</span></span><br><span class="line">| url          | http://controller:8778           |</span><br><span class="line">+--------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ openstack endpoint create --region RegionOne placement admin http:<span class="comment">//controller:8778</span></span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| Field        | Value                            |</span><br><span class="line">+--------------+----------------------------------+</span><br><span class="line">| enabled      | <span class="keyword">True</span>                             |</span><br><span class="line">| id           | d9d5626cdb5442ac91dff8c1588f4726 |</span><br><span class="line">| <span class="class"><span class="keyword">interface</span>    | <span class="title">admin</span>                            |</span></span><br><span class="line"><span class="class">| <span class="title">region</span>       | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">region_id</span>    | <span class="title">RegionOne</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_id</span>   | <span class="title">bbd270a97c3a499fb73765120094e9da</span> |</span></span><br><span class="line"><span class="class">| <span class="title">service_name</span> | <span class="title">placement</span>                        |</span></span><br><span class="line"><span class="class">| <span class="title">service_type</span> | <span class="title">placement</span>                        |</span></span><br><span class="line">| url          | http://controller:8778           |</span><br><span class="line">+--------------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装和配置："><a href="#安装和配置：" class="headerlink" title="安装和配置："></a>安装和配置：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install openstack-nova-api openstack-nova-conductor openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler openstack-nova-placement-api</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/nova/nova.conf</span></span><br><span class="line">[<span class="keyword">DEFAULT</span>]</span><br><span class="line">my_ip=<span class="number">192.100</span><span class="number">.10</span><span class="number">.160</span></span><br><span class="line">use_neutron=<span class="keyword">true</span></span><br><span class="line">firewall_driver=nova.virt.firewall.NoopFirewallDriver</span><br><span class="line">enabled_apis=osapi_compute,metadata</span><br><span class="line">transport_url=rabbit:<span class="comment">//openstack:123456@controller</span></span><br><span class="line">[api]</span><br><span class="line">auth_strategy=keystone</span><br><span class="line">[api_database]</span><br><span class="line">connection = mysql+pymysql:<span class="comment">//nova:123456@controller/nova_api</span></span><br><span class="line">[database]</span><br><span class="line">connection = mysql+pymysql:<span class="comment">//nova:123456@controller/nova</span></span><br><span class="line">[glance]</span><br><span class="line">api_servers = http:<span class="comment">//controller:9292</span></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_url = http:<span class="comment">//controller:5000/v3</span></span><br><span class="line">memcached_servers = controller:<span class="number">11211</span></span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = <span class="keyword">default</span></span><br><span class="line">user_domain_name = <span class="keyword">default</span></span><br><span class="line">project_name = service</span><br><span class="line">username = nova</span><br><span class="line">password = <span class="number">123456</span></span><br><span class="line">[libvirt]</span><br><span class="line"><span class="comment">#virt_type=kvm</span></span><br><span class="line">[neutron]</span><br><span class="line">url = http:<span class="comment">//controller:9696</span></span><br><span class="line">auth_url = http:<span class="comment">//controller:35357</span></span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = <span class="keyword">default</span></span><br><span class="line">user_domain_name = <span class="keyword">default</span></span><br><span class="line">region_name = RegionOne</span><br><span class="line">project_name = service</span><br><span class="line">username = neutron</span><br><span class="line">password = <span class="number">123456</span></span><br><span class="line">service_metadata_proxy = <span class="keyword">true</span></span><br><span class="line">metadata_proxy_shared_secret = <span class="number">123456</span></span><br><span class="line">[oslo_concurrency]</span><br><span class="line">lock_path=/<span class="keyword">var</span>/lib/nova/tmp</span><br><span class="line">[placement]</span><br><span class="line">os_region_name = RegionOne</span><br><span class="line">project_domain_name = <span class="keyword">Default</span></span><br><span class="line">project_name = service</span><br><span class="line">auth_type = password</span><br><span class="line">user_domain_name = <span class="keyword">Default</span></span><br><span class="line">auth_url = http:<span class="comment">//controller:5000/v3</span></span><br><span class="line">username = placement</span><br><span class="line">password = <span class="number">123456</span></span><br><span class="line">[vnc]</span><br><span class="line">enabled=<span class="keyword">true</span></span><br><span class="line">server_listen=$my_ip</span><br><span class="line">server_proxyclient_address=$my_ip</span><br><span class="line"><span class="comment">#novncproxy_base_url=http://127.0.0.1:6080/vnc_auto.html</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/httpd/conf.d/00-nova-placement-api.conf            在最下方加入</span></span><br><span class="line">&lt;Directory /usr/bin&gt;</span><br><span class="line">   &lt;IfVersion &gt;= <span class="number">2.4</span>&gt;</span><br><span class="line">      <span class="keyword">Require</span> all granted</span><br><span class="line">   &lt;/IfVersion&gt;</span><br><span class="line">   &lt;IfVersion &lt; <span class="number">2.4</span>&gt;</span><br><span class="line">      Order allow,deny</span><br><span class="line">      Allow from all</span><br><span class="line">   &lt;/IfVersion&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="完成安装："><a href="#完成安装：" class="headerlink" title="完成安装："></a>完成安装：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl restart httpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># su -s /bin/sh -c "nova-manage api_db sync" nova</span></span><br><span class="line"><span class="comment"># su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova</span></span><br><span class="line"><span class="comment"># su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova</span></span><br><span class="line"><span class="comment"># su -s /bin/sh -c "nova-manage db sync" nova</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># nova-manage cell_v2 list_cells</span></span><br><span class="line">+-------+--------------------------------------+------------------------------------+-------------------------------------------------+</span><br><span class="line">|  名称 |                 UUID                 |           Transport URL            |                    数据库连接                   |</span><br><span class="line">+-------+--------------------------------------+------------------------------------+-------------------------------------------------+</span><br><span class="line">| cell0 | <span class="number">00000000</span><span class="number">-0000</span><span class="number">-0000</span><span class="number">-0000</span><span class="number">-000000000000</span> |               none:/               | mysql+pymysql:<span class="comment">//nova:****@controller/nova_cell0 |</span></span><br><span class="line">| cell1 | c795b2eb<span class="number">-4814</span><span class="number">-4</span>fe7-b9ff<span class="number">-090</span>a1b1b2be5 | rabbit:<span class="comment">//openstack:****@controller |    mysql+pymysql://nova:****@controller/nova    |</span></span><br><span class="line">+-------+--------------------------------------+------------------------------------+-------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl enable openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</span></span><br><span class="line"><span class="comment"># systemctl start openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Compute节点："><a href="#Compute节点：" class="headerlink" title="Compute节点："></a>Compute节点：</h3><h4 id="安装和配置：-1"><a href="#安装和配置：-1" class="headerlink" title="安装和配置："></a>安装和配置：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install openstack-nova-compute</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/nova/nova.conf</span></span><br><span class="line">[<span class="keyword">DEFAULT</span>]</span><br><span class="line">my_ip = <span class="number">192.100</span><span class="number">.10</span><span class="number">.161</span></span><br><span class="line">enabled_apis = osapi_compute,metadata</span><br><span class="line">use_neutron = <span class="keyword">True</span></span><br><span class="line">firewall_driver = nova.virt.firewall.NoopFirewallDriver</span><br><span class="line">transport_url = rabbit:<span class="comment">//openstack:123456@controller</span></span><br><span class="line">[api]</span><br><span class="line">auth_strategy = keystone</span><br><span class="line">[vnc]</span><br><span class="line">enabled = <span class="keyword">True</span></span><br><span class="line">server_listen = <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">server_proxyclient_address = $my_ip</span><br><span class="line">novncproxy_base_url = http:<span class="comment">//controller:6080/vnc_auto.html</span></span><br><span class="line">[glance]</span><br><span class="line">api_servers = http:<span class="comment">//controller:9292</span></span><br><span class="line">[oslo_concurrency]</span><br><span class="line">lock_path = /<span class="keyword">var</span>/lib/nova/tmp</span><br><span class="line">[placement]</span><br><span class="line">os_region_name = RegionOne</span><br><span class="line">project_domain_name = <span class="keyword">Default</span></span><br><span class="line">project_name = service</span><br><span class="line">auth_type = password</span><br><span class="line">user_domain_name = <span class="keyword">Default</span></span><br><span class="line">auth_url = http:<span class="comment">//controller:5000/v3</span></span><br><span class="line">username = placement</span><br><span class="line">password = <span class="number">123456</span></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_url = http:<span class="comment">//controller:5000/v3</span></span><br><span class="line">memcached_servers = controller:<span class="number">11211</span></span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = <span class="keyword">default</span></span><br><span class="line">user_domain_name = <span class="keyword">default</span></span><br><span class="line">project_name = service</span><br><span class="line">username = nova</span><br><span class="line">password = <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="完成安装"><a href="#完成安装" class="headerlink" title="完成安装"></a>完成安装</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl enable libvirtd.service openstack-nova-compute.service</span></span><br><span class="line"><span class="comment"># systemctl start libvirtd.service openstack-nova-compute.service</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Controller节点：-1"><a href="#Controller节点：-1" class="headerlink" title="Controller节点："></a>Controller节点：</h3><h4 id="将计算节点添加到cell数据库："><a href="#将计算节点添加到cell数据库：" class="headerlink" title="将计算节点添加到cell数据库："></a>将计算节点添加到cell数据库：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ . admin-openrc</span><br><span class="line"></span><br><span class="line">$ openstack compute service <span class="keyword">list</span> --service nova-compute</span><br><span class="line">+----+--------------+-----------------------+------+---------+-------+----------------------------+</span><br><span class="line">| ID | Binary       | Host                  | Zone | Status  | State | Updated At                 |</span><br><span class="line">+----+--------------+-----------------------+------+---------+-------+----------------------------+</span><br><span class="line">|  <span class="number">9</span> | nova-compute | localhost.localdomain | nova | enabled | up    | <span class="number">2018</span><span class="number">-09</span><span class="number">-13</span>T02:<span class="number">59</span>:<span class="number">06.000000</span> |</span><br><span class="line">+----+--------------+-----------------------+------+---------+-------+----------------------------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="发现计算主机："><a href="#发现计算主机：" class="headerlink" title="发现计算主机："></a>发现计算主机：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova</span></span><br><span class="line"></span><br><span class="line">/usr/lib/python2<span class="number">.7</span>/site-packages/oslo_db/sqlalchemy/enginefacade.py:<span class="number">332</span>: NotSupportedWarning: Configuration option(s) [<span class="string">'use_tpool'</span>] not supported</span><br><span class="line">  <span class="keyword">exception</span>.NotSupportedWarning</span><br><span class="line">Found <span class="number">2</span> cell mappings.</span><br><span class="line">Skipping cell0 since it does not contain hosts.</span><br><span class="line">Getting computes from cell <span class="string">'cell1'</span>: c795b2eb<span class="number">-4814</span><span class="number">-4</span>fe7-b9ff<span class="number">-090</span>a1b1b2be5</span><br><span class="line">Checking host mapping <span class="keyword">for</span> compute host <span class="string">'localhost.localdomain'</span>: <span class="number">58</span>be78ad<span class="number">-5220</span><span class="number">-4869</span>-ab31<span class="number">-33</span>c9674ecfd1</span><br><span class="line">Creating host mapping <span class="keyword">for</span> compute host <span class="string">'localhost.localdomain'</span>: <span class="number">58</span>be78ad<span class="number">-5220</span><span class="number">-4869</span>-ab31<span class="number">-33</span>c9674ecfd1</span><br><span class="line">Found <span class="number">1</span> unmapped computes in cell: c795b2eb<span class="number">-4814</span><span class="number">-4</span>fe7-b9ff<span class="number">-090</span>a1b1b2be5</span><br><span class="line"></span><br><span class="line">注意：添加新计算节点时，必须在控制器节点上运行nova-manage cell_v2 discover_hosts以注册这些新计算节点。</span><br><span class="line">或者，您可以在 /etc/nova/nova.conf 中设置适当的间隔：</span><br><span class="line">[scheduler]</span><br><span class="line">discover_hosts_in_cells_interval = <span class="number">300</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="验证："><a href="#验证：" class="headerlink" title="验证："></a>验证：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ . admin-openrc</span><br><span class="line"></span><br><span class="line">$ openstack compute service <span class="keyword">list</span></span><br><span class="line">+----+------------------+-----------------------+----------+---------+-------+----------------------------+</span><br><span class="line">| ID | Binary           | Host                  | Zone     | Status  | State | Updated At                 |</span><br><span class="line">+----+------------------+-----------------------+----------+---------+-------+----------------------------+</span><br><span class="line">|  <span class="number">1</span> | nova-conductor   | controller            | internal | enabled | up    | <span class="number">2018</span><span class="number">-09</span><span class="number">-13</span>T03:<span class="number">00</span>:<span class="number">28.000000</span> |</span><br><span class="line">|  <span class="number">3</span> | nova-consoleauth | controller            | internal | enabled | up    | <span class="number">2018</span><span class="number">-09</span><span class="number">-13</span>T03:<span class="number">00</span>:<span class="number">29.000000</span> |</span><br><span class="line">|  <span class="number">4</span> | nova-scheduler   | controller            | internal | enabled | up    | <span class="number">2018</span><span class="number">-09</span><span class="number">-13</span>T03:<span class="number">00</span>:<span class="number">29.000000</span> |</span><br><span class="line">|  <span class="number">9</span> | nova-compute     | localhost.localdomain | nova     | enabled | up    | <span class="number">2018</span><span class="number">-09</span><span class="number">-13</span>T03:<span class="number">00</span>:<span class="number">26.000000</span> |</span><br><span class="line">+----+------------------+-----------------------+----------+---------+-------+----------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ openstack catalog <span class="keyword">list</span></span><br><span class="line">+-----------+-----------+-----------------------------------------+</span><br><span class="line">| Name      | Type      | Endpoints                               |</span><br><span class="line">+-----------+-----------+-----------------------------------------+</span><br><span class="line">| keystone  | identity  | RegionOne                               |</span><br><span class="line">|           |           |   <span class="keyword">public</span>: http:<span class="comment">//controller:5000/v3/    |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   internal: http:<span class="comment">//controller:5000/v3/  |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http:<span class="comment">//controller:5000/v3/     |</span></span><br><span class="line">|           |           |                                         |</span><br><span class="line">| nova      | compute   | RegionOne                               |</span><br><span class="line">|           |           |   <span class="keyword">public</span>: http:<span class="comment">//controller:8774/v2.1   |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   internal: http:<span class="comment">//controller:8774/v2.1 |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http:<span class="comment">//controller:8774/v2.1    |</span></span><br><span class="line">|           |           |                                         |</span><br><span class="line">| glance    | image     | RegionOne                               |</span><br><span class="line">|           |           |   internal: http:<span class="comment">//controller:9292      |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http:<span class="comment">//controller:9292         |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   <span class="keyword">public</span>: http:<span class="comment">//controller:9292        |</span></span><br><span class="line">|           |           |                                         |</span><br><span class="line">| placement | placement | RegionOne                               |</span><br><span class="line">|           |           |   internal: http:<span class="comment">//controller:8778      |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   <span class="keyword">public</span>: http:<span class="comment">//controller:8778        |</span></span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http:<span class="comment">//controller:8778         |</span></span><br><span class="line">|           |           |                                         |</span><br><span class="line">+-----------+-----------+-----------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ openstack image <span class="keyword">list</span></span><br><span class="line">+--------------------------------------+--------+--------+</span><br><span class="line">| ID                                   | Name   | Status |</span><br><span class="line">+--------------------------------------+--------+--------+</span><br><span class="line">| ad7da2d4-cb83<span class="number">-4</span>a41<span class="number">-836</span>f-e58e47e899f5 | cirros | active |</span><br><span class="line">+--------------------------------------+--------+--------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nova-status upgrade check</span></span><br><span class="line">/usr/lib/python2<span class="number">.7</span>/site-packages/oslo_db/sqlalchemy/enginefacade.py:<span class="number">332</span>: NotSupportedWarning: Configuration option(s) [<span class="string">'use_tpool'</span>] not supported</span><br><span class="line">  <span class="keyword">exception</span>.NotSupportedWarning</span><br><span class="line">Option <span class="string">"os_region_name"</span> from group <span class="string">"placement"</span> is deprecated. <span class="keyword">Use</span> <span class="title">option</span> "<span class="title">region</span>-<span class="title">name</span>" <span class="title">from</span> <span class="title">group</span> "<span class="title">placement</span>".</span><br><span class="line">+-------------------------------+</span><br><span class="line">| 升级检查结果                  |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| 检查: <span class="title">Cells</span> <span class="title">v2</span>                |</span><br><span class="line">| 结果: 成功                    |</span><br><span class="line">| 详情: <span class="title">None</span>                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| 检查: <span class="title">Placement</span> <span class="title">API</span>           |</span><br><span class="line">| 结果: 成功                    |</span><br><span class="line">| 详情: <span class="title">None</span>                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| 检查: <span class="title">Resource</span> <span class="title">Providers</span>      |</span><br><span class="line">| 结果: 成功                    |</span><br><span class="line">| 详情: <span class="title">None</span>                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| 检查: <span class="title">Ironic</span> <span class="title">Flavor</span> <span class="title">Migration</span> |</span><br><span class="line">| 结果: 成功                    |</span><br><span class="line">| 详情: <span class="title">None</span>                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| 检查: <span class="title">API</span> <span class="title">Service</span> <span class="title">Version</span>     |</span><br><span class="line">| 结果: 成功                    |</span><br><span class="line">| 详情: <span class="title">None</span>                    |</span><br><span class="line">+-------------------------------+</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/19/OpenstackQueens4/" rel="next" title="Openstack Queens 环境搭建（四）Glance服务">
+                <i class="fa fa-chevron-left"></i> Openstack Queens 环境搭建（四）Glance服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/OpenstackQueens6/" rel="prev" title="Openstack Queens 环境搭建（六）Neutron服务">
+                Openstack Queens 环境搭建（六）Neutron服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/matx.jpg" alt="圣特伦特星">
+            
+              <p class="site-author-name" itemprop="name">圣特伦特星</p>
+              <p class="site-description motion-element" itemprop="description">“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/shengteluntexing" target="_blank" title="SegmentFault">
+                      
+                        <i class="fa fa-fw fa-coffee"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/matianxin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:trentmtx@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/matianxin" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller节点："><span class="nav-number">1.</span> <span class="nav-text">Controller节点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-nova-api-nova-和-nova-cell0-的数据库，授予权限："><span class="nav-number">1.1.</span> <span class="nav-text">创建 nova_api, nova,和 nova_cell0 的数据库，授予权限：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建nova用户："><span class="nav-number">1.2.</span> <span class="nav-text">创建nova用户：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建nova服务实体："><span class="nav-number">1.3.</span> <span class="nav-text">创建nova服务实体：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Compute-API服务端点："><span class="nav-number">1.4.</span> <span class="nav-text">创建Compute API服务端点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Placement服务相关："><span class="nav-number">1.5.</span> <span class="nav-text">创建Placement服务相关：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装和配置："><span class="nav-number">1.6.</span> <span class="nav-text">安装和配置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完成安装："><span class="nav-number">1.7.</span> <span class="nav-text">完成安装：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute节点："><span class="nav-number">2.</span> <span class="nav-text">Compute节点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装和配置：-1"><span class="nav-number">2.1.</span> <span class="nav-text">安装和配置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完成安装"><span class="nav-number">2.2.</span> <span class="nav-text">完成安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller节点：-1"><span class="nav-number">3.</span> <span class="nav-text">Controller节点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将计算节点添加到cell数据库："><span class="nav-number">3.1.</span> <span class="nav-text">将计算节点添加到cell数据库：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发现计算主机："><span class="nav-number">3.2.</span> <span class="nav-text">发现计算主机：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证："><span class="nav-number">3.3.</span> <span class="nav-text">验证：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="200" height="200" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+			  
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">圣特伦特星</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Matx, NexT">
+  <meta name="keywords" content="openstack,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
-<meta name="keywords" content="Matx">
-<meta property="og:type" content="website">
-<meta property="og:title" content="圣特伦特星">
-<meta property="og:url" content="https://matianxin.github.io/tags/eletric-power/index.html">
+<meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack Queens 环境搭建（二）环境相关服务">
+<meta property="og:url" content="https://matianxin.github.io/2019/03/19/OpenstackQueens2/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-23T08:37:43.660Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="圣特伦特星">
-<meta name="twitter:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta name="twitter:title" content="Openstack Queens 环境搭建（二）环境相关服务">
+<meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/tags/eletric-power/">
+  <link rel="canonical" href="https://matianxin.github.io/2019/03/19/OpenstackQueens2/">
 
 
 
 
 
-  <title>标签: eletric power | 圣特伦特星</title>
+  <title>Openstack Queens 环境搭建（二）环境相关服务 | 圣特伦特星</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	
 	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
@@ -274,78 +275,203 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>eletric power<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/03/19/OpenstackQueens2/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/06/21/虚拟化隔离安装配置手册/" itemprop="url">
-              
-                <span itemprop="name">虚拟化隔离安装配置说明</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Openstack Queens 环境搭建（二）环境相关服务</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-21T20:00:00+08:00" content="2019-06-21">
-          06-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T16:25:00+08:00">
+                2019-03-19
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h3 id="Controller节点："><a href="#Controller节点：" class="headerlink" title="Controller节点："></a>Controller节点：</h3><h4 id="安装NTP服务"><a href="#安装NTP服务" class="headerlink" title="安装NTP服务"></a>安装NTP服务</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install chrony</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/chrony.conf</span></span><br><span class="line"></span><br><span class="line">server <span class="number">0.</span>centos.pool.ntp.org iburst</span><br><span class="line">server <span class="number">1.</span>centos.pool.ntp.org iburst</span><br><span class="line">server <span class="number">2.</span>centos.pool.ntp.org iburst</span><br><span class="line">server <span class="number">3.</span>centos.pool.ntp.org iburst</span><br><span class="line">...</span><br><span class="line">allow <span class="number">192.100</span><span class="number">.10</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># systemctl enable chronyd.service                            开机启用NTP</span></span><br><span class="line"><span class="comment"># systemctl start chronyd.service                             开启NTP服务</span></span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/20/虚拟化纵向安装配置手册/" itemprop="url">
-              
-                <span itemprop="name">虚拟化纵向安装配置说明</span>
-              
-            </a>
-        
-      </h2>
+<p>验证NTP服务：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># chronyc sources</span></span><br><span class="line"></span><br><span class="line">  <span class="number">210</span> Number of sources = <span class="number">2</span></span><br><span class="line">  MS Name/IP address         Stratum Poll Reach LastRx Last sample</span><br><span class="line">  ===============================================================================</span><br><span class="line">  ^- <span class="number">192.0</span><span class="number">.2</span><span class="number">.11</span>                    <span class="number">2</span>   <span class="number">7</span>    <span class="number">12</span>   <span class="number">137</span>  <span class="number">-2814</span>us[<span class="number">-3000</span>us] +/-   <span class="number">43</span>ms</span><br><span class="line">  ^* <span class="number">192.0</span><span class="number">.2</span><span class="number">.12</span>                    <span class="number">2</span>   <span class="number">6</span>   <span class="number">177</span>    <span class="number">46</span>    +<span class="number">17</span>us[  <span class="number">-23</span>us] +/-   <span class="number">68</span>ms</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-20T09:00:00+08:00" content="2019-06-20">
-          06-20
-        </time>
-      </div>
+<h4 id="安装Openstack相关库"><a href="#安装Openstack相关库" class="headerlink" title="安装Openstack相关库"></a>安装Openstack相关库</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install centos-release-openstack-queens                 安装Openstack库</span></span><br><span class="line"><span class="comment"># yum upgrade                                                 更新包</span></span><br><span class="line"><span class="comment"># yum install python-openstackclient                          安装Openstack客户端</span></span><br><span class="line"><span class="comment"># yum install openstack-selinux                               安装openstack-selinux用来管理Openstack服务的安全策略</span></span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+<h4 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl stop firewalld                                    关闭防火墙服务</span></span><br><span class="line"><span class="comment"># systemctl disable firewalld                                 永久防火墙开机自启动</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭SELINUX服务"><a href="#关闭SELINUX服务" class="headerlink" title="关闭SELINUX服务"></a>关闭SELINUX服务</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># setenforce 0                                               关闭selinux服务</span></span><br><span class="line"><span class="comment"># vi /etc/selinux/config                                     永久关闭selinux服务</span></span><br><span class="line">    SELINUX=disabled</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装数据库服务"><a href="#安装数据库服务" class="headerlink" title="安装数据库服务"></a>安装数据库服务</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install mariadb mariadb-server python2-PyMySQL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/my.cnf.d/openstack.cnf</span></span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">bind-address = <span class="number">192.100</span><span class="number">.10</span><span class="number">.160</span></span><br><span class="line"><span class="keyword">default</span>-storage-engine = innodb</span><br><span class="line">innodb_file_per_table = on</span><br><span class="line">max_connections = <span class="number">4096</span></span><br><span class="line">collation-server = utf8_general_ci</span><br><span class="line">character-set-server = utf8</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># systemctl enable mariadb.service                     开机启用Mysql服务</span></span><br><span class="line"><span class="comment"># systemctl start mariadb.service                      开启Mysql服务</span></span><br><span class="line"><span class="comment"># mysql_secure_installation                            设置Mysql密码-&gt;123456</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装消息队列"><a href="#安装消息队列" class="headerlink" title="安装消息队列"></a>安装消息队列</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install rabbitmq-server</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># systemctl enable rabbitmq-server.service</span></span><br><span class="line"><span class="comment"># systemctl start rabbitmq-server.service</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rabbitmqctl add_user openstack 123456</span></span><br><span class="line"><span class="comment"># rabbitmqctl set_permissions openstack ".*" ".*" ".*"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装Memcached缓存"><a href="#安装Memcached缓存" class="headerlink" title="安装Memcached缓存"></a>安装Memcached缓存</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install memcached python-memcached</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/sysconfig/memcached</span></span><br><span class="line">OPTIONS=<span class="string">"-l 127.0.0.1,::1,controller"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># systemctl enable memcached.service</span></span><br><span class="line"><span class="comment"># systemctl start memcached.service</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装Etcd"><a href="#安装Etcd" class="headerlink" title="安装Etcd"></a>安装Etcd</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install etcd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/etcd/etcd.conf</span></span><br><span class="line"><span class="comment">#[Member]</span></span><br><span class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/default.etcd"</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.100.10.160:2380"</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.100.10.160:2379"</span></span><br><span class="line">ETCD_NAME=<span class="string">"controller"</span></span><br><span class="line"><span class="comment">#[Clustering]</span></span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.100.10.160:2380"</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.100.10.160:2379"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">"controller=http://192.100.10.160:2380"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster-01"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># systemctl enable etcd</span></span><br><span class="line"><span class="comment"># systemctl start etcd</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Compute节点："><a href="#Compute节点：" class="headerlink" title="Compute节点："></a>Compute节点：</h3><h4 id="安装NTP服务-1"><a href="#安装NTP服务-1" class="headerlink" title="安装NTP服务"></a>安装NTP服务</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install chrony</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/chrony.conf</span></span><br><span class="line"></span><br><span class="line">server controller iburst</span><br><span class="line">...</span><br><span class="line">allow <span class="number">192.100</span><span class="number">.10</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># systemctl enable chronyd.service                            开机启用NTP</span></span><br><span class="line"><span class="comment"># systemctl start chronyd.service                             开启NTP服务</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装Openstack相关库-1"><a href="#安装Openstack相关库-1" class="headerlink" title="安装Openstack相关库"></a>安装Openstack相关库</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install centos-release-openstack-queens                 安装Openstack库</span></span><br><span class="line"><span class="comment"># yum upgrade                                                 更新包</span></span><br><span class="line"><span class="comment"># yum install python-openstackclient                          安装Openstack客户端</span></span><br><span class="line"><span class="comment"># yum install openstack-selinux                               安装openstack-selinux用来管理Openstack服务的安全策略</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭防火墙-1"><a href="#关闭防火墙-1" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl stop firewalld                                    关闭防火墙服务</span></span><br><span class="line"><span class="comment"># systemctl disable firewalld                                 永久防火墙开机自启动</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭SELINUX服务-1"><a href="#关闭SELINUX服务-1" class="headerlink" title="关闭SELINUX服务"></a>关闭SELINUX服务</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># setenforce 0                                               关闭selinux服务</span></span><br><span class="line"><span class="comment"># vi /etc/selinux/config                                     永久关闭selinux服务</span></span><br><span class="line">    SELINUX=disabled</span><br></pre></td></tr></table></figure>
 
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/19/OpenstackQueens1/" rel="next" title="Openstack Queens 环境搭建（一）环境准备">
+                <i class="fa fa-chevron-left"></i> Openstack Queens 环境搭建（一）环境准备
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/OpenstackQueens3/" rel="prev" title="Openstack Queens 环境搭建（三）Keystone服务">
+                Openstack Queens 环境搭建（三）Keystone服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -353,6 +479,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -373,8 +503,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -464,6 +603,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller节点："><span class="nav-number">1.</span> <span class="nav-text">Controller节点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装NTP服务"><span class="nav-number">1.1.</span> <span class="nav-text">安装NTP服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Openstack相关库"><span class="nav-number">1.2.</span> <span class="nav-text">安装Openstack相关库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">1.3.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭SELINUX服务"><span class="nav-number">1.4.</span> <span class="nav-text">关闭SELINUX服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装数据库服务"><span class="nav-number">1.5.</span> <span class="nav-text">安装数据库服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装消息队列"><span class="nav-number">1.6.</span> <span class="nav-text">安装消息队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Memcached缓存"><span class="nav-number">1.7.</span> <span class="nav-text">安装Memcached缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Etcd"><span class="nav-number">1.8.</span> <span class="nav-text">安装Etcd</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute节点："><span class="nav-number">2.</span> <span class="nav-text">Compute节点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装NTP服务-1"><span class="nav-number">2.1.</span> <span class="nav-text">安装NTP服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Openstack相关库-1"><span class="nav-number">2.2.</span> <span class="nav-text">安装Openstack相关库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭防火墙-1"><span class="nav-number">2.3.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭SELINUX服务-1"><span class="nav-number">2.4.</span> <span class="nav-text">关闭SELINUX服务</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -611,6 +766,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
