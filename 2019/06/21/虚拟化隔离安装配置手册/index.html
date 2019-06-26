@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="实验室全虚拟化场景中隔离的具体配置">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-24T02:55:11.339Z">
+<meta property="og:updated_time" content="2019-06-24T08:27:27.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚拟化隔离安装配置说明">
 <meta name="twitter:description" content="实验室全虚拟化场景中隔离的具体配置">
@@ -429,7 +429,7 @@
 <h3 id="证书互导"><a href="#证书互导" class="headerlink" title="证书互导"></a>证书互导</h3><ul>
 <li>设备密钥 √ RSA -&gt; 导出设备证书文件 -&gt; dev.cer</li>
 <li>发送端证书 -&gt; 添加<ul>
-<li>发送端IP： 192.168.1.14</li>
+<li>发送端IP： 192.168.1.14 -&gt; 此处为发送端IP，不为虚拟IP</li>
 <li>证书标识： sender.cer</li>
 </ul>
 </li>
@@ -443,7 +443,7 @@
 <li><p>启动传输软件。 Stonewall-2000-Send.jar</p>
 </li>
 <li><p>右键 -&gt; 以管理员身份运行 -&gt; 命令行 -&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar Stonewall-<span class="number">2000</span>-Send.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -jar Stonewall-<span class="number">2000</span>-Send.jar</span><br><span class="line">设置密码口令保护窗口如果报错，需先运行jreUpdate1.8.jar</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>出现提示：系统检测到密钥尚未存在，是否需要生成密钥？ -&gt; 是</p>
 </li>
@@ -471,7 +471,7 @@
 <li><p>设定 -&gt; 配置链路信息</p>
 <ul>
 <li>链路名称： Link-1</li>
-<li>目的IP地址： 192.168.1.13  -&gt; 接收端IP地址，有交换机的情况下，配置虚拟IP。</li>
+<li>目的IP地址： 192.168.1.13  -&gt; 接收端IP地址，正反向隔离在相同环境的情况下，配置虚拟IP。</li>
 <li>目的端口：   7777</li>
 <li>发送失败等待周期(秒)： 30</li>
 <li>使用隧道：   Tunnel-1</li>
@@ -517,6 +517,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/25/kdpaTopo/" rel="prev" title="实验室主站厂站拓扑搭建">
+                实验室主站厂站拓扑搭建 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -595,7 +599,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -606,7 +610,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -617,7 +621,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -694,7 +698,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>
