@@ -308,10 +308,10 @@ font:
   # `size: xx`. Use `px` as unit.
 
   # Global font settings used on <body> element.
-  global:
-    external: true
-    family: Lato
-    size:
+  # global:
+  #   external: true
+  #   family: Lato
+  #   size:
 
   # Font settings for Headlines (h1, h2, h3, h4, h5, h6).
   # Fallback to `global` font settings.
