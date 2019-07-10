@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Matx, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
-<meta name="keywords" content="Matx">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://matianxin.github.io/categories/index.html">
+<meta name="description" content="MySQL数据库区别于其他数据库的很重要的一个特点就是其插件式的表存储引擎，其基于表，而不是数据库。由于每个存储引擎都有其特点，因此我们可以针对每一张表来挑选最合适的存储引擎。今天介绍两种最常见的存储引擎和它们的区别：InnoDB和MyISAM。">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL中InnoDB和MyISAM的存储引擎区别">
+<meta property="og:url" content="https://matianxin.github.io/2019/07/10/MysqlEngine/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta property="og:description" content="MySQL数据库区别于其他数据库的很重要的一个特点就是其插件式的表存储引擎，其基于表，而不是数据库。由于每个存储引擎都有其特点，因此我们可以针对每一张表来挑选最合适的存储引擎。今天介绍两种最常见的存储引擎和它们的区别：InnoDB和MyISAM。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-20T04:02:39.071Z">
+<meta property="og:updated_time" content="2019-07-10T08:04:30.693Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
-<meta name="twitter:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta name="twitter:title" content="MySQL中InnoDB和MyISAM的存储引擎区别">
+<meta name="twitter:description" content="MySQL数据库区别于其他数据库的很重要的一个特点就是其插件式的表存储引擎，其基于表，而不是数据库。由于每个存储引擎都有其特点，因此我们可以针对每一张表来挑选最合适的存储引擎。今天介绍两种最常见的存储引擎和它们的区别：InnoDB和MyISAM。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/categories/">
+  <link rel="canonical" href="https://matianxin.github.io/2019/07/10/MysqlEngine/">
 
 
 
 
 
-  <title>分类 | 圣特伦特星</title>
+  <title>MySQL中InnoDB和MyISAM的存储引擎区别 | 圣特伦特星</title>
   
 
 
@@ -277,40 +277,201 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/07/10/MysqlEngine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">分类</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 6 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Eletric-Power/">Eletric Power</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kedong/">Kedong</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Openstack/">Openstack</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">MySQL中InnoDB和MyISAM的存储引擎区别</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T15:58:00+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  MySQL数据库区别于其他数据库的很重要的一个特点就是其插件式的表存储引擎，其基于表，而不是数据库。由于每个存储引擎都有其特点，因此我们可以针对每一张表来挑选最合适的存储引擎。今天介绍两种最常见的存储引擎和它们的区别：InnoDB和MyISAM。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h3 id="InnoDB存储引擎："><a href="#InnoDB存储引擎：" class="headerlink" title="InnoDB存储引擎："></a>InnoDB存储引擎：</h3><p>InnoDB存储引擎支持事务，其设计目标主要就是面向OLTP（On Line Transaction Processing 在线事务处理）的应用。特点为行锁设计、支持外键，并支持非锁定读。从5.5.8版本开始，InnoDB成为了MySQL的默认存储引擎。</p>
+<p>InnoDB存储引擎采用聚集索引（clustered）的方式来存储数据，因此每个表都是按照主键的顺序进行存放，如果没有指定主键，InnoDB会为每行自动生成一个6字节的ROWID作为主键。</p>
+<h3 id="MyISAM存储引擎："><a href="#MyISAM存储引擎：" class="headerlink" title="MyISAM存储引擎："></a>MyISAM存储引擎：</h3><p>MyISAM存储引擎不支持事务、表锁设计，支持全文索引，主要面向OLAP（On Line Analytical Processing 联机分析处理）应用，适用于数据仓库等查询频繁的场景。在5.5.8版本之前，MyISAM是MySQL的默认存储引擎。该引擎代表着对海量数据进行查询和分析的需求。它强调性能，因此在查询的执行速度比InnoDB更快。</p>
+<p>MyISAM存储引擎还有一个特点是只缓存索引文件，而不缓存数据文件，这点非常独特。</p>
+<h3 id="InnoDB和MyISAM的区别"><a href="#InnoDB和MyISAM的区别" class="headerlink" title="InnoDB和MyISAM的区别:"></a>InnoDB和MyISAM的区别:</h3><h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><p>为了数据库操作的原子性，我们需要事务。保证一组操作要么都成功，要么都失败，比如转账的功能。我们通常将多条SQL语句放在begin和commit之间，组成一个事务。</p>
+<p>InnoDB支持，MyISAM不支持。</p>
+<h4 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h4><p>由于InnoDB的聚集索引，其如果没有指定主键，就会自动生成主键。<br>MyISAM支持没有主键的表存在。</p>
+<h4 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h4><p>为了解决复杂逻辑的依赖，我们需要外键。比如高考成绩的录入，必须归属于某位同学，我们就需要高考成绩数据库里有准考证号的外键。</p>
+<p>InnoDB支持，MyISAM不支持。</p>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>为了优化查询的速度，进行排序和匹配查找，我们需要索引。比如所有人的姓名从a-z首字母进行顺序存储，当我们查找zhangsan或者第44位的时候就可以很快的定位到我们想要的位置进行查找。</p>
+<p>InnoDB是聚集索引，数据和主键的聚集索引绑定在一起，通过主键索引效率很高。如果通过其他列的辅助索引来进行查找，需要先查找到聚集索引，再查询到所有数据，需要两次查询。</p>
+<p>MyISAM是非聚集索引，数据文件是分离的，索引保存的是数据的指针。</p>
+<p>从InnoDB 1.2.x版本，MySQL5.6版本后，两者都支持全文索引。</p>
+<p>auto_increment<br>对于自增数的字段，InnoDB要求必须有只有该字段的索引。但MyISAM可以将该字段与其他字段组成联合索引。</p>
+<h4 id="表行数"><a href="#表行数" class="headerlink" title="表行数"></a>表行数</h4><p>很常见的需求是看表中有多少条数据，此时我们需要</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(*) <span class="keyword">from</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<p>InnoDB不保存表行数，需要进行全表扫描。MyISAM用一个变量保存，直接读取该值，更快。当时当带有where查询的时候，两者一样。</p>
+<h4 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h4><p>数据库的文件都是需要在磁盘中进行存储，当应用需要时再读取到内存中。一般包含数据文件、索引文件。</p>
+<p>InnoDB分为：<br>.frm表结构文件<br>.ibdata1共享表空间<br>.ibd表独占空间<br>.redo日志文件</p>
+<p>MyISAM分为三个文件：<br>.frm存储表定义<br>.MYD存储表数据<br>.MYI存储表索引</p>
+<h4 id="执行速度"><a href="#执行速度" class="headerlink" title="执行速度"></a>执行速度</h4><p>如果你的操作是大量的查询操作，如SELECT，使用MyISAM性能会更好。<br>如果大部分是删除和更改的操作，使用InnoDB。</p>
+<p>delete<br>调用delete from table时，MyISAM会直接重建表，InnoDB会一行一行的删除，但是可以用truncate table代替。</p>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>MyISAM仅支持表锁，每次操作锁定整张表。<br>InnoDB支持行锁，每次操作锁住最小数量的行数据。</p>
+<p>表锁相比于行锁消耗的资源更少，且不会出现死锁，但同时并发性能差。行锁消耗更多的资源，速度较慢，且可能发生死锁，但是因为锁定的粒度小、数据少，并发性能好。如果InnoDB的一条语句无法确定要扫描的范围，也会锁定整张表。</p>
+<p>当行锁发生死锁的时候，会计算每个事务影响的行数，然后回滚行数较少的事务。</p>
+<h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4><p>MyISAM崩溃后无法快速的安全恢复。InnoDB有一套完善的恢复机制。</p>
+<h4 id="数据缓存"><a href="#数据缓存" class="headerlink" title="数据缓存"></a>数据缓存</h4><p>MyISAM仅缓存索引数据，通过索引查询数据。InnoDB不仅缓存索引数据，同时缓存数据信息，将数据按页读取到缓存池，按LRU（Latest Rare Use 最近最少使用）算法来进行更新。</p>
+<p>####<br>如何选择存储引擎<br>创建表的语句都是相同的，只有最后的type来指定存储引擎。</p>
+<p>MyISAM<br>1.大量查询总count<br>2.查询频繁，插入不频繁<br>3.没有事务操作</p>
+<p>InnoDB<br>1.需要高可用性，或者需要事务<br>2.表更新频繁</p>
+<p>摘自：<a href="https://segmentfault.com/a/1190000019713794" target="_blank" rel="noopener">https://segmentfault.com/a/1190000019713794</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/01/TooManyConnections/" rel="next" title="Mysql 1040 Too many connections 错误与解决办法">
+                <i class="fa fa-chevron-left"></i> Mysql 1040 Too many connections 错误与解决办法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -343,8 +504,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -434,6 +604,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB存储引擎："><span class="nav-number">1.</span> <span class="nav-text">InnoDB存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM存储引擎："><span class="nav-number">2.</span> <span class="nav-text">MyISAM存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB和MyISAM的区别"><span class="nav-number">3.</span> <span class="nav-text">InnoDB和MyISAM的区别:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务"><span class="nav-number">3.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主键"><span class="nav-number">3.2.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外键"><span class="nav-number">3.3.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">3.4.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表行数"><span class="nav-number">3.5.</span> <span class="nav-text">表行数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储"><span class="nav-number">3.6.</span> <span class="nav-text">存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行速度"><span class="nav-number">3.7.</span> <span class="nav-text">执行速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁"><span class="nav-number">3.8.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据恢复"><span class="nav-number">3.9.</span> <span class="nav-text">数据恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据缓存"><span class="nav-number">3.10.</span> <span class="nav-text">数据缓存</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
