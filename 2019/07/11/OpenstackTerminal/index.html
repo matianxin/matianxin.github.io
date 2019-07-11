@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Matx, NexT">
+  <meta name="keywords" content="openstack,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="马添鑫80后坐标：沈阳技术方向：Openstack、 虚拟化、 PythonEmail：trentmtx@163.com 声明：本站点发表的任何文章，仅代表我个人观点。">
-<meta name="keywords" content="Matx">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我">
-<meta property="og:url" content="https://matianxin.github.io/about/index.html">
+<meta name="description" content="Openstack可供参考的常用命令列表">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack命令行">
+<meta property="og:url" content="https://matianxin.github.io/2019/07/11/OpenstackTerminal/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="马添鑫80后坐标：沈阳技术方向：Openstack、 虚拟化、 PythonEmail：trentmtx@163.com 声明：本站点发表的任何文章，仅代表我个人观点。">
+<meta property="og:description" content="Openstack可供参考的常用命令列表">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-21T13:52:44.131Z">
+<meta property="og:updated_time" content="2019-07-11T07:45:49.813Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于我">
-<meta name="twitter:description" content="马添鑫80后坐标：沈阳技术方向：Openstack、 虚拟化、 PythonEmail：trentmtx@163.com 声明：本站点发表的任何文章，仅代表我个人观点。">
+<meta name="twitter:title" content="Openstack命令行">
+<meta name="twitter:description" content="Openstack可供参考的常用命令列表">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/about/">
+  <link rel="canonical" href="https://matianxin.github.io/2019/07/11/OpenstackTerminal/">
 
 
 
 
 
-  <title>关于我 | 圣特伦特星</title>
+  <title>Openstack命令行 | 圣特伦特星</title>
   
 
 
@@ -277,35 +277,174 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/07/11/OpenstackTerminal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于我</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="马添鑫"><a href="#马添鑫" class="headerlink" title="马添鑫"></a>马添鑫</h3><p>80后<br>坐标：沈阳<br>技术方向：Openstack、 虚拟化、 Python<br>Email：<a href="mailto:trentmtx@163.com" target="_blank" rel="noopener">trentmtx@163.com</a></p>
-<p>声明：本站点发表的任何文章，仅代表我个人观点。</p>
-
+          <h1 class="post-title" itemprop="name headline">Openstack命令行</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T15:42:00+08:00">
+                2019-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Openstack可供参考的常用命令列表
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h3 id="Keystone"><a href="#Keystone" class="headerlink" title="Keystone"></a>Keystone</h3><h4 id="列出所有的用户"><a href="#列出所有的用户" class="headerlink" title="列出所有的用户"></a>列出所有的用户</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ openstack user list</span><br><span class="line"></span><br><span class="line">+----------------------------------+-----------+</span><br><span class="line">| ID                               | Name      |</span><br><span class="line">+----------------------------------+-----------+</span><br><span class="line">| <span class="number">2</span>ac5fe07105a43518ae444a37640222b | demo      |</span><br><span class="line">| <span class="number">5</span>bc73e84451b4e71906232bd3849422d | neutron   |</span><br><span class="line">| <span class="number">84</span>b0b75df69f4413a1380c9efc249b2d | placement |</span><br><span class="line">| <span class="number">87</span>bf7fb4671f4524a6fa64ad75856594 | admin     |</span><br><span class="line">| <span class="number">9</span>aaa5aa26b414d35b37b851ccf749a55 | nova      |</span><br><span class="line">| eee2818e703e47c5a434e5926c90e7fb | glance    |</span><br><span class="line">+----------------------------------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="列出认证服务目录"><a href="#列出认证服务目录" class="headerlink" title="列出认证服务目录"></a>列出认证服务目录</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">$ openstack catalog list</span><br><span class="line"></span><br><span class="line">+-----------+-----------+-----------------------------------------+</span><br><span class="line">| Name      | Type      | Endpoints                               |</span><br><span class="line">+-----------+-----------+-----------------------------------------+</span><br><span class="line">| placement | placement | RegionOne                               |</span><br><span class="line">|           |           |   internal: http://controller:<span class="number">8778</span>      |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   public: http://controller:<span class="number">8778</span>        |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http://controller:<span class="number">8778</span>         |</span><br><span class="line">|           |           |                                         |</span><br><span class="line">| keystone  | identity  | RegionOne                               |</span><br><span class="line">|           |           |   internal: http://controller:<span class="number">5000</span>/v3/  |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   public: http://controller:<span class="number">5000</span>/v3/    |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http://controller:<span class="number">5000</span>/v3/     |</span><br><span class="line">|           |           |                                         |</span><br><span class="line">| neutron   | network   | RegionOne                               |</span><br><span class="line">|           |           |   public: http://controller:<span class="number">9696</span>        |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http://controller:<span class="number">9696</span>         |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   internal: http://controller:<span class="number">9696</span>      |</span><br><span class="line">|           |           |                                         |</span><br><span class="line">| glance    | image     | RegionOne                               |</span><br><span class="line">|           |           |   admin: http://controller:<span class="number">9292</span>         |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   internal: http://controller:<span class="number">9292</span>      |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   public: http://controller:<span class="number">9292</span>        |</span><br><span class="line">|           |           |                                         |</span><br><span class="line">| nova      | compute   | RegionOne                               |</span><br><span class="line">|           |           |   internal: http://controller:<span class="number">8774</span>/v2<span class="number">.1</span> |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   admin: http://controller:<span class="number">8774</span>/v2<span class="number">.1</span>    |</span><br><span class="line">|           |           | RegionOne                               |</span><br><span class="line">|           |           |   public: http://controller:<span class="number">8774</span>/v2<span class="number">.1</span>   |</span><br><span class="line">|           |           |                                         |</span><br><span class="line">+-----------+-----------+-----------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>摘自：Openstack官方文档 <a href="https://docs.openstack.org/zh_CN/user-guide/cli-cheat-sheet.html" target="_blank" rel="noopener">https://docs.openstack.org/zh_CN/user-guide/cli-cheat-sheet.html</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/11/OpenstackNeutronQuotas/" rel="next" title="Openstack修改系统网络配额">
+                <i class="fa fa-chevron-left"></i> Openstack修改系统网络配额
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -448,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#马添鑫"><span class="nav-number">1.</span> <span class="nav-text">马添鑫</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keystone"><span class="nav-number">1.</span> <span class="nav-text">Keystone</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#列出所有的用户"><span class="nav-number">1.1.</span> <span class="nav-text">列出所有的用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列出认证服务目录"><span class="nav-number">1.2.</span> <span class="nav-text">列出认证服务目录</span></a></li></ol></li></ol></div>
             
 
           </div>
