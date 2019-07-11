@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="MySQL数据库区别于其他数据库的很重要的一个特点就是其插件式的表存储引擎，其基于表，而不是数据库。由于每个存储引擎都有其特点，因此我们可以针对每一张表来挑选最合适的存储引擎。今天介绍两种最常见的存储引擎和它们的区别：InnoDB和MyISAM。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-10T08:04:30.693Z">
+<meta property="og:updated_time" content="2019-07-10T08:05:26.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL中InnoDB和MyISAM的存储引擎区别">
 <meta name="twitter:description" content="MySQL数据库区别于其他数据库的很重要的一个特点就是其插件式的表存储引擎，其基于表，而不是数据库。由于每个存储引擎都有其特点，因此我们可以针对每一张表来挑选最合适的存储引擎。今天介绍两种最常见的存储引擎和它们的区别：InnoDB和MyISAM。">
@@ -410,7 +410,7 @@
 <p>当行锁发生死锁的时候，会计算每个事务影响的行数，然后回滚行数较少的事务。</p>
 <h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4><p>MyISAM崩溃后无法快速的安全恢复。InnoDB有一套完善的恢复机制。</p>
 <h4 id="数据缓存"><a href="#数据缓存" class="headerlink" title="数据缓存"></a>数据缓存</h4><p>MyISAM仅缓存索引数据，通过索引查询数据。InnoDB不仅缓存索引数据，同时缓存数据信息，将数据按页读取到缓存池，按LRU（Latest Rare Use 最近最少使用）算法来进行更新。</p>
-<p>####<br>如何选择存储引擎<br>创建表的语句都是相同的，只有最后的type来指定存储引擎。</p>
+<h4 id="如何选择存储引擎"><a href="#如何选择存储引擎" class="headerlink" title="如何选择存储引擎"></a>如何选择存储引擎</h4><p>创建表的语句都是相同的，只有最后的type来指定存储引擎。</p>
 <p>MyISAM<br>1.大量查询总count<br>2.查询频繁，插入不频繁<br>3.没有事务操作</p>
 <p>InnoDB<br>1.需要高可用性，或者需要事务<br>2.表更新频繁</p>
 <p>摘自：<a href="https://segmentfault.com/a/1190000019713794" target="_blank" rel="noopener">https://segmentfault.com/a/1190000019713794</a></p>
@@ -453,6 +453,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/11/OpenstackNeutronQuotas/" rel="prev" title="Openstack修改系统网络配额">
+                Openstack修改系统网络配额 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -531,7 +535,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -614,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB存储引擎："><span class="nav-number">1.</span> <span class="nav-text">InnoDB存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM存储引擎："><span class="nav-number">2.</span> <span class="nav-text">MyISAM存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB和MyISAM的区别"><span class="nav-number">3.</span> <span class="nav-text">InnoDB和MyISAM的区别:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务"><span class="nav-number">3.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主键"><span class="nav-number">3.2.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外键"><span class="nav-number">3.3.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">3.4.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表行数"><span class="nav-number">3.5.</span> <span class="nav-text">表行数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储"><span class="nav-number">3.6.</span> <span class="nav-text">存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行速度"><span class="nav-number">3.7.</span> <span class="nav-text">执行速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁"><span class="nav-number">3.8.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据恢复"><span class="nav-number">3.9.</span> <span class="nav-text">数据恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据缓存"><span class="nav-number">3.10.</span> <span class="nav-text">数据缓存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB存储引擎："><span class="nav-number">1.</span> <span class="nav-text">InnoDB存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM存储引擎："><span class="nav-number">2.</span> <span class="nav-text">MyISAM存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB和MyISAM的区别"><span class="nav-number">3.</span> <span class="nav-text">InnoDB和MyISAM的区别:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务"><span class="nav-number">3.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主键"><span class="nav-number">3.2.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外键"><span class="nav-number">3.3.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">3.4.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表行数"><span class="nav-number">3.5.</span> <span class="nav-text">表行数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储"><span class="nav-number">3.6.</span> <span class="nav-text">存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行速度"><span class="nav-number">3.7.</span> <span class="nav-text">执行速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁"><span class="nav-number">3.8.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据恢复"><span class="nav-number">3.9.</span> <span class="nav-text">数据恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据缓存"><span class="nav-number">3.10.</span> <span class="nav-text">数据缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何选择存储引擎"><span class="nav-number">3.11.</span> <span class="nav-text">如何选择存储引擎</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -630,7 +634,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>
