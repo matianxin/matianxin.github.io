@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="openstack,">
+  <meta name="keywords" content="Matx, NexT">
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
-<meta name="keywords" content="openstack">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Openstack Queens 环境搭建（一）环境准备">
-<meta property="og:url" content="https://matianxin.github.io/2019/03/19/OpenstackQueens1/index.html">
+<meta name="description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta name="keywords" content="Matx">
+<meta property="og:type" content="website">
+<meta property="og:title" content="圣特伦特星">
+<meta property="og:url" content="https://matianxin.github.io/tags/linux/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-23T08:21:15.295Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Openstack Queens 环境搭建（一）环境准备">
-<meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta name="twitter:title" content="圣特伦特星">
+<meta name="twitter:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/2019/03/19/OpenstackQueens1/">
+  <link rel="canonical" href="https://matianxin.github.io/tags/linux/">
 
 
 
 
 
-  <title>Openstack Queens 环境搭建（一）环境准备 | 圣特伦特星</title>
+  <title>标签: linux | 圣特伦特星</title>
   
 
 
@@ -145,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 	
 	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
@@ -275,217 +274,52 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>linux<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/03/19/OpenstackQueens1/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="圣特伦特星">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/matx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="圣特伦特星">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2019/07/12/top/" itemprop="url">
+              
+                <span itemprop="name">Linux top 命令详解</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">Openstack Queens 环境搭建（一）环境准备</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T16:20:00+08:00">
-                2019-03-19
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-07-12T10:18:08+08:00" content="2019-07-12">
+          07-12
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Openstack/" itemprop="url" rel="index">
-                    <span itemprop="name">Openstack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-              <div class="post-description">
-                  OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。
-              </div>
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>环境准备：<br>基于CentOS Linux release 7.6.1810 (Core)</p>
-<p>控制节点（Controller）：<br>eth0：192.100.10.160/24<br>eth1：10.0.0.11/24<br>eth2：预留</p>
-<p>计算节点（Compute):<br>eth0：192.100.10.161/24<br>eth1：10.0.0.12/24<br>eth2：预留</p>
-<p>网卡0接口为管理网络 -&gt; 交换机 + 路由器<br>网卡1接口为Overlay网络 -&gt; 目前直连 / 交换机连接<br>网卡2接口为外部网络 -&gt; 路由器<br> -（可以先使用eth1作为外部网络下载Openstack安装所需资源，后修改）</p>
-<p>通用密码： 123456</p>
-<h3 id="Controller节点："><a href="#Controller节点：" class="headerlink" title="Controller节点："></a>Controller节点：</h3><p>配置网卡信息：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/sysconfig/network-scripts/ifcfg-eth0</span></span><br><span class="line">BOOTPROTO=<span class="keyword">static</span></span><br><span class="line">IPADDR=<span class="number">192.100</span><span class="number">.10</span><span class="number">.160</span></span><br><span class="line">NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">GATEWAY=<span class="number">192.100</span><span class="number">.10</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/sysconfig/network-scripts/ifcfg-eth1</span></span><br><span class="line">BOOTPROTO=<span class="keyword">static</span></span><br><span class="line">IPADDR=<span class="number">10.0</span><span class="number">.0</span><span class="number">.11</span></span><br><span class="line">NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
-
-<p>配置主机信息：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/hosts</span></span><br><span class="line"><span class="comment"># controller</span></span><br><span class="line"><span class="number">192.100</span><span class="number">.10</span><span class="number">.160</span>     controller</span><br><span class="line"><span class="comment"># compute</span></span><br><span class="line"><span class="number">192.100</span><span class="number">.10</span><span class="number">.161</span>     compute</span><br></pre></td></tr></table></figure>
-
-<p>配置主机名：<br>控制节点的主机名为controller，设置如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="comment"># hostnamectl set-hostname controller</span></span><br></pre></td></tr></table></figure>
-
-<p>对主机名进行验证：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="comment"># hostname</span></span><br></pre></td></tr></table></figure>
-
-<p>看到输出为controller即可</p>
-<p>配置DNS：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/resolv.conf</span></span><br><span class="line">nameserver <span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Compute节点："><a href="#Compute节点：" class="headerlink" title="Compute节点："></a>Compute节点：</h3><p>配置管理网络：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/sysconfig/network-scripts/ifcfg-eth0</span></span><br><span class="line">BOOTPROTO=<span class="keyword">static</span></span><br><span class="line">IPADDR=<span class="number">192.100</span><span class="number">.10</span><span class="number">.161</span></span><br><span class="line">NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">GATEWAY=<span class="number">192.100</span><span class="number">.10</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/sysconfig/network-scripts/ifcfg-eth1</span></span><br><span class="line">BOOTPROTO=<span class="keyword">static</span></span><br><span class="line">IPADDR=<span class="number">10.0</span><span class="number">.0</span><span class="number">.21</span></span><br><span class="line">NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
-
-<p>配置主机信息：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/hosts</span></span><br><span class="line"><span class="comment"># controller</span></span><br><span class="line"><span class="number">192.100</span><span class="number">.10</span><span class="number">.160</span>     controller</span><br><span class="line"><span class="comment"># compute</span></span><br><span class="line"><span class="number">192.100</span><span class="number">.10</span><span class="number">.161</span>     compute</span><br></pre></td></tr></table></figure>
-
-<p>配置主机名：<br>计算节点的主机名为compute，设置如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="comment"># hostnamectl set-hostname compute</span></span><br></pre></td></tr></table></figure>
-
-<p>对主机名进行验证：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="comment"># hostname</span></span><br></pre></td></tr></table></figure>
-
-<p>看到输出为compute即可</p>
-<p>配置DNS：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/resolv.conf</span></span><br><span class="line">nameserver <span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/03/10/KDPA RestAPI/" rel="next" title="KDPA RestAPI">
-                <i class="fa fa-chevron-left"></i> KDPA RestAPI
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/19/OpenstackQueens2/" rel="prev" title="Openstack Queens 环境搭建（二）环境相关服务">
-                Openstack Queens 环境搭建（二）环境相关服务 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -493,10 +327,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -517,17 +347,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -617,22 +438,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller节点："><span class="nav-number">1.</span> <span class="nav-text">Controller节点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute节点："><span class="nav-number">2.</span> <span class="nav-text">Compute节点：</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -780,10 +585,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
