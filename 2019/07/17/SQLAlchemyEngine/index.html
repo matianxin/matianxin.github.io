@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Matx, NexT">
+  <meta name="keywords" content="sqlalchemy,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
-<meta name="keywords" content="Matx">
-<meta property="og:type" content="website">
-<meta property="og:title" content="圣特伦特星">
-<meta property="og:url" content="https://matianxin.github.io/tags/tool/index.html">
+<meta name="description" content="Engine 翻译过来就是引擎的意思，汽车通过引擎来驱动，而 SQLAlchemy 是通过 Engine 来驱动，Engine 维护了一个连接池（Pool）对象和方言（Dialect）。方言简单而言就是你连的到底是 MySQL 还是 Oracle 或者 PostgreSQL 还是其它数据库。">
+<meta name="keywords" content="sqlalchemy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLAlchemy 中的 Engine 是什么">
+<meta property="og:url" content="https://matianxin.github.io/2019/07/17/SQLAlchemyEngine/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta property="og:description" content="Engine 翻译过来就是引擎的意思，汽车通过引擎来驱动，而 SQLAlchemy 是通过 Engine 来驱动，Engine 维护了一个连接池（Pool）对象和方言（Dialect）。方言简单而言就是你连的到底是 MySQL 还是 Oracle 或者 PostgreSQL 还是其它数据库。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-17T02:01:15.142Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="圣特伦特星">
-<meta name="twitter:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta name="twitter:title" content="SQLAlchemy 中的 Engine 是什么">
+<meta name="twitter:description" content="Engine 翻译过来就是引擎的意思，汽车通过引擎来驱动，而 SQLAlchemy 是通过 Engine 来驱动，Engine 维护了一个连接池（Pool）对象和方言（Dialect）。方言简单而言就是你连的到底是 MySQL 还是 Oracle 或者 PostgreSQL 还是其它数据库。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/tags/tool/">
+  <link rel="canonical" href="https://matianxin.github.io/2019/07/17/SQLAlchemyEngine/">
 
 
 
 
 
-  <title>标签: tool | 圣特伦特星</title>
+  <title>SQLAlchemy 中的 Engine 是什么 | 圣特伦特星</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	
 	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
@@ -274,52 +275,197 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>tool<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/07/17/SQLAlchemyEngine/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/06/28/ab/" itemprop="url">
-              
-                <span itemprop="name">压力测试工具ab使用方法</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">SQLAlchemy 中的 Engine 是什么</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-28T11:00:00+08:00" content="2019-06-28">
-          06-28
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-17T09:56:17+08:00">
+                2019-07-17
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQLAlchemy/" itemprop="url" rel="index">
+                    <span itemprop="name">SQLAlchemy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Engine 翻译过来就是引擎的意思，汽车通过引擎来驱动，而 SQLAlchemy 是通过 Engine 来驱动，Engine 维护了一个连接池（Pool）对象和方言（Dialect）。方言简单而言就是你连的到底是 MySQL 还是 Oracle 或者 PostgreSQL 还是其它数据库。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>连接池很重要，因为每次发送sql查询的时候都需要先建立连接，如果程序启动的时候事先就初始化一批连接放在连接池，每次用完后又放回连接池给其它请求使用，就能大大提高查询的效率。</p>
+<h4 id="Engine-初始化"><a href="#Engine-初始化" class="headerlink" title="Engine 初始化"></a>Engine 初始化</h4><p>Engine 的初始化非常简单，通过工厂函数 create_engine 就可以创建。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"></span><br><span class="line">engine = create_engine(<span class="string">'mysql://user:password@localhost:3306/test?charset=utf8'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>构建好 Engine 对象的同时，连接池和Dialect也创建好了，但是这时候并不会立马与数据库建立真正的连接，只有你调用 Engine.connect() 或者 Engine.execute(sql) 执行SQL请求的时候，才会建立真正的连接。<br>因此 Engine 和 Pool 的行为称之为延迟初始化，等真正要派上用场的时候才去建立连接。</p>
+<p>需要注意的是，创建引擎时，如果数据库的密码含有特殊字符，需要先编码处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> urllib.parse</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>urllib.parse.quote_plus(<span class="string">"kx%jj5/g"</span>)</span><br><span class="line"><span class="string">'kx%25jj5%2Fg'</span></span><br></pre></td></tr></table></figure>
+
+<p>其它数据库方言初始化 engine 的方式可参考官方文档：</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls" target="_blank" rel="noopener">https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls</a></li>
+</ul>
+<p>create_engine 还有很多可选参数，这里介绍几个重要的参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">engine = create_engine(<span class="string">'mysql://user:password@localhost:3306/test?charset=utf8'</span>,</span><br><span class="line">                       echo=<span class="literal">False</span></span><br><span class="line">                       pool_size=<span class="number">100</span>,</span><br><span class="line">                       pool_recycle=<span class="number">3600</span>,</span><br><span class="line">                       pool_pre_ping=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>echo</strong> ：为 True 时候会把sql语句打印出来，当然，你可以通过配置logger来控制输出，这里不做讨论。</p>
+<p><strong>pool_size</strong>： 是连接池的大小，默认为5个，0表示连接数无限制</p>
+<p><strong>pool_recycle</strong>： MySQL 默认情况下如果一个连接8小时内容没有任何动作（查询请求）就会自动断开链接，出现 MySQL has gone away的错误。设置了 pool_recycle 后 SQLAlchemy 就会在指定时间内回收连接。如果设置为3600 就表示 1小时后该连接会被自动回收。</p>
+<p><strong>pool_pre_ping</strong> ： 这是1.2新增的参数，如果值为True，那么每次从连接池中拿连接的时候，都会向数据库发送一个类似 select 1 的测试查询语句来判断服务器是否正常运行。当该连接出现 disconnect 的情况时，该连接连同pool中的其它连接都会被回收。</p>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls" target="_blank" rel="noopener">https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls</a></li>
+<li><a href="https://stackoverflow.com/questions/34322471/sqlalchemy-engine-connection-and-session-difference" target="_blank" rel="noopener">https://stackoverflow.com/questions/34322471/sqlalchemy-engine-connection-and-session-difference</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/13/core/pooling.html#dealing-with-disconnects" target="_blank" rel="noopener">https://docs.sqlalchemy.org/en/13/core/pooling.html#dealing-with-disconnects</a></li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sqlalchemy/" rel="tag"><i class="fa fa-tag"></i> sqlalchemy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/12/top/" rel="next" title="Linux top 命令详解">
+                <i class="fa fa-chevron-left"></i> Linux top 命令详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -327,6 +473,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -347,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -438,6 +597,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Engine-初始化"><span class="nav-number">1.</span> <span class="nav-text">Engine 初始化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -585,6 +760,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
