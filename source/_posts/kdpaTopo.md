@@ -77,7 +77,7 @@ date: 2019/6/25 9:30:00
 
 - PC_5 -> 进入系统 -> 右键 -> Terminal -> 以管理员身份运行 -> 进入目录 -> D:\software\隔离传输软件\正向\receive
 
-- 以jar包方式运行 java -jar StoneWall-send.jar
+- 以jar包方式运行 java -jar StoneWall-recv.jar
 
 #### ⑲配置及启动正向隔离内网发送端工具。
 
