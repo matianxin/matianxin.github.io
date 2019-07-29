@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Matx, NexT">
+  <meta name="keywords" content="openstack,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
-<meta name="keywords" content="Matx">
-<meta property="og:type" content="website">
-<meta property="og:title" content="圣特伦特星">
-<meta property="og:url" content="https://matianxin.github.io/tags/mysql/index.html">
+<meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack Queens Horizon（八）计算节点实例首次孵化优化">
+<meta property="og:url" content="https://matianxin.github.io/2019/07/29/OpenstackQueens8/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-29T01:39:18.105Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="圣特伦特星">
-<meta name="twitter:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta name="twitter:title" content="Openstack Queens Horizon（八）计算节点实例首次孵化优化">
+<meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/tags/mysql/">
+  <link rel="canonical" href="https://matianxin.github.io/2019/07/29/OpenstackQueens8/">
 
 
 
 
 
-  <title>标签: mysql | 圣特伦特星</title>
+  <title>Openstack Queens Horizon（八）计算节点实例首次孵化优化 | 圣特伦特星</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	
 	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
@@ -274,78 +275,193 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>mysql<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/07/29/OpenstackQueens8/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/07/10/MysqlEngine/" itemprop="url">
-              
-                <span itemprop="name">MySQL中InnoDB和MyISAM的存储引擎区别</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Openstack Queens Horizon（八）计算节点实例首次孵化优化</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-10T15:58:00+08:00" content="2019-07-10">
-          07-10
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-29T09:32:00+08:00">
+                2019-07-29
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h3 id="Controller节点："><a href="#Controller节点：" class="headerlink" title="Controller节点："></a>Controller节点：</h3><h4 id="创建镜像缓存目录，并调整权限"><a href="#创建镜像缓存目录，并调整权限" class="headerlink" title="创建镜像缓存目录，并调整权限"></a>创建镜像缓存目录，并调整权限</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir -p /var/lib/glance/imagecache</span></span><br><span class="line"><span class="comment"># chmod -R 777 /var/lib/glance/images</span></span><br><span class="line"><span class="comment"># chmod -R 777 /var/lib/glance/imagecache</span></span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/01/TooManyConnections/" itemprop="url">
-              
-                <span itemprop="name">Mysql 1040 Too many connections 错误与解决办法</span>
-              
-            </a>
-        
-      </h2>
+<h4 id="配置共享文件夹，将与控制节点管理网卡同网段的CIDR配置入文件，并赋读写权限"><a href="#配置共享文件夹，将与控制节点管理网卡同网段的CIDR配置入文件，并赋读写权限" class="headerlink" title="配置共享文件夹，将与控制节点管理网卡同网段的CIDR配置入文件，并赋读写权限"></a>配置共享文件夹，将与控制节点管理网卡同网段的CIDR配置入文件，并赋读写权限</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/exports</span></span><br><span class="line"></span><br><span class="line">/<span class="keyword">var</span>/lib/glance/imagecache <span class="number">192.100</span><span class="number">.10</span><span class="number">.0</span>/<span class="number">24</span>(rw)</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-01T10:40:00+08:00" content="2019-07-01">
-          07-01
-        </time>
-      </div>
+<h4 id="加载刚才的配置文件"><a href="#加载刚才的配置文件" class="headerlink" title="加载刚才的配置文件"></a>加载刚才的配置文件</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># exportfs -e</span></span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+<h4 id="注意控制节点的iptables，要放开111（rpc）、2049-nfs-和892-nfs挂载-端口，一般在OpenStack中这几个端口都是默认放开的。"><a href="#注意控制节点的iptables，要放开111（rpc）、2049-nfs-和892-nfs挂载-端口，一般在OpenStack中这几个端口都是默认放开的。" class="headerlink" title="注意控制节点的iptables，要放开111（rpc）、2049(nfs)和892(nfs挂载)端口，一般在OpenStack中这几个端口都是默认放开的。"></a>注意控制节点的iptables，要放开111（rpc）、2049(nfs)和892(nfs挂载)端口，一般在OpenStack中这几个端口都是默认放开的。</h4><h4 id="设置nfs服务开机启动，并启动nfs"><a href="#设置nfs服务开机启动，并启动nfs" class="headerlink" title="设置nfs服务开机启动，并启动nfs"></a>设置nfs服务开机启动，并启动nfs</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl enable rpcbind</span></span><br><span class="line"><span class="comment"># systemctl enable nfs</span></span><br><span class="line"><span class="comment"># systemctl restart rpcbind</span></span><br><span class="line"><span class="comment"># systemctl restart nfs</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="确认本地共享目录是否正确（showmount-e）"><a href="#确认本地共享目录是否正确（showmount-e）" class="headerlink" title="确认本地共享目录是否正确（showmount -e）"></a>确认本地共享目录是否正确（showmount -e）</h4><h3 id="计算节点"><a href="#计算节点" class="headerlink" title="计算节点"></a>计算节点</h3><h4 id="计算节点配置nfs挂载以及系统开机自动挂载有脚本实现"><a href="#计算节点配置nfs挂载以及系统开机自动挂载有脚本实现" class="headerlink" title="计算节点配置nfs挂载以及系统开机自动挂载有脚本实现"></a>计算节点配置nfs挂载以及系统开机自动挂载有脚本实现</h4><h4 id="在计算节点创建文件夹，并将项目源码中的脚本拷贝上去"><a href="#在计算节点创建文件夹，并将项目源码中的脚本拷贝上去" class="headerlink" title="在计算节点创建文件夹，并将项目源码中的脚本拷贝上去"></a>在计算节点创建文件夹，并将项目源码中的脚本拷贝上去</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir -p /var/www/kdpa/bin</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="将项目源码中-kdpa-bin-目录下的sed-rclocal-sh、mount-nfs-sh脚本拷贝到计算节点新创建的目录下"><a href="#将项目源码中-kdpa-bin-目录下的sed-rclocal-sh、mount-nfs-sh脚本拷贝到计算节点新创建的目录下" class="headerlink" title="将项目源码中/kdpa/bin/目录下的sed_rclocal.sh、mount_nfs.sh脚本拷贝到计算节点新创建的目录下"></a>将项目源码中/kdpa/bin/目录下的sed_rclocal.sh、mount_nfs.sh脚本拷贝到计算节点新创建的目录下</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sed_rclocal.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">rc_local_file=<span class="string">"/etc/rc.d/rc.local"</span></span><br><span class="line">chmod 755 <span class="variable">$&#123;rc_local_file&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># add mount nfs shell in rc.local</span></span><br><span class="line">mount_nfs_sh=<span class="string">"/var/www/kdpa/bin/mount_nfs.sh"</span></span><br><span class="line">chmod 755 <span class="variable">$&#123;mount_nfs_sh&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"/usr/bin/sh <span class="variable">$&#123;mount_nfs_sh&#125;</span>"</span>&gt;&gt;<span class="variable">$&#123;rc_local_file&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># add ovs set-manager shell in rc.local</span></span><br><span class="line">ovs_set_manager_sh=<span class="string">"/var/www/kdpa/bin/ovs_set_manager.sh"</span></span><br><span class="line">chmod 755 <span class="variable">$&#123;ovs_set_manager_sh&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"/usr/bin/sh <span class="variable">$&#123;ovs_set_manager_sh&#125;</span>"</span>&gt;&gt;<span class="variable">$&#123;rc_local_file&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mount_nfs.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">nfs_service_image_cache_path=<span class="string">"/var/lib/glance/imagecache"</span></span><br><span class="line">local_image_cache_path=<span class="string">"/var/lib/nova/instances/_base"</span></span><br><span class="line">controller_host=$(cat /etc/hosts | grep controller | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line"></span><br><span class="line">mkdir -p <span class="variable">$&#123;local_image_cache_path&#125;</span></span><br><span class="line">chmod -R 777 <span class="variable">$&#123;local_image_cache_path&#125;</span></span><br><span class="line"></span><br><span class="line">mount -t nfs4 <span class="variable">$&#123;controller_host&#125;</span>:<span class="variable">$&#123;nfs_service_image_cache_path&#125;</span>  <span class="variable">$&#123;local_image_cache_path&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="执行脚本mount-nfs-sh挂载控制节点nfs共享目录"><a href="#执行脚本mount-nfs-sh挂载控制节点nfs共享目录" class="headerlink" title="执行脚本mount_nfs.sh挂载控制节点nfs共享目录"></a>执行脚本mount_nfs.sh挂载控制节点nfs共享目录</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sh /var/www/kdpa/bin/mount_nfs.sh</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="验证挂载是否成功"><a href="#验证挂载是否成功" class="headerlink" title="验证挂载是否成功"></a>验证挂载是否成功</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mount -l | grep 服务端IP</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="执行脚本sed-rclocal-sh调整系统开机启动脚本"><a href="#执行脚本sed-rclocal-sh调整系统开机启动脚本" class="headerlink" title="执行脚本sed_rclocal.sh调整系统开机启动脚本"></a>执行脚本sed_rclocal.sh调整系统开机启动脚本</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sh /var/www/kdpa/bin/sed_rclocal.sh</span></span><br></pre></td></tr></table></figure>
+
+<p>最终查看/etc/rc.d/rc.local文件是否添加成功</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/17/SQLAlchemyEngine/" rel="next" title="SQLAlchemy 中的 Engine 是什么">
+                <i class="fa fa-chevron-left"></i> SQLAlchemy 中的 Engine 是什么
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -353,6 +469,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -373,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -464,6 +593,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller节点："><span class="nav-number">1.</span> <span class="nav-text">Controller节点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建镜像缓存目录，并调整权限"><span class="nav-number">1.1.</span> <span class="nav-text">创建镜像缓存目录，并调整权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置共享文件夹，将与控制节点管理网卡同网段的CIDR配置入文件，并赋读写权限"><span class="nav-number">1.2.</span> <span class="nav-text">配置共享文件夹，将与控制节点管理网卡同网段的CIDR配置入文件，并赋读写权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加载刚才的配置文件"><span class="nav-number">1.3.</span> <span class="nav-text">加载刚才的配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意控制节点的iptables，要放开111（rpc）、2049-nfs-和892-nfs挂载-端口，一般在OpenStack中这几个端口都是默认放开的。"><span class="nav-number">1.4.</span> <span class="nav-text">注意控制节点的iptables，要放开111（rpc）、2049(nfs)和892(nfs挂载)端口，一般在OpenStack中这几个端口都是默认放开的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置nfs服务开机启动，并启动nfs"><span class="nav-number">1.5.</span> <span class="nav-text">设置nfs服务开机启动，并启动nfs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#确认本地共享目录是否正确（showmount-e）"><span class="nav-number">1.6.</span> <span class="nav-text">确认本地共享目录是否正确（showmount -e）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算节点"><span class="nav-number">2.</span> <span class="nav-text">计算节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#计算节点配置nfs挂载以及系统开机自动挂载有脚本实现"><span class="nav-number">2.1.</span> <span class="nav-text">计算节点配置nfs挂载以及系统开机自动挂载有脚本实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在计算节点创建文件夹，并将项目源码中的脚本拷贝上去"><span class="nav-number">2.2.</span> <span class="nav-text">在计算节点创建文件夹，并将项目源码中的脚本拷贝上去</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将项目源码中-kdpa-bin-目录下的sed-rclocal-sh、mount-nfs-sh脚本拷贝到计算节点新创建的目录下"><span class="nav-number">2.3.</span> <span class="nav-text">将项目源码中/kdpa/bin/目录下的sed_rclocal.sh、mount_nfs.sh脚本拷贝到计算节点新创建的目录下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行脚本mount-nfs-sh挂载控制节点nfs共享目录"><span class="nav-number">2.4.</span> <span class="nav-text">执行脚本mount_nfs.sh挂载控制节点nfs共享目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证挂载是否成功"><span class="nav-number">2.5.</span> <span class="nav-text">验证挂载是否成功</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行脚本sed-rclocal-sh调整系统开机启动脚本"><span class="nav-number">2.6.</span> <span class="nav-text">执行脚本sed_rclocal.sh调整系统开机启动脚本</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -611,6 +756,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
