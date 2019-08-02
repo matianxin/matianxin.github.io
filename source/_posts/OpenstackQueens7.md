@@ -1,5 +1,5 @@
 ﻿---
-title: Openstack Queens Horizon（七）Horizon服务
+title: Openstack Queens 环境搭建（七）Horizon服务
 tags: [openstack]
 categories: Openstack
 description: OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。

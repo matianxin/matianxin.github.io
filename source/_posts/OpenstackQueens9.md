@@ -1,5 +1,5 @@
 ﻿---
-title: Openstack Queens Horizon（九）Cinder服务
+title: Openstack Queens 环境搭建（九）Cinder服务
 tags: [openstack]
 categories: Openstack
 description: OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。
@@ -9,15 +9,15 @@ date: 2019/8/1 16:20:00
 #### 存储服务概念
 OpenStack块存储服务(Cinder)将持久性存储添加到一个虚拟机。块存储提供了管理卷的基础设施，并与OpenStack计算交互，为实例提供卷。该服务还支持卷快照和卷类型的管理。
 块存储服务由以下组件组成:
-cinder-api
+**cinder-api**
 接收API请求，并将其路由到cinders -volume以进行操作。
-cinder-volume
+**cinder-volume**
 直接与块存储服务和进程(如cinders -scheduler)交互。它还可以通过消息队列与这些进程进行交互。cinders -volume服务响应发送到块存储服务的读写请求，以维护状态。它可以通过驱动程序体系结构与各种存储提供者交互。
-cinder-scheduler daemon
+**cinder-scheduler daemon**
 选择要在其上创建卷的最佳存储提供程序节点。与nova-scheduler类似的组件。
-cinder-backup daemon
+**cinder-backup daemon**
 Cinder-backup服务向备份存储提供程序提供任何类型的备份卷。与cinders -volume服务一样，它可以通过驱动程序体系结构与各种存储提供者交互。
-Messaging queue
+**Messaging queue**
 在块存储进程之间路由信息。
 
 ### Controller节点：
@@ -167,8 +167,11 @@ os_regioon_name = RegionOne
 只有实例可以访问块存储卷。然而，底层操作系统管理与卷相关联的设备。默认情况下，LVM卷扫描工具扫描/dev目录中包含卷的块存储设备。如果项目在其卷上使用LVM，那么扫描工具将检测这些卷并试图缓存它们，这会导致底层操作系统和项目卷出现各种问题。必须重新配置LVM，以便只扫描包含cinder-volume卷组的设备。
 
 #### 编辑 /etc/lvm/lvm.conf文件
+
 在devices选项，添加一个接受/dev/sdb设备并拒绝所有其他设备的过滤器:
-注：filter数组中的每个项都以for accept或r for reject开头，并包含一个用于设备名称的正则表达式。数组必须以r/结束。*/拒绝任何剩余设备。您可以使用vgs -vvvv命令来测试过滤器。
+注：filter数组中的每个项都以for accept或r for reject开头，并包含一个用于设备名称的正则表达式。数组必须以r/结束。
+*/ 拒绝任何剩余设备。您可以使用vgs -vvvv命令来测试过滤器。
+
 
 ```php
 devices {
@@ -176,6 +179,7 @@ devices {
 filter = [ "a/sdb/", "r/.*/"]
 ...}
 ```
+
 #### 安装配置组件
 ```php
 # yum install -y openstack-cinder targetcli python-keystone
