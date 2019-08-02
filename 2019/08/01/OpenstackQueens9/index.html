@@ -82,14 +82,14 @@
 <meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Openstack Queens Horizon（九）Cinder服务">
+<meta property="og:title" content="Openstack Queens 环境搭建（九）Cinder服务">
 <meta property="og:url" content="https://matianxin.github.io/2019/08/01/OpenstackQueens9/index.html">
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-01T08:42:51.991Z">
+<meta property="og:updated_time" content="2019-08-02T06:17:04.871Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Openstack Queens Horizon（九）Cinder服务">
+<meta name="twitter:title" content="Openstack Queens 环境搭建（九）Cinder服务">
 <meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>Openstack Queens Horizon（九）Cinder服务 | 圣特伦特星</title>
+  <title>Openstack Queens 环境搭建（九）Cinder服务 | 圣特伦特星</title>
   
 
 
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Openstack Queens Horizon（九）Cinder服务</h1>
+          <h1 class="post-title" itemprop="name headline">Openstack Queens 环境搭建（九）Cinder服务</h1>
         
 
         <div class="post-meta">
@@ -382,7 +382,7 @@
       
 
       
-        <h4 id="存储服务概念"><a href="#存储服务概念" class="headerlink" title="存储服务概念"></a>存储服务概念</h4><p>OpenStack块存储服务(Cinder)将持久性存储添加到一个虚拟机。块存储提供了管理卷的基础设施，并与OpenStack计算交互，为实例提供卷。该服务还支持卷快照和卷类型的管理。<br>块存储服务由以下组件组成:<br>cinder-api<br>接收API请求，并将其路由到cinders -volume以进行操作。<br>cinder-volume<br>直接与块存储服务和进程(如cinders -scheduler)交互。它还可以通过消息队列与这些进程进行交互。cinders -volume服务响应发送到块存储服务的读写请求，以维护状态。它可以通过驱动程序体系结构与各种存储提供者交互。<br>cinder-scheduler daemon<br>选择要在其上创建卷的最佳存储提供程序节点。与nova-scheduler类似的组件。<br>cinder-backup daemon<br>Cinder-backup服务向备份存储提供程序提供任何类型的备份卷。与cinders -volume服务一样，它可以通过驱动程序体系结构与各种存储提供者交互。<br>Messaging queue<br>在块存储进程之间路由信息。</p>
+        <h4 id="存储服务概念"><a href="#存储服务概念" class="headerlink" title="存储服务概念"></a>存储服务概念</h4><p>OpenStack块存储服务(Cinder)将持久性存储添加到一个虚拟机。块存储提供了管理卷的基础设施，并与OpenStack计算交互，为实例提供卷。该服务还支持卷快照和卷类型的管理。<br>块存储服务由以下组件组成:<br><strong>cinder-api</strong><br>接收API请求，并将其路由到cinders -volume以进行操作。<br><strong>cinder-volume</strong><br>直接与块存储服务和进程(如cinders -scheduler)交互。它还可以通过消息队列与这些进程进行交互。cinders -volume服务响应发送到块存储服务的读写请求，以维护状态。它可以通过驱动程序体系结构与各种存储提供者交互。<br><strong>cinder-scheduler daemon</strong><br>选择要在其上创建卷的最佳存储提供程序节点。与nova-scheduler类似的组件。<br><strong>cinder-backup daemon</strong><br>Cinder-backup服务向备份存储提供程序提供任何类型的备份卷。与cinders -volume服务一样，它可以通过驱动程序体系结构与各种存储提供者交互。<br><strong>Messaging queue</strong><br>在块存储进程之间路由信息。</p>
 <h3 id="Controller节点："><a href="#Controller节点：" class="headerlink" title="Controller节点："></a>Controller节点：</h3><h4 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h4><p>在安装和配置块存储服务之前，必须创建数据库、服务凭据和API端点。</p>
 <h4 id="创建数据库，为cinder数据库授权"><a href="#创建数据库，为cinder数据库授权" class="headerlink" title="创建数据库，为cinder数据库授权"></a>创建数据库，为cinder数据库授权</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql -uroot -p123456</span></span><br><span class="line">MariaDB [(none)]&gt; create database cinder;</span><br><span class="line">MariaDB [(none)]&gt; grant all privileges on cinder.* to <span class="string">'cinder'</span>@<span class="string">'localhost'</span> identified by <span class="string">'123456'</span>;</span><br><span class="line">MariaDB [(none)]&gt; grant all privileges on cinder.* to <span class="string">'cinder'</span>@<span class="string">'%'</span> identified by <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure>
 
@@ -443,7 +443,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vgcreate cinder-volumes /dev/sdb</span></span><br><span class="line">  Volume group <span class="string">"cinder-volumes"</span> successfully created</span><br></pre></td></tr></table></figure>
 
 <p>只有实例可以访问块存储卷。然而，底层操作系统管理与卷相关联的设备。默认情况下，LVM卷扫描工具扫描/dev目录中包含卷的块存储设备。如果项目在其卷上使用LVM，那么扫描工具将检测这些卷并试图缓存它们，这会导致底层操作系统和项目卷出现各种问题。必须重新配置LVM，以便只扫描包含cinder-volume卷组的设备。</p>
-<h4 id="编辑-etc-lvm-lvm-conf文件"><a href="#编辑-etc-lvm-lvm-conf文件" class="headerlink" title="编辑 /etc/lvm/lvm.conf文件"></a>编辑 /etc/lvm/lvm.conf文件</h4><p>在devices选项，添加一个接受/dev/sdb设备并拒绝所有其他设备的过滤器:<br>注：filter数组中的每个项都以for accept或r for reject开头，并包含一个用于设备名称的正则表达式。数组必须以r/结束。*/拒绝任何剩余设备。您可以使用vgs -vvvv命令来测试过滤器。</p>
+<h4 id="编辑-etc-lvm-lvm-conf文件"><a href="#编辑-etc-lvm-lvm-conf文件" class="headerlink" title="编辑 /etc/lvm/lvm.conf文件"></a>编辑 /etc/lvm/lvm.conf文件</h4><p>在devices选项，添加一个接受/dev/sdb设备并拒绝所有其他设备的过滤器:<br>注：filter数组中的每个项都以for accept或r for reject开头，并包含一个用于设备名称的正则表达式。数组必须以r/结束。<br>*/ 拒绝任何剩余设备。您可以使用vgs -vvvv命令来测试过滤器。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">devices &#123;</span><br><span class="line">...</span><br><span class="line">filter = [ <span class="string">"a/sdb/"</span>, <span class="string">"r/.*/"</span>]</span><br><span class="line">...&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="安装配置组件-1"><a href="#安装配置组件-1" class="headerlink" title="安装配置组件"></a>安装配置组件</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install -y openstack-cinder targetcli python-keystone</span></span><br></pre></td></tr></table></figure>
@@ -519,8 +519,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/29/OpenstackQueens8/" rel="next" title="Openstack Queens Horizon（八）计算节点实例首次孵化优化">
-                <i class="fa fa-chevron-left"></i> Openstack Queens Horizon（八）计算节点实例首次孵化优化
+              <a href="/2019/07/29/OpenstackQueens8/" rel="next" title="Openstack Queens 环境搭建（八）计算节点实例首次孵化优化">
+                <i class="fa fa-chevron-left"></i> Openstack Queens 环境搭建（八）计算节点实例首次孵化优化
               </a>
             
           </div>
@@ -528,6 +528,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/02/OpenstackQueens10/" rel="prev" title="Openstack Queens 环境搭建（十）Ceilometer + Gnocchi">
+                Openstack Queens 环境搭建（十）Ceilometer + Gnocchi <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -606,7 +610,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -705,7 +709,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>
