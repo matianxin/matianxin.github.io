@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-02T07:30:54.900Z">
+<meta property="og:updated_time" content="2019-08-02T07:38:59.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Openstack Queens 环境搭建（十）Ceilometer + Gnocchi">
 <meta name="twitter:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
@@ -601,6 +601,7 @@
 <td></td>
 </tr>
 </tbody></table>
+<p>参考：<a href="https://docs.openstack.org/ceilometer/latest/admin/telemetry-measurements.html" target="_blank" rel="noopener">https://docs.openstack.org/ceilometer/latest/admin/telemetry-measurements.html</a></p>
 <h3 id="详细监控方法介绍"><a href="#详细监控方法介绍" class="headerlink" title="详细监控方法介绍"></a>详细监控方法介绍</h3><h4 id="采集信息查询方法"><a href="#采集信息查询方法" class="headerlink" title="采集信息查询方法"></a>采集信息查询方法</h4><p>此方案中采集信息以gnocchi+文件方式存储。获取采集信息有两种方式，分别为 gnocchi-api和gnocchi 命令。以下采用gnocchi命令做详细介绍：<br>注：数据存储分级：(资源项)resource-&gt;(资源指标条目)metric-&gt;(实际数据)measure</p>
 <ul>
 <li><p>获取权限</p>
@@ -656,6 +657,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/06/monitor/" rel="prev" title="collectd + influxDB + Grafana 搭建监控平台">
+                collectd + influxDB + Grafana 搭建监控平台 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -734,7 +739,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -745,7 +750,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -756,7 +761,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -833,7 +838,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>
