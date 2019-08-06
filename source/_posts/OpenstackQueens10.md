@@ -493,6 +493,7 @@ memory | Gauge | MB | instance ID | Notification | Libvirt, Hyper-V | Volume of 
 memory.usage | Gauge | MB | instance ID | Pollster | Libvirt, Hyper-V, vSphere, XenAPI | Volume of RAM used by the instance from the amount of its allocated memory | 实例从其分配的内存量中使用的RAM量
 ...
 
+参考：https://docs.openstack.org/ceilometer/latest/admin/telemetry-measurements.html
 
 ### 详细监控方法介绍
 #### 采集信息查询方法
