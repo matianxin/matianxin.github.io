@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Matx, NexT">
+  <meta name="keywords" content="linux,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
-<meta name="keywords" content="Matx">
-<meta property="og:type" content="website">
-<meta property="og:title" content="圣特伦特星">
-<meta property="og:url" content="https://matianxin.github.io/archives/2019/03/index.html">
+<meta name="description" content="chrony是一个ntp协议的实现程序，既可以当做服务端，也可以充当客户端；它专为间歇性互联网连接的系统而设计，当然也能良好应用于持久互联网连接的环境；chrony有三个时间参考：硬件时钟、实时时钟以及手动同步。">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrony - 一步搞定NTP时间同步问题">
+<meta property="og:url" content="https://matianxin.github.io/2019/09/24/chrony/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta property="og:description" content="chrony是一个ntp协议的实现程序，既可以当做服务端，也可以充当客户端；它专为间歇性互联网连接的系统而设计，当然也能良好应用于持久互联网连接的环境；chrony有三个时间参考：硬件时钟、实时时钟以及手动同步。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-24T08:40:00.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="圣特伦特星">
-<meta name="twitter:description" content="“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？">
+<meta name="twitter:title" content="Chrony - 一步搞定NTP时间同步问题">
+<meta name="twitter:description" content="chrony是一个ntp协议的实现程序，既可以当做服务端，也可以充当客户端；它专为间歇性互联网连接的系统而设计，当然也能良好应用于持久互联网连接的环境；chrony有三个时间参考：硬件时钟、实时时钟以及手动同步。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/archives/2019/03/">
+  <link rel="canonical" href="https://matianxin.github.io/2019/09/24/chrony/">
 
 
 
 
 
-  <title>归档 | 圣特伦特星</title>
+  <title>Chrony - 一步搞定NTP时间同步问题 | 圣特伦特星</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	
 	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
@@ -274,317 +275,202 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/09/24/chrony/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Chrony - 一步搞定NTP时间同步问题</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-24T16:27:08+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 24 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens7/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（七）Horizon服务</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:50:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
+              <div class="post-description">
+                  chrony是一个ntp协议的实现程序，既可以当做服务端，也可以充当客户端；它专为间歇性互联网连接的系统而设计，当然也能良好应用于持久互联网连接的环境；chrony有三个时间参考：硬件时钟、实时时钟以及手动同步。
+              </div>
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是chrony？"><a href="#什么是chrony？" class="headerlink" title="什么是chrony？"></a>什么是chrony？</h3><p><strong>A client/server for the Network Time Protocol, this program keeps your computer’s clock accurate. It was specially designed to support systems with intermittent internet connections, but it also works well in permanently connected environments. It can use also hardware reference clocks, system real-time clock or manual input as time references.</strong><br>chrony是一个ntp协议的实现程序，既可以当做服务端，也可以充当客户端；它专为间歇性互联网连接的系统而设计，当然也能良好应用于持久互联网连接的环境；chrony有三个时间参考：硬件时钟、实时时钟以及手动同步。</p>
+<h3 id="chrony的程序环境"><a href="#chrony的程序环境" class="headerlink" title="chrony的程序环境"></a>chrony的程序环境</h3><p>主配置文件：/etc/chrony.conf<br>客户端程序：/usr/bin/chronyc<br>服务端程序：/usr/sbin/chronyd</p>
+<h3 id="为本地服务器配置一个时间服务器"><a href="#为本地服务器配置一个时间服务器" class="headerlink" title="为本地服务器配置一个时间服务器"></a>为本地服务器配置一个时间服务器</h3><h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><p>时间服务器：192.168.1.10<br>允许本网段192.168.1.0/24同步时间。</p>
+<h4 id="配置服务端"><a href="#配置服务端" class="headerlink" title="配置服务端"></a>配置服务端</h4><p>在编辑配置文件之前，我一般习惯于备份一下，以备重新调整。<br>网络时间服务器可以自行查找，网上很多资料，下边配置两个个国内常用的时间服务器：</p>
+<p>]# cd /etc/<br>etc]# cp chrony.conf{,.bak}<br>etc]# vim chrony.conf<br>    …</p>
+<pre><code>#  iburst为固定格式，记住就可以，没有深究。
+server cn.pool.ntp.org iburst
+server tw.pool.ntp.org iburst
+...
+# 允许指定网络的主机同步时间，不指定就是允许所有，默认不开启。
+allow 192.168.1.0/24
+...
+# 还有一个默认不开启的选项，意思是，即使服务端没有同步到精确的网络时间，也允许向客户端同步不精确的时间。可以视情况而定。
+# Serve time even if not synchronized to any NTP server.
+#local stratum 10</code></pre><p>~]# systemctl start chronyd.service<br>~]# systemctl enable chronyd.service</p>
+<h4 id="客户端同步"><a href="#客户端同步" class="headerlink" title="客户端同步"></a>客户端同步</h4><p>配置192.168.1.10作为时间服务器</p>
+<p>etc]# vim chrony.conf<br>    …<br>    server 192.168.1.10 iburst<br>    …<br>~]# systemctl start chronyd.service<br>~]# systemctl enable chronyd.service</p>
+<p>进入chronyc客户端交互式模式：<br>~]# chronyc</p>
+<p>查看现有的时间服务器<br>    chronyc&gt; sources<br>        210 Number of sources = 1</p>
+<pre><code>MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+^* 192.168.1.10               10   6   377    53  -4546ns[-5000ns] +/-  234us</code></pre><p>查看时间服务器状态<br>    chronyc&gt; sourcestats<br>        210 Number of sources = 1</p>
+<pre><code>    Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+    ==============================================================================
+    192.168.1.10               10   6   584     +0.001      0.828    +35ns    74us
+
+chronyc&gt;exit</code></pre><p>也可以直接在命令行使用：<br>~]# chronyc sources<br>~]# chronyc sourcestats</p>
+<p>chrony兼容ntpdate，客户端可以使用ntpdate手动同步时间</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~]<span class="comment"># ntpdate 192.168.1.10</span></span><br><span class="line"> <span class="number">9</span> Nov <span class="number">02</span>:<span class="number">54</span>:<span class="number">30</span> ntpdate[<span class="number">39551</span>]: adjust time server <span class="number">192.168</span><span class="number">.43</span><span class="number">.101</span> offset <span class="number">-0.000003</span> sec</span><br></pre></td></tr></table></figure>
 
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens6/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（六）Neutron服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:45:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens5/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（五）Nova服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:40:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens4/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（四）Glance服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:35:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens3/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（三）Keystone服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:30:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens2/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（二）环境相关服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:25:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/19/OpenstackQueens1/" itemprop="url">
-              
-                <span itemprop="name">Openstack Queens 环境搭建（一）环境准备</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-19T16:20:00+08:00" content="2019-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/10/KDPA RestAPI/" itemprop="url">
-              
-                <span itemprop="name">KDPA RestAPI</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-10T10:00:00+08:00" content="2019-03-10">
-          03-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/06/monitor/" rel="next" title="collectd + influxDB + Grafana 搭建监控平台">
+                <i class="fa fa-chevron-left"></i> collectd + influxDB + Grafana 搭建监控平台
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -592,6 +478,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -612,8 +502,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -703,6 +602,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是chrony？"><span class="nav-number">1.</span> <span class="nav-text">什么是chrony？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chrony的程序环境"><span class="nav-number">2.</span> <span class="nav-text">chrony的程序环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为本地服务器配置一个时间服务器"><span class="nav-number">3.</span> <span class="nav-text">为本地服务器配置一个时间服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">3.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置服务端"><span class="nav-number">3.2.</span> <span class="nav-text">配置服务端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端同步"><span class="nav-number">3.3.</span> <span class="nav-text">客户端同步</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -850,6 +765,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
