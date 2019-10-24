@@ -225,8 +225,11 @@ firewall_driver = iptables_hybrid
 ```
 
 ### Compute节点：
+
 #### 安装及配置：
-```php# yum install openstack-neutron-openvswitch ebtables ipset
+
+```php
+# yum install openstack-neutron-openvswitch ebtables ipset
 
 # vi /etc/neutron/neutron.conf
 [DEFAULT]
