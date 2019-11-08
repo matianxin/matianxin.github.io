@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CentOS网卡配置文件设置为网桥模式]]></title>
+    <url>%2F2019%2F11%2F08%2FOpenstackProviderBridge%2F</url>
+    <content type="text"><![CDATA[原eth0配置文件/etc/sysconfig/network-scripts/ifcfg-eth0 12345678910111213TYPE=EthernetPROXY_METHOD=noneBROWSER_ONLY=noBOOTPROTO=staticDEFROUTE=noIPV4_FAILURE_FATAL=noNAME=eth0UUID=63754cd8-9152-44a4-b051-ea88c0182bd4DEVICE=eth0ONBOOT=yesIPADDR=191.100.200.30NETMASK=255.255.255.0GATEWAY=192.100.10.161 改成网桥配置后,eth0配置文件及br-provider网桥配置文件/etc/sysconfig/network-scripts/ifcfg-eth0 123456789TYPE=OVSPortDEVICETYPE=ovsNAME=eth0UUID=63754cd8-9152-44a4-b051-ea88c0182bd4DEVICE=eth0ONBOOT=yesIPADDR=0.0.0.0NETMASK=255.255.255.0OVS_BRIDGE=br-provider /etc/sysconfig/network-scripts/ifcfg-br-provider 123456789DEVICE=br-providerDEVICETYPE=ovsTYPE=OVSBridgeBOOTPROTO=staticIPADDR=192.100.200.30NETMASK=255.255.255.0GATEWAY=192.100.10.161ONBOOT=yes]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[构建openstack Queens版本本地yum源]]></title>
     <url>%2F2019%2F10%2F24%2FYum_OpenstackQueens%2F</url>
     <content type="text"><![CDATA[选择一台CentOS服务器，安装以下软件：1yum install yum-utils createrepo yum-plugin-priorities httpd 开启httpd服务1systemctl start httpd 获取repo文件并使用reposync同步源1yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-2.noarch.rpm 查看源ID列表 1yum repolist 同步openstack-queens这个repo12cd /var/www/html/reposync --repoid=openstack-queens 第一次同步时间较长，同步结束后，执行1createrepo –update /var/www/html/openstack-queens 创建完成后，就可以使用web测试：1http://[ip]/openstack-queens/ 选择另外一台服务器作为客户机12345678910cd /etc/yum.repos.dmv CentOS-Base.repo CentOS-Base.repo_bakcp CentOS-Media.repo CentOS-Media.repo_bakvim CentOS-Media.repo[openstack-queens]name=OpenStack Queens Repositorybaseurl=http://47.98.122.105/openstack-queens/enabled=1gpgcheck=0 配置完成，清除缓存并查看软件包12yum clean allyum list]]></content>
