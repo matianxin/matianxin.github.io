@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Centos7安装kafka]]></title>
+    <url>%2F2019%2F11%2F19%2Fcentos7_kdfka%2F</url>
+    <content type="text"><![CDATA[安装准备：基于Centos7.5 1804 minimal安装JDK1.81yum -y install java-1.8.0-openjdk* 安装kafka下载kafka 1wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz 解压 1tar -zxvf kafka_2.12-2.3.0.tgz 修改配置，使kafka远程访问 12345vi config/server.properties# listeners=PLAINTEXT://:9092-&gt;listeners=PLAINTEXT://KAFKA_IP:9092 启动kafka进入kafka目录 1cd kafka_2.12-2.3.0 启动zookeeper 1bin/zookeeper-server-start.sh -daemon config/zookeeper.properties 检查zookeeper端口2181是否正常监听 12netstat -an|grep 2181tcp6 0 0 :::2181 :::* LISTEN 检查kafka默认的JVM参数配置是否需要修改Kafka默认设置1G，即”-Xmx1G -Xms1G”。如果你的测试机内存较低，需要修改才能成功启动。参数配置位于：bin/kafka-server-start.sh 启动Kafka 1bin/kafka-server-start.sh config/server.properties 如果一切顺利，就会看到如下启动成功的日志： 1[2019-11-18 21:42:37,067] INFO [KafkaServer id=0] started (kafka.server.KafkaServer) 检查Kafka的端口9092监听是否正常 12[root@localhost kafka_2.12-2.3.0]# netstat -an|grep 9092tcp6 0 0 :::9092 :::* LISTEN 测试kafka创建一个测试主题 1234cd kafka_2.12-2.3.0bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testCreated topic "test". 查看刚刚创建的test主题 123bin/kafka-topics.sh --list --zookeeper localhost:2181test 向刚刚创建的test主题中写入数据 123bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test&gt;Hello, World!&gt; “Hello World!”为写入的数据。 查看刚刚写入的数据另外开一个ssh tab连接，然后执行如下命令 1234bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginningUsing the ConsoleConsumer with old consumer is deprecated and will be removed in a future major release. Consider using the new consumer by passing [bootstrap-server] instead of [zookeeper].Hello, World!]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS网卡配置文件设置为网桥模式]]></title>
     <url>%2F2019%2F11%2F08%2FOpenstackProviderBridge%2F</url>
     <content type="text"><![CDATA[原eth0配置文件/etc/sysconfig/network-scripts/ifcfg-eth0 12345678910111213TYPE=EthernetPROXY_METHOD=noneBROWSER_ONLY=noBOOTPROTO=staticDEFROUTE=noIPV4_FAILURE_FATAL=noNAME=eth0UUID=63754cd8-9152-44a4-b051-ea88c0182bd4DEVICE=eth0ONBOOT=yesIPADDR=191.100.200.30NETMASK=255.255.255.0GATEWAY=192.100.10.161 改成网桥配置后,eth0配置文件及br-provider网桥配置文件/etc/sysconfig/network-scripts/ifcfg-eth0 123456789TYPE=OVSPortDEVICETYPE=ovsNAME=eth0UUID=63754cd8-9152-44a4-b051-ea88c0182bd4DEVICE=eth0ONBOOT=yesIPADDR=0.0.0.0NETMASK=255.255.255.0OVS_BRIDGE=br-provider /etc/sysconfig/network-scripts/ifcfg-br-provider 123456789DEVICE=br-providerDEVICETYPE=ovsTYPE=OVSBridgeBOOTPROTO=staticIPADDR=192.100.200.30NETMASK=255.255.255.0GATEWAY=192.100.10.161ONBOOT=yes]]></content>
