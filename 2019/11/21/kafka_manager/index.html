@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="kafka-manager是目前最受欢迎的kafka集群管理工具，最早由雅虎开源，用户可以在Web界面执行一些简单的集群管理操作。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-21T07:13:47.030Z">
+<meta property="og:updated_time" content="2019-11-21T07:17:32.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kafka集群管理工具kafka-manager的安装使用">
 <meta name="twitter:description" content="kafka-manager是目前最受欢迎的kafka集群管理工具，最早由雅虎开源，用户可以在Web界面执行一些简单的集群管理操作。">
@@ -383,7 +383,7 @@
 
       
         <h4 id="kafka-manager简介"><a href="#kafka-manager简介" class="headerlink" title="kafka-manager简介"></a>kafka-manager简介</h4><p>kafka-manager是目前最受欢迎的kafka集群管理工具，最早由雅虎开源，用户可以在Web界面执行一些简单的集群管理操作。具体支持以下内容：</p>
-<p>管理多个集群<br>轻松检查群集状态（主题，消费者，偏移，代理，副本分发，分区分发）<br>运行首选副本选举<br>使用选项生成分区分配以选择要使用的代理<br>运行分区重新分配（基于生成的分配）<br>使用可选主题配置创建主题（0.8.1.1具有与0.8.2+不同的配置）<br>删除主题（仅支持0.8.2+并记住在代理配​​置中设置delete.topic.enable = true）<br>主题列表现在指示标记为删除的主题（仅支持0.8.2+）<br>批量生成多个主题的分区分配，并可选择要使用的代理<br>批量运行重新分配多个主题的分区<br>将分区添加到现有主题<br>更新现有主题的配置<br>kafka-manager 项目地址：<a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="noopener">https://github.com/yahoo/kafka-manager</a></p>
+<p>管理多个集群<br>轻松检查集群状态（主题，消费者，偏移，代理，副本分发，分区分发）<br>运行首选副本选举<br>使用选项生成分区分配以选择要使用的代理<br>运行分区重新分配（基于生成的分配）<br>使用可选主题配置创建主题（0.8.1.1具有与0.8.2+不同的配置）<br>删除主题（仅支持0.8.2+并记住在代理配​​置中设置delete.topic.enable = true）<br>主题列表现在指示标记为删除的主题（仅支持0.8.2+）<br>批量生成多个主题的分区分配，并可选择要使用的代理<br>批量运行重新分配多个主题的分区<br>将分区添加到现有主题<br>更新现有主题的配置<br>kafka-manager 项目地址：<a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="noopener">https://github.com/yahoo/kafka-manager</a></p>
 <h4 id="kafka-manager安装"><a href="#kafka-manager安装" class="headerlink" title="kafka-manager安装"></a>kafka-manager安装</h4><p>下载安装包<br>使用Git或者直接从Releases中下载，这里我们下载 2.0.0.2<br>版本：<a href="https://github.com/yahoo/kafka-manager/releases" target="_blank" rel="noopener">https://github.com/yahoo/kafka-manager/releases</a></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//github.com/yahoo/kafka-manager/archive/2.0.0.2.tar.gz</span></span><br></pre></td></tr></table></figure>
 
@@ -402,7 +402,7 @@
 <p>安装<br>将编译好的/root/kafka-manager-2.0.0.2/target/universal/kafka-manager-2.0.0.zip文件解压</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip /root/kafka-manager<span class="number">-2.0</span><span class="number">.0</span><span class="number">.2</span>/target/universal/kafka-manager<span class="number">-2.0</span><span class="number">.0</span>.zip</span><br></pre></td></tr></table></figure>
 
-<p>启动服务<br>启动zk集群，kafka集群，再启动kafka-manager服务。<br>bin/kafka-manager 默认的端口是9000，可通过 -Dhttp.port，指定端口; -Dconfig.file=conf/application.conf指定配置文件:</p>
+<p>启动服务<br>启动zk集群，kafka集群，再启动kafka-manager服务。<br>bin/kafka-manager 默认的端口是9000，可通过 -Dhttp.port，指定端口;<br>-Dconfig.file=conf/application.conf指定配置文件:</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup bin/kafka-manager -Dconfig.file=conf/application.conf -Dhttp.port=<span class="number">9000</span> &amp;</span><br></pre></td></tr></table></figure>
 
 <p>WebUI查看：<a href="http://KAFKA_IP:9000/" target="_blank" rel="noopener">http://KAFKA_IP:9000/</a> 出现如下界面则启动成功。</p>
@@ -445,6 +445,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/21/jmx_kafka/" rel="prev" title="JMX开启kafka">
+                JMX开启kafka <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -523,7 +527,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -622,7 +626,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">1</span></li></ul>
 				</canvas>
 			</div>
 		</div>
