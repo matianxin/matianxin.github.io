@@ -11,7 +11,7 @@ date: 2019/11/21 15:00:00
 kafka-manager是目前最受欢迎的kafka集群管理工具，最早由雅虎开源，用户可以在Web界面执行一些简单的集群管理操作。具体支持以下内容：
 
 管理多个集群
-轻松检查群集状态（主题，消费者，偏移，代理，副本分发，分区分发）
+轻松检查集群状态（主题，消费者，偏移，代理，副本分发，分区分发）
 运行首选副本选举
 使用选项生成分区分配以选择要使用的代理
 运行分区重新分配（基于生成的分配）
@@ -67,7 +67,8 @@ unzip /root/kafka-manager-2.0.0.2/target/universal/kafka-manager-2.0.0.zip
 
 启动服务
 启动zk集群，kafka集群，再启动kafka-manager服务。
-bin/kafka-manager 默认的端口是9000，可通过 -Dhttp.port，指定端口; -Dconfig.file=conf/application.conf指定配置文件:
+bin/kafka-manager 默认的端口是9000，可通过 -Dhttp.port，指定端口;
+-Dconfig.file=conf/application.conf指定配置文件:
 
 ```php
 nohup bin/kafka-manager -Dconfig.file=conf/application.conf -Dhttp.port=9000 &
