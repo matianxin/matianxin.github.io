@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,">
+  <meta name="keywords" content="openstack,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。">
-<meta name="keywords" content="linux">
+<meta name="description" content="Openstack计算节点被删除后，重新挂载，原主机名称没有改变，在创建实例时，报错：No valid host was found 。">
+<meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux top 命令详解">
-<meta property="og:url" content="https://matianxin.github.io/2019/07/12/top/index.html">
+<meta property="og:title" content="Openstack创建实例报错：No valid host was found.">
+<meta property="og:url" content="https://matianxin.github.io/2020/04/14/OpenstackNoValidHost/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。">
+<meta property="og:description" content="Openstack计算节点被删除后，重新挂载，原主机名称没有改变，在创建实例时，报错：No valid host was found 。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-17T01:54:59.931Z">
+<meta property="og:updated_time" content="2020-04-14T03:57:29.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux top 命令详解">
-<meta name="twitter:description" content="top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。">
+<meta name="twitter:title" content="Openstack创建实例报错：No valid host was found.">
+<meta name="twitter:description" content="Openstack计算节点被删除后，重新挂载，原主机名称没有改变，在创建实例时，报错：No valid host was found 。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/2019/07/12/top/">
+  <link rel="canonical" href="https://matianxin.github.io/2020/04/14/OpenstackNoValidHost/">
 
 
 
 
 
-  <title>Linux top 命令详解 | 圣特伦特星</title>
+  <title>Openstack创建实例报错：No valid host was found. | 圣特伦特星</title>
   
 
 
@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/07/12/top/">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2020/04/14/OpenstackNoValidHost/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="圣特伦特星">
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux top 命令详解</h1>
+          <h1 class="post-title" itemprop="name headline">Openstack创建实例报错：No valid host was found.</h1>
         
 
         <div class="post-meta">
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-12T10:18:08+08:00">
-                2019-07-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T11:40:00+08:00">
+                2020-04-14
               </time>
             
 
@@ -341,8 +341,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
                   </a>
                 </span>
 
@@ -365,7 +365,7 @@
 
           
               <div class="post-description">
-                  top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。
+                  Openstack计算节点被删除后，重新挂载，原主机名称没有改变，在创建实例时，报错：No valid host was found 。
               </div>
           
 
@@ -382,146 +382,14 @@
       
 
       
-        <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ top</span><br><span class="line"></span><br><span class="line">top - <span class="number">10</span>:<span class="number">14</span>:<span class="number">44</span> up <span class="number">15</span> days, <span class="number">20</span>:<span class="number">18</span>,  <span class="number">8</span> users,  load average: <span class="number">6.99</span>, <span class="number">3.36</span>, <span class="number">2.62</span></span><br><span class="line">Tasks: <span class="number">985</span> total,   <span class="number">2</span> running, <span class="number">983</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">%Cpu(s):  <span class="number">0.7</span> us, <span class="number">13.2</span> sy,  <span class="number">7.2</span> ni, <span class="number">78.7</span> id,  <span class="number">0.1</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span><br><span class="line">KiB Mem : <span class="number">16142800</span> total,  <span class="number">1201456</span> free, <span class="number">14020500</span> used,   <span class="number">920844</span> buff/cache</span><br><span class="line">KiB Swap:  <span class="number">8191996</span> total,  <span class="number">6339272</span> free,  <span class="number">1852724</span> used.  <span class="number">1396492</span> avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</span><br><span class="line"><span class="number">22195</span> root      <span class="number">20</span>   <span class="number">0</span> <span class="number">4995348</span> <span class="number">264576</span>  <span class="number">18712</span> S   <span class="number">7.9</span>  <span class="number">1.6</span>  <span class="number">26</span>:<span class="number">02.20</span> gnome-shell</span><br><span class="line"><span class="number">28393</span> root      <span class="number">26</span>   <span class="number">6</span>  <span class="number">438932</span>  <span class="number">95064</span>   <span class="number">6416</span> S   <span class="number">3.3</span>  <span class="number">0.6</span>  <span class="number">16</span>:<span class="number">52.90</span> python</span><br><span class="line"><span class="number">25155</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">163096</span>   <span class="number">3436</span>   <span class="number">1684</span> S   <span class="number">1.7</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">22.93</span> top</span><br><span class="line"> <span class="number">4092</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">413152</span>  <span class="number">96096</span>   <span class="number">4812</span> S   <span class="number">1.3</span>  <span class="number">0.6</span>  <span class="number">33</span>:<span class="number">59.19</span> Xvnc</span><br><span class="line"><span class="number">23570</span> nova      <span class="number">26</span>   <span class="number">6</span>  <span class="number">456196</span>  <span class="number">29632</span>   <span class="number">4524</span> S   <span class="number">1.3</span>  <span class="number">0.2</span> <span class="number">131</span>:<span class="number">28.54</span> nova-conductor</span><br><span class="line"><span class="number">23724</span> nova      <span class="number">26</span>   <span class="number">6</span>  <span class="number">513364</span>  <span class="number">42712</span>   <span class="number">4908</span> S   <span class="number">1.3</span>  <span class="number">0.3</span> <span class="number">135</span>:<span class="number">03.59</span> nova-api</span><br><span class="line"><span class="number">12833</span> neutron   <span class="number">26</span>   <span class="number">6</span>  <span class="number">497996</span> <span class="number">135052</span>   <span class="number">4608</span> S   <span class="number">1.0</span>  <span class="number">0.8</span>  <span class="number">59</span>:<span class="number">59.61</span> neutron-dhcp-ag</span><br><span class="line"><span class="number">20537</span> nobody    <span class="number">20</span>   <span class="number">0</span>  <span class="number">254952</span>  <span class="number">10144</span>   <span class="number">4152</span> S   <span class="number">1.0</span>  <span class="number">0.1</span>   <span class="number">0</span>:<span class="number">01.45</span> php-fpm</span><br><span class="line"><span class="number">28987</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">162940</span>   <span class="number">3248</span>   <span class="number">1620</span> R   <span class="number">1.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.22</span> top</span><br><span class="line"> <span class="number">5016</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">527732</span>   <span class="number">3760</span>   <span class="number">1500</span> S   <span class="number">0.7</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">34.49</span> ibus-daemon</span><br><span class="line"> <span class="number">7012</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">928104</span>  <span class="number">26384</span>   <span class="number">8988</span> S   <span class="number">0.7</span>  <span class="number">0.2</span>   <span class="number">9</span>:<span class="number">19.03</span> gnome-terminal-</span><br><span class="line"> <span class="number">8040</span> openvsw+  <span class="number">26</span>   <span class="number">6</span> <span class="number">1316280</span> <span class="number">160352</span>  <span class="number">12192</span> S   <span class="number">0.7</span>  <span class="number">1.0</span> <span class="number">170</span>:<span class="number">13.54</span> ovs-vswitchd</span><br><span class="line"> <span class="number">9408</span> etcd      <span class="number">26</span>   <span class="number">6</span>   <span class="number">11.6</span>g   <span class="number">9896</span>   <span class="number">2052</span> S   <span class="number">0.7</span>  <span class="number">0.1</span> <span class="number">176</span>:<span class="number">00.49</span> etcd</span><br><span class="line"><span class="number">23586</span> glance    <span class="number">26</span>   <span class="number">6</span>  <span class="number">502376</span>  <span class="number">13540</span>   <span class="number">4984</span> R   <span class="number">0.7</span>  <span class="number">0.1</span>  <span class="number">99</span>:<span class="number">49.88</span> glance-api</span><br><span class="line">    <span class="number">1</span> root      <span class="number">26</span>   <span class="number">6</span>  <span class="number">201696</span>   <span class="number">5700</span>   <span class="number">2100</span> S   <span class="number">0.3</span>  <span class="number">0.0</span>   <span class="number">5</span>:<span class="number">16.81</span> systemd</span><br><span class="line">    <span class="number">3</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S   <span class="number">0.3</span>  <span class="number">0.0</span>   <span class="number">1</span>:<span class="number">49.34</span> ksoftirqd/<span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="统计信息区"><a href="#统计信息区" class="headerlink" title="统计信息区"></a>统计信息区</h3><p>前五行是系统整体的统计信息。</p>
-<p>第一行是任务队列信息，同 uptime。 命令的执行结果。其内容如下：</p>
-<ul>
-<li>10:14:44 <strong>系统当前时间</strong></li>
-<li>up 15 days, 20:18 <strong>系统运行时间，格式为时:分</strong></li>
-<li>8 users <strong>当前登录用户数</strong></li>
-<li>load average: 6.99, 3.36, 2.62 <strong>系统负载，即任务队列的平均长度。</strong><ul>
-<li>三个数值分别为1分钟、5分钟、15分钟前到现在的平均值。</li>
-</ul>
-</li>
-</ul>
-<p>第二、三行为进程和CPU的信息。当有多个CPU时，这些内容可能会超过两行。内容如下：</p>
-<ul>
-<li><p>Tasks:</p>
-</li>
-<li><p>985 total <strong>进程总数</strong></p>
-</li>
-<li><p>2 running <strong>正在运行的进程数</strong></p>
-</li>
-<li><p>983 sleeping <strong>睡眠的进程数</strong></p>
-</li>
-<li><p>0 stopped <strong>停止的进程数</strong></p>
-</li>
-<li><p>0 zombie <strong>僵尸进程数</strong></p>
-</li>
-<li><p>Cpu(s):</p>
-</li>
-<li><p>0.7% us <strong>用户空间占用CPU百分比</strong></p>
-</li>
-<li><p>13.2% sy <strong>内核空间占用CPU百分比</strong></p>
-</li>
-<li><p>7.2% ni <strong>用户进程空间内改变过优先级的进程占用CPU百分比</strong></p>
-</li>
-<li><p>78.7% id <strong>空闲CPU百分比</strong></p>
-</li>
-<li><p>0.1% wa <strong>等待输入输出的CPU时间百分比</strong></p>
-</li>
-<li><p>0.0% hi</p>
-</li>
-<li><p>0.0% si</p>
-</li>
-</ul>
-<p>最后两行为内存信息。内容如下：</p>
-<ul>
-<li><p>Mem:</p>
-</li>
-<li><p>16142800 total <strong>物理内存总量</strong></p>
-</li>
-<li><p>14020500 used <strong>使用的物理内存总量</strong></p>
-</li>
-<li><p>1201456 free <strong>空闲内存总量</strong></p>
-</li>
-<li><p>920844 buff/cache <strong>用作内核缓存的内存量</strong></p>
-</li>
-<li><p>Swap:</p>
-</li>
-<li><p>8191996 total <strong>交换区总量</strong></p>
-</li>
-<li><p>1852724k used <strong>使用的交换区总量</strong></p>
-</li>
-<li><p>6339272 free <strong>空闲交换区总量</strong></p>
-</li>
-<li><p>1396492 avail Mem</p>
-</li>
-</ul>
-<p>统计信息区域的下方显示了各个进程的详细信息。首先来认识一下各列的含义。</p>
-<ul>
-<li>序号 列名 含义</li>
-<li>a PID <strong>进程id</strong></li>
-<li>b PPID 父进程id</li>
-<li>c RUSER Real user name</li>
-<li>d UID 进程所有者的用户id</li>
-<li>e USER <strong>进程所有者的用户名</strong></li>
-<li>f GROUP 进程所有者的组名</li>
-<li>g TTY 启动进程的终端名。不是从终端启动的进程则显示为 ?</li>
-<li>h PR <strong>优先级</strong></li>
-<li>i NI <strong>nice值。负值表示高优先级，正值表示低优先级</strong></li>
-<li>j P 最后使用的CPU，仅在多CPU环境下有意义</li>
-<li>k %CPU <strong>上次更新到现在的CPU时间占用百分比</strong></li>
-<li>l TIME 进程使用的CPU时间总计，单位秒</li>
-<li>m TIME+ <strong>进程使用的CPU时间总计，单位1/100秒</strong></li>
-<li>n %MEM <strong>进程使用的物理内存百分比</strong></li>
-<li>o VIRT <strong>进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES</strong></li>
-<li>p SWAP 进程使用的虚拟内存中，被换出的大小，单位kb。</li>
-<li>q RES <strong>进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA</strong></li>
-<li>r CODE 可执行代码占用的物理内存大小，单位kb</li>
-<li>s DATA 可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb</li>
-<li>t SHR <strong>共享内存大小，单位kb</strong></li>
-<li>u nFLT 页面错误次数</li>
-<li>v nDRT 最后一次写入到现在，被修改过的页面数。</li>
-<li>w S <strong>进程状态。</strong><ul>
-<li>D=不可中断的睡眠状态</li>
-<li>R=运行</li>
-<li>S=睡眠</li>
-<li>T=跟踪/停止</li>
-<li>Z=僵尸进程</li>
-</ul>
-</li>
-<li>x COMMAND <strong>命令名/命令行</strong></li>
-<li>y WCHAN 若该进程在睡眠，则显示睡眠中的系统函数名</li>
-<li>z Flags 任务标志，参考</li>
-</ul>
-<p>默认情况下仅显示比较重要的<br>PID、USER、PR、NI、VIRT、RES、SHR、S、%CPU、%MEM、TIME+、COMMAND列。<br>可以通过下面的快捷键来更改显示内容。<br>更改显示内容<br>通过 f 键可以选择显示的内容。<br>按 f 键之后会显示列的列表，<br>按 a-z 即可显示或隐藏对应的列，最后按回车键确定。<br>按 o 键可以改变列的显示顺序。<br>按小写的 a-z 可以将相应的列向右移动，<br>而大写的 A-Z可以将相应的列向左移动。最后按回车键确定。<br>按大写的 F 或 O 键，然后按 a-z 可以将进程按照相应的列进行排序。<br>而大写的 R 键可以将当前的排序倒转。</p>
-<h3 id="命令使用"><a href="#命令使用" class="headerlink" title="命令使用"></a>命令使用</h3><p>1．工具（命令）名称<br>top</p>
-<p>2．工具（命令）作用<br>显示系统当前的进程和其他状况；<br>top是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止.<br>比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
-<p>3．环境设置<br>在Linux下使用。</p>
-<p>4．使用方法<br>4．1使用格式<br>top [-][d][p][q][c][C][S][s][n]</p>
-<p>4．2参数说明</p>
-<ul>
-<li>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。</li>
-<li>p 通过指定监控进程ID来仅仅监控某个进程的状态。</li>
-<li>q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。</li>
-<li>S 指定累计模式</li>
-<li>s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。</li>
-<li>i 使top不显示任何闲置或者僵死进程。</li>
-<li>c 显示整个命令行而不只是显示命令名</li>
-</ul>
-<p>4.3其他<br>下面介绍在top命令执行过程中可以使用的一些交互命令。从使用角度来看，熟练的掌握这些命令比掌握选项还重要一些。这些命令都是单字母的，如果在命令行选项中使用了s选项，则可能其中一些命令会被屏蔽掉。</p>
-<ul>
-<li>Ctrl+L 擦除并且重写屏幕。</li>
-<li>h或者? 显示帮助画面，给出一些简短的命令总结说明。</li>
-<li>k 终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。</li>
-<li>i 忽略闲置和僵死进程。这是一个开关式命令。</li>
-<li>q 退出程序。</li>
-<li>r 重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。</li>
-<li>S 切换到累计模式。</li>
-<li>s 改变两次刷新之间的延迟时间。系统将提示用户输入新的时间，单位为s。如果有小数，就换算成ms。输入0值则系统将不断刷新，默认值是5<br>s。需要注意的是如果设置太小的时间，很可能会引起不断刷新，从而根本来不及看清显示的情况，而且系统负载也会大大增加。</li>
-<li>f或者F 从当前显示中添加或者删除项目。</li>
-<li>o或者O 改变显示项目的顺序。</li>
-<li>l 切换显示平均负载和启动时间信息。</li>
-<li>m 切换显示内存信息。</li>
-<li>t 切换显示进程和CPU状态信息。</li>
-<li>c 切换显示命令名称和完整命令行。</li>
-<li>M 根据驻留内存大小进行排序。</li>
-<li>P 根据CPU使用百分比大小进行排序。</li>
-<li>T 根据时间/累计时间进行排序。</li>
-<li>W 将当前设置写入~/.toprc文件中。这是写top配置文件的推荐方法。</li>
-</ul>
+        <h4 id="错误原因："><a href="#错误原因：" class="headerlink" title="错误原因："></a>错误原因：</h4><p>UUID冲突，nova_api数据库中resource_providers表与nova.compute_nodes表中host的UUID不一致引起的，导致原因可能为删除计算节点时没有清空resource_providers表中的数据。</p>
+<h4 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h4><p>[root@controller]#  nova-manage cell_v2 list_hosts<br>+———–+————————————–+———-+<br>| Cell Name |              Cell UUID               | Hostname |<br>+———–+————————————–+———-+<br>|   cell1   | 9abb6c5c-25e2-440c-8295-4826d055298c | compute4 |<br>|   cell1   | 9abb6c5c-25e2-440c-8295-4826d055298c | compute5 |<br>|   cell1   | 9abb6c5c-25e2-440c-8295-4826d055298c | compute6 |<br>+———–+————————————–+———-+</p>
+<p>MariaDB [(none)]&gt; use nova_api;<br>Reading table information for completion of table and column names<br>You can turn off this feature to get a quicker startup with -A</p>
+<p>Database changed<br>MariaDB [nova_api]&gt; select uuid,name from resource_providers where name=’compute5’;<br>+————————————–+———-+<br>| uuid                                 | name     |<br>+————————————–+———-+<br>| 305cc2a4-75e8-496f-b843-152400257c35 | compute5 |<br>+————————————–+———-+<br>1 row in set (0.00 sec)</p>
+<p>MariaDB [nova_api]&gt; select uuid,host from nova.compute_nodes where host=’compute5’;<br>+————————————–+———-+<br>| uuid                                 | host     |<br>+————————————–+———-+<br>| 924c0d27-1952-4663-8f01-e8cecc67f964 | compute5 |<br>+————————————–+———-+<br>1 row in set (0.00 sec)</p>
+<p>可以看到，UUID为compute5的计算节点在resource_providers表中与nova.compute_nodes表中数据不一致，将resource_providers表中数据修改：</p>
+<p>MariaDB [nova_api]&gt;  update resource_providers set uuid=’924c0d27-1952-4663-8f01-e8cecc67f964’ where name=’compute5’ and uuid=’305cc2a4-75e8-496f-b843-152400257c35’;<br>Query OK, 1 row affected (0.01 sec)<br>Rows matched: 1  Changed: 1  Warnings: 0</p>
+<p>修改后，compute5上实例可以成功创建。</p>
 
       
     </div>
@@ -539,7 +407,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
           
         </div>
       
@@ -552,8 +420,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/11/OpenstackTerminal/" rel="next" title="Openstack命令行">
-                <i class="fa fa-chevron-left"></i> Openstack命令行
+              <a href="/2020/04/14/switchJumbo/" rel="next" title="交换机端口开启巨帧功能">
+                <i class="fa fa-chevron-left"></i> 交换机端口开启巨帧功能
               </a>
             
           </div>
@@ -561,10 +429,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/17/SQLAlchemyEngine/" rel="prev" title="SQLAlchemy 中的 Engine 是什么">
-                SQLAlchemy 中的 Engine 是什么 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -726,7 +590,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#统计信息区"><span class="nav-number">1.</span> <span class="nav-text">统计信息区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令使用"><span class="nav-number">2.</span> <span class="nav-text">命令使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#错误原因："><span class="nav-number">1.</span> <span class="nav-text">错误原因：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决办法："><span class="nav-number">2.</span> <span class="nav-text">解决办法：</span></a></li></ol></div>
             
 
           </div>
