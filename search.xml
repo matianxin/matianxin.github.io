@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[交换机端口开启巨帧功能]]></title>
+    <url>%2F2020%2F04%2F14%2FswitchJumbo%2F</url>
+    <content type="text"><![CDATA[命令功能：开启/关闭端口巨帧功能。 命令模式：全局配置模式 命令格式：1set jumbo port &lt;portlist&gt;&#123;enable | disable&#125; 命令参数解释：参数 描述 端口列表enable 开启端口巨帧功能disable 关闭端口巨帧功能 使用说明：ZXR10 2950设备可以转发10k大小的巨帧。 缺省：巨帧功能默认为disable状态。]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Centos7断电导致generating /run/initramfs/rdsosreport.txt 问题]]></title>
     <url>%2F2020%2F04%2F14%2Frdsosreport%2F</url>
     <content type="text"><![CDATA[开机就进入命令窗口，窗口提示信息如下：1234generating "/run/initramfs/rdsosreport.txt"entering emergencymode. exit the shell to continuetype "journalctl" to view system logs.you might want to save "/run/initramfs/rdsosreport.txt" to a usb stick or /boot after mounting them and attach it to a bug report. 解决办法：1xfs_repair /dev/mapper/centos-root -L 1reboot]]></content>
       <categories>
-        <category>Centos7</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>centos</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
