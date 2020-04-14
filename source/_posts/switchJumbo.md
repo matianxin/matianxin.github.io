@@ -20,11 +20,10 @@ set jumbo port <portlist>{enable | disable}
 ```
 
 #### 命令参数解释：
-参数                 描述
-----                ----
-<portlist>          端口列表
-enable              开启端口巨帧功能
-disable             关闭端口巨帧功能
+参数       |    描述
+<portlist> |   端口列表
+enable     |   开启端口巨帧功能
+disable    |   关闭端口巨帧功能
 
 #### 使用说明：
 ZXR10 2950设备可以转发10k大小的巨帧。
