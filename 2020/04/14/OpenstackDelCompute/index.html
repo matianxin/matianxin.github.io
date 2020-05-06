@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tool,">
+  <meta name="keywords" content="openstack,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="set jumbo port">
-<meta name="keywords" content="tool">
+<meta name="description" content="Openstack控制节点删除计算节点的方法">
+<meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="交换机端口开启巨帧功能">
-<meta property="og:url" content="https://matianxin.github.io/2020/04/14/switchJumbo/index.html">
+<meta property="og:title" content="Openstack控制节点删除计算节点的方法">
+<meta property="og:url" content="https://matianxin.github.io/2020/04/14/OpenstackDelCompute/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="set jumbo port">
+<meta property="og:description" content="Openstack控制节点删除计算节点的方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-14T05:37:18.856Z">
+<meta property="og:updated_time" content="2020-04-14T07:42:27.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="交换机端口开启巨帧功能">
-<meta name="twitter:description" content="set jumbo port">
+<meta name="twitter:title" content="Openstack控制节点删除计算节点的方法">
+<meta name="twitter:description" content="Openstack控制节点删除计算节点的方法">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://matianxin.github.io/2020/04/14/switchJumbo/">
+  <link rel="canonical" href="https://matianxin.github.io/2020/04/14/OpenstackDelCompute/">
 
 
 
 
 
-  <title>交换机端口开启巨帧功能 | 圣特伦特星</title>
+  <title>Openstack控制节点删除计算节点的方法 | 圣特伦特星</title>
   
 
 
@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2020/04/14/switchJumbo/">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2020/04/14/OpenstackDelCompute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="圣特伦特星">
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">交换机端口开启巨帧功能</h1>
+          <h1 class="post-title" itemprop="name headline">Openstack控制节点删除计算节点的方法</h1>
         
 
         <div class="post-meta">
@@ -318,7 +318,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T10:30:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T13:40:00+08:00">
                 2020-04-14
               </time>
             
@@ -341,8 +341,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
                   </a>
                 </span>
 
@@ -365,7 +365,7 @@
 
           
               <div class="post-description">
-                  set jumbo port
+                  Openstack控制节点删除计算节点的方法
               </div>
           
 
@@ -382,13 +382,24 @@
       
 
       
-        <h4 id="命令功能："><a href="#命令功能：" class="headerlink" title="命令功能："></a>命令功能：</h4><p>开启/关闭端口巨帧功能。</p>
-<h4 id="命令模式："><a href="#命令模式：" class="headerlink" title="命令模式："></a>命令模式：</h4><p>全局配置模式</p>
-<h4 id="命令格式："><a href="#命令格式：" class="headerlink" title="命令格式："></a>命令格式：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set jumbo port &lt;portlist&gt;&#123;enable | disable&#125;</span><br></pre></td></tr></table></figure>
+        <p>在控制节点Controller的操作：删除计算节点名称为compute5：<br>1.查看计算主机及服务相关：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack host list</span></span><br><span class="line">+------------+-------------+----------+</span><br><span class="line">| Host Name  | Service     | Zone     |</span><br><span class="line">+------------+-------------+----------+</span><br><span class="line">| controller | consoleauth | internal |</span><br><span class="line">| controller | scheduler   | internal |</span><br><span class="line">| controller | conductor   | internal |</span><br><span class="line">| compute4   | compute     | nova     |</span><br><span class="line">| compute6   | compute     | nova     |</span><br><span class="line">| compute5   | compute     | nova     |</span><br><span class="line">+------------+-------------+----------+</span><br></pre></td></tr></table></figure>
 
-<h4 id="命令参数解释："><a href="#命令参数解释：" class="headerlink" title="命令参数解释："></a>命令参数解释：</h4><p> 参数       |    描述<br> portlist   |   端口列表<br> enable     |   开启端口巨帧功能<br> disable    |   关闭端口巨帧功能</p>
-<h4 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h4><p>ZXR10 2950设备可以转发10k大小的巨帧。</p>
-<h4 id="缺省："><a href="#缺省：" class="headerlink" title="缺省："></a>缺省：</h4><p>巨帧功能默认为disable状态。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># nova service-list</span></span><br><span class="line">+--------------------------------------+------------------+------------+----------+---------+-------+----------------------------+-----------------+-------------+</span><br><span class="line">| Id                                   | Binary           | Host       | Zone     | Status  | State | Updated_at                 | Disabled Reason | Forced down |</span><br><span class="line">+--------------------------------------+------------------+------------+----------+---------+-------+----------------------------+-----------------+-------------+</span><br><span class="line">| <span class="number">936</span>a4177-d08d<span class="number">-4</span>f62-bb8c<span class="number">-7</span>da7047ab6f8 | nova-consoleauth | controller | internal | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">07.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| c1395bf8<span class="number">-47</span>dd<span class="number">-47</span>b0-bc8c-e10fc083ad40 | nova-scheduler   | controller | internal | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">11.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| <span class="number">28958175</span><span class="number">-5745</span><span class="number">-4</span>b9f-b71d-e431168f6119 | nova-conductor   | controller | internal | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">10.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| c586b1d2-f326<span class="number">-4e7</span>e<span class="number">-8</span>a3a-fead78a151c0 | nova-compute     | compute4   | nova     | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">11.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| b6f3a4e3-a0ec<span class="number">-4</span>f41-b47d<span class="number">-976</span>bd45581b6 | nova-compute     | compute6   | nova     | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">03.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| bb93240f<span class="number">-58</span>f4<span class="number">-4</span>d3c-a040-a66a9b2f0ea9 | nova-compute     | compute5   | nova     | enabled | down  | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">12.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">+--------------------------------------+------------------+------------+----------+---------+-------+----------------------------+-----------------+-------------+</span><br></pre></td></tr></table></figure>
+
+<p>计算节点compute的State状态是down，但Status状态还是enabled可用。<br>2.修改compute5为不可用状态。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># nova service-disable bb93240f-58f4-4d3c-a040-a66a9b2f0ea9</span></span><br></pre></td></tr></table></figure>
+
+<p>查看是否修改成功</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># nova service-list</span></span><br><span class="line">+--------------------------------------+------------------+------------+----------+---------+-------+----------------------------+-----------------+-------------+</span><br><span class="line">| Id                                   | Binary           | Host       | Zone     | Status  | State | Updated_at                 | Disabled Reason | Forced down |</span><br><span class="line">+--------------------------------------+------------------+------------+----------+---------+-------+----------------------------+-----------------+-------------+</span><br><span class="line">| <span class="number">936</span>a4177-d08d<span class="number">-4</span>f62-bb8c<span class="number">-7</span>da7047ab6f8 | nova-consoleauth | controller | internal | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">07.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| c1395bf8<span class="number">-47</span>dd<span class="number">-47</span>b0-bc8c-e10fc083ad40 | nova-scheduler   | controller | internal | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">11.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| <span class="number">28958175</span><span class="number">-5745</span><span class="number">-4</span>b9f-b71d-e431168f6119 | nova-conductor   | controller | internal | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">10.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| c586b1d2-f326<span class="number">-4e7</span>e<span class="number">-8</span>a3a-fead78a151c0 | nova-compute     | compute4   | nova     | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">11.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| b6f3a4e3-a0ec<span class="number">-4</span>f41-b47d<span class="number">-976</span>bd45581b6 | nova-compute     | compute6   | nova     | enabled | up    | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">03.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">| bb93240f<span class="number">-58</span>f4<span class="number">-4</span>d3c-a040-a66a9b2f0ea9 | nova-compute     | compute5   | nova     | disabled| down  | <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span>T05:<span class="number">59</span>:<span class="number">12.000000</span> | -               | <span class="keyword">False</span>       |</span><br><span class="line">+--------------------------------------+------------------+------------+----------+---------+-------+----------------------------+-----------------+-------------+</span><br></pre></td></tr></table></figure>
+
+<p>3.在数据库（nova）中清理</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># mysql -p</span></span><br><span class="line">Enter password:</span><br><span class="line">Welcome to the MariaDB monitor. Commands end with ; <span class="keyword">or</span> g.</span><br><span class="line">Your MariaDB connection id is <span class="number">980</span></span><br><span class="line">Server version: <span class="number">10.1</span><span class="number">.20</span>-MariaDB MariaDB Server</span><br><span class="line">Copyright (c) <span class="number">2000</span>, <span class="number">2016</span>, Oracle, MariaDB Corporation Ab <span class="keyword">and</span> others.</span><br><span class="line">Type <span class="string">'help;'</span> <span class="keyword">or</span> <span class="string">'h'</span> <span class="keyword">for</span> help. Type <span class="string">'c'</span> to clear the current input statement.</span><br><span class="line">MariaDB [(none)]&gt; <span class="keyword">use</span> <span class="title">nova</span></span><br><span class="line"><span class="title">Reading</span> <span class="title">table</span> <span class="title">information</span> <span class="title">for</span> <span class="title">completion</span> <span class="title">of</span> <span class="title">table</span> <span class="title">and</span> <span class="title">column</span> <span class="title">names</span></span><br><span class="line"><span class="title">You</span> <span class="title">can</span> <span class="title">turn</span> <span class="title">off</span> <span class="title">this</span> <span class="title">feature</span> <span class="title">to</span> <span class="title">get</span> <span class="title">a</span> <span class="title">quicker</span> <span class="title">startup</span> <span class="title">with</span> -<span class="title">A</span></span><br><span class="line"><span class="title">Database</span> <span class="title">changed</span></span><br><span class="line"><span class="title">MariaDB</span> [<span class="title">nova</span>]&gt; <span class="title">delete</span> <span class="title">from</span> <span class="title">nova</span>.<span class="title">services</span> <span class="title">where</span> <span class="title">host</span>="<span class="title">compute5</span>";</span><br><span class="line">Query OK, <span class="number">1</span> row affected (<span class="number">0.01</span> sec)</span><br><span class="line">MariaDB [nova]&gt; delete from compute_nodes where hypervisor_hostname=<span class="string">"compute5"</span>;</span><br><span class="line">Query OK, <span class="number">0</span> rows affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">MariaDB [nova]&gt; select host from nova.services;</span><br><span class="line"></span><br><span class="line">MariaDB [nova]&gt; select hypervisor_hostname from compute_nodes;</span><br></pre></td></tr></table></figure>
+
+<p>4.校验</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@controller ~]<span class="comment"># openstack host list</span></span><br><span class="line">[root@controller ~]<span class="comment"># nova service-list</span></span><br></pre></td></tr></table></figure>
+
+<p>再次查看计算节点，就发现compute已经被删除了。</p>
 
       
     </div>
@@ -406,7 +417,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tool/" rel="tag"><i class="fa fa-tag"></i> tool</a>
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
           
         </div>
       
@@ -419,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/14/rdsosreport/" rel="next" title="Centos7断电导致generating /run/initramfs/rdsosreport.txt 问题">
-                <i class="fa fa-chevron-left"></i> Centos7断电导致generating /run/initramfs/rdsosreport.txt 问题
+              <a href="/2020/04/14/OpenstackNoValidHost/" rel="next" title="Openstack创建实例报错：No valid host was found.">
+                <i class="fa fa-chevron-left"></i> Openstack创建实例报错：No valid host was found.
               </a>
             
           </div>
@@ -429,8 +440,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/04/14/OpenstackNoValidHost/" rel="prev" title="Openstack创建实例报错：No valid host was found.">
-                Openstack创建实例报错：No valid host was found. <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/06/SPICE/" rel="prev" title="Openstack虚拟桌面协议SPICE代替vnc">
+                Openstack虚拟桌面协议SPICE代替vnc <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -483,17 +494,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -583,22 +585,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令功能："><span class="nav-number">1.</span> <span class="nav-text">命令功能：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式："><span class="nav-number">2.</span> <span class="nav-text">命令模式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令格式："><span class="nav-number">3.</span> <span class="nav-text">命令格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令参数解释："><span class="nav-number">4.</span> <span class="nav-text">命令参数解释：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用说明："><span class="nav-number">5.</span> <span class="nav-text">使用说明：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺省："><span class="nav-number">6.</span> <span class="nav-text">缺省：</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
