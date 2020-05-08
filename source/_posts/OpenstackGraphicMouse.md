@@ -7,7 +7,7 @@ date: 2020/5/6 15:37:08
 ---
 
 ### 问题描述
-在OpenstackQueens环境下分别安装Windows，Kali及凝思操作系统，发现凝思操作系统出现鼠标漂移的问题。
+在OpenstackQueens环境下分别安装Windows，Kali及凝思图型界面操作系统，发现凝思操作系统出现鼠标漂移的问题。
 经调查，默认情况下有图型界面的实例使用的输入设备类型为usbtablet，
 Windows，Kali在usbtablet下没有问题，凝思操作系统鼠标漂移。
 凝思在使用ps2mouse下没有问题，而ps2mouse下Windows，Kali鼠标出现漂移。
