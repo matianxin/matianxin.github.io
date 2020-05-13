@@ -61,3 +61,19 @@ gpgcheck=0
 yum clean all
 yum list
 ```
+
+#### 问题
+客户端yum安装报错：
+```php
+Error downloading packages:
+  glusterfs-libs-7.5-1.el7.x86_64: failed to retrieve Packages/g/glusterfs-libs-7.5-1.el7.x86_64.rpm from centos7-gluster
+error was [Errno 2] Local file does not exist: /etc/yum.repos.d/pdate/Packages/g/glusterfs-libs-7.5-1.el7.x86_64.rpm
+  glusterfs-7.5-1.el7.x86_64: failed to retrieve Packages/g/glusterfs-7.5-1.el7.x86_64.rpm from centos7-gluster
+error was [Errno 2] Local file does not exist: /etc/yum.repos.d/pdate/Packages/g/glusterfs-7.5-1.el7.x86_64.rpm
+```
+问题解决：
+YUM服务器删除对应热repodata文件夹，使用如下命令
+```php
+createrepo -pdo /var/www/html/kdpa/ /var/www/html/kdpa/
+```
+重新生成repo链接，问题解决
