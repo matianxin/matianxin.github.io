@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="构建openstack Queens版本本地yum源">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-13T08:54:34.775Z">
+<meta property="og:updated_time" content="2020-05-13T09:01:23.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="构建openstack Queens版本本地yum源">
 <meta name="twitter:description" content="构建openstack Queens版本本地yum源">
@@ -404,7 +404,7 @@
 <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>客户端yum安装报错：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Error downloading packages:</span><br><span class="line">  glusterfs-libs<span class="number">-7.5</span><span class="number">-1.</span>el7.x86_64: failed to retrieve Packages/g/glusterfs-libs<span class="number">-7.5</span><span class="number">-1.</span>el7.x86_64.rpm from centos7-gluster</span><br><span class="line">error was [Errno <span class="number">2</span>] Local file does not exist: /etc/yum.repos.d/pdate/Packages/g/glusterfs-libs<span class="number">-7.5</span><span class="number">-1.</span>el7.x86_64.rpm</span><br><span class="line">  glusterfs<span class="number">-7.5</span><span class="number">-1.</span>el7.x86_64: failed to retrieve Packages/g/glusterfs<span class="number">-7.5</span><span class="number">-1.</span>el7.x86_64.rpm from centos7-gluster</span><br><span class="line">error was [Errno <span class="number">2</span>] Local file does not exist: /etc/yum.repos.d/pdate/Packages/g/glusterfs<span class="number">-7.5</span><span class="number">-1.</span>el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
 
-<p>问题解决：<br>YUM服务器删除对应热repodata文件夹，使用如下命令</p>
+<p>问题解决：<br>YUM服务器删除对应的repodata文件夹，使用如下命令</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createrepo -pdo /<span class="keyword">var</span>/www/html/kdpa/ /<span class="keyword">var</span>/www/html/kdpa/</span><br></pre></td></tr></table></figure>
 
 <p>重新生成repo链接，问题解决</p>
@@ -529,7 +529,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -540,7 +540,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -551,7 +551,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -628,7 +628,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">2</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">2</span></li></ul>
 				</canvas>
 			</div>
 		</div>
