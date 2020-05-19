@@ -72,7 +72,7 @@ error was [Errno 2] Local file does not exist: /etc/yum.repos.d/pdate/Packages/g
 error was [Errno 2] Local file does not exist: /etc/yum.repos.d/pdate/Packages/g/glusterfs-7.5-1.el7.x86_64.rpm
 ```
 问题解决：
-YUM服务器删除对应热repodata文件夹，使用如下命令
+YUM服务器删除对应的repodata文件夹，使用如下命令
 ```php
 createrepo -pdo /var/www/html/kdpa/ /var/www/html/kdpa/
 ```
