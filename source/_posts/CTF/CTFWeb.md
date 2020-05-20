@@ -392,16 +392,16 @@ payload：
 
 双写可以绕过对输入内容过滤的单次判断，在XSS、SQL注入和PHP代码审计的题目中比较常见。
 
-双写顾名思义就是将被过滤的关键字符写两遍，比如，如果要添加XSS Payload，又需要插入```html <script> ```标签，就可以构造如下的
+双写顾名思义就是将被过滤的关键字符写两遍，比如，如果要添加XSS Payload，又需要插入script标签，就可以构造如下的
 
 ```php
 Payload：<scr<script>ipt>
 ````
-来绕过对```html <script> ```标签的单次过滤限制。
+来绕过对script标签的单次过滤限制。
 
 这样的方法不仅对XSS有用，也可以用于代码审计和SQL注入。
 
-HGAME2019有一道XSS题目就是过滤了```html <script> ```，可以用双写绕过。
+HGAME2019有一道XSS题目就是过滤了script标签，可以用双写绕过。
 
 #### 等价替代
 
@@ -411,7 +411,7 @@ HGAME2019有一道XSS题目就是过滤了```html <script> ```，可以用双写
 ```php
 /**/
 ```
-绕过对空格的限制；XSS题目如果过滤了```html <script> ```标签，可以使用其他类型的
+绕过对空格的限制；XSS题目如果过滤了script标签，可以使用其他类型的
 ```php
 payload；如果需要使用cat命令却被过滤，可以使用tac、more、less命令来替代等。
 ```
