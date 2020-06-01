@@ -73,3 +73,21 @@ Miscellaneous简称MISC，意思是杂项，混杂的意思。
 其短文件是backup1.sql，iis解析漏洞，绕过文件上传检测
 - php弱类型
 - 绕waf，大小写混合，使用编码，使用注释，使用空字节
+
+
+当前我们环境中的题型为：
+
+1.CRYPTO：
+字符串(可能很长) 或 上传一个文件
+
+2.PWN：
+每一道题Docker container对外开放一个端口映射
+
+3.MISC:
+全部为 上传一个文件
+
+4.Reserve：
+全部为 上传一个文件
+
+5.Web：
+每一道题Docker container对外开放一个端口映射
