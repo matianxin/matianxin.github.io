@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<!DOCTYPE html>
 
 
@@ -1391,3 +1392,1398 @@
 
 </body>
 </html>
+=======
+﻿<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="kedong,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="实训平台-主站厂站虚拟化环境搭建">
+<meta name="keywords" content="kedong">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验室虚拟化主站厂站拓扑搭建">
+<meta property="og:url" content="https://matianxin.github.io/2019/06/25/Other/kdpaTopo/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="实训平台-主站厂站虚拟化环境搭建">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://matianxin.github.io/images/virt_labo.jpg">
+<meta property="og:updated_time" content="2019-07-19T08:47:16.108Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实验室虚拟化主站厂站拓扑搭建">
+<meta name="twitter:description" content="实训平台-主站厂站虚拟化环境搭建">
+<meta name="twitter:image" content="https://matianxin.github.io/images/virt_labo.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://matianxin.github.io/2019/06/25/Other/kdpaTopo/">
+
+
+
+
+
+  <title>实验室虚拟化主站厂站拓扑搭建 | 圣特伦特星</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
+	
+	<a href="https://github.com/matianxin" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">圣特伦特星</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">差以毫厘，谬以千里。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2019/06/25/Other/kdpaTopo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实验室虚拟化主站厂站拓扑搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-25T09:30:00+08:00">
+                2019-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kedong/" itemprop="url" rel="index">
+                    <span itemprop="name">Kedong</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  实训平台-主站厂站虚拟化环境搭建
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/virt_labo.jpg" alt></p>
+<h3 id="虚拟化正向隔离"><a href="#虚拟化正向隔离" class="headerlink" title="虚拟化正向隔离"></a>虚拟化正向隔离</h3><h4 id="①创建虚拟化正向隔离组件-SW-1，开机"><a href="#①创建虚拟化正向隔离组件-SW-1，开机" class="headerlink" title="①创建虚拟化正向隔离组件 SW_1，开机"></a>①创建虚拟化正向隔离组件 SW_1，开机</h4><h4 id="②创建虚拟交换机-Switch-2，开机"><a href="#②创建虚拟交换机-Switch-2，开机" class="headerlink" title="②创建虚拟交换机 Switch_2，开机"></a>②创建虚拟交换机 Switch_2，开机</h4><h4 id="③创建虚拟交换机-Switch-3，开机"><a href="#③创建虚拟交换机-Switch-3，开机" class="headerlink" title="③创建虚拟交换机 Switch_3，开机"></a>③创建虚拟交换机 Switch_3，开机</h4><h4 id="④创建虚拟主机-win7-2-ok-主站PC-PC-4，开机"><a href="#④创建虚拟主机-win7-2-ok-主站PC-PC-4，开机" class="headerlink" title="④创建虚拟主机[win7-2-ok]-主站PC PC_4，开机"></a>④创建虚拟主机[win7-2-ok]-主站PC PC_4，开机</h4><h4 id="⑤创建虚拟主机-win7-2-ok-安全三区PC-PC-5，开机"><a href="#⑤创建虚拟主机-win7-2-ok-安全三区PC-PC-5，开机" class="headerlink" title="⑤创建虚拟主机[win7-2-ok]-安全三区PC PC_5，开机"></a>⑤创建虚拟主机[win7-2-ok]-安全三区PC PC_5，开机</h4><h4 id="⑥创建虚拟主机-win7-2-ok-隔离SW-1管理工具-PC-6，开机"><a href="#⑥创建虚拟主机-win7-2-ok-隔离SW-1管理工具-PC-6，开机" class="headerlink" title="⑥创建虚拟主机[win7-2-ok]-隔离SW_1管理工具 PC_6，开机"></a>⑥创建虚拟主机[win7-2-ok]-隔离SW_1管理工具 PC_6，开机</h4><h4 id="⑦配置PC-4IP地址：192-168-1-10-255-255-255-0-192-168-1-1"><a href="#⑦配置PC-4IP地址：192-168-1-10-255-255-255-0-192-168-1-1" class="headerlink" title="⑦配置PC_4IP地址：192.168.1.10 255.255.255.0 192.168.1.1"></a>⑦配置PC_4IP地址：192.168.1.10 255.255.255.0 192.168.1.1</h4><h4 id="⑧配置PC-5IP地址：192-168-1-20-255-255-255-0-192-168-1-1"><a href="#⑧配置PC-5IP地址：192-168-1-20-255-255-255-0-192-168-1-1" class="headerlink" title="⑧配置PC_5IP地址：192.168.1.20 255.255.255.0 192.168.1.1"></a>⑧配置PC_5IP地址：192.168.1.20 255.255.255.0 192.168.1.1</h4><h4 id="⑨配置Switch-2：1-4口配置VLAN1001"><a href="#⑨配置Switch-2：1-4口配置VLAN1001" class="headerlink" title="⑨配置Switch_2：1-4口配置VLAN1001"></a>⑨配置Switch_2：1-4口配置VLAN1001</h4><h4 id="⑩配置Switch-3：1-4口配置VLAN1002"><a href="#⑩配置Switch-3：1-4口配置VLAN1002" class="headerlink" title="⑩配置Switch_3：1-4口配置VLAN1002"></a>⑩配置Switch_3：1-4口配置VLAN1002</h4><h4 id="⑪创建串口线，连接SW-1串口（内）与PC-6"><a href="#⑪创建串口线，连接SW-1串口（内）与PC-6" class="headerlink" title="⑪创建串口线，连接SW_1串口（内）与PC_6"></a>⑪创建串口线，连接SW_1串口（内）与PC_6</h4><h4 id="⑫创建网线，连接SW-1网卡0（内）与Switch-2网口1"><a href="#⑫创建网线，连接SW-1网卡0（内）与Switch-2网口1" class="headerlink" title="⑫创建网线，连接SW_1网卡0（内）与Switch_2网口1"></a>⑫创建网线，连接SW_1网卡0（内）与Switch_2网口1</h4><h4 id="⑬创建网线，连接SW-1网卡0（外）与Switch-3网口1"><a href="#⑬创建网线，连接SW-1网卡0（外）与Switch-3网口1" class="headerlink" title="⑬创建网线，连接SW_1网卡0（外）与Switch_3网口1"></a>⑬创建网线，连接SW_1网卡0（外）与Switch_3网口1</h4><h4 id="⑭创建网线，连接PC-4网卡0与Switch-2网口2"><a href="#⑭创建网线，连接PC-4网卡0与Switch-2网口2" class="headerlink" title="⑭创建网线，连接PC_4网卡0与Switch_2网口2"></a>⑭创建网线，连接PC_4网卡0与Switch_2网口2</h4><h4 id="⑮创建网线，连接PC-5网卡0与Switch-3网口2"><a href="#⑮创建网线，连接PC-5网卡0与Switch-3网口2" class="headerlink" title="⑮创建网线，连接PC_5网卡0与Switch_3网口2"></a>⑮创建网线，连接PC_5网卡0与Switch_3网口2</h4><h4 id="⑯配置正向隔离管理工具PC-6："><a href="#⑯配置正向隔离管理工具PC-6：" class="headerlink" title="⑯配置正向隔离管理工具PC_6："></a>⑯配置正向隔离管理工具PC_6：</h4><p><strong>配置管理工具。</strong></p>
+<ul>
+<li>PC_6右键 -&gt; 上传/下载 -&gt; 传入vc_redist.2015.x64与全QT界面隔离管理工具中包含vcruntime140.dll，libcrypto-1_1.dll。 -&gt; 关闭</li>
+<li>安装vc_redist.2015.x64</li>
+<li>打开全QT界面隔离管理工具Stonewall.exe</li>
+<li>屏幕分辨率 -&gt; 1024×768</li>
+<li>用户名：admin 密码：111111</li>
+<li>串口登录。 串口：COM1。 频率：115200。 权限：管理员。 √ 正向隔离。</li>
+</ul>
+<p><strong>设备配置 -&gt; 基本配置</strong></p>
+<ul>
+<li>管理IP：     无     -&gt; 不填</li>
+<li>设备名称：   zsw     -&gt; 自定义</li>
+<li>点击写入</li>
+</ul>
+<p><strong>规则配置 -&gt; 主机信息1 -&gt; 添加</strong></p>
+<ul>
+<li><p>SW_1 -&gt; 进入内网隔离系统 -&gt; 清除主机信息与连接信息 -&gt; 删除/etc/mac.conf 和 /etc/rules</p>
+</li>
+<li><p>√ IP和MAC地址绑定</p>
+</li>
+<li><p>主机名：   PC_4            -&gt; 自定义</p>
+</li>
+<li><p>MAC1：    FA:16:3E:40:11:01 -&gt; 主机网卡MAC地址</p>
+</li>
+<li><p>主机IP：   192.168.1.10      -&gt; 主机网卡ip地址</p>
+</li>
+<li><p>主机虚拟IP1：192.168.1.11     -&gt; ETH0协商IP与主机同网段时自动生成,不通网段时填写一个ETH0所在网段下任意IP地址</p>
+</li>
+<li><p>主机虚拟ip2：可以不填</p>
+</li>
+</ul>
+<p><strong>规则配置 -&gt; 主机信息2 -&gt; 添加</strong></p>
+<ul>
+<li>√ IP和MAC地址绑定</li>
+<li>主机名：   PC_5          -&gt; 自定义</li>
+<li>MAC1：    FA:16:3E:40:11:02 -&gt; 主机网卡MAC地址</li>
+<li>主机IP：   192.168.1.20      -&gt; 主机网卡ip地址</li>
+<li>主机虚拟IP1：192.168.1.21     -&gt; ETH0协商IP与主机同网段时自动生成,不通网段时填写一个ETH0所在网段下任意IP地址</li>
+<li>主机虚拟ip2：可以不填</li>
+</ul>
+<p><strong>规则配置 -&gt; 连接信息</strong></p>
+<ul>
+<li>规则名：       rule         -&gt; 自定义</li>
+<li>(内网)IP地址： 192.100.1.10</li>
+<li>(内网)虚拟IP： 192.100.1.11</li>
+<li>(内网)网口号： ETH0/网口0</li>
+<li>(外网)IP地址： 192.100.1.20</li>
+<li>(外网)虚拟IP： 192.100.1.21</li>
+<li>(外网)网口号： ETH0/网口0</li>
+<li>协议：        TCP</li>
+</ul>
+<h4 id="⑰配置后查看SW-1-etc-mac-conf和-etc-rules是否与配置相同。重启SW-1内网隔离与外网隔离。"><a href="#⑰配置后查看SW-1-etc-mac-conf和-etc-rules是否与配置相同。重启SW-1内网隔离与外网隔离。" class="headerlink" title="⑰配置后查看SW_1 /etc/mac.conf和/etc/rules是否与配置相同。重启SW_1内网隔离与外网隔离。"></a>⑰配置后查看SW_1 /etc/mac.conf和/etc/rules是否与配置相同。重启SW_1内网隔离与外网隔离。</h4><ul>
+<li>正向隔离： 发送端为内网 接收端为外网</li>
+<li>sender：PC_4 receiver：PC_5</li>
+</ul>
+<h4 id="⑱配置及启动正向隔离外网接收端工具。"><a href="#⑱配置及启动正向隔离外网接收端工具。" class="headerlink" title="⑱配置及启动正向隔离外网接收端工具。"></a>⑱配置及启动正向隔离外网接收端工具。</h4><ul>
+<li><p>PC_5 -&gt; 进入系统 -&gt; 右键 -&gt; Terminal -&gt; 以管理员身份运行 -&gt; 进入目录 -&gt; D:\software\隔离传输软件\正向\receive</p>
+</li>
+<li><p>以jar包方式运行 java -jar StoneWall-recv.jar</p>
+</li>
+</ul>
+<h4 id="⑲配置及启动正向隔离内网发送端工具。"><a href="#⑲配置及启动正向隔离内网发送端工具。" class="headerlink" title="⑲配置及启动正向隔离内网发送端工具。"></a>⑲配置及启动正向隔离内网发送端工具。</h4><ul>
+<li><p>PC_4 -&gt; 进入系统 -&gt; 右键 -&gt; Terminal -&gt; 以管理员身份运行 -&gt; 进入目录 -&gt; D:\software\隔离传输软件\send</p>
+</li>
+<li><p>以jar包方式运行 java -jar StoneWall-send.jar</p>
+</li>
+<li><p>待发送的文件（任何类型）-&gt; 右键 -&gt; 发送</p>
+<ul>
+<li>任务名称：   task        √ 主任务</li>
+<li>目的IP地址： 192.168.1.21 -&gt; 接收端虚拟IP地址</li>
+<li>目的端口号： 7777</li>
+<li>目的文件夹： d:/test      -&gt; 自定义</li>
+<li>√ 立即发送</li>
+<li>查看日志及接收端是否发送成功。</li>
+</ul>
+</li>
+</ul>
+<h3 id="虚拟化反向隔离"><a href="#虚拟化反向隔离" class="headerlink" title="虚拟化反向隔离"></a>虚拟化反向隔离</h3><h4 id="⑳创建虚拟化反向隔离组件-SW-2，开机"><a href="#⑳创建虚拟化反向隔离组件-SW-2，开机" class="headerlink" title="⑳创建虚拟化反向隔离组件 SW_2，开机"></a>⑳创建虚拟化反向隔离组件 SW_2，开机</h4><h4 id="㉑创建虚拟主机-win7-2-ok-隔离SW-2管理工具-PC-7，开机"><a href="#㉑创建虚拟主机-win7-2-ok-隔离SW-2管理工具-PC-7，开机" class="headerlink" title="㉑创建虚拟主机[win7-2-ok]-隔离SW_2管理工具 PC_7，开机"></a>㉑创建虚拟主机[win7-2-ok]-隔离SW_2管理工具 PC_7，开机</h4><h4 id="㉒创建串口线，连接SW-2串口（外）与PC-7"><a href="#㉒创建串口线，连接SW-2串口（外）与PC-7" class="headerlink" title="㉒创建串口线，连接SW_2串口（外）与PC_7"></a>㉒创建串口线，连接SW_2串口（外）与PC_7</h4><h4 id="㉓创建网线，连接SW-2网卡0（内）与Switch-2网口3"><a href="#㉓创建网线，连接SW-2网卡0（内）与Switch-2网口3" class="headerlink" title="㉓创建网线，连接SW_2网卡0（内）与Switch_2网口3"></a>㉓创建网线，连接SW_2网卡0（内）与Switch_2网口3</h4><h4 id="㉔创建网线，连接SW-2网卡0（外）与Switch-3网口3"><a href="#㉔创建网线，连接SW-2网卡0（外）与Switch-3网口3" class="headerlink" title="㉔创建网线，连接SW_2网卡0（外）与Switch_3网口3"></a>㉔创建网线，连接SW_2网卡0（外）与Switch_3网口3</h4><h4 id="㉕⑯配置反向隔离管理工具PC-7："><a href="#㉕⑯配置反向隔离管理工具PC-7：" class="headerlink" title="㉕⑯配置反向隔离管理工具PC_7："></a>㉕⑯配置反向隔离管理工具PC_7：</h4><p><strong>配置管理工具。</strong></p>
+<ul>
+<li>PC_7右键 -&gt; 上传/下载 -&gt; 传入vc_redist.2015.x64与全QT界面隔离管理工具中包含vcruntime140.dll，libcrypto-1_1.dll。 -&gt; 关闭</li>
+<li>安装vc_redist.2015.x64</li>
+<li>打开全QT界面隔离管理工具Stonewall.exe</li>
+<li>屏幕分辨率 -&gt; 1024×768</li>
+<li>用户名：admin 密码：111111</li>
+<li>串口登录。 串口：COM1。 频率：115200。 权限：管理员。 √ 反向隔离。</li>
+</ul>
+<p><strong>设备配置 -&gt; 基本配置</strong></p>
+<ul>
+<li>管理IP：     无     -&gt; 不填</li>
+<li>设备名称：   fsw     -&gt; 自定义</li>
+<li>ETH0协商IP： 192.168.1.200  -&gt; 与发送端须配置成相同网段</li>
+<li>ETH1协商IP： 0.0.0.0        -&gt; 可不做配置</li>
+</ul>
+<p><strong>规则配置 -&gt; 主机信息1 -&gt; 添加</strong></p>
+<ul>
+<li>SW_2 -&gt; 进入外网隔离系统 -&gt; 清除主机信息与连接信息 -&gt; 删除/etc/mac.conf 和 /etc/rules</li>
+<li>√ IP和MAC地址绑定</li>
+<li>主机名：   PC_5          -&gt; 自定义</li>
+<li>MAC1：    FA:16:3E:40:11:02 -&gt; 主机网卡MAC地址</li>
+<li>主机IP：   192.168.1.20      -&gt; 主机网卡ip地址</li>
+<li>主机虚拟IP1：192.168.1.22     -&gt; ETH0协商IP与主机同网段时自动生成,不通网段时填写一个ETH0所在网段下任意IP地址</li>
+<li>主机虚拟ip2：可以不填</li>
+</ul>
+<p><strong>规则配置 -&gt; 主机信息2 -&gt; 添加</strong></p>
+<ul>
+<li>√ IP和MAC地址绑定</li>
+<li>主机名：   PC_4            -&gt; 自定义</li>
+<li>MAC1：    FA:16:3E:40:11:01 -&gt; 主机网卡MAC地址</li>
+<li>主机IP：   192.168.1.10      -&gt; 主机网卡ip地址</li>
+<li>主机虚拟IP1：192.168.1.12     -&gt; ETH0协商IP与主机同网段时自动生成,不通网段时填写一个ETH0所在网段下任意IP地址</li>
+<li>主机虚拟ip2：可以不填</li>
+</ul>
+<p><strong>规则配置 -&gt; 连接信息</strong></p>
+<ul>
+<li>规则名：       rule         -&gt; 自定义</li>
+<li>(内网)IP地址： 192.100.1.10</li>
+<li>(内网)虚拟IP： 192.100.1.12</li>
+<li>(内网)网口号： ETH0/网口0</li>
+<li>(外网)IP地址： 192.100.1.20</li>
+<li>(外网)虚拟IP： 192.100.1.22</li>
+<li>(外网)网口号： ETH0/网口0</li>
+<li>协议：        UDP</li>
+</ul>
+<p><strong>证书秘钥 -&gt; 设备秘钥</strong></p>
+<ul>
+<li>设备密钥 √ RSA -&gt; 导出设备证书文件 -&gt; fsw.cer</li>
+<li>上传/下载 -&gt; fsw.cer导出到本地</li>
+</ul>
+<h4 id="㉖配置及启动反向隔离内网接收端工具。"><a href="#㉖配置及启动反向隔离内网接收端工具。" class="headerlink" title="㉖配置及启动反向隔离内网接收端工具。"></a>㉖配置及启动反向隔离内网接收端工具。</h4><ul>
+<li><p>上传/下载 -&gt; 新的隔离接收端工具new_udp_recv_4.2.2.jar -&gt; 复制到目录D:\software\隔离传输软件\反向\receive\下</p>
+</li>
+<li><p>右键 -&gt; Terminal -&gt; 以管理员身份运行 -&gt; 进入目录 -&gt; D:\software\隔离传输软件\反向\receive</p>
+</li>
+<li><p>以jar包方式运行 java -jar new_udp_recv_4.2.2.jar</p>
+</li>
+</ul>
+<h4 id="㉗配置及启动反向隔离外网发送端工具。"><a href="#㉗配置及启动反向隔离外网发送端工具。" class="headerlink" title="㉗配置及启动反向隔离外网发送端工具。"></a>㉗配置及启动反向隔离外网发送端工具。</h4><ul>
+<li><p>上传/下载 -&gt; 新的隔离接收端工具new_udp_send_4.2.2.jar -&gt; 复制到目录D:\software\隔离传输软件\反向\send\下</p>
+</li>
+<li><p>上传/下载 -&gt; 反向隔离端证书 fsw.cer</p>
+</li>
+<li><p>检查config目录下是否有**.p12文件，若存在，则删除。</p>
+</li>
+<li><p>启动传输软件。 new_udp_recv_4.2.2.jar</p>
+</li>
+<li><p>右键 -&gt; 以管理员身份运行 -&gt; 命令行 -&gt; 进入目录 -&gt; D:\software\隔离传输软件\反向\send</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -jar new_udp_recv_4.2.2.jar</span><br><span class="line">设置密码口令保护窗口如果报错，需先运行jreUpdate1.8.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>出现提示：系统检测到密钥尚未存在，是否需要生成密钥？ -&gt; 是</p>
+</li>
+<li><p>创建登录口令：123456。 确定，提示操作成功。</p>
+</li>
+<li><p>登录窗口：</p>
+<ul>
+<li>操作员名称： administrator</li>
+<li>操作员密码： 12345678</li>
+<li>密钥保护口令： 123456</li>
+</ul>
+</li>
+<li></li>
+<li><p>管理 -&gt; 密钥管理 -&gt; 导出密钥。 -&gt; sender.cer</p>
+</li>
+<li><p>上传/下载 -&gt; 反向隔离发送端证书 sender.cer</p>
+</li>
+<li><p>设定 -&gt; 配置加密隧道</p>
+<ul>
+<li>隧道名称： Tunnel-1</li>
+<li>隧道的协商IP地址： 192.168.1.200  -&gt; 设备ETH0协商IP</li>
+<li>隧道的协商端口：   4558</li>
+<li>隧道每次通过的文件数： 100</li>
+<li>隔离设备证书路径： ../.. fsw.cer</li>
+</ul>
+</li>
+<li><p>设定 -&gt; 配置链路信息</p>
+<ul>
+<li>链路名称： Link-1</li>
+<li>目的IP地址： 192.168.1.12  -&gt; 接收端IP地址，正反向隔离在相同环境的情况下，配置虚拟IP。</li>
+<li>目的端口：   7777</li>
+<li>发送失败等待周期(秒)： 30</li>
+<li>使用隧道：   Tunnel-1</li>
+</ul>
+</li>
+</ul>
+<h4 id="㉘PC-7导入发送端证书。"><a href="#㉘PC-7导入发送端证书。" class="headerlink" title="㉘PC_7导入发送端证书。"></a>㉘PC_7导入发送端证书。</h4><ul>
+<li>发送端证书 -&gt; 删除其他</li>
+<li>发送端证书 -&gt; 添加<ul>
+<li>发送端IP： 192.168.1.20 -&gt; 此处为发送端IP，不为虚拟IP</li>
+<li>证书标识： sender.cer</li>
+</ul>
+</li>
+</ul>
+<h4 id="㉙重启SW-2内网隔离与外网隔离。"><a href="#㉙重启SW-2内网隔离与外网隔离。" class="headerlink" title="㉙重启SW_2内网隔离与外网隔离。"></a>㉙重启SW_2内网隔离与外网隔离。</h4><h4 id="㉚PC-5发送E文本。"><a href="#㉚PC-5发送E文本。" class="headerlink" title="㉚PC_5发送E文本。"></a>㉚PC_5发送E文本。</h4><ul>
+<li>待发送的文件（E文本）-&gt; 右键 -&gt; 发送<ul>
+<li>任务名称：   task1</li>
+<li>目的文件夹： d:/test      -&gt; 自定义</li>
+<li>选择链路 -&gt; Link-1 -&gt; 添加</li>
+<li>不符合发送条件的文件备份至 -&gt; 当前文档目录</li>
+<li>查看日志及接收端是否发送成功。</li>
+<li>如果发现隔离发送进行中一直在校验E文本规范，不发送的情况，重新打开发送端工具。</li>
+</ul>
+</li>
+</ul>
+<h3 id="虚拟化纵向"><a href="#虚拟化纵向" class="headerlink" title="虚拟化纵向"></a>虚拟化纵向</h3><h4 id="㉛创建虚拟化纵向-电力纵向-PS-1，开机"><a href="#㉛创建虚拟化纵向-电力纵向-PS-1，开机" class="headerlink" title="㉛创建虚拟化纵向[电力纵向]PS_1，开机"></a>㉛创建虚拟化纵向[电力纵向]PS_1，开机</h4><h4 id="㉜创建虚拟化纵向-电力纵向-PS-2，开机"><a href="#㉜创建虚拟化纵向-电力纵向-PS-2，开机" class="headerlink" title="㉜创建虚拟化纵向[电力纵向]PS_2，开机"></a>㉜创建虚拟化纵向[电力纵向]PS_2，开机</h4><h4 id="㉝创建虚拟路由器R，配置：网卡1：192-168-1-0-24-网卡2：192-168-2-0-24，开机"><a href="#㉝创建虚拟路由器R，配置：网卡1：192-168-1-0-24-网卡2：192-168-2-0-24，开机" class="headerlink" title="㉝创建虚拟路由器R，配置：网卡1：192.168.1.0/24 网卡2：192.168.2.0/24，开机"></a>㉝创建虚拟路由器R，配置：网卡1：192.168.1.0/24 网卡2：192.168.2.0/24，开机</h4><h4 id="㉞创建虚拟交换机-Switch-1，开机"><a href="#㉞创建虚拟交换机-Switch-1，开机" class="headerlink" title="㉞创建虚拟交换机 Switch_1，开机"></a>㉞创建虚拟交换机 Switch_1，开机</h4><h4 id="㉟创建虚拟主机-win7-2-PC-3，开机"><a href="#㉟创建虚拟主机-win7-2-PC-3，开机" class="headerlink" title="㉟创建虚拟主机[win7-2]PC_3，开机"></a>㉟创建虚拟主机[win7-2]PC_3，开机</h4><h4 id="㊱创建虚拟主机-win7-2-PC-2，开机"><a href="#㊱创建虚拟主机-win7-2-PC-2，开机" class="headerlink" title="㊱创建虚拟主机[win7-2]PC_2，开机"></a>㊱创建虚拟主机[win7-2]PC_2，开机</h4><h4 id="㊲创建虚拟主机-win7-2-PC-1，开机"><a href="#㊲创建虚拟主机-win7-2-PC-1，开机" class="headerlink" title="㊲创建虚拟主机[win7-2]PC_1，开机"></a>㊲创建虚拟主机[win7-2]PC_1，开机</h4><h4 id="㊳创建虚拟USB-KEY-UK-1，插入PS-1"><a href="#㊳创建虚拟USB-KEY-UK-1，插入PS-1" class="headerlink" title="㊳创建虚拟USB-KEY UK_1，插入PS_1"></a>㊳创建虚拟USB-KEY UK_1，插入PS_1</h4><h4 id="㊴创建虚拟USB-KEY-UK-2，插入PS-2"><a href="#㊴创建虚拟USB-KEY-UK-2，插入PS-2" class="headerlink" title="㊴创建虚拟USB-KEY UK_2，插入PS_2"></a>㊴创建虚拟USB-KEY UK_2，插入PS_2</h4><h4 id="㊵配置Switch-1：1-2口配置VLAN1003"><a href="#㊵配置Switch-1：1-2口配置VLAN1003" class="headerlink" title="㊵配置Switch_1：1-2口配置VLAN1003"></a>㊵配置Switch_1：1-2口配置VLAN1003</h4><h4 id="㊶配置PC-3IP地址：169-254-200-201-255-255-255-0-169-254-200-1"><a href="#㊶配置PC-3IP地址：169-254-200-201-255-255-255-0-169-254-200-1" class="headerlink" title="㊶配置PC_3IP地址：169.254.200.201 255.255.255.0 169.254.200.1"></a>㊶配置PC_3IP地址：169.254.200.201 255.255.255.0 169.254.200.1</h4><h4 id="㊷配置PC-2IP地址：169-254-200-201-255-255-255-0-169-254-200-1"><a href="#㊷配置PC-2IP地址：169-254-200-201-255-255-255-0-169-254-200-1" class="headerlink" title="㊷配置PC_2IP地址：169.254.200.201 255.255.255.0 169.254.200.1"></a>㊷配置PC_2IP地址：169.254.200.201 255.255.255.0 169.254.200.1</h4><h4 id="㊸配置PC-1IP地址：192-168-2-20-255-255-255-0-192-168-2-1"><a href="#㊸配置PC-1IP地址：192-168-2-20-255-255-255-0-192-168-2-1" class="headerlink" title="㊸配置PC_1IP地址：192.168.2.20 255.255.255.0 192.168.2.1"></a>㊸配置PC_1IP地址：192.168.2.20 255.255.255.0 192.168.2.1</h4><h4 id="㊹创建网线，连接PS-1网口0与Switch-2网口4"><a href="#㊹创建网线，连接PS-1网口0与Switch-2网口4" class="headerlink" title="㊹创建网线，连接PS_1网口0与Switch_2网口4"></a>㊹创建网线，连接PS_1网口0与Switch_2网口4</h4><h4 id="㊺创建网线，连接PS-1网口1与R网口1"><a href="#㊺创建网线，连接PS-1网口1与R网口1" class="headerlink" title="㊺创建网线，连接PS_1网口1与R网口1"></a>㊺创建网线，连接PS_1网口1与R网口1</h4><h4 id="㊻创建网线，连接PS-2网口1与R网口2"><a href="#㊻创建网线，连接PS-2网口1与R网口2" class="headerlink" title="㊻创建网线，连接PS_2网口1与R网口2"></a>㊻创建网线，连接PS_2网口1与R网口2</h4><h4 id="㊼创建网线，连接PS-2网口0与Switch-1网口1"><a href="#㊼创建网线，连接PS-2网口0与Switch-1网口1" class="headerlink" title="㊼创建网线，连接PS_2网口0与Switch_1网口1"></a>㊼创建网线，连接PS_2网口0与Switch_1网口1</h4><h4 id="㊽创建网线，连接PC-1网卡0与Switch-1网口2"><a href="#㊽创建网线，连接PC-1网卡0与Switch-1网口2" class="headerlink" title="㊽创建网线，连接PC_1网卡0与Switch_1网口2"></a>㊽创建网线，连接PC_1网卡0与Switch_1网口2</h4><h4 id="㊾创建网线，连接PC-2网卡0与PS-2网卡4"><a href="#㊾创建网线，连接PC-2网卡0与PS-2网卡4" class="headerlink" title="㊾创建网线，连接PC_2网卡0与PS_2网卡4"></a>㊾创建网线，连接PC_2网卡0与PS_2网卡4</h4><h4 id="㊿创建网线，连接PC-3网卡0与PS-1网卡4"><a href="#㊿创建网线，连接PC-3网卡0与PS-1网卡4" class="headerlink" title="㊿创建网线，连接PC_3网卡0与PS_1网卡4"></a>㊿创建网线，连接PC_3网卡0与PS_1网卡4</h4><h4 id="51-PC-3本地安装及配置纵向PS-1："><a href="#51-PC-3本地安装及配置纵向PS-1：" class="headerlink" title="(51)PC_3本地安装及配置纵向PS_1："></a>(51)PC_3本地安装及配置纵向PS_1：</h4><p>安装纵向管理工具：</p>
+<ul>
+<li>目录地址：d:/software/PSTunnel2000加密装置千兆管理工具.exe</li>
+<li>屏幕分辨率 -&gt; 1024×768<br>添加新操作员：</li>
+<li>管理工具 -&gt; 右键 -&gt; 以管理员身份运行<ul>
+<li>操作员：init</li>
+<li>密码：Tun-2000</li>
+<li>设备IP：169.254.200.200</li>
+</ul>
+</li>
+<li>-&gt; 操作员 -&gt; 操作员管理 -&gt; 添加：+操作员： user -&gt; 确定<br>导出导入证书：</li>
+<li>初始化 -&gt; 生成设备密钥及证书请求 -&gt; 下一步 -&gt; 填写省/市/设备名 -&gt; 下一步 -&gt; 生成.csr证书</li>
+<li>证书转换。使用证书工具2.0将.csr证书转换为.cer证书。传入对端。</li>
+<li>证书 -&gt; 证书导入 -&gt; 远程设备证书 -&gt; 选择证书 -&gt; 确定<br>VLAN配置：</li>
+<li>本地ETH1：192.168.1.50 255.255.255.0 VLAN：0</li>
+<li>远程ETH1：192.168.2.50 255.255.255.0 VLAN：0<br>路由配置：</li>
+<li>目的地址：192.168.2.50</li>
+<li>子网掩码：255.255.255.0</li>
+<li>网关地址：192.168.1.1<br>安全隧道:</li>
+<li>-&gt; 恢复隧道配置 -&gt; 11.pbak -&gt; 配置写入装置 -&gt; 确定 -&gt; 修改隧道 -&gt; 确定<ul>
+<li>隧道名标识： 11 -&gt; 不支持修改</li>
+<li>本地IP： 192.168.1.50 -&gt; 本地ETH1</li>
+<li>远程IP： 192.168.2.50 -&gt; 远程ETH1</li>
+<li>255.255.255.0</li>
+<li>0.0.0.0</li>
+<li>0.0.0.0</li>
+<li>MTU：    1500<br>安全策略：</li>
+</ul>
+</li>
+<li>-&gt; 恢复策略配置 -&gt; 11.pbak -&gt; 配置写入装置 -&gt; 确定 -&gt; 修改策略 -&gt; 确定<ul>
+<li>标识id：0</li>
+<li>本地IP： 192.168.1.50 -&gt; 本地ETH1</li>
+<li>远程IP： 192.168.2.50 -&gt; 远程ETH1</li>
+<li>本地起始IP：192.168.1.1</li>
+<li>本地终止IP：192.168.1.254</li>
+<li>远程起始IP：192.168.2.1</li>
+<li>远程终止IP：192.168.2.254</li>
+<li>方向：双向</li>
+</ul>
+</li>
+</ul>
+<p>重置隧道：</p>
+<ul>
+<li>-&gt; 管理 -&gt; 重置隧道 -&gt; OPENED</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>*新纵向的用户名,密码：root, Tun-2000</li>
+<li>纵向内部查询路由命令：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monipead.arm -all</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="52-PC-2本地安装及配置纵向PS-2："><a href="#52-PC-2本地安装及配置纵向PS-2：" class="headerlink" title="(52)PC_2本地安装及配置纵向PS_2："></a>(52)PC_2本地安装及配置纵向PS_2：</h4><p>配置与以上相同，反向。</p>
+<h4 id="53-PC-4配置静态路由："><a href="#53-PC-4配置静态路由：" class="headerlink" title="(53)PC_4配置静态路由："></a>(53)PC_4配置静态路由：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add -p <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> mask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="54-PC-1配置静态路由："><a href="#54-PC-1配置静态路由：" class="headerlink" title="(54)PC_1配置静态路由："></a>(54)PC_1配置静态路由：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add -p <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> mask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="number">192.168</span><span class="number">.2</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="55-验证纵向的功能："><a href="#55-验证纵向的功能：" class="headerlink" title="(55)验证纵向的功能："></a>(55)验证纵向的功能：</h4><p>使用PC_4 ping PC_1</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping <span class="number">192.168</span><span class="number">.2</span><span class="number">.50</span></span><br></pre></td></tr></table></figure>
+
+<p>查看PS_2的eth1口是否抓到ESP报文包。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kedong/" rel="tag"><i class="fa fa-tag"></i> kedong</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/21/Other/虚拟化隔离安装配置手册/" rel="next" title="虚拟化隔离安装配置说明">
+                <i class="fa fa-chevron-left"></i> 虚拟化隔离安装配置说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/28/Linux/ab/" rel="prev" title="压力测试工具ab使用方法">
+                压力测试工具ab使用方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/matx.jpg" alt="圣特伦特星">
+            
+              <p class="site-author-name" itemprop="name">圣特伦特星</p>
+              <p class="site-description motion-element" itemprop="description">“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/shengteluntexing" target="_blank" title="SegmentFault">
+                      
+                        <i class="fa fa-fw fa-coffee"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/matianxin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:trentmtx@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/matianxin" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟化正向隔离"><span class="nav-number">1.</span> <span class="nav-text">虚拟化正向隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#①创建虚拟化正向隔离组件-SW-1，开机"><span class="nav-number">1.1.</span> <span class="nav-text">①创建虚拟化正向隔离组件 SW_1，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#②创建虚拟交换机-Switch-2，开机"><span class="nav-number">1.2.</span> <span class="nav-text">②创建虚拟交换机 Switch_2，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#③创建虚拟交换机-Switch-3，开机"><span class="nav-number">1.3.</span> <span class="nav-text">③创建虚拟交换机 Switch_3，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#④创建虚拟主机-win7-2-ok-主站PC-PC-4，开机"><span class="nav-number">1.4.</span> <span class="nav-text">④创建虚拟主机[win7-2-ok]-主站PC PC_4，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑤创建虚拟主机-win7-2-ok-安全三区PC-PC-5，开机"><span class="nav-number">1.5.</span> <span class="nav-text">⑤创建虚拟主机[win7-2-ok]-安全三区PC PC_5，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑥创建虚拟主机-win7-2-ok-隔离SW-1管理工具-PC-6，开机"><span class="nav-number">1.6.</span> <span class="nav-text">⑥创建虚拟主机[win7-2-ok]-隔离SW_1管理工具 PC_6，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑦配置PC-4IP地址：192-168-1-10-255-255-255-0-192-168-1-1"><span class="nav-number">1.7.</span> <span class="nav-text">⑦配置PC_4IP地址：192.168.1.10 255.255.255.0 192.168.1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑧配置PC-5IP地址：192-168-1-20-255-255-255-0-192-168-1-1"><span class="nav-number">1.8.</span> <span class="nav-text">⑧配置PC_5IP地址：192.168.1.20 255.255.255.0 192.168.1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑨配置Switch-2：1-4口配置VLAN1001"><span class="nav-number">1.9.</span> <span class="nav-text">⑨配置Switch_2：1-4口配置VLAN1001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑩配置Switch-3：1-4口配置VLAN1002"><span class="nav-number">1.10.</span> <span class="nav-text">⑩配置Switch_3：1-4口配置VLAN1002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑪创建串口线，连接SW-1串口（内）与PC-6"><span class="nav-number">1.11.</span> <span class="nav-text">⑪创建串口线，连接SW_1串口（内）与PC_6</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑫创建网线，连接SW-1网卡0（内）与Switch-2网口1"><span class="nav-number">1.12.</span> <span class="nav-text">⑫创建网线，连接SW_1网卡0（内）与Switch_2网口1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑬创建网线，连接SW-1网卡0（外）与Switch-3网口1"><span class="nav-number">1.13.</span> <span class="nav-text">⑬创建网线，连接SW_1网卡0（外）与Switch_3网口1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑭创建网线，连接PC-4网卡0与Switch-2网口2"><span class="nav-number">1.14.</span> <span class="nav-text">⑭创建网线，连接PC_4网卡0与Switch_2网口2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑮创建网线，连接PC-5网卡0与Switch-3网口2"><span class="nav-number">1.15.</span> <span class="nav-text">⑮创建网线，连接PC_5网卡0与Switch_3网口2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑯配置正向隔离管理工具PC-6："><span class="nav-number">1.16.</span> <span class="nav-text">⑯配置正向隔离管理工具PC_6：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑰配置后查看SW-1-etc-mac-conf和-etc-rules是否与配置相同。重启SW-1内网隔离与外网隔离。"><span class="nav-number">1.17.</span> <span class="nav-text">⑰配置后查看SW_1 /etc/mac.conf和/etc/rules是否与配置相同。重启SW_1内网隔离与外网隔离。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑱配置及启动正向隔离外网接收端工具。"><span class="nav-number">1.18.</span> <span class="nav-text">⑱配置及启动正向隔离外网接收端工具。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#⑲配置及启动正向隔离内网发送端工具。"><span class="nav-number">1.19.</span> <span class="nav-text">⑲配置及启动正向隔离内网发送端工具。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟化反向隔离"><span class="nav-number">2.</span> <span class="nav-text">虚拟化反向隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#⑳创建虚拟化反向隔离组件-SW-2，开机"><span class="nav-number">2.1.</span> <span class="nav-text">⑳创建虚拟化反向隔离组件 SW_2，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉑创建虚拟主机-win7-2-ok-隔离SW-2管理工具-PC-7，开机"><span class="nav-number">2.2.</span> <span class="nav-text">㉑创建虚拟主机[win7-2-ok]-隔离SW_2管理工具 PC_7，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉒创建串口线，连接SW-2串口（外）与PC-7"><span class="nav-number">2.3.</span> <span class="nav-text">㉒创建串口线，连接SW_2串口（外）与PC_7</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉓创建网线，连接SW-2网卡0（内）与Switch-2网口3"><span class="nav-number">2.4.</span> <span class="nav-text">㉓创建网线，连接SW_2网卡0（内）与Switch_2网口3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉔创建网线，连接SW-2网卡0（外）与Switch-3网口3"><span class="nav-number">2.5.</span> <span class="nav-text">㉔创建网线，连接SW_2网卡0（外）与Switch_3网口3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉕⑯配置反向隔离管理工具PC-7："><span class="nav-number">2.6.</span> <span class="nav-text">㉕⑯配置反向隔离管理工具PC_7：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉖配置及启动反向隔离内网接收端工具。"><span class="nav-number">2.7.</span> <span class="nav-text">㉖配置及启动反向隔离内网接收端工具。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉗配置及启动反向隔离外网发送端工具。"><span class="nav-number">2.8.</span> <span class="nav-text">㉗配置及启动反向隔离外网发送端工具。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉘PC-7导入发送端证书。"><span class="nav-number">2.9.</span> <span class="nav-text">㉘PC_7导入发送端证书。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉙重启SW-2内网隔离与外网隔离。"><span class="nav-number">2.10.</span> <span class="nav-text">㉙重启SW_2内网隔离与外网隔离。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉚PC-5发送E文本。"><span class="nav-number">2.11.</span> <span class="nav-text">㉚PC_5发送E文本。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟化纵向"><span class="nav-number">3.</span> <span class="nav-text">虚拟化纵向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#㉛创建虚拟化纵向-电力纵向-PS-1，开机"><span class="nav-number">3.1.</span> <span class="nav-text">㉛创建虚拟化纵向[电力纵向]PS_1，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉜创建虚拟化纵向-电力纵向-PS-2，开机"><span class="nav-number">3.2.</span> <span class="nav-text">㉜创建虚拟化纵向[电力纵向]PS_2，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉝创建虚拟路由器R，配置：网卡1：192-168-1-0-24-网卡2：192-168-2-0-24，开机"><span class="nav-number">3.3.</span> <span class="nav-text">㉝创建虚拟路由器R，配置：网卡1：192.168.1.0/24 网卡2：192.168.2.0/24，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉞创建虚拟交换机-Switch-1，开机"><span class="nav-number">3.4.</span> <span class="nav-text">㉞创建虚拟交换机 Switch_1，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㉟创建虚拟主机-win7-2-PC-3，开机"><span class="nav-number">3.5.</span> <span class="nav-text">㉟创建虚拟主机[win7-2]PC_3，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊱创建虚拟主机-win7-2-PC-2，开机"><span class="nav-number">3.6.</span> <span class="nav-text">㊱创建虚拟主机[win7-2]PC_2，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊲创建虚拟主机-win7-2-PC-1，开机"><span class="nav-number">3.7.</span> <span class="nav-text">㊲创建虚拟主机[win7-2]PC_1，开机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊳创建虚拟USB-KEY-UK-1，插入PS-1"><span class="nav-number">3.8.</span> <span class="nav-text">㊳创建虚拟USB-KEY UK_1，插入PS_1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊴创建虚拟USB-KEY-UK-2，插入PS-2"><span class="nav-number">3.9.</span> <span class="nav-text">㊴创建虚拟USB-KEY UK_2，插入PS_2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊵配置Switch-1：1-2口配置VLAN1003"><span class="nav-number">3.10.</span> <span class="nav-text">㊵配置Switch_1：1-2口配置VLAN1003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊶配置PC-3IP地址：169-254-200-201-255-255-255-0-169-254-200-1"><span class="nav-number">3.11.</span> <span class="nav-text">㊶配置PC_3IP地址：169.254.200.201 255.255.255.0 169.254.200.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊷配置PC-2IP地址：169-254-200-201-255-255-255-0-169-254-200-1"><span class="nav-number">3.12.</span> <span class="nav-text">㊷配置PC_2IP地址：169.254.200.201 255.255.255.0 169.254.200.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊸配置PC-1IP地址：192-168-2-20-255-255-255-0-192-168-2-1"><span class="nav-number">3.13.</span> <span class="nav-text">㊸配置PC_1IP地址：192.168.2.20 255.255.255.0 192.168.2.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊹创建网线，连接PS-1网口0与Switch-2网口4"><span class="nav-number">3.14.</span> <span class="nav-text">㊹创建网线，连接PS_1网口0与Switch_2网口4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊺创建网线，连接PS-1网口1与R网口1"><span class="nav-number">3.15.</span> <span class="nav-text">㊺创建网线，连接PS_1网口1与R网口1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊻创建网线，连接PS-2网口1与R网口2"><span class="nav-number">3.16.</span> <span class="nav-text">㊻创建网线，连接PS_2网口1与R网口2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊼创建网线，连接PS-2网口0与Switch-1网口1"><span class="nav-number">3.17.</span> <span class="nav-text">㊼创建网线，连接PS_2网口0与Switch_1网口1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊽创建网线，连接PC-1网卡0与Switch-1网口2"><span class="nav-number">3.18.</span> <span class="nav-text">㊽创建网线，连接PC_1网卡0与Switch_1网口2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊾创建网线，连接PC-2网卡0与PS-2网卡4"><span class="nav-number">3.19.</span> <span class="nav-text">㊾创建网线，连接PC_2网卡0与PS_2网卡4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#㊿创建网线，连接PC-3网卡0与PS-1网卡4"><span class="nav-number">3.20.</span> <span class="nav-text">㊿创建网线，连接PC_3网卡0与PS_1网卡4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#51-PC-3本地安装及配置纵向PS-1："><span class="nav-number">3.21.</span> <span class="nav-text">(51)PC_3本地安装及配置纵向PS_1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#52-PC-2本地安装及配置纵向PS-2："><span class="nav-number">3.22.</span> <span class="nav-text">(52)PC_2本地安装及配置纵向PS_2：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#53-PC-4配置静态路由："><span class="nav-number">3.23.</span> <span class="nav-text">(53)PC_4配置静态路由：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#54-PC-1配置静态路由："><span class="nav-number">3.24.</span> <span class="nav-text">(54)PC_1配置静态路由：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#55-验证纵向的功能："><span class="nav-number">3.25.</span> <span class="nav-text">(55)验证纵向的功能：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="200" height="200" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">4</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+			  
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">圣特伦特星</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+>>>>>>> 9e302a13055574168cd05b455b005761c6bd137a

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<!DOCTYPE html>
 
 
@@ -1229,3 +1230,1236 @@
 
 </body>
 </html>
+=======
+﻿<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ctf,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="CTF中Crypto题目的常见题型">
+<meta name="keywords" content="ctf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF中Crypto题目的常见题型">
+<meta property="og:url" content="https://matianxin.github.io/2020/05/20/CTF/CTFCrypto/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="CTF中Crypto题目的常见题型">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-20T09:12:02.723Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CTF中Crypto题目的常见题型">
+<meta name="twitter:description" content="CTF中Crypto题目的常见题型">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://matianxin.github.io/2020/05/20/CTF/CTFCrypto/">
+
+
+
+
+
+  <title>CTF中Crypto题目的常见题型 | 圣特伦特星</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
+	
+	<a href="https://github.com/matianxin" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">圣特伦特星</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">差以毫厘，谬以千里。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2020/05/20/CTF/CTFCrypto/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CTF中Crypto题目的常见题型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-20T11:00:00+08:00">
+                2020-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  CTF中Crypto题目的常见题型
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="CTF中Crypto题目的常见题型"><a href="#CTF中Crypto题目的常见题型" class="headerlink" title="CTF中Crypto题目的常见题型"></a>CTF中Crypto题目的常见题型</h3><ul>
+<li><p>BugKu 提供了很多加解密工具，链接：<a href="http://tool.bugku.com/" target="_blank" rel="noopener">http://tool.bugku.com/</a></p>
+</li>
+<li><p>SSL在线工具网址提供了很多工具，链接：<a href="http://www.ssleye.com/" target="_blank" rel="noopener">http://www.ssleye.com/</a></p>
+</li>
+<li><p>text bin hex base64 dec 转码工具：<a href="https://conv.darkbyte.ru/" target="_blank" rel="noopener">https://conv.darkbyte.ru/</a></p>
+</li>
+</ul>
+<h4 id="1-摩斯密码-Morse编码"><a href="#1-摩斯密码-Morse编码" class="headerlink" title="1. 摩斯密码 / Morse编码"></a>1. 摩斯密码 / Morse编码</h4><p>摩尔斯电码(Morse code)是一种时通时断的信号代码，通过不同的排列 顺序来表达不同的英文字母、数字和标点符号。是由美国人艾尔菲德·维 尔(Alfred Lewis Vail)与萨缪尔·摩尔斯(Samuel Finley Breese Morse) 在1836年发明。由点（·）和划（-）组成。</p>
+<p>特征：点和横的组合。</p>
+<p>在线工具：<br><a href="http://www.zhongguosou.com/zonghe/moErSiCodeConverter.aspx" target="_blank" rel="noopener">http://www.zhongguosou.com/zonghe/moErSiCodeConverter.aspx</a><br><a href="http://tool.bugku.com/mosi/" target="_blank" rel="noopener">http://tool.bugku.com/mosi/</a></p>
+<p>例如：-… -.- -.-. - ..-. – .. … -.-.</p>
+<p>解密结果：BKCTFMISC</p>
+<p>–/—/.-./…/.<br>解密结果：MORSE</p>
+<h4 id="2-ASCII编码"><a href="#2-ASCII编码" class="headerlink" title="2.ASCII编码"></a>2.ASCII编码</h4><p>ASCII(American Standard Code for Information Interchange，美国信息交换标准代码)是基于拉丁字母的一套 电脑编码系统，主要用于显示现代英语和其他西欧语言。它是现今最通用的单字节编码系统，并等同于国际标准ISO/IEC 646。</p>
+<p>例如：72 105 65 115 99 105 105<br>解密结果：H i A s c i i</p>
+<p>特点：一般常用字符为0-9（48-57）、A-Z（65-90）、a-z（97-122）、空格（32）</p>
+<p>在线工具：<a href="http://www.ab126.com/goju/1711.html" target="_blank" rel="noopener">http://www.ab126.com/goju/1711.html</a></p>
+<h4 id="3-Tap-Code敲击码"><a href="#3-Tap-Code敲击码" class="headerlink" title="3.Tap Code敲击码"></a>3.Tap Code敲击码</h4><p>敲击码(Tap code)是一种以非常简单的方式对文本信息进行 编码的方法。因该编码对信息通过使用一系列的点击声音来编 码而命名，敲击码是基于 5 ×5 方格波利比奥斯方阵来实现的， 不同点是是用 K 字母被整合到 C 中。<br>   1  2  3  4  5<br>1  A  B C/K D  E<br>2  F  G  H  I  J<br>3  L  M  N  O  P<br>4  Q  R  S  T  U<br>5  V  W  X  Y  Z</p>
+<p>例如：2,3 1,5 3,1 3,1 3,4<br>.. …/. …../… ./… ./… …./<br>解密结果：H E L L O</p>
+<p>ps. 当出现1,3时，对比C/K，选择更合适的结果</p>
+<h4 id="4-Base编码"><a href="#4-Base编码" class="headerlink" title="4.Base编码"></a>4.Base编码</h4><p>Base64是网络上最常见的用于传输8Bit字节码的编码方式之一，Base64 就是一种基于64(65)个可打印字符来表示二进制数据的方法。 a-z、A-Z、0-9、符号“+”、“/”（再加上作为补位的”=”，实际上是 65个字符） 。</p>
+<p>Base xx 中的 xx 表示的是采用多少个字符进行编码，比如说 base64 就是采用 64 个字符编码，由于 2 的 6 次方等于 64，所以每 6 个比特 为一个单元，对应某个可打印字符。</p>
+<p>例如：d2VsY29tZQ==<br>解密结果：welcome</p>
+<p>特点：base64 结尾可能会有=号，但最多有2个 。 base32 结尾可能会有=号,最多有 3 个等号。<br>根据 base 的不同，字符集会有所限制 。 有可能需要自己加等号。</p>
+<p>在线工具：<a href="http://tool.chinaz.com/tools/base64.aspx" target="_blank" rel="noopener">http://tool.chinaz.com/tools/base64.aspx</a></p>
+<h4 id="5-URL编码"><a href="#5-URL编码" class="headerlink" title="5.URL编码"></a>5.URL编码</h4><p>URL编码,又叫百分号编码，是统一资源定位(URL)编码方式。URL地址（常说网址）规定了常用地数字，字母可以直接使用，另外一批作为特殊用户字符也可以直接用（/,:@等），剩下的其它所有字符必须通过%xx编码 处理。现在已经成为一种规范了，基本所有程序语言都有这种编码，如js： 有encodeURI、encodeURIComponent，PHP有urlencode、urldecode等。编 码方法很简单，在该字节ascii码的的16进制字符前面加%.<br>如空格字符， ascii码是32，对应16进制是‘20’，那么urlencode编码结果是:%20。</p>
+<p>例如：URL%E7%BC%96%E7%A0%81<br>解密结果：URL编码</p>
+<p>特点：存在大量的%<br>在线工具：<a href="https://tool.oschina.net/encode?type=4" target="_blank" rel="noopener">https://tool.oschina.net/encode?type=4</a></p>
+<h4 id="6-Unicode编码"><a href="#6-Unicode编码" class="headerlink" title="6.Unicode编码"></a>6.Unicode编码</h4><p>Unicode（统一码、万国码、单一码）是计算机科学领域里的一项业界 标准,包括字符集、编码方案等。Unicode是为了解决传统的字符编码方案的局限而产生的，它为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。1990年开始研发，1994年正式公布。</p>
+<p>例如：&#72;&#101;&#108;&#108;&#111;&#67;&#84;&#70;<br>解密结果：HelloCTF<br>在线工具：<a href="https://tool.oschina.net/encode" target="_blank" rel="noopener">https://tool.oschina.net/encode</a></p>
+<h4 id="7-jsfuck"><a href="#7-jsfuck" class="headerlink" title="7.jsfuck"></a>7.jsfuck</h4><p>JSFuck 可以让你只用6个字符<a href> </a>!+来编写 JavaScript 程序<br>在线工具：<a href="https://www.bugku.com/tools/jsfuck/" target="_blank" rel="noopener">https://www.bugku.com/tools/jsfuck/</a></p>
+<h4 id="8-brainfuck"><a href="#8-brainfuck" class="headerlink" title="8.brainfuck"></a>8.brainfuck</h4><p>Brainfuck 是一种极小化的计算机语言，按照”Turing complete(完整图灵机) “思想设计的语言，它的主要设计思路是:用最小的概念实现一种“简单”的语 言，BrainFXXk语言只有八种符号，<br>所有的操作都由这八种符号  &gt; &lt; + - . , [ ] 的组合来完成。</p>
+<p>例如：+++++ +++++ [-&gt;++ +++++ +++&lt;] &gt;++++ .—. +++++ ++..+ ++.&lt;+ +++++ ++[-&gt;<br>—– —&lt;] &gt;—. &lt;++++ ++++[ -&gt;+++ +++++ &lt;]&gt;++ +++++ ++++. —– —.+<br>++.– —-. —– —.&lt; </p>
+<p>解密结果：hello,world<br>在线工具：<a href="https://www.splitbrain.org/services/ook" target="_blank" rel="noopener">https://www.splitbrain.org/services/ook</a></p>
+<h4 id="9-凯撒密码"><a href="#9-凯撒密码" class="headerlink" title="9.凯撒密码"></a>9.凯撒密码</h4><p>凯撒密码（Caesar）加密时会将明文中的每个字母都按照其在字母表中的顺序向后（或向前）移动固定数目（循环移动）作为密文。例如，当偏移量是左移 3 的时候（解密时 的密钥就是 3）。<br>使用时，加密者查找明文字母表中需要加密的消息中的每一个字母所在位置，并且写下密文字母表中对应的字母。需要解密的人则根据事先已知的密钥反过来操作，得到原来的明文。</p>
+<p>根据偏移量的不同，还存在若干特定的恺撒密码名称：<br>偏移量为 10：Avocat （A→K）<br>偏移量为 13：ROT13<br>偏移量为 -5：Cassis （K 6）<br>偏移量为 -6：Cassette （K 7）</p>
+<p>例如：Uryyb,Jrypbzr<br>解密结果：Hello,Welcome<br>在线工具：<a href="http://www.mxcz.net/tools/rot13.aspx" target="_blank" rel="noopener">http://www.mxcz.net/tools/rot13.aspx</a></p>
+<h4 id="10-栅栏密码"><a href="#10-栅栏密码" class="headerlink" title="10.栅栏密码"></a>10.栅栏密码</h4><p>特征：大小写和字符，其实就是分组替换加密</p>
+<p>例如：一只小羊翻过了2个栅栏</p>
+<p>KYsd3js2E{a2jda}</p>
+<p>解密结果：KEY{sad23jjdsa2}<br>在线工具：<a href="http://tool.bugku.com/jiemi/" target="_blank" rel="noopener">http://tool.bugku.com/jiemi/</a></p>
+<h4 id="11-Ook-密码"><a href="#11-Ook-密码" class="headerlink" title="11.Ook 密码"></a>11.Ook 密码</h4><p>特征：Brainfuck 类型密码，密文由 Ook 和 三种标点 . ! ? 构成，不见得都得用上，有的是Ook，有的没有Ook只有标点。</p>
+<p>在线工具：<a href="https://tool.bugku.com/brainfuck/" target="_blank" rel="noopener">https://tool.bugku.com/brainfuck/</a></p>
+<h4 id="12-类栅栏密码"><a href="#12-类栅栏密码" class="headerlink" title="12.类栅栏密码"></a>12.类栅栏密码</h4><p>特征：会给你一串乱序的密文 C，同时给你从1 到 n 的一串乱序的数，找下 C 对于 n 的最大公约数，然后将他们重新排序。<br>动手画一画就出来了</p>
+<p>BugKu中的一道题：<br>lf5{ag024c483549d7fd@@1}     ， 一张纸条上凌乱的写着2 1 6 5 3 4</p>
+<p>2   1   6   5   3   4<br>l   f   5   {   a   g<br>0   2   4   c   4   8<br>3   5   4   9   d   7<br>f   d   @   @   1   }<br>再按照123456的顺序数从第一行排到最后一行</p>
+<p>flag{52048c453d794df1}@@</p>
+<p>提交 flag发现不对，这两个@@有点奇怪，去掉@就成功了，那么一般这种字符都是迷惑人的。</p>
+<h4 id="13-由0和1组成的摩斯密码"><a href="#13-由0和1组成的摩斯密码" class="headerlink" title="13.由0和1组成的摩斯密码"></a>13.由0和1组成的摩斯密码</h4><p>特征：密文由0和1构成，可能由空格、tab或则其他字符分割，去掉这些分割后，0和1的总数是5的倍数<br>将 0 和 1 替换为 . 或 - ，多试几次就可能有发现。</p>
+<p>BugKu中的一道题：</p>
+<p>0010 0100 01 110 1111011 11 11111 010 000 0 001101 1010 111 100 0 001101 01111 000 001101 00 10 1 0 010 0 000 1 01111 10 11110 101011 1111101</p>
+<p>把0换成点 .    1换成 -    后：<br>..-. .-.. .- –. —-.– – —– .-. … . ..–.- -.-. — -.. . ..–.- .—- … ..–.- .. -. - . .-. . … - .—- -. —-. -.-.– —–.-<br>在线工具解密一下，得到：</p>
+<p>FLAG%u7bM0RSE_CODE_1S_INTEREST1N9!%u7d</p>
+<p>结果有点奇怪，但八九不离十了。把%u7b 换成 {  把%u7d 换成 }，然后大小写切换</p>
+<p>flag{m0rse_code_1s_interest1n9!}</p>
+<h4 id="14-键盘格子密码"><a href="#14-键盘格子密码" class="headerlink" title="14.键盘格子密码"></a>14.键盘格子密码</h4><p>特征：由三到四个英文字母或数字为一组。</p>
+<p>在键盘上找对应的键位，中间围起来的就是密文（这能能想得出。。。）</p>
+<p>例如：r5yG lp9I BjM tFhBT6uh y7iJ QsZ bhM<br>解密结果：t o n g y u a n</p>
+<h4 id="15-托马斯杰斐逊-转轮密码"><a href="#15-托马斯杰斐逊-转轮密码" class="headerlink" title="15.托马斯杰斐逊 转轮密码"></a>15.托马斯杰斐逊 转轮密码</h4><p>特征：给你一个密码表，n行的26个字母，key是 1 - n 的数列， 密文是 n 个英文字母<br>根据 key 找对应行的密码表，然后在密码表上找密文字母，以这个字母为开头，重新排序。<br>1： &lt;ZWAXJGDLUBVIQHKYPNTCRMOSFE &lt;
+2： &lt;KPBELNACZDTRXMJQOYHGVSFUWI &lt;
+3： &lt;BDMAIZVRNSJUWFHTEQGYXPLOCK &lt;
+4： &lt;RPLNDVHGFCUKTEBSXQYIZMJWAO &lt;
+5： &lt;IHFRLABEUOTSGJVDKCPMNZQWXY &lt;
+6： &lt;AMKGHIWPNYCJBFZDRUSLOQXVET &lt;
+7： &lt;GWTHSPYBXIZULVKMRAFDCEONJQ &lt;
+8： &lt;NOZUTWDCVRJLXKISEFAPMYGHBQ &lt;
+9： &lt;QWATDSRFHENYVUBMCOIKZGJXPL &lt;
+10： &lt;WABMCXPLTDSRJQZGOIKFHENYVU &lt;
+11： &lt;XPLTDAOIKFZGHENYSRUBMCQWVJ &lt;
+12： &lt;TDSWAYXPLVUBOIKZGJRFHENMCQ &lt;
+13： &lt;BMCSRFHLTDENQWAOXPYVUIKZGJ &lt;
+14： &lt;XPHKZGJTDSENYVUBMLAOIRFCQW &lt;</p>
+<p>密钥： 2,5,1,3,6,4,9,7,8,14,10,13,11,12<br>密文：HCBTSXWCRQGL ES</p>
+<p>在第 2 行密码表中找H开头的字母，然后以H开头再到尾过一遍，以此类推，整理出另一个密码表：</p>
+<p>HGVSFUWIKPBELNACZDTR X MJQOY<br>CPMNZQWXYIHFRLABEUOT S GJVDK<br>BVIQHKYPNTCRMOSFEZWA X JGDLU<br>TEQGYXPLOCKBDMAIZVRN S JUWFH<br>SLOQXVETAMKGHIWPNYCJ B FZDRU<br>XQYIZMJWAORPLNDVHGFC U KTEBS<br>WATDSRFHENYVUBMCOIKZ G JXPLQ<br>CEONJQGWTHSPYBXIZULV K MRAFD<br>RJLXKISEFAPMYGHBQNOZ U TWDCV<br>QWXPHKZGJTDSENYVUBML A OIRFC<br>GOIKFHENYVUWABMCXPLT D SRJQZ<br>LTDENQWAOXPYVUIKZGJB M CSRFH<br>ENYSRUBMCQWVJXPLTDAO I KFZGH<br>SWAYXPLVUBOIKZGJRFHE N MCQTD</p>
+<p>然后在这里找一些比较明显的（语句通顺的）话，就是flag。</p>
+<p>XSXSBUGKUADMIN<br>提交不对的话就大小写换一下：xsxsbugkuadmin</p>
+<p>这个其实可以写个程序出来，遍历密码表即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rotor cipher decoder</span></span><br><span class="line"><span class="comment"># parameter input</span></span><br><span class="line">rotor = [</span><br><span class="line">    <span class="string">"ZWAXJGDLUBVIQHKYPNTCRMOSFE"</span>, <span class="string">"KPBELNACZDTRXMJQOYHGVSFUWI"</span>,</span><br><span class="line">    <span class="string">"BDMAIZVRNSJUWFHTEQGYXPLOCK"</span>, <span class="string">"RPLNDVHGFCUKTEBSXQYIZMJWAO"</span>,</span><br><span class="line">    <span class="string">"IHFRLABEUOTSGJVDKCPMNZQWXY"</span>, <span class="string">"AMKGHIWPNYCJBFZDRUSLOQXVET"</span>,</span><br><span class="line">    <span class="string">"GWTHSPYBXIZULVKMRAFDCEONJQ"</span>, <span class="string">"NOZUTWDCVRJLXKISEFAPMYGHBQ"</span>,</span><br><span class="line">    <span class="string">"QWATDSRFHENYVUBMCOIKZGJXPL"</span>, <span class="string">"WABMCXPLTDSRJQZGOIKFHENYVU"</span>,</span><br><span class="line">    <span class="string">"XPLTDAOIKFZGHENYSRUBMCQWVJ"</span>, <span class="string">"TDSWAYXPLVUBOIKZGJRFHENMCQ"</span>,</span><br><span class="line">    <span class="string">"BMCSRFHLTDENQWAOXPYVUIKZGJ"</span>, <span class="string">"XPHKZGJTDSENYVUBMLAOIRFCQW"</span></span><br><span class="line">]</span><br><span class="line">cipher = <span class="string">"HCBTSXWCRQGLES"</span></span><br><span class="line"></span><br><span class="line">key = [<span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">14</span>, <span class="number">10</span>, <span class="number">13</span>, <span class="number">11</span>, <span class="number">12</span>]</span><br><span class="line"></span><br><span class="line">tmp_list=[]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(rotor)):</span><br><span class="line">    tmp=<span class="string">""</span></span><br><span class="line">    k = key[i] - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, len(rotor[k])):</span><br><span class="line">        <span class="keyword">if</span> cipher[i] == rotor[k][j]:</span><br><span class="line">            <span class="keyword">if</span> j == <span class="number">0</span>:</span><br><span class="line">                tmp=rotor[k]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp=rotor[k][j:] + rotor[k][<span class="number">0</span>:j]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    tmp_list.append(tmp)</span><br><span class="line"><span class="comment"># print(tmp_list)</span></span><br><span class="line"></span><br><span class="line">message_list = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(tmp_list[i])):</span><br><span class="line">    tmp = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, len(tmp_list)):</span><br><span class="line">        tmp += tmp_list[j][i]</span><br><span class="line">    message_list.append(tmp)</span><br><span class="line">print(message_list)</span><br></pre></td></tr></table></figure>
+
+<h4 id="16-Base91编码"><a href="#16-Base91编码" class="headerlink" title="16.Base91编码"></a>16.Base91编码</h4><p>特征：基本上是键盘上所有可打印的 ASC II 字符</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（<span class="number">0x21</span><span class="number">-0x7E</span>），A-Z、a-z、<span class="number">1</span> - <span class="number">9</span>、 !@<span class="comment">#$%^&amp;*()_+-=&#123;&#125;[]|\:;"'&lt;,&gt;.?/~·</span></span><br></pre></td></tr></table></figure>
+
+<p>之类的。</p>
+<p>参考： <a href="http://base91.sourceforge.net/" target="_blank" rel="noopener">http://base91.sourceforge.net/</a> （里面有工具源码）<br>在线工具：<a href="http://ctf.ssleye.com/base91.html" target="_blank" rel="noopener">http://ctf.ssleye.com/base91.html</a></p>
+<h4 id="17-Linux系统的-shadow-文件格式"><a href="#17-Linux系统的-shadow-文件格式" class="headerlink" title="17.Linux系统的 shadow 文件格式"></a>17.Linux系统的 shadow 文件格式</h4><p>特征：就是Linux的shadow文件格式<br>工具：Kali Linux 中的 John<br>root:$6$HRMJoyGA$26FIgg6CU0bGUOfqFB0Qo9AE2LRZxG8N3H.3BK8t49wGlYbkFbxVFtGOZqVIq3q<br>Q6k0oetDbn2aVzdhuVQ6US.:17770:0:99999:7:::<br>Linux的 /etc/shadow 文件存储了该系统下所有用户口令相关信息，只有 root 权限可以查看，用户口令是以 Hash + Salt 的形式保护的。<br>每个字段都用 “$” 或“:”符号分割；<br>第一个字段是用户名，如root ；<br>第二个字段是哈希算法，比如 6 代表SHA-512，1 代表 MD5；<br>第三个字段是盐，比如上面的 HRMJoyGA<br>第四个字段是口令+盐加密后的哈希值<br>后面分别是密码最后一次修改日期、密码的两次修改间隔时间（和第三个字段相比）、密码的有效期(和第三个字段相比）、密码修改到期前的警告天数（和第五个字段相比）、密码过期后的宽限天数（和第五个字段相比）、账号失效时间，这里不太重要要；</p>
+<p>直接跑 John 试试<br>john shadow<br>如果解开了，加 –show 查看解密口令<br>john –show shadow</p>
+<h4 id="18-ZIP-伪加密"><a href="#18-ZIP-伪加密" class="headerlink" title="18.ZIP 伪加密"></a>18.ZIP 伪加密</h4><p>特征：一个ZIP压缩包，建议先读一下Zip文件解析与利用，里面提到：<br>一格zip文件有三个部分组成：压缩源文件数据区 + 压缩源文件目录区 + 压缩源文件目录结束标志；<br>每一部分都由明文 PK （50 4B）开始；<br>这是三个头标记，主要看第二个；<br>压缩源文件数据区：<br>50 4B 03 04：这是头文件标记<br>压缩源文件目录区：<br>50 4B 01 02：目录中文件文件头标记<br>后面两位（如 1F 00 或 3F 00）：压缩使用的 pkware 版本<br>再后面两位（如 14 00）：解压文件所需 pkware 版本<br>再后面两位：全局方式位标记（有无加密，这个更改这里进行伪加密，00 00 是无密码，改为09 00打开就会提示有密码了）<br>压缩源文件目录结束标志 ：<br>50 4B 05 06：目录结束标记<br>工具：ZipCenOp.jar 或 WinHex<br>e.g. BugKu 上的一道题 <a href="https://ctf.bugku.com/challenges#zip%E4%BC%AA%E5%8A%A0%E5%AF%86" target="_blank" rel="noopener">https://ctf.bugku.com/challenges#zip%E4%BC%AA%E5%8A%A0%E5%AF%86</a></p>
+<ol>
+<li>使用 ZipCenOp.jar<br>链接：<a href="https://pan.baidu.com/s/1yDcWWhY0lSlBArEJ4S6qUw" target="_blank" rel="noopener">https://pan.baidu.com/s/1yDcWWhY0lSlBArEJ4S6qUw</a><br>提取码：g3it<br>（需要java环境）windows下在cmd中输入：<br>java -jar ZipCenOp.jar r xxx.zip</li>
+</ol>
+<p>直接破解ZIP包；</p>
+<ol start="2">
+<li>使用 WinHex<br>我们用winhex打开压缩包，搜索504B，点击第二个504B，从后面找第七、八位，发现是 09 00，改为 00 00 即可。<br>这种方式只适用于ZIP的伪加密，真加密了此方法不适用。</li>
+</ol>
+<h4 id="19-RSA-加解密"><a href="#19-RSA-加解密" class="headerlink" title="19.RSA 加解密"></a>19.RSA 加解密</h4><p>特征：给一些 RSA 算法的参数，然后加密\解密消息获取 flag。<br>说一下 RSA 算法模式：<br>分三部分，密钥生成、加密、解密：<br>a) 密钥生成<br>    1) 选取两个长度为 K 的素数 P 和 Q，计算 N = P * Q；<br>    2) 计算 phi(N) = (P-1) * (Q-1)， 其中 phi(N) 是 Z_(N^*) 的阶；<br>    3) 随机选取一个int整数 e ∈ [ 1, phi(N) - 1 ]，使得 gcd( e, phi(N)) = 1；<br>    4) 计算它的逆 d，使得 [ e * d mod phi(N) ] = 1；<br>    5) 输出私钥和公钥 sk = ( N, d ), pk = ( N, e )；<br>b) 加密<br>    c = m^e mod(N)<br>c) 解密<br>    m = c^d mod(N)<br>工具：RsaCtfTool （用于输出RSA参数） libnum （用于密文的计算）<br>具体参考Bugku-加密-rsa(WriteUp)</p>
+<h4 id="20-仿射密码-affine-cipher"><a href="#20-仿射密码-affine-cipher" class="headerlink" title="20.仿射密码 affine cipher"></a>20.仿射密码 affine cipher</h4><p>特征：可能会提示你是放射密码 affine，公式： y = k * x + b mod 26 （跟一元一次函数似的）<br>后面的取模，如果都是英文字母的话是26，不排除有其他形式，比如ASC II 什么的，取模可能会换。</p>
+<p>工具：python代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Q: y = 17x-8 flag&#123;szzyfimhyzd&#125;</span></span><br><span class="line">flag = <span class="string">"szzyfimhyzd"</span></span><br><span class="line"></span><br><span class="line">flaglist = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flag:</span><br><span class="line">    flaglist.append(ord(i)<span class="number">-97</span>)</span><br><span class="line"></span><br><span class="line">flags = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flaglist:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">26</span>):</span><br><span class="line">        c = (<span class="number">17</span> * j - <span class="number">8</span>) % <span class="number">26</span></span><br><span class="line">        <span class="keyword">if</span>(c == i):</span><br><span class="line">            flags += chr(j+<span class="number">97</span>)</span><br><span class="line">print(<span class="string">'flag&#123;'</span>+ flags + <span class="string">'&#125;'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="21-进制转换"><a href="#21-进制转换" class="headerlink" title="21.进制转换"></a>21.进制转换</h4><p>特征：二进制 b开头，八进制 o开头，十进制 d开头，十六进制 x开头</p>
+<p>BugKu里的一道题：<br>d87 x65 x6c x63 o157 d109 o145 b100000 d116 b1101111 o40 x6b b1100101 b1101100 o141 d105 x62 d101 b1101001 d46 o40 d71 x69 d118 x65 x20 b1111001 o157 b1110101 d32 o141 d32 d102 o154 x61 x67 b100000 o141 d115 b100000 b1100001 d32 x67 o151 x66 d116 b101110 b100000 d32 d102 d108 d97 o147 d123 x31 b1100101 b110100 d98 d102 b111000 d49 b1100001 d54 b110011 x39 o64 o144 o145 d53 x61 b1100010 b1100011 o60 d48 o65 b1100001 x63 b110110 d101 o63 b111001 d97 d51 o70 d55 b1100010 d125 x20 b101110 x20 b1001000 d97 d118 o145 x20 d97 o40 d103 d111 d111 x64 d32 o164 b1101001 x6d o145 x7e</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'d87 x65 x6c x63 o157 d109 o145 b100000 d116 b1101111 o40 x6b b1100101 b1101100 o141 d105 x62 d101 b1101001 d46 o40 d71 x69 d118 x65 x20 b1111001 o157 b1110101 d32 o141 d32 d102 o154 x61 x67 b100000 o141 d115 b100000 b1100001 d32 x67 o151 x66 d116 b101110 b100000 d32 d102 d108 d97 o147 d123 x31 b1100101 b110100 d98 d102 b111000 d49 b1100001 d54 b110011 x39 o64 o144 o145 d53 x61 b1100010 b1100011 o60 d48 o65 b1100001 x63 b110110 d101 o63 b111001 d97 d51 o70 d55 b1100010 d125 x20 b101110 x20 b1001000 d97 d118 o145 x20 d97 o40 d103 d111 d111 x64 d32 o164 b1101001 x6d o145 x7e'</span></span><br><span class="line">ss = s.split()</span><br><span class="line">sss = []</span><br><span class="line">print(ss)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ss:</span><br><span class="line">    <span class="keyword">if</span> i[<span class="number">0</span>] == <span class="string">'d'</span>:</span><br><span class="line">        i = i[<span class="number">1</span>:]</span><br><span class="line">        i = int(i,<span class="number">10</span>)</span><br><span class="line">        i = chr(i)</span><br><span class="line">        sss.append(i)</span><br><span class="line">    <span class="keyword">elif</span> i[<span class="number">0</span>] == <span class="string">'x'</span>:</span><br><span class="line">        i = i[<span class="number">1</span>:]</span><br><span class="line">        i = int(i,<span class="number">16</span>)</span><br><span class="line">        i = chr(i)</span><br><span class="line">        sss.append(i)</span><br><span class="line">    <span class="keyword">elif</span> i[<span class="number">0</span>] == <span class="string">'o'</span>:</span><br><span class="line">        i = i[<span class="number">1</span>:]</span><br><span class="line">        i = int(i,<span class="number">8</span>)</span><br><span class="line">        i = chr(i)</span><br><span class="line">        sss.append(i)</span><br><span class="line">    <span class="keyword">elif</span> i[<span class="number">0</span>] == <span class="string">'b'</span>:</span><br><span class="line">        i = i[<span class="number">1</span>:]</span><br><span class="line">        i = int(i,<span class="number">2</span>)</span><br><span class="line">        i = chr(i)</span><br><span class="line">        sss.append(i)</span><br><span class="line">print(sss)</span><br><span class="line">flag = <span class="string">''</span>.join(sss)</span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/20/CTF/CTFReverse/" rel="next" title="CTF中Reverse介绍">
+                <i class="fa fa-chevron-left"></i> CTF中Reverse介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/01/Linux/TooManyOpenFiles/" rel="prev" title="Too many open files的四种解决办法">
+                Too many open files的四种解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/matx.jpg" alt="圣特伦特星">
+            
+              <p class="site-author-name" itemprop="name">圣特伦特星</p>
+              <p class="site-description motion-element" itemprop="description">“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/shengteluntexing" target="_blank" title="SegmentFault">
+                      
+                        <i class="fa fa-fw fa-coffee"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/matianxin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:trentmtx@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/matianxin" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CTF中Crypto题目的常见题型"><span class="nav-number">1.</span> <span class="nav-text">CTF中Crypto题目的常见题型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-摩斯密码-Morse编码"><span class="nav-number">1.1.</span> <span class="nav-text">1. 摩斯密码 / Morse编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-ASCII编码"><span class="nav-number">1.2.</span> <span class="nav-text">2.ASCII编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Tap-Code敲击码"><span class="nav-number">1.3.</span> <span class="nav-text">3.Tap Code敲击码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Base编码"><span class="nav-number">1.4.</span> <span class="nav-text">4.Base编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-URL编码"><span class="nav-number">1.5.</span> <span class="nav-text">5.URL编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Unicode编码"><span class="nav-number">1.6.</span> <span class="nav-text">6.Unicode编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-jsfuck"><span class="nav-number">1.7.</span> <span class="nav-text">7.jsfuck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-brainfuck"><span class="nav-number">1.8.</span> <span class="nav-text">8.brainfuck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-凯撒密码"><span class="nav-number">1.9.</span> <span class="nav-text">9.凯撒密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-栅栏密码"><span class="nav-number">1.10.</span> <span class="nav-text">10.栅栏密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-Ook-密码"><span class="nav-number">1.11.</span> <span class="nav-text">11.Ook 密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-类栅栏密码"><span class="nav-number">1.12.</span> <span class="nav-text">12.类栅栏密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-由0和1组成的摩斯密码"><span class="nav-number">1.13.</span> <span class="nav-text">13.由0和1组成的摩斯密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-键盘格子密码"><span class="nav-number">1.14.</span> <span class="nav-text">14.键盘格子密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-托马斯杰斐逊-转轮密码"><span class="nav-number">1.15.</span> <span class="nav-text">15.托马斯杰斐逊 转轮密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-Base91编码"><span class="nav-number">1.16.</span> <span class="nav-text">16.Base91编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-Linux系统的-shadow-文件格式"><span class="nav-number">1.17.</span> <span class="nav-text">17.Linux系统的 shadow 文件格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#18-ZIP-伪加密"><span class="nav-number">1.18.</span> <span class="nav-text">18.ZIP 伪加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#19-RSA-加解密"><span class="nav-number">1.19.</span> <span class="nav-text">19.RSA 加解密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-仿射密码-affine-cipher"><span class="nav-number">1.20.</span> <span class="nav-text">20.仿射密码 affine cipher</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#21-进制转换"><span class="nav-number">1.21.</span> <span class="nav-text">21.进制转换</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="200" height="200" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">4</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+			  
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">圣特伦特星</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+>>>>>>> 9e302a13055574168cd05b455b005761c6bd137a
