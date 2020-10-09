@@ -35,7 +35,7 @@ $ docker --registry-mirror=https://registry.docker-cn.com daemon
 修改保存后重启 Docker 以使配置生效。
 
 ```php
-systemctl docker restart
+systemctl restart docker
 ```
 
 注: 您也可以使用适用于 Mac 的 Docker 和适用于 Windows 的 Docker 来进行设置。
