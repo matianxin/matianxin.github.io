@@ -1,0 +1,1936 @@
+﻿<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openstack,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="cloudbaseinit">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cloudbaseinit">
+<meta property="og:url" content="https://matianxin.github.io/2020/10/19/Openstack/CloudBaseInit/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="cloudbaseinit">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-19T02:44:56.493Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cloudbaseinit">
+<meta name="twitter:description" content="cloudbaseinit">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://matianxin.github.io/2020/10/19/Openstack/CloudBaseInit/">
+
+
+
+
+
+  <title>cloudbaseinit | 圣特伦特星</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
+	
+	<a href="https://github.com/matianxin" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">圣特伦特星</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">差以毫厘，谬以千里。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2020/10/19/Openstack/CloudBaseInit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cloudbaseinit</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-19T10:10:00+08:00">
+                2020-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Openstack/" itemprop="url" rel="index">
+                    <span itemprop="name">Openstack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  cloudbaseinit
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>官方文档: <a href="https://cloudbase-init.readthedocs.io/en/latest/intro.html" target="_blank" rel="noopener">https://cloudbase-init.readthedocs.io/en/latest/intro.html</a></p>
+<h4 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h4><p><strong>Intro</strong><br>The open source project cloudbase-init is a service conceived and maintained by Cloudbase Solutions Srl, currently working on NT systems. It was designed to initialize and configure guest operating systems under OpenStack, OpenNebula, CloudStack, MaaS and many others. Under Cloudbase page, stable and beta installers can be found and the service itself is very easy to configure through configuration files. It can also customize instances based on user input like local scripts and data.</p>
+<p>More details on how you can use this can be found under Tutorial.</p>
+<p><strong>Portable cloud initialization service</strong><br>The main goal of this project is to provide guest cloud initialization for Windows and other operating systems. The architecture of the project is highly flexible and allows extensions for additional clouds and plugins.</p>
+<p>There’s no limitation in the type of supported hypervisors. This service can be used on instances running on Hyper-V, KVM, Xen, ESXi etc.</p>
+<p><strong>Binaries</strong><br>Stable installers:</p>
+<p><a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_Stable_x64.msi" target="_blank" rel="noopener">https://www.cloudbase.it/downloads/CloudbaseInitSetup_Stable_x64.msi</a></p>
+<p><a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_Stable_x86.msi" target="_blank" rel="noopener">https://www.cloudbase.it/downloads/CloudbaseInitSetup_Stable_x86.msi</a></p>
+<p>Beta installers:</p>
+<p><a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi" target="_blank" rel="noopener">https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi</a></p>
+<p><a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_x86.msi" target="_blank" rel="noopener">https://www.cloudbase.it/downloads/CloudbaseInitSetup_x86.msi</a></p>
+<p>Use a x64 installer on 64 bit versions of Windows and the x86 one exclusively on 32 bit versions.</p>
+<h4 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h4><p><strong>Tutorial</strong><br>First, download your desired type of installer from here, then install it and fill in configuration options which suits you best. Based on the current selected cloudbase-init installer architecture, it’ll be available under C:\Program Files or C:\Program Files (x86) as Cloudbase Solutions\Cloudbase-Init directory. There, are located some folders of interest like:</p>
+<p>bin - Executable files and other binaries.</p>
+<p>conf - Configuration files holding miscellaneous options.</p>
+<p>log - Here are the cloudbase-init logs.</p>
+<p>LocalScripts - User supplied scripts.</p>
+<p>Python - Bundle of executable and library files to support Python scripts and core execution.</p>
+<p>After install, cloudbase-init acts like a 2-step service which will read metadata using Services and will pass that to the executing Plugins, this way configuring all the supported things. Depending on the platform, some plugins may request reboots.</p>
+<p><strong>Sysprepping</strong><br>The System Preparation (Sysprep) tool prepares an installation of Windows for duplication, auditing, and customer delivery. Duplication, also called imaging, enables you to capture a customized Windows image that you can reuse throughout an organization. The Sysprep phase uses the “Unattend.xml” which implies the service to run using the “cloudbase-init-unattend.conf” configuration file.</p>
+<p><strong>Configuration file</strong><br>In the chosen installation path, under the conf directory, are present two config files named “cloudbase-init.conf” and “cloudbase-init-unattend.conf”. These can hold various config options for picking up the desired available services and plugins ready for execution and also customizing user experience.</p>
+<p>Explained example of configuration file:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[DEFAULT]</span></span><br><span class="line"><span class="comment"># What user to create and in which group(s) to be put.</span></span><br><span class="line"><span class="attr">username</span>=Admin</span><br><span class="line"><span class="attr">groups</span>=Administrators</span><br><span class="line"><span class="attr">inject_user_password</span>=<span class="literal">true</span>  <span class="comment"># Use password from the metadata (not random).</span></span><br><span class="line"><span class="comment"># Which devices to inspect for a possible configuration drive (metadata).</span></span><br><span class="line"><span class="attr">config_drive_raw_hhd</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">config_drive_cdrom</span>=<span class="literal">true</span></span><br><span class="line"><span class="comment"># Path to tar implementation from Ubuntu.</span></span><br><span class="line"><span class="attr">bsdtar_path</span>=C:\Program Files (x86)\Cloudbase Solutions\Cloudbase-Init\bin\bsdtar.exe</span><br><span class="line"><span class="comment"># Logging debugging level.</span></span><br><span class="line"><span class="attr">verbose</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">debug</span>=<span class="literal">true</span></span><br><span class="line"><span class="comment"># Where to store logs.</span></span><br><span class="line"><span class="attr">logdir</span>=C:\Program Files (x86)\Cloudbase Solutions\Cloudbase-Init\log\</span><br><span class="line"><span class="attr">logfile</span>=cloudbase-init-unattend.log</span><br><span class="line"><span class="attr">default_log_levels</span>=comtypes=INFO,suds=INFO,iso8601=WARN</span><br><span class="line"><span class="attr">logging_serial_port_settings</span>=</span><br><span class="line"><span class="comment"># Enable MTU and NTP plugins.</span></span><br><span class="line"><span class="attr">mtu_use_dhcp_config</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">ntp_use_dhcp_config</span>=<span class="literal">true</span></span><br><span class="line"><span class="comment"># Where are located the user supplied scripts for execution.</span></span><br><span class="line"><span class="attr">local_scripts_path</span>=C:\Program Files (x86)\Cloudbase Solutions\Cloudbase-Init\LocalScripts\</span><br><span class="line"><span class="comment"># Services that will be tested for loading until one of them succeeds.</span></span><br><span class="line"><span class="attr">metadata_services</span>=cloudbaseinit.metadata.services.configdrive.ConfigDriveService,</span><br><span class="line">                  cloudbaseinit.metadata.services.httpservice.HttpService,</span><br><span class="line">                  cloudbaseinit.metadata.services.ec2service.EC2Service,</span><br><span class="line">                  cloudbaseinit.metadata.services.maasservice.MaaSHttpService</span><br><span class="line"><span class="comment"># What plugins to execute.</span></span><br><span class="line"><span class="attr">plugins</span>=cloudbaseinit.plugins.common.mtu.MTUPlugin,</span><br><span class="line">        cloudbaseinit.plugins.common.sethostname.SetHostNamePlugin</span><br><span class="line"><span class="comment"># Miscellaneous.</span></span><br><span class="line"><span class="attr">allow_reboot</span>=<span class="literal">false</span>    <span class="comment"># allow the service to reboot the system</span></span><br><span class="line"><span class="attr">stop_service_on_exit</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>The “cloudbase-init-unattend.conf” configuration file is similar to the default one and is used by the Sysprepping phase. It was designed for the scenario where the minimum user intervention is required and it only runs the MTU and host name plugins, leaving the image ready for further initialization cases.</p>
+<p>More of these explained options are available under the Services, Plugins and Userdata documentation.</p>
+<p>A complete list of config options can be found at Configuration options reference.</p>
+<p><strong>File execution</strong><br>Cloudbase-init has the ability to execute user provided scripts, usually found in the default path C:\Program Files (x86)\Cloudbase Solutions\Cloudbase-Init\LocalScripts, through a specific plugin for doing it. Depending on the platform used, the files should be valid PowerShell, Python, Batch or Bash scripts. The userdata can be also a PEM certificate, in a cloud-config format or a MIME content. The user data plugin is capable of executing various script types and exit code value handling.</p>
+<p>Based on their exit codes, you can instruct the system to reboot or even re-execute the plugin on the next boot:</p>
+<p>1001 - reboot and don’t run the plugin again on next boot<br>1002 - don’t reboot now and run the plugin again on next boot<br>1003 - reboot and run the plugin again on next boot</p>
+<h4 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h4><p><strong>Services</strong><br>A metadata service has the role of getting the guest provided data (configuration information) and exposing it to the Plugins for a general and basic initialization of the instance. These sub-services can change their behavior according to custom configuration options documented below.</p>
+<p><strong>Configuring available services</strong><br>Any of these classes can be specified manually in the configuration file under metadata_services option. Based on this option, the service loader will search across these providers in the defined order and load the first one that is available.</p>
+<p>For more details on doing this, see configuration file in Tutorial.</p>
+<p><strong>OpenStack (web API)</strong><br>classcloudbaseinit.metadata.services.httpservice.HttpService<br>A complete service which supports password related capabilities and can be usually accessed at the <a href="http://169.254.169.254/" target="_blank" rel="noopener">http://169.254.169.254/</a> magic URL. The magic URL can be customized using the metadata_base_url config option. A default value of True for add_metadata_private_ip_route option is used to add a route for the IP address to the gateway. This is needed for supplying a bridge between different VLANs in order to get access to the web server.</p>
+<p>Metadata version used: latest.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>WinRM authentication certificates<br>static network configuration<br>admin user password<br>post admin user password (only once)<br>user data</p>
+<p>Config options for openstack section:</p>
+<p>metadata_base_url (string: “<a href="http://169.254.169.254/”" target="_blank" rel="noopener">http://169.254.169.254/”</a>)
+add_metadata_private_ip_route (bool: True)<br>https_allow_insecure (bool: False)<br>https_ca_bundle (string: None)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p><strong>OpenStack (configuration drive)</strong><br>classcloudbaseinit.metadata.services.configdrive.ConfigDriveService<br>This is similar to the web API, but it “serves” its files locally without requiring network access. The data is generally retrieved from a cdrom, vfat or raw disks/partitions by enabling selective lookup across different devices. Use the types option to specify which types of config drive content the service will search for and also on which devices using the locations option.</p>
+<p>It will search for metadata:</p>
+<p>in mounted optical units<br>directly in the physical disk bytes<br>by exploring the physical disk as a vfat drive; which requires mtools (specified by the mtools_path option in the Default section)</p>
+<p>This service is usually faster than the HTTP twin, as there is no timeout waiting for the network to be up.</p>
+<p>Metadata version used: latest.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>authentication certificates<br>static network configuration<br>admin user password<br>user data</p>
+<p>Config options for config_drive section:</p>
+<p>raw_hdd (bool: True)<br>cdrom (bool: True)<br>vfat (bool: True)</p>
+<p>types (list: [“vfat”, “iso”])</p>
+<p>locations (list: [“cdrom”, “hdd”, “partition”])</p>
+<p><strong>NoCloud configuration drive</strong><br>classcloudbaseinit.metadata.services.nocloudservice.NoCloudConfigDriveService<br>NoCloudConfigDriveService is similar to OpenStack config drive metadata in terms of the medium on which the data is provided (as an attached ISO, partition or disk) and similar to the EC2 metadata in terms of how the metadata files are named and structured.</p>
+<p>The metadata is provided on a config-drive (vfat or iso9660) with the label cidata or CIDATA.</p>
+<p>The folder structure for NoCloud is:</p>
+<p>/user-data<br>/meta-data</p>
+<p>The user-data and meta-data files respect the EC2 metadata service format.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>static network configuration (Debian and network config v1 formats)<br>user data</p>
+<p>Config options for config_drive section:</p>
+<p>raw_hdd (bool: True)<br>cdrom (bool: True)<br>vfat (bool: True)</p>
+<p>types (list: [“vfat”, “iso”])</p>
+<p>locations (list: [“cdrom”, “hdd”, “partition”])</p>
+<p>Example metadata:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">instance-id: windows1</span><br><span class="line">network-interfaces: |</span><br><span class="line">  iface Ethernet0 inet <span class="keyword">static</span></span><br><span class="line">  address <span class="number">10.0</span><span class="number">.0</span><span class="number">.2</span></span><br><span class="line">  network <span class="number">10.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">  netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">  broadcast <span class="number">10.0</span><span class="number">.0</span><span class="number">.255</span></span><br><span class="line">  gateway <span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">  hwaddress ether <span class="number">00</span>:<span class="number">11</span>:<span class="number">22</span>:<span class="number">33</span>:<span class="number">44</span>:<span class="number">55</span></span><br><span class="line">hostname: windowshost1</span><br></pre></td></tr></table></figure>
+
+<p>Cloud-init’s network config v1 format can be used to configure static network configuration. The configuration file should be named network-config and should be present at the same folder level with the meta-data and user-data file. If no network-config is found, cloudbase-init will use the network-interfaces value from the metadata (if any).</p>
+<p>The following network config types are implemented: physical, bond, vlan and nameserver. Unsupported config types: bridge and route.</p>
+<p>Example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="number">1</span></span><br><span class="line">config:</span><br><span class="line">   - type: physical</span><br><span class="line">     name: interface0</span><br><span class="line">     mac_address: <span class="string">"52:54:00:12:34:00"</span></span><br><span class="line">     mtu: <span class="number">1450</span></span><br><span class="line">     subnets:</span><br><span class="line">        - type: <span class="keyword">static</span></span><br><span class="line">          address: <span class="number">192.168</span><span class="number">.1</span><span class="number">.10</span></span><br><span class="line">          netmask: <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">          dns_nameservers:</span><br><span class="line">            - <span class="number">192.168</span><span class="number">.1</span><span class="number">.11</span></span><br><span class="line">   - type: bond</span><br><span class="line">     name: bond0</span><br><span class="line">     bond_interfaces:</span><br><span class="line">       - gbe0</span><br><span class="line">       - gbe1</span><br><span class="line">     mac_address: <span class="string">"52:54:00:12:34:00"</span></span><br><span class="line">     params:</span><br><span class="line">       bond-mode: active-backup</span><br><span class="line">       bond-lacp-rate: <span class="literal">false</span></span><br><span class="line">     mtu: <span class="number">1450</span></span><br><span class="line">     subnets:</span><br><span class="line">        - type: <span class="keyword">static</span></span><br><span class="line">          address: <span class="number">192.168</span><span class="number">.1</span><span class="number">.10</span></span><br><span class="line">          netmask: <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">          dns_nameservers:</span><br><span class="line">            - <span class="number">192.168</span><span class="number">.1</span><span class="number">.11</span></span><br><span class="line">   - type: vlan</span><br><span class="line">     name: vlan0</span><br><span class="line">     vlan_link: eth1</span><br><span class="line">     vlan_id: <span class="number">150</span></span><br><span class="line">     mac_address: <span class="string">"52:54:00:12:34:00"</span></span><br><span class="line">     mtu: <span class="number">1450</span></span><br><span class="line">     subnets:</span><br><span class="line">        - type: <span class="keyword">static</span></span><br><span class="line">          address: <span class="number">192.168</span><span class="number">.1</span><span class="number">.10</span></span><br><span class="line">          netmask: <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">          dns_nameservers:</span><br><span class="line">            - <span class="number">192.168</span><span class="number">.1</span><span class="number">.11</span></span><br><span class="line">   - type: nameserver</span><br><span class="line">     address:</span><br><span class="line">       - <span class="number">192.168</span><span class="number">.23</span><span class="number">.2</span></span><br><span class="line">       - <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span></span><br><span class="line">     search: acme.local</span><br></pre></td></tr></table></figure>
+
+<p>More information on the NoCloud metadata service specifications can be found here.</p>
+<p><strong>Amazon EC2</strong><br>classcloudbaseinit.metadata.services.ec2service.EC2Service<br>This is similar to the OpenStack HTTP service but is using a different format for metadata endpoints and has general capabilities.</p>
+<p>Metadata version used: 2009-04-04.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>user data</p>
+<p>Config options for ec2 section:</p>
+<p>metadata_base_url (string: “<a href="http://169.254.169.254/”" target="_blank" rel="noopener">http://169.254.169.254/”</a>)
+add_metadata_private_ip_route (bool: True)<br>https_allow_insecure (bool: False)<br>https_ca_bundle (string: None)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p>Note</p>
+<p><a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html" target="_blank" rel="noopener">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html</a></p>
+<p><strong>Apache CloudStack</strong><br>classcloudbaseinit.metadata.services.cloudstack.CloudStack<br>Another web-based service which usually uses “10.1.1.1” or DHCP addresses for retrieving content. If no metadata can be found at the metadata_base_url, the service will look for the metadata at the DHCP server URL.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>admin user password<br>poll for, post, delete admin user password (each reboot)<br>user data</p>
+<p>Config options for cloudstack section:</p>
+<p>metadata_base_url (string: “<a href="http://10.1.1.1/”" target="_blank" rel="noopener">http://10.1.1.1/”</a>)
+password_server_port (int: 8080)<br>add_metadata_private_ip_route (bool: True)<br>https_allow_insecure (bool: False)<br>https_ca_bundle (string: None)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p>Note</p>
+<p>By design, this service can update the password anytime, so it will cause the setuserpassword plugin to run at every boot and by security concerns, the password is deleted right after retrieval and no updating will occur until a new password is available on the server.</p>
+<p><strong>OpenNebula Service</strong><br>classcloudbaseinit.metadata.services.opennebulaservice.OpenNebulaService<br>The OpenNebula provider is related to configuration drive and searches for a specific context file which holds all the available info. The provided details are exposed as bash variables gathered in a shell script.</p>
+<p>Capabilities:</p>
+<p>hardcoded instance id to iid-dsopennebula<br>hostname<br>public keys<br>static network configuration<br>user data</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p><strong>Ubuntu MaaS</strong><br>classcloudbaseinit.metadata.services.maasservice.MaaSHttpService<br>This metadata service usually works with instances on baremetal and uses web requests for retrieving the available exposed metadata. It uses OAuth to secure the requests.</p>
+<p>Metadata version used: 2012-03-01.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>WinRM authentication certificates<br>static network configuration<br>user data</p>
+<p>Config options for maas section:</p>
+<p>metadata_base_url (string: None)<br>oauth_consumer_key (string: None)<br>oauth_consumer_secret (string: None)<br>oauth_token_key (string: None)<br>oauth_token_secret (string: None)<br>https_allow_insecure (bool: False)<br>https_ca_bundle (string: None)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p>Note</p>
+<p>By design, the configuration options are set by an agent called curtin which runs the hooks that set the config values. On Windows, these hooks need to be present in the root directory: Windows curtin hooks.</p>
+<p><strong>Open Virtualization Format (OVF)</strong><br>classcloudbaseinit.metadata.services.ovfservice.OvfService<br>The OVF provider searches data from OVF environment ISO transport.</p>
+<p>Capabilities:</p>
+<p>instance id (hardcoded to iid-ovf if not present)<br>hostname<br>public keys<br>admin user name<br>admin user password<br>user data</p>
+<p>Config options:</p>
+<p>config_file_name (string: “ovf-env.xml”)<br>drive_label (string: “OVF ENV”)<br>ns (string: “oe”)</p>
+<p><strong>Packet Service</strong><br>classcloudbaseinit.metadata.services.packet.PacketService<br>Packet metadata service provides the metadata for baremetal servers at the magic URL <a href="https://metadata.packet.net/" target="_blank" rel="noopener">https://metadata.packet.net/</a>.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>post admin user password (only once)<br>user data<br>call home on successful provision</p>
+<p>Config options for packet section:</p>
+<p>metadata_base_url (string: “<a href="https://metadata.packet.net/”" target="_blank" rel="noopener">https://metadata.packet.net/”</a>)
+https_allow_insecure (bool: False)<br>https_ca_bundle (string: None)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p><strong>Azure Service</strong><br>classcloudbaseinit.metadata.services.azureservice.AzureService<br>Azure metadata service provides the metadata for Microsoft Azure cloud platform.</p>
+<p>Azure metadata is offered via multiple sources like HTTP metadata, config-drive metadata and KVP (Hyper-V Key-Value Pair Data Exchange). This implementation uses only HTTP and config-drive metadata sources.</p>
+<p>Azure service implements the interface to notify the cloud provider when the instance has started provisioning, completed provisioning and if the provisioning failed.</p>
+<p>Metadata version used: 2015-04-05.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>WinRM authentication certificates<br>admin user name<br>admin user password<br>user data<br>post RDP certificate thumbprint<br>provisioning status<br>Windows Update status<br>VM agent configuration<br>licensing configuration<br>ephemeral disk warning</p>
+<p>Config options for azure section:</p>
+<p>transport_cert_store_name (string: Windows Azure Environment”)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<p><strong>Empty Metadata Service</strong><br>classcloudbaseinit.metadata.services.base.EmptyMetadataService<br>The empty metadata service can be used to run plugins that do not rely on metadata service information, like setting NTP, MTU, extending volumes, local scripts execution, licensing, etc.</p>
+<p>It can be used also as a fallback metadata service, in case no other previous metadata service could be loaded.</p>
+<p>EmptyMetadataService does not support the following plugins:<br>cloudbaseinit.plugins.windows.createuser.CreateUserPlugin<br>cloudbaseinit.plugins.common.setuserpassword.SetUserPasswordPlugin<br>cloudbaseinit.plugins.common.sshpublickeys.SetUserSSHPublicKeysPlugin<br>cloudbaseinit.plugins.windows.winrmcertificateauth.ConfigWinRMCertificateAuthPlugin</p>
+<p>If any of the plugins defined above are executed, they will fail with exception NotExistingMetadataException. The reason for the hardcoded failure is that these plugins rely on metadata to execute correctly. If metadata like username or password is not provided, these plugins can lock or misconfigure the user, leading to unwanted problems.</p>
+<p>Note</p>
+<p>If a service returns an empty instance-id (like EmptyMetadataService does), all the plugins will be executed at every cloudbase-init run (reboot, service restart). Plugins that set NTP, MTU, extend volumes are idempotent and can be re-executed with no issues. Make sure that if you configure cloudbase-init to run local scripts, those local scripts are idempotent.</p>
+<p><strong>VMware GuestInfo Service</strong><br>classcloudbaseinit.metadata.services.vmwareguestinfoservice.VMwareGuestInfoService<br>VMwareGuestInfoService is a metadata service which uses VMware’s rpctool to extract guest metadata and userdata configured for machines running on VMware hypervisors.</p>
+<p>The VMware RPC tool used to query the instance metadata and userdata needs to be present at the config option path.</p>
+<p>Both json and yaml are supported as metadata formats. The metadata / userdata can be encoded in base64, gzip or gzip+base64.</p>
+<p>Example metadata in yaml format:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">instance-id: cloud-vm</span><br><span class="line">local-hostname: cloud-vm</span><br><span class="line">admin-username: cloud-username</span><br><span class="line">admin-password: Passw0rd</span><br><span class="line"><span class="keyword">public</span>-keys-data: |</span><br><span class="line">  ssh-key <span class="number">1</span></span><br><span class="line">  ssh-key <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>This metadata content needs to be set as string in the guestinfo dictionary, thus needs to be converted to base64 (it is recommended to gzip it too). To convert to gzip+base64 format:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat metadata.yml | gzip.exe -9 | base64.exe -w0</span><br></pre></td></tr></table></figure>
+
+<p>The output of the gzip+base64 conversion needs to be set in the instance guestinfo, along with the encoding of the metadata / userdata.</p>
+<p>For more information on how to achieve this, please check <a href="https://github.com/vmware/cloud-init-vmware-guestinfo#configuration" target="_blank" rel="noopener">https://github.com/vmware/cloud-init-vmware-guestinfo#configuration</a></p>
+<p>This is an example how to set the information from the instance:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rpctool_path</span>&gt;</span> "info-set guestinfo.metadata <span class="tag">&lt;<span class="name">gzip+base64-encoded-metadata</span>&gt;</span>"</span><br><span class="line"><span class="tag">&lt;<span class="name">rpctool_path</span>&gt;</span> "info-set guestinfo.metadata.encoding gzip+base64"</span><br><span class="line"><span class="tag">&lt;<span class="name">rpctool_path</span>&gt;</span> "info-set guestinfo.userdata <span class="tag">&lt;<span class="name">gzip+base64-encoded-userdata</span>&gt;</span>"</span><br><span class="line"><span class="tag">&lt;<span class="name">rpctool_path</span>&gt;</span> "info-set guestinfo.userdata.encoding gzip+base64"</span><br></pre></td></tr></table></figure>
+
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>admin user name<br>admin user password<br>user data</p>
+<p>Config options for vmwareguestinfo section:</p>
+<p>vmware_rpctool_path (string: “%ProgramFiles%/VMware/VMware Tools/rpctool.exe”)</p>
+<p><strong>Google Compute Engine Service</strong><br>classcloudbaseinit.metadata.services.gceservice.GCEService<br>GCE metadata service provides the metadata for instances running on Google Compute Engine.</p>
+<p>GCE metadata is offered via an internal HTTP metadata endpoint, reachable at the magic URL <a href="http://metadata.google.internal/computeMetadata/v1/" target="_blank" rel="noopener">http://metadata.google.internal/computeMetadata/v1/</a>. More information can be found in the GCE metadata documents.</p>
+<p>To provide userdata to be executed by the instance (in cloud-config format, for example), use the user-data and user-data-encoding instance metadata keys.</p>
+<p>Capabilities:</p>
+<p>instance id<br>hostname<br>public keys<br>user data</p>
+<p>Config options for gce section:</p>
+<p>metadata_base_url (string: <a href="http://metadata.google.internal/computeMetadata/v1/”" target="_blank" rel="noopener">http://metadata.google.internal/computeMetadata/v1/”</a>)
+https_allow_insecure (bool: False)<br>https_ca_bundle (string: None)</p>
+<p>Config options for default section:</p>
+<p>retry_count (integer: 5)<br>retry_count_interval (integer: 4)</p>
+<h4 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h4><p><strong>Plugins</strong><br>Plugins execute actions based on the metadata obtained by the loaded service. They are intended to configure the instance using data provided by the underlying cloud and by the user who created the instance. There are three stages for the plugins’ execution:</p>
+<ol>
+<li>The PRE_NETWORKING stage (for setting up the network, before doing any valid web request.</li>
+<li>The PRE_METADATA_DISCOVERY stage (additional configuration before the metadata service discovery).</li>
+<li>The default MAIN stage, which holds the rest of the plugins which are (re)executed according to their saved status. The metadata service loaded needs to provide an instance id for the plugins to be able to have a saved status. If the metadata service cannot provide an instance id, the plugins state from the MAIN stage cannot be saved, and therefore, all plugins will be executed at every boot.</li>
+</ol>
+<p>Note that the plugins from the two stages are executed each time the cloudbase-init service starts (those plugins do not have saved status).</p>
+<p>Just before the MAIN stage, the metadata service can report to the cloud service that the provision started. After the MAIN stage ended, the metadata service can report to the cloud service that the provisioning completed successfully or failed.</p>
+<p><strong>Configuring selected plugins</strong><br>By default, only a subset of plugins is executed. The plugins are:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[DEFAULT]</span></span><br><span class="line"><span class="attr">plugins</span> = cloudbaseinit.plugins.common.mtu.MTUPlugin, cloudbaseinit.plugins.windows.ntpclient.NTPClientPlugin, cloudbaseinit.plugins.common.sethostname.SetHostNamePlugin, cloudbaseinit.plugins.windows.createuser.CreateUserPlugin, cloudbaseinit.plugins.common.networkconfig.NetworkConfigPlugin, cloudbaseinit.plugins.windows.licensing.WindowsLicensingPlugin, cloudbaseinit.plugins.common.sshpublickeys.SetUserSSHPublicKeysPlugin, cloudbaseinit.plugins.windows.extendvolumes.ExtendVolumesPlugin, cloudbaseinit.plugins.common.userdata.UserDataPlugin, cloudbaseinit.plugins.common.setuserpassword.SetUserPasswordPlugin, cloudbaseinit.plugins.windows.winrmlistener.ConfigWinRMListenerPlugin, cloudbaseinit.plugins.windows.winrmcertificateauth.ConfigWinRMCertificateAuthPlugin, cloudbaseinit.plugins.common.localscripts.LocalScriptsPlugin</span><br></pre></td></tr></table></figure>
+
+<p>A custom list of plugins can be specified through the plugins option in the configuration file.</p>
+<p>For more details on doing this, see configuration file in Tutorial.</p>
+<p><strong>Setting hostname (MAIN)</strong><br>classcloudbaseinit.plugins.common.sethostname.SetHostNamePlugin<br>Sets the instance hostname. The hostname gets truncated to 15 characters for Netbios compatibility reasons if netbios_host_name_compatibility is set.</p>
+<p>Config options:</p>
+<p>netbios_host_name_compatibility (bool: True)</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service.<br>May require a system restart.</p>
+<p><strong>Creating user (MAIN)</strong><br>classcloudbaseinit.plugins.windows.createuser.CreateUserPlugin<br>Creates (or updates if existing) a new user and adds it to a set of provided local groups. By default, it creates the user “Admin” under “Administrators” group, but this can be changed in the configuration file.</p>
+<p>A random user password is set for the user. The password length is by default set to 20 and can be customized using the user_password_length configuration option.</p>
+<p>If rename_admin_user is set to True, the user Administrator is renamed to the username config value or to the metadata service provided value.</p>
+<p>Config options:</p>
+<p>username (string: “Admin”)<br>groups (list of strings: [“Administrators”])<br>user_password_length (int: 20)<br>rename_admin_user (bool: false)</p>
+<p>Notes:</p>
+<p>The metadata service can provide the username. If the metadata service provides the admin username, it will override the username configuration value.</p>
+<p><strong>Setting password (MAIN)</strong><br>classcloudbaseinit.plugins.common.setuserpassword.SetUserPasswordPlugin<br>Sets the cloud user’s password. If a password has been provided in the metadata during boot it will be used, otherwise a random password will be generated, encrypted with the user’s SSH public key and posted to the metadata provider.</p>
+<p>An option called inject_user_password is set True by default to make available the use of metadata password which is found under the “admin_pass” field or through an URL request. If the option is set to False or if the password isn’t found in metadata, then an attempt of using an already set password is done (usually a random value by the CreateUserPlugin plugin). With first_logon_behaviour you can control what happens with the password at the next logon. If this option is set to “always”, the user will be forced to change the password at the next logon.</p>
+<p>If it is set to “clear_text_injected_only”, the user will be forced to change the password only if the password is a clear text password, coming from the metadata. The last option is “no”, when the user is never forced to change the password.</p>
+<p>Config options:</p>
+<p>username (string: “Admin”)<br>inject_user_password (bool: True)<br>first_logon_behaviour (string: “clear_text_injected_only”)<br>user_password_length (int: 20)</p>
+<p>Notes:</p>
+<p>The metadata service may provide the username. If the metadata service provides the admin username, it will override the username configuration value.</p>
+<p>May run at every boot to (re)set and post the password if the metadata service supports this behaviour.</p>
+<p><strong>Static networking (MAIN)</strong><br>classcloudbaseinit.plugins.common.networkconfig.NetworkConfigPlugin<br>Statically configures each network adapter for which corresponding details are found into metadata. The details/addresses association is done using MAC matching and if this fails, then name or interface index matching. The basic setting is based on IPv4 addresses, but it supports IPv6 addresses too if they are enabled and exposed to the metadata. The purpose of this plugin is to configure network adapters, for which the DHCP server is disabled, to have internet access and static IPs.</p>
+<p>NIC teaming (bonding) is supported and uses NetLBFO implementation.</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service.<br>May require a system restart.</p>
+<p>Saving public keys (MAIN)<br>classcloudbaseinit.plugins.common.sshpublickeys.SetUserSSHPublicKeysPlugin<br>Creates an authorized_keys file in the user’s home directory containing the SSH keys provided in the metadata. It is needed by the plugin responsible for encrypting and setting passwords.</p>
+<p>Config options:</p>
+<p>username (string: “Admin”)</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service. The metadata service provides the SSH public keys.</p>
+<p>The metadata service can provide the username. If the metadata service provides the admin username, it will override the username configuration value.</p>
+<p><strong>Volume expanding (MAIN)</strong><br>classcloudbaseinit.plugins.windows.extendvolumes.ExtendVolumesPlugin<br>Extends automatically a disk partition to its maximum size. This is useful when booting images with different flavors. By default, all the volumes are extended, but you can select specific ones by populating with their indexes the volumes_to_extend option.</p>
+<p>Config options:</p>
+<p>volumes_to_extend (list of integers: None)</p>
+<p>Notes:</p>
+<p>Runs at every boot.</p>
+<p><strong>WinRM listener (MAIN)</strong><br>classcloudbaseinit.plugins.windows.winrmlistener.ConfigWinRMListenerPlugin<br>Configures a WinRM HTTPS listener to allow remote management via WinRM or PowerShell.</p>
+<p>If winrm_enable_basic_auth is set to True, it enables basic authentication (authentication using username and password) for the WinRM listeners.</p>
+<p>If winrm_configure_http_listener is set to True, the WinRM http listener will also be enabled.</p>
+<p>Config options:</p>
+<p>winrm_enable_basic_auth (bool: True)<br>winrm_configure_https_listener (bool: True)<br>winrm_configure_http_listener (bool: False)</p>
+<p>Notes:<br>The metadata service can provide the listeners configuration (protocol and certificate thumbprint).</p>
+<p>May run at every boot. If the WinRM Windows service does not exist, it will run at the next boot.</p>
+<p><strong>WinRM certificate (MAIN)</strong><br>classcloudbaseinit.plugins.windows.winrmcertificateauth.ConfigWinRMCertificateAuthPlugin<br>Enables password-less authentication for remote management via WinRS or PowerShell. Usually uses x509 embedded with UPN certificates.</p>
+<p>Config options:</p>
+<p>username (string: “Admin”)</p>
+<p>Notes</p>
+<p>Requires support in the metadata service. The metadata service must provide the certificate metadata. The admin user password needs to be present, either from the metadata, either as shared data set by running CreateUserPlugin or SetUserPasswordPlugin. The metadata service can provide the username. If the metadata service provides the admin username, it will override the username configuration value.</p>
+<p>How to use this feature: <a href="http://www.cloudbase.it/windows-without-passwords-in-openstack/" target="_blank" rel="noopener">http://www.cloudbase.it/windows-without-passwords-in-openstack/</a></p>
+<p><strong>Local Scripts execution (MAIN)</strong><br>classcloudbaseinit.plugins.common.localscripts.LocalScriptsPlugin<br>Executes any script (powershell, batch, python etc.) located in the following path indicated by local_scripts_path option.</p>
+<p>More details about the supported scripts and content can be found in Tutorial on file execution subject.</p>
+<p>Config options:</p>
+<p>local_scripts_path (string: None)</p>
+<p>Notes:</p>
+<p>May require a system restart.</p>
+<p>May run at every boot. It depends on the exit codes of the scripts.</p>
+<p><strong>Licensing (MAIN)</strong><br>classcloudbaseinit.plugins.windows.licensing.WindowsLicensingPlugin<br>Activates the Windows instance if the activate_windows option is True. If set_kms_product_key or set_avma_product_key are set, it will use that KMS or AVMA product key in Windows.</p>
+<p>If kms_host is set, it will set the provided host as the KMS licensing server.</p>
+<p>Config options:</p>
+<p>activate_windows (bool: False)<br>set_kms_product_key (bool: False)<br>set_avma_product_key (bool: False)<br>kms_host (string: None)<br>log_licensing_info (bool: True)</p>
+<p>Notes:</p>
+<p>The metadata service can provide the KMS host, overriding the configuration option kms_host. The metadata service can provide the avma_product_key, overriding the configuration option set_avma_product_key.</p>
+<p><strong>Clock synchronization (PRE_NETWORKING)</strong><br>classcloudbaseinit.plugins.windows.ntpclient.NTPClientPlugin<br>Applies NTP client info based on the DHCP server options, if available. This behavior is enabled only when the ntp_use_dhcp_config option is set to True (which by default is False).</p>
+<p>If real_time_clock_utc is set to True, it will set the real time clock to use universal time. If set to False, it will set the real time clock to use the local time.</p>
+<p>Config options:</p>
+<p>ntp_use_dhcp_config (bool: False)<br>real_time_clock_utc (bool: False)<br>ntp_enable_service (bool: True)</p>
+<p>Notes:</p>
+<p>May require a reboot.</p>
+<p>May run at every boot.</p>
+<p><strong>MTU customization (PRE_METADATA_DISCOVERY)</strong><br>classcloudbaseinit.plugins.common.mtu.MTUPlugin<br>Sets the network interfaces MTU based on the value provided by the DHCP server options, if available and enabled (by default is True). This is particularly useful for cases in which a lower MTU value is required for networking (e.g. OpenStack GRE Neutron Open vSwitch configurations).</p>
+<p>Config options:</p>
+<p>mtu_use_dhcp_config (bool: True)</p>
+<p>Notes:</p>
+<p>Runs at every boot.</p>
+<p><strong>User data (MAIN)</strong><br>classcloudbaseinit.plugins.common.userdata.UserDataPlugin<br>Executes custom scripts provided by user data metadata as plain text or compressed with Gzip. More details, examples and possible formats here: Userdata.</p>
+<p><strong>Trim Config (MAIN)</strong><br>classcloudbaseinit.plugins.common.trim.TrimConfigPlugin<br>Enables or disables TRIM delete notifications for the underlying storage device.</p>
+<p>Config options:</p>
+<p>trim_enabled (bool: False)</p>
+<p><strong>San Policy Config (MAIN)</strong><br>classcloudbaseinit.plugins.windows.sanpolicy.SANPolicyPlugin<br>If not None, the SAN policy is set to the given value of the configuration option san_policy. The possible values are: OnlineAll, OfflineAll or OfflineShared.</p>
+<p>Config options:</p>
+<p>san_policy (string: None)</p>
+<p><strong>RDP Settings Config (MAIN)</strong><br>classcloudbaseinit.plugins.windows.rdp.RDPSettingsPlugin<br>Sets the registry key KeepAliveEnable, to enable or disable the RDP keep alive functionality.</p>
+<p>Config options:</p>
+<p>rdp_set_keepalive (bool: False)</p>
+<p><strong>RDP Post Certificate Thumbprint (MAIN)</strong><br>classcloudbaseinit.plugins.windows.rdp.RDPPostCertificateThumbprintPlugin<br>Posts the RDP certificate thumbprint to the metadata service endpoint.</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service. The metadata service should expose an HTTP endpoint where the certificate thumbprint can be posted.</p>
+<p><strong>Page Files (MAIN)</strong><br>classcloudbaseinit.plugins.windows.pagefiles.PageFilesPlugin<br>Sets custom page files according to the config options.</p>
+<p>Config options:</p>
+<p>page_file_volume_labels (array: [])<br>page_file_volume_mount_points (array: [])</p>
+<p>Notes:</p>
+<p>May require a reboot. If the page file is configured, a reboot is required.</p>
+<p>Runs at every boot.</p>
+<p><strong>Display Idle Timeout Config (MAIN)</strong><br>classcloudbaseinit.plugins.windows.displayidletimeout.DisplayIdleTimeoutConfigPlugin<br>Sets the idle timeout, in seconds, before powering off the display. Set 0 to leave the display always on.</p>
+<p>Config options:</p>
+<p>display_idle_timeout (int: 0)</p>
+<p><strong>Boot Status Policy Config (MAIN)</strong><br>classcloudbaseinit.plugins.windows.bootconfig.BootStatusPolicyPlugin<br>Sets the Windows BCD boot status policy according to the config option. When set, the only possible value for bcd_boot_status_policy is ignoreallfailures.</p>
+<p>Config options:</p>
+<p>bcd_boot_status_policy (string: None)</p>
+<p><strong>BCD Config (MAIN)</strong><br>classcloudbaseinit.plugins.windows.bootconfig.BCDConfigPlugin<br>A unique disk ID is needed to avoid disk signature collisions. This plugin resets the boot disk id and enables auto-recovery in the BCD store.</p>
+<p>Config options:</p>
+<p>set_unique_boot_disk_id (bool: False)<br>bcd_enable_auto_recovery (bool: False)</p>
+<p><strong>Ephemeral Disk Config (MAIN)</strong><br>classcloudbaseinit.plugins.common.ephemeraldisk.EphemeralDiskPlugin<br>Sets the ephemeral disk data loss warning file. On public clouds like Azure, the ephemeral disk should contain a read only file with data loss warning text, that warns the user to not use the ephemeral disk as a persistent storage disk.</p>
+<p>Config options:</p>
+<p>ephemeral_disk_volume_label (string: None)<br>ephemeral_disk_volume_mount_point (string: None)<br>ephemeral_disk_data_loss_warning_path (string: None)</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service. The metadata service should provide the disk data loss warning text.</p>
+<p><strong>Windows Auto Updates (MAIN)</strong><br>classcloudbaseinit.plugins.windows.updates.WindowsAutoUpdatesPlugin<br>Enables automatic Windows updates based on the user configuration or the metadata service information. The metadata service setting takes priority over the configuration option.</p>
+<p>Config options:</p>
+<p>enable_automatic_updates (bool: False)</p>
+<p>Notes:</p>
+<p>If the metadata service provides the information needed to enable the automatic updates, it will override the enable_automatic_updates configuration value.</p>
+<p><strong>Server Certificates (MAIN)</strong><br>classcloudbaseinit.plugins.windows.certificates.ServerCertificatesPlugin<br>Imports X509 certificates into the desired store location. The metadata service provides the certificate and key in a PFX archive, their store location and store name.</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service.</p>
+<p><strong>Azure Guest Agent (MAIN)</strong><br>classcloudbaseinit.plugins.windows.azureguestagent.AzureGuestAgentPlugin<br>Installs Azure Guest agent, which is required for the Azure cloud platform.</p>
+<p>Notes:</p>
+<p>Requires support in the metadata service. Azure metadata service should provide the agent package provisioning data.</p>
+<h4 id="Userdata"><a href="#Userdata" class="headerlink" title="Userdata"></a>Userdata</h4><p><strong>Userdata</strong><br>The userdata is the user custom content exposed to the guest instance by the currently deployed and running cloud infrastructure. Its purpose is to provide additional data for the instance to customize it as much as you need, if the cloud initialization service does support this feature.</p>
+<p>Fortunately, cloudbase-init is able to interpret and use this kind of user specific data in multiple ways. In most of the cases, the thing that indicates of what type is the processed data is usually the first line.</p>
+<p>Currently supported contents:</p>
+<p><strong>PEM certificate</strong><br>—–BEGIN CERTIFICATE—–</p>
+<p>This one should start with a PEM specific beginning header, which will be eventually parsed by the configuration drive and web API OpenStack services and used by the WinRM certificate (MAIN) plugin for storing and using it.</p>
+<p><strong>Batch</strong><br>rem cmd</p>
+<p>The file is executed in a cmd.exe shell (can be changed with the COMSPEC environment variable).</p>
+<p>PowerShell****</p>
+<p>#ps1 or #ps1_sysnative (system native)</p>
+<p>#ps1_x86 (Windows On Windows 32bit)</p>
+<p>Execute PowerShell scripts using the desired executable. For finding out more about the system nativeness thing, click here.</p>
+<p><strong>Bash</strong></p>
+<p>#!/bin/bash</p>
+<p>A bash shell needs to be installed in the system and available in the PATH in order to use this feature.</p>
+<p><strong>Python</strong></p>
+<p>#!/usr/bin/env python</p>
+<p>Python is available by default with the build itself, but also it must be in the system PATH.</p>
+<p><strong>EC2 format</strong><br>There is no “first line” here, but the content should follow a XML pattern with valid Batch/PowerShell script contents under script or powershell enclosing tags like in this example:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">set root=%SystemDrive%</span><br><span class="line">echo ec2dir&gt;%root%\ec2file.txt</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">powershell</span>&gt;</span></span><br><span class="line">$root = $env:SystemDrive</span><br><span class="line">$dname = Get-Content "$root\ec2file.txt"</span><br><span class="line">New-Item -path "$root\$dname" -type directory</span><br><span class="line"><span class="tag">&lt;/<span class="name">powershell</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Note</p>
+<p><a href="http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_WinAMI.html" target="_blank" rel="noopener">http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_WinAMI.html</a></p>
+<p><strong>Cloud config</strong></p>
+<p>#cloud-config</p>
+<p>Cloud-config YAML configuration as supported by cloud-init, excluding Linux specific content. The following cloud-config directives are supported:</p>
+<p>write_files - Defines a set of files which will be created on the local filesystem. It can be a list of items or only one item, with the following attributes:</p>
+<p>path - Absolute path on disk where the content should be written.<br>content - The content which will be written in the given file.<br>permissions - Integer representing file permissions.<br>encoding - The encoding of the data in content. Supported encodings are: b64, base64 for base64-encoded content, gz, gzip for gzip encoded content, gz+b64, gz+base64, gzip+b64, gzip+base64 for base64 encoded gzip content.</p>
+<p>Examples:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">write_files:</span><br><span class="line">   encoding: b64</span><br><span class="line">   content: NDI=</span><br><span class="line">   path: C:\test</span><br><span class="line">   permissions: <span class="string">'0o466'</span></span><br><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">write_files:</span><br><span class="line">   -   encoding: b64</span><br><span class="line">       content: NDI=</span><br><span class="line">       path: C:\b64</span><br><span class="line">       permissions: <span class="string">'0644'</span></span><br><span class="line">   -   encoding: base64</span><br><span class="line">       content: NDI=</span><br><span class="line">       path: C:\b64_1</span><br><span class="line">       permissions: <span class="string">'0644'</span></span><br><span class="line">   -   encoding: gzip</span><br><span class="line">       content: !!binary |</span><br><span class="line">           H4sIAGUfoFQC/zMxAgCIsCQyAgAAAA==</span><br><span class="line">       path: C:\gzip</span><br><span class="line">       permissions: <span class="string">'0644'</span></span><br></pre></td></tr></table></figure>
+
+<p>set_timezone - Change the underlying timezone.</p>
+<p>Example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">set_timezone: Asia/Tbilisi</span><br></pre></td></tr></table></figure>
+
+<p>set_hostname - Override the already default set hostname value (taken from metadata).</p>
+<p>If the hostname is changed, a reboot will be required.</p>
+<p>Example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">set_hostname: newhostname</span><br></pre></td></tr></table></figure>
+
+<p>groups - Create local groups and add existing users to those local groups.</p>
+<p>The definition of the groups consists of a list in the format:</p>
+<p><group_name>: [<user1>, <user2>]</user2></user1></group_name></p>
+<p>The list of users can be empty, when creating a group without members.</p>
+<p>Example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groups:</span><br><span class="line">  - windows-group: [user1, user2]</span><br><span class="line">  - cloud-users</span><br></pre></td></tr></table></figure>
+
+<p>users - Create and configure local users.</p>
+<p>The users are defined as a list. Each element from the list represents a user. Each user can have the the following attributes defined:</p>
+<p>name - The username (required string).<br>gecos - the user description.<br>primary_group - the user’s primary group.<br>groups - the user’s groups. On Windows, primary_group and groups are concatenated.<br>passwd - the user’s password. On Linux, the password is a hashed string, whereas on Windows the password is a plaintext string. If the password is not defined, a random password will be set.<br>inactive - boolean value, defaults to False. If set to True, the user will be disabled.<br>expiredate - a string in the format <year>-<month>-<day>. Example: 2020-10-01.<br>ssh_authorized_keys - a list of SSH public keys, that will be set in ~/.ssh/authorized_keys.</day></month></year></p>
+<p>Example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">users:</span><br><span class="line">  -</span><br><span class="line">    name: Admin</span><br><span class="line">  -</span><br><span class="line">    name: brian</span><br><span class="line">    gecos: <span class="string">'Brian Cohen'</span></span><br><span class="line">    primary_group: Users</span><br><span class="line">    groups: cloud-users</span><br><span class="line">    passwd: StrongPassw0rd</span><br><span class="line">    inactive: <span class="keyword">False</span></span><br><span class="line">    expiredate: <span class="number">2020</span><span class="number">-10</span><span class="number">-01</span></span><br><span class="line">    ssh_authorized_keys:</span><br><span class="line">      - ssh-rsa AAAB...byV</span><br><span class="line">      - ssh-rsa AAAB...ctV</span><br></pre></td></tr></table></figure>
+
+<p>ntp - Set NTP servers. The definition is a dict with the following attributes:</p>
+<p>enabled - Boolean value, defaults to True, to enable or disable the NTP config.<br>servers - A list of NTP servers.<br>pools - A list of NTP pools.</p>
+<p>The servers and pools are aggregated, servers being the first ones in the list. On Windows, there is no difference between an NTP pool or server.</p>
+<p>Example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">ntp:</span><br><span class="line">  enabled: <span class="keyword">True</span></span><br><span class="line">  servers: [<span class="string">'my.ntp.server.local'</span>, <span class="string">'192.168.23.2'</span>]</span><br><span class="line">  pools: [<span class="string">'0.company.pool.ntp.org'</span>, <span class="string">'1.company.pool.ntp.org'</span>]</span><br></pre></td></tr></table></figure>
+
+<p>runcmd - Directive that can contain a list of commands that will be executed, in the order of their definition.</p>
+<p>A command can be defined as a string or as a list of strings, the first one being the executable path.</p>
+<p>On Windows, the commands are aggregated into a file and executed with cmd.exe. The userdata exit codes can be used to request a reboot: File execution.</p>
+<p>Example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">runcmd:</span><br><span class="line">  - <span class="string">'dir C:\\'</span></span><br><span class="line">  - [<span class="string">'echo'</span>, <span class="string">'1'</span>]</span><br></pre></td></tr></table></figure>
+
+<p>The cloud-config directives are executed by default in the following order: write_files, set_timezone, set_hostname, ntp, groups, users, runcmd. Use config option cloud_config_plugins to filter or to change the order of the cloud config plugins.</p>
+<p>The execution of set_hostname or runcmd can request a reboot if needed. The reboot is performed at the end of the cloud-config execution (after all the directives have been executed).</p>
+<p><strong>Multi-part content</strong><br>MIME multi-part user data is supported. The content will be handled based on the content type.</p>
+<p>text/x-shellscript - Any script to be executed: PowerShell, Batch, Bash or Python.</p>
+<p>text/part-handler - A script that can manage other content type parts. This is used in particular by Heat / CFN templates, although Linux specific.</p>
+<p>text/x-cfninitdata - Heat / CFN content. Written to the path provided by heat_config_dir option which defaults to “C:\cfn”. (examples of Heat Windows templates)</p>
+<p><strong>Sysnativeness</strong><br>When deciding which path to use for system executable files…</p>
+<p>On 32bit OSes, the return value will be the System32 directory, which contains 32bit programs. On 64bit OSes, the return value may be different, depending on the Python bits and the sysnative parameter. If the Python interpreter is 32bit, the return value will be System32 (containing 32bit programs) if sysnative is set to False and Sysnative otherwise. But if the Python interpreter is 64bit and sysnative is False, the return value will be SysWOW64 and System32 for a True value of sysnative.</p>
+<p>Why this behavior and what is the purpose of sysnative parameter?</p>
+<p>On a 32bit OS the things are clear, there is one System32 directory containing 32bit applications and that’s all. On a 64bit OS, there’s a System32 directory containing 64bit applications and a compatibility one named SysWOW64 (WindowsOnWindows) containing the 32bit version of them. Depending on the Python interpreter’s bits, the sysnative flag will try to bring the appropriate version of the system directory, more exactly, the physical System32 or SysWOW64 found on disk. On a WOW case (32bit interpreter on 64bit OS), a return value of System32 will point to the physical SysWOW64 directory and a return value of Sysnative, which is consolidated by the existence of this alias, will point to the real physical System32 directory found on disk. If the OS is still 64bit and there is no WOW case (that means the interpreter is 64bit), the system native concept is out of discussion and each return value will point to the physical location it intends to.</p>
+<p>On a 32bit OS the sysnative parameter has no meaning, but on a 64bit one, based on its value, it will provide a real/alias path pointing to system native applications if set to True (64bit programs) and to system compatibility applications if set to False (32bit programs). Its purpose is to provide the correct system paths by taking into account the Python interpreter bits too, because on a 32bit interpreter version, System32 is not the same with the System32 on a 64bit interpreter. Also, using a 64bit interpreter, the Sysnative alias will not work, but the sysnative parameter will take care to return SysWOW64 if you explicitly want 32bit applications, by setting it to False.</p>
+<h3 id="Configuration-options-reference"><a href="#Configuration-options-reference" class="headerlink" title="Configuration options reference"></a>Configuration options reference</h3><p>The following is an overview of all available configuration options in cloudbase-init.</p>
+<p><strong>DEFAULT</strong><br>debug<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Mutable<br>This option can be changed without restarting.</p>
+<p>If set to true, the logging level will be set to DEBUG instead of the default INFO level.</p>
+<p>log_config_append<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Mutable<br>This option can be changed without restarting.</p>
+<p>The name of a logging configuration file. This file is appended to any existing logging configuration files. For details about logging configuration files, see the Python logging module documentation. Note that when logging configuration files are used then all logging configuration is set in the configuration file and other logging configuration options are ignored (for example, log-date-format).</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>log-config</p>
+<p>DEFAULT</p>
+<p>log_config</p>
+<p>log_date_format<br>Type<br>string</p>
+<p>Default<br>%Y-%m-%d %H:%M:%S</p>
+<p>Defines the format string for %(asctime)s in log records. Default: the value above . This option is ignored if log_config_append is set.</p>
+<p>log_file<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>(Optional) Name of log file to send logging output to. If no default is set, logging will go to stderr as defined by use_stderr. This option is ignored if log_config_append is set.</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>logfile</p>
+<p>log_dir<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>(Optional) The base directory used for relative log_file paths. This option is ignored if log_config_append is set.</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>logdir</p>
+<p>watch_log_file<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.</p>
+<p>use_syslog<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Use syslog for logging. Existing syslog format is DEPRECATED and will be changed later to honor RFC5424. This option is ignored if log_config_append is set.</p>
+<p>use_journal<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Enable journald for logging. If running in a systemd environment you may wish to enable journal support. Doing so will use the journal native protocol which includes structured metadata in addition to log messages.This option is ignored if log_config_append is set.</p>
+<p>syslog_log_facility<br>Type<br>string</p>
+<p>Default<br>LOG_USER</p>
+<p>Syslog facility to receive log lines. This option is ignored if log_config_append is set.</p>
+<p>use_json<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Use JSON formatting for logging. This option is ignored if log_config_append is set.</p>
+<p>use_stderr<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Log output to standard error. This option is ignored if log_config_append is set.</p>
+<p>use_eventlog<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Log output to Windows Event Log.</p>
+<p>log_rotate_interval<br>Type<br>integer</p>
+<p>Default<br>1</p>
+<p>The amount of time before the log files are rotated. This option is ignored unless log_rotation_type is setto “interval”.</p>
+<p>log_rotate_interval_type<br>Type<br>string</p>
+<p>Default<br>days</p>
+<p>Valid Values<br>Seconds, Minutes, Hours, Days, Weekday, Midnight</p>
+<p>Rotation interval type. The time of the last file change (or the time when the service was started) is used when scheduling the next rotation.</p>
+<p>max_logfile_count<br>Type<br>integer</p>
+<p>Default<br>30</p>
+<p>Maximum number of rotated log files.</p>
+<p>max_logfile_size_mb<br>Type<br>integer</p>
+<p>Default<br>200</p>
+<p>Log file maximum size in MB. This option is ignored if “log_rotation_type” is not set to “size”.</p>
+<p>log_rotation_type<br>Type<br>string</p>
+<p>Default<br>none</p>
+<p>Valid Values<br>interval, size, none</p>
+<p>Log rotation type.</p>
+<p>Possible values</p>
+<p>interval<br>Rotate logs at predefined time intervals.</p>
+<p>size<br>Rotate logs once they reach a predefined size.</p>
+<p>none<br>Do not rotate log files.</p>
+<p>logging_context_format_string<br>Type<br>string</p>
+<p>Default<br>%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s</p>
+<p>Format string to use for log messages with context. Used by oslo_log.formatters.ContextFormatter</p>
+<p>logging_default_format_string<br>Type<br>string</p>
+<p>Default<br>%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s</p>
+<p>Format string to use for log messages when context is undefined. Used by oslo_log.formatters.ContextFormatter</p>
+<p>logging_debug_format_suffix<br>Type<br>string</p>
+<p>Default<br>%(funcName)s %(pathname)s:%(lineno)d</p>
+<p>Additional data to append to log message when logging level for the message is DEBUG. Used by oslo_log.formatters.ContextFormatter</p>
+<p>logging_exception_prefix<br>Type<br>string</p>
+<p>Default<br>%(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s</p>
+<p>Prefix each line of exception output with this format. Used by oslo_log.formatters.ContextFormatter</p>
+<p>logging_user_identity_format<br>Type<br>string</p>
+<p>Default<br>%(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s</p>
+<p>Defines the format string for %(user_identity)s that is used in logging_context_format_string. Used by oslo_log.formatters.ContextFormatter</p>
+<p>default_log_levels<br>Type<br>list</p>
+<p>Default<br>[‘amqp=WARN’, ‘amqplib=WARN’, ‘boto=WARN’, ‘qpid=WARN’, ‘sqlalchemy=WARN’, ‘suds=INFO’, ‘oslo.messaging=INFO’, ‘oslo_messaging=INFO’, ‘iso8601=WARN’, ‘requests.packages.urllib3.connectionpool=WARN’, ‘urllib3.connectionpool=WARN’, ‘websocket=WARN’, ‘requests.packages.urllib3.util.retry=WARN’, ‘urllib3.util.retry=WARN’, ‘keystonemiddleware=WARN’, ‘routes.middleware=WARN’, ‘stevedore=WARN’, ‘taskflow=WARN’, ‘keystoneauth=WARN’, ‘oslo.cache=INFO’, ‘oslo_policy=INFO’, ‘dogpile.core.dogpile=INFO’]</p>
+<p>List of package logging levels in logger=LEVEL pairs. This option is ignored if log_config_append is set.</p>
+<p>publish_errors<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Enables or disables publication of error events.</p>
+<p>instance_format<br>Type<br>string</p>
+<p>Default<br>“[instance: %(uuid)s] “</p>
+<p>The format for an instance that is passed with the log message.</p>
+<p>instance_uuid_format<br>Type<br>string</p>
+<p>Default<br>“[instance: %(uuid)s] “</p>
+<p>The format for an instance UUID that is passed with the log message.</p>
+<p>rate_limit_interval<br>Type<br>integer</p>
+<p>Default<br>0</p>
+<p>Interval, number of seconds, of log rate limiting.</p>
+<p>rate_limit_burst<br>Type<br>integer</p>
+<p>Default<br>0</p>
+<p>Maximum number of logged messages per rate_limit_interval.</p>
+<p>rate_limit_except_level<br>Type<br>string</p>
+<p>Default<br>CRITICAL</p>
+<p>Log level name used by rate limiting: CRITICAL, ERROR, INFO, WARNING, DEBUG or empty string. Logs with level greater or equal to rate_limit_except_level are not filtered. An empty string means that all levels are filtered.</p>
+<p>fatal_deprecations<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Enables or disables fatal status of deprecations.</p>
+<p>allow_reboot<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Allows OS reboots requested by plugins</p>
+<p>stop_service_on_exit<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>In case of execution as a service, specifies if the service must be gracefully stopped before exiting</p>
+<p>check_latest_version<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Check if there is a newer version of cloudbase-init available. If this option is activated, a log message will be emitted if there is a newer version available.</p>
+<p>retry_count<br>Type<br>integer</p>
+<p>Default<br>5</p>
+<p>Max. number of attempts for fetching metadata in case of transient errors</p>
+<p>retry_count_interval<br>Type<br>floating point</p>
+<p>Default<br>4</p>
+<p>Interval between attempts in case of transient errors, expressed in seconds</p>
+<p>mtools_path<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Path to “mtools” program suite, used for interacting with VFAT filesystems</p>
+<p>bsdtar_path<br>Type<br>string</p>
+<p>Default<br>bsdtar.exe</p>
+<p>Path to “bsdtar”, used to extract ISO ConfigDrive files</p>
+<p>netbios_host_name_compatibility<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Truncates the hostname to 15 characters for Netbios compatibility</p>
+<p>logging_serial_port_settings<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Serial port logging settings. Format: “port,baudrate,parity,bytesize”, e.g.: “COM1,115200,N,8”. Set to None (default) to disable.</p>
+<p>activate_windows<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Activates Windows automatically</p>
+<p>set_kms_product_key<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Sets the KMS product key for this operating system</p>
+<p>set_avma_product_key<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Sets the AVMA product key for this operating system</p>
+<p>kms_host<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The KMS host address in form <host>[:<port>], e.g: “kmshost:1688”</port></host></p>
+<p>log_licensing_info<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Logs the operating system licensing information</p>
+<p>winrm_enable_basic_auth<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Enables basic authentication for the WinRM HTTPS listener</p>
+<p>winrm_configure_http_listener<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Configures the WinRM HTTP listener</p>
+<p>winrm_configure_https_listener<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Configures the WinRM HTTPS listener</p>
+<p>volumes_to_extend<br>Type<br>list</p>
+<p>Default<br><none></none></p>
+<p>List of volumes that need to be extended if contiguous space is available on the disk. By default all the available volumes can be extended. Volumes must be specified using a comma separated list of volume indexes, e.g.: “1,2”</p>
+<p>san_policy<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Valid Values<br>OnlineAll, OfflineAll, OfflineShared</p>
+<p>If not None, the SAN policy is set to the given value</p>
+<p>local_scripts_path<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Path location containing scripts to be executed when the plugin runs</p>
+<p>mtu_use_dhcp_config<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Configures the network interfaces MTU based on the values provided via DHCP</p>
+<p>username<br>Type<br>string</p>
+<p>Default<br>Admin</p>
+<p>User to be added to the system or updated if already existing</p>
+<p>groups<br>Type<br>list</p>
+<p>Default<br>[‘Administrators’]</p>
+<p>List of local groups to which the user specified in “username” will be added</p>
+<p>rename_admin_user<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Renames the builtin admin user instead of creating a new user</p>
+<p>heat_config_dir<br>Type<br>string</p>
+<p>Default<br>C:\cfn</p>
+<p>The directory where the Heat configuration files must be saved</p>
+<p>ntp_enable_service<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Enables the NTP client service</p>
+<p>ntp_use_dhcp_config<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Configures NTP client time synchronization using the NTP servers provided via DHCP</p>
+<p>real_time_clock_utc<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Sets the real time clock to use universal time (True) or local time (False)</p>
+<p>inject_user_password<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Set the password provided in the configuration. If False or no password is provided, a random one will be set</p>
+<p>first_logon_behaviour<br>Type<br>string</p>
+<p>Default<br>clear_text_injected_only</p>
+<p>Valid Values<br>clear_text_injected_only, no, always</p>
+<p>Control the behaviour of what happens at next logon. If this option is set to always, then the user will be forced to change the password at next logon. If it is set to clear_text_injected_only, then the user will have to change the password only if the password is a clear text password, coming from the metadata. The last option is no, when the user is never forced to change the password.</p>
+<p>metadata_services<br>Type<br>list</p>
+<p>Default<br>[‘cloudbaseinit.metadata.services.httpservice.HttpService’, ‘cloudbaseinit.metadata.services.configdrive.ConfigDriveService’, ‘cloudbaseinit.metadata.services.ec2service.EC2Service’, ‘cloudbaseinit.metadata.services.maasservice.MaaSHttpService’, ‘cloudbaseinit.metadata.services.cloudstack.CloudStack’, ‘cloudbaseinit.metadata.services.opennebulaservice.OpenNebulaService’]</p>
+<p>List of enabled metadata service classes, to be tested for availability in the provided order. The first available service will be used to retrieve metadata</p>
+<p>plugins<br>Type<br>list</p>
+<p>Default<br>[‘cloudbaseinit.plugins.common.mtu.MTUPlugin’, ‘cloudbaseinit.plugins.windows.ntpclient.NTPClientPlugin’, ‘cloudbaseinit.plugins.common.sethostname.SetHostNamePlugin’, ‘cloudbaseinit.plugins.windows.createuser.CreateUserPlugin’, ‘cloudbaseinit.plugins.common.networkconfig.NetworkConfigPlugin’, ‘cloudbaseinit.plugins.windows.licensing.WindowsLicensingPlugin’, ‘cloudbaseinit.plugins.common.sshpublickeys.SetUserSSHPublicKeysPlugin’, ‘cloudbaseinit.plugins.windows.extendvolumes.ExtendVolumesPlugin’, ‘cloudbaseinit.plugins.common.userdata.UserDataPlugin’, ‘cloudbaseinit.plugins.common.setuserpassword.SetUserPasswordPlugin’, ‘cloudbaseinit.plugins.windows.winrmlistener.ConfigWinRMListenerPlugin’, ‘cloudbaseinit.plugins.windows.winrmcertificateauth.ConfigWinRMCertificateAuthPlugin’, ‘cloudbaseinit.plugins.common.localscripts.LocalScriptsPlugin’]</p>
+<p>List of enabled plugin classes, to be executed in the provided order</p>
+<p>user_data_plugins<br>Type<br>list</p>
+<p>Default<br>[‘cloudbaseinit.plugins.common.userdataplugins.parthandler.PartHandlerPlugin’, ‘cloudbaseinit.plugins.common.userdataplugins.cloudconfig.CloudConfigPlugin’, ‘cloudbaseinit.plugins.common.userdataplugins.cloudboothook.CloudBootHookPlugin’, ‘cloudbaseinit.plugins.common.userdataplugins.shellscript.ShellScriptPlugin’, ‘cloudbaseinit.plugins.common.userdataplugins.multipartmixed.MultipartMixedPlugin’, ‘cloudbaseinit.plugins.common.userdataplugins.heat.HeatPlugin’]</p>
+<p>List of enabled userdata content plugins</p>
+<p>cloud_config_plugins<br>Type<br>list</p>
+<p>Default<br>[]</p>
+<p>List which contains the name of the cloud config plugins ordered by priority.</p>
+<p>rdp_set_keepalive<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Sets the RDP KeepAlive policy</p>
+<p>bcd_boot_status_policy<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Valid Values<br>ignoreallfailures</p>
+<p>Sets the Windows BCD boot status policy</p>
+<p>bcd_enable_auto_recovery<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Enables or disables the BCD auto recovery</p>
+<p>set_unique_boot_disk_id<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Sets a new random unique id on the boot disk to avoid collisions</p>
+<p>display_idle_timeout<br>Type<br>integer</p>
+<p>Default<br>0</p>
+<p>The idle timeout, in seconds, before powering off the display. Set 0 to leave the display always on</p>
+<p>page_file_volume_labels<br>Type<br>list</p>
+<p>Default<br>[]</p>
+<p>Labels of volumes on which a Windows page file needs to be created. E.g.: “Temporary Storage”</p>
+<p>page_file_volume_mount_points<br>Type<br>list</p>
+<p>Default<br>[]</p>
+<p>Volume mount points on which a Windows page file needs to be created. E.g.: “?GLOBALROOTdeviceHarddisk1Partition1”</p>
+<p>trim_enabled<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Enables or disables TRIM delete notifications for the underlying storage device.</p>
+<p>process_userdata<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Processes the userdata content based on the type, e.g. executing a PowerShell script</p>
+<p>userdata_save_path<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Copies the userdata to the given file path. The path can include environment variables that will be expanded, e.g. “%SYSTEMDRIVE%CloudbaseInitUserData.bin”</p>
+<p>enable_automatic_updates<br>Type<br>boolean</p>
+<p>Default<br><none></none></p>
+<p>If set, enables or disables automatic operating system updates.</p>
+<p>metadata_report_provisioning_started<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Reports to the metadata service that provisioning has started</p>
+<p>metadata_report_provisioning_completed<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Reports to the metadata service that provisioning completed successfully or failed</p>
+<p>ephemeral_disk_volume_label<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Ephemeral disk volume label, e.g.: “Temporary Storage”</p>
+<p>ephemeral_disk_volume_mount_point<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Ephemeral disk volume mount point, e.g.:”?GLOBALROOTdeviceHarddisk1Partition1”</p>
+<p>ephemeral_disk_data_loss_warning_path<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>Ephemeral disk data loss warning path, relative to the ephemeral disk volume path. E.g.: DATALOSS_WARNING_README.txt</p>
+<p>user_password_length<br>Type<br>integer</p>
+<p>Default<br>20</p>
+<p>The length of the generated password for the user defined by the username config option.</p>
+<p><strong>azure</strong><br>transport_cert_store_name<br>Type<br>string</p>
+<p>Default<br>Windows Azure Environment</p>
+<p>Certificate store name for metadata certificates</p>
+<p><strong>cloudstack</strong><br>metadata_base_url<br>Type<br>string</p>
+<p>Default<br><a href="http://10.1.1.1/" target="_blank" rel="noopener">http://10.1.1.1/</a></p>
+<p>The base URL where the service looks for metadata</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>cloudstack_metadata_ip</p>
+<p>password_server_port<br>Type<br>integer</p>
+<p>Default<br>8080</p>
+<p>The port number used by the Password Server.</p>
+<p>https_allow_insecure<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Whether to disable the validation of HTTPS certificates.</p>
+<p>https_ca_bundle<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The path to a CA_BUNDLE file or directory with certificates of trusted CAs.</p>
+<p>add_metadata_private_ip_route<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Add a route for the metadata ip address to the gateway</p>
+<p><strong>config_drive</strong><br>raw_hdd<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Look for an ISO config drive in raw HDDs</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>config_drive_raw_hhd</p>
+<p>Warning</p>
+<p>This option is deprecated for removal. Its value may be silently ignored in the future.</p>
+<p>cdrom<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Look for a config drive in the attached cdrom drives</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>config_drive_cdrom</p>
+<p>Warning</p>
+<p>This option is deprecated for removal. Its value may be silently ignored in the future.</p>
+<p>vfat<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Look for a config drive in VFAT filesystems</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>config_drive_vfat</p>
+<p>Warning</p>
+<p>This option is deprecated for removal. Its value may be silently ignored in the future.</p>
+<p>types<br>Type<br>list</p>
+<p>Default<br>[‘vfat’, ‘iso’]</p>
+<p>Supported formats of a configuration drive</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>config_drive_types</p>
+<p>locations<br>Type<br>list</p>
+<p>Default<br>[‘cdrom’, ‘hdd’, ‘partition’]</p>
+<p>Supported configuration drive locations</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>config_drive_locations</p>
+<p><strong>ec2</strong><br>metadata_base_url<br>Type<br>string</p>
+<p>Default<br><a href="http://169.254.169.254/" target="_blank" rel="noopener">http://169.254.169.254/</a></p>
+<p>The base URL where the service looks for metadata</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>ec2_metadata_base_url</p>
+<p>add_metadata_private_ip_route<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Add a route for the metadata ip address to the gateway</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>ec2_add_metadata_private_ip_route</p>
+<p>https_allow_insecure<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Whether to disable the validation of HTTPS certificates.</p>
+<p>https_ca_bundle<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The path to a CA_BUNDLE file or directory with certificates of trusted CAs.</p>
+<p><strong>gce</strong><br>metadata_base_url<br>Type<br>string</p>
+<p>Default<br><a href="http://metadata.google.internal/computeMetadata/v1/" target="_blank" rel="noopener">http://metadata.google.internal/computeMetadata/v1/</a></p>
+<p>The base URL where the service looks for metadata</p>
+<p>https_allow_insecure<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Whether to disable the validation of HTTPS certificates.</p>
+<p>https_ca_bundle<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The path to a CA_BUNDLE file or directory with certificates of trusted CAs.</p>
+<p><strong>maas</strong><br>metadata_base_url<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The base URL for MaaS metadata</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>maas_metadata_url</p>
+<p>oauth_consumer_key<br>Type<br>string</p>
+<p>Default<br>‘’</p>
+<p>The MaaS OAuth consumer key</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>maas_oauth_consumer_key</p>
+<p>oauth_consumer_secret<br>Type<br>string</p>
+<p>Default<br>‘’</p>
+<p>The MaaS OAuth consumer secret</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>maas_oauth_consumer_secret</p>
+<p>oauth_token_key<br>Type<br>string</p>
+<p>Default<br>‘’</p>
+<p>The MaaS OAuth token key</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>maas_oauth_token_key</p>
+<p>oauth_token_secret<br>Type<br>string</p>
+<p>Default<br>‘’</p>
+<p>The MaaS OAuth token secret</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>maas_oauth_token_secret</p>
+<p>https_allow_insecure<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Whether to disable the validation of HTTPS certificates.</p>
+<p>https_ca_bundle<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The path to a CA_BUNDLE file or directory with certificates of trusted CAs.</p>
+<p><strong>openstack</strong><br>metadata_base_url<br>Type<br>string</p>
+<p>Default<br><a href="http://169.254.169.254/" target="_blank" rel="noopener">http://169.254.169.254/</a></p>
+<p>The base URL where the service looks for metadata</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>metadata_base_url</p>
+<p>add_metadata_private_ip_route<br>Type<br>boolean</p>
+<p>Default<br>True</p>
+<p>Add a route for the metadata ip address to the gateway</p>
+<p>Deprecated Variations<br>Group</p>
+<p>Name</p>
+<p>DEFAULT</p>
+<p>add_metadata_private_ip_route</p>
+<p>https_allow_insecure<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Whether to disable the validation of HTTPS certificates.</p>
+<p>https_ca_bundle<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The path to a CA_BUNDLE file or directory with certificates of trusted CAs.</p>
+<p><strong>ovf</strong><br>config_file_name<br>Type<br>string</p>
+<p>Default<br>ovf-env.xml</p>
+<p>Configuration file name</p>
+<p>drive_label<br>Type<br>string</p>
+<p>Default<br>OVF ENV</p>
+<p>Look for configuration file in drives with this label</p>
+<p>ns<br>Type<br>string</p>
+<p>Default<br>oe</p>
+<p>Namespace prefix for ovf environment</p>
+<p><strong>packet</strong><br>metadata_base_url<br>Type<br>string</p>
+<p>Default<br><a href="https://metadata.packet.net/" target="_blank" rel="noopener">https://metadata.packet.net/</a></p>
+<p>The URL where the service looks for metadata</p>
+<p>https_allow_insecure<br>Type<br>boolean</p>
+<p>Default<br>False</p>
+<p>Whether to disable the validation of HTTPS certificates.</p>
+<p>https_ca_bundle<br>Type<br>string</p>
+<p>Default<br><none></none></p>
+<p>The path to a CA_BUNDLE file or directory with certificates of trusted CAs.</p>
+<p><strong>vmwareguestinfo</strong><br>vmware_rpctool_path<br>Type<br>string</p>
+<p>Default<br>%ProgramFiles%/VMware/VMware Tools/rpctool.exe</p>
+<p>The local path where VMware rpctool is found</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/13/Other/ISO7Module/" rel="next" title="网络ISO七层模型图">
+                <i class="fa fa-chevron-left"></i> 网络ISO七层模型图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/matx.jpg" alt="圣特伦特星">
+            
+              <p class="site-author-name" itemprop="name">圣特伦特星</p>
+              <p class="site-description motion-element" itemprop="description">“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/shengteluntexing" target="_blank" title="SegmentFault">
+                      
+                        <i class="fa fa-fw fa-coffee"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/matianxin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:trentmtx@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/matianxin" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tutorial"><span class="nav-number">2.</span> <span class="nav-text">Tutorial</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Services"><span class="nav-number">3.</span> <span class="nav-text">Services</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Plugins"><span class="nav-number">4.</span> <span class="nav-text">Plugins</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Userdata"><span class="nav-number">5.</span> <span class="nav-text">Userdata</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-options-reference"><span class="nav-number"></span> <span class="nav-text">Configuration options reference</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="200" height="200" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">4</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+			  
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">圣特伦特星</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
