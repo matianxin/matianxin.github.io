@@ -87,18 +87,18 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="Windows CloudBase-Init 安装使用及配置说明">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install1.gif">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install2.gif">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install3.gif">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install4.gif">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install5.gif">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install6.gif">
-<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install7.gif">
-<meta property="og:updated_time" content="2020-10-20T03:49:19.066Z">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install1.png">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install2.png">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install3.png">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install4.png">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install5.png">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install6.png">
+<meta property="og:image" content="https://matianxin.github.io/images/cloudbaseinit/install7.png">
+<meta property="og:updated_time" content="2020-10-20T11:29:17.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows CloudBase-Init 安装使用及配置说明">
 <meta name="twitter:description" content="Windows CloudBase-Init 安装使用及配置说明">
-<meta name="twitter:image" content="https://matianxin.github.io/images/cloudbaseinit/install1.gif">
+<meta name="twitter:image" content="https://matianxin.github.io/images/cloudbaseinit/install1.png">
 
 
 
@@ -392,7 +392,10 @@
       
         <p>1.下载Windows CloudBase-Init安装包，地址：<br><a href="https://cloudbase.it/cloudbase-init/#download" target="_blank" rel="noopener">https://cloudbase.it/cloudbase-init/#download</a></p>
 <p>当前版本为：CloudbaseInitSetup_1_1_2_x64.msi</p>
-<p>2.安装：<br><img src="/images/cloudbaseinit/install1.gif" alt><br><img src="/images/cloudbaseinit/install2.gif" alt><br><img src="/images/cloudbaseinit/install3.gif" alt><br><img src="/images/cloudbaseinit/install4.gif" alt><br><img src="/images/cloudbaseinit/install5.gif" alt><br><img src="/images/cloudbaseinit/install6.gif" alt><br><img src="/images/cloudbaseinit/install7.gif" alt></p>
+<p>2.安装：<br><img src="/images/cloudbaseinit/install1.png" alt><br><img src="/images/cloudbaseinit/install2.png" alt><br>安装目录默认为 C:\Program Files\Cloudbase Solutions\Cloudbase-Init<br><img src="/images/cloudbaseinit/install3.png" alt><br>用户名修改为当前Windows超级管理员Administrator<br>这里不勾选Use metadata password，勾选此项这里会在孵化虚拟机时生成新的随机密码<br>Serial口选择Windows当前使用的串口COM1<br><img src="/images/cloudbaseinit/install4.png" alt><br><img src="/images/cloudbaseinit/install5.png" alt><br><img src="/images/cloudbaseinit/install6.png" alt><br>安装结束，不勾选Run Sysprep to create a generalized image.及 Shutdown when Sysprep terminates.<br><img src="/images/cloudbaseinit/install7.png" alt></p>
+<p>3.安装结束之后，修改Cloudbaase-init配置文件：<br>C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\下的<br>cloudbase-init.conf及cloudbase-init-unattend.conf<br>配置修改为：<br>安装CloudBase-init后，cloudbase-init会自动重启，将其关闭重启：<br>allow_reboot=false</p>
+<p>关闭CloudBase-init自动更新：<br>check_latest_version=false</p>
+<p>4.* Windows在安装cloudbase-init后需要重新启动，再制作镜像。<br>5.使用Openstack在孵化过程中上传的文件目录为(E:)config\openstack\content\下。</p>
 
       
     </div>

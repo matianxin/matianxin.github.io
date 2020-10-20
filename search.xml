@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Windows CloudBase-Init 安装使用及配置说明]]></title>
     <url>%2F2020%2F10%2F20%2FOpenstack%2FWindowsCloudBaseInit%2F</url>
-    <content type="text"><![CDATA[1.下载Windows CloudBase-Init安装包，地址：https://cloudbase.it/cloudbase-init/#download 当前版本为：CloudbaseInitSetup_1_1_2_x64.msi 2.安装：]]></content>
+    <content type="text"><![CDATA[1.下载Windows CloudBase-Init安装包，地址：https://cloudbase.it/cloudbase-init/#download 当前版本为：CloudbaseInitSetup_1_1_2_x64.msi 2.安装：安装目录默认为 C:\Program Files\Cloudbase Solutions\Cloudbase-Init用户名修改为当前Windows超级管理员Administrator这里不勾选Use metadata password，勾选此项这里会在孵化虚拟机时生成新的随机密码Serial口选择Windows当前使用的串口COM1安装结束，不勾选Run Sysprep to create a generalized image.及 Shutdown when Sysprep terminates. 3.安装结束之后，修改Cloudbaase-init配置文件：C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\下的cloudbase-init.conf及cloudbase-init-unattend.conf配置修改为：安装CloudBase-init后，cloudbase-init会自动重启，将其关闭重启：allow_reboot=false 关闭CloudBase-init自动更新：check_latest_version=false 4.* Windows在安装cloudbase-init后需要重新启动，再制作镜像。5.使用Openstack在孵化过程中上传的文件目录为(E:)config\openstack\content\下。]]></content>
       <categories>
         <category>Openstack</category>
       </categories>
