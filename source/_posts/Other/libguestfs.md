@@ -29,7 +29,6 @@ ibguestfs 是一组 Linux 下的 C 语言的 API ，用来访问虚拟机的磁�
 #### libguestfs命令
 
 ```php
-
 root@compute144:~ # virt-
 virt-alignment-scan      virt-customize           virt-host-validate       virt-pki-validate        virt-tar-out
 virt-builder             virt-df                  virt-index-validate      virt-rescue              virt-what
@@ -76,60 +75,41 @@ instance-00001445:/dev/centos/root     2238464    1897392     341072   85%
 
 #### virt-copy-in：将文件复制到虚拟机里面
 ```php
-virt-list-partitions - List partitions in a virtual machine or disk image
+virt-copy-in - Copy files and directories into a virtual machine disk image.
 
 SYNOPSIS
- virt-list-partitions [--options] domname
+ virt-copy-in -a disk.img file|dir [file|dir ...] /destination
 
- virt-list-partitions [--options] disk.img [disk.img ...]
-OBSOLETE
-This tool is obsolete. Use virt-filesystems(1) as a more flexible replacement.
+ virt-copy-in -d domain file|dir [file|dir ...] /destination
+WARNING
+Using virt-copy-in on live virtual machines, or concurrently with other disk editing tools, can be dangerous, potentially causing disk corruption. The virtual machine must be shut down before you use this command, and disk images must not be edited concurrently.
 
 DESCRIPTION
-virt-list-partitions is a command line tool to list the partitions that are contained in a virtual machine or disk image. It is mainly useful as a first step to using virt-resize(1).
+virt-copy-in copies files and directories from the local disk into a virtual machine disk image or named libvirt domain.
 
-virt-list-partitions is just a simple wrapper around libguestfs(3) functionality. For more complex cases you should look at the guestfish(1) tool.
+You can give one or more filenames and directories on the command line. Directories are copied in recursively. The final parameter must be the destination directory in the disk image which must be an absolute path starting with a / character.
+
+EXAMPLES
+Update /etc/resolv.conf in a guest:
+
+ virt-copy-in -d MyGuest resolv.conf /etc
+Upload a home directory to a guest:
+
+ virt-copy-in -d MyGuest skel /home
+JUST A SHELL SCRIPT WRAPPER AROUND GUESTFISH
+This command is just a simple shell script wrapper around the guestfish(1) copy-in command. For anything more complex than a trivial copy, you are probably better off using guestfish directly.
 
 OPTIONS
---help
-Display brief help.
-
---version
-Display version number and exit.
-
--c URI
---connect URI
-If using libvirt, connect to the given URI. If omitted, then we connect to the default libvirt hypervisor.
-
-If you specify guest block devices directly, then libvirt is not used at all.
-
---format raw
-Specify the format of disk images given on the command line. If this is omitted then the format is autodetected from the content of the disk image.
-
-If disk images are requested from libvirt, then this program asks libvirt for this information. In this case, the value of the format parameter is ignored.
-
-If working with untrusted raw-format guest disk images, you should ensure the format is always specified.
-
--h
---human-readable
-Show sizes in human-readable form (eg. "1G").
-
--l
---long
-With this option, virt-list-partitions displays the type and size of each partition too (where "type" means ext3, pv etc.)
-
--t
---total
-Display the total size of each block device (as a separate row or rows).
+Since the shell script just passes options straight to guestfish, read guestfish(1) to see the full list of options.
 
 SEE ALSO
-guestfs(3), guestfish(1), virt-filesystems(1), virt-list-filesystems(1), virt-resize(1), Sys::Guestfs(3), Sys::Virt(3), http://libguestfs.org/.
+guestfish(1), virt-cat(1), virt-copy-out(1), virt-edit(1), virt-tar-in(1), virt-tar-out(1), http://libguestfs.org/.
 
-AUTHOR
-Richard W.M. Jones http://people.redhat.com/~rjones/
+AUTHORS
+Richard W.M. Jones (rjones at redhat dot com)
 
 COPYRIGHT
-Copyright (C) 2009-2020 Red Hat Inc.
+Copyright (C) 2011-2012 Red Hat Inc.
 
 LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -212,7 +192,6 @@ Run libguestfs-test-tool(1) and paste the complete, unedited output into the bug
 
 #### 系统组件适配
 ```mysql
-
 系统组件适配 virt-copy-in virt-copy-out 备注
 ---------- ------------ ------------- ----------------------------------------
 Win7            √             √         目前查到只支持传输到根目录 / 下 ，也就是C盘
