@@ -16,9 +16,11 @@ KVM环境安装凝思8(V6.0.8)版本: Linx-6.0.80-20180821-amd64-DVD.iso
 
 ![](/images/kvm/display_protocol.png)
 
-
 #### 2.显卡
 
 **修改显卡 由 QXL -> Cirrus**
 
 ![](/images/kvm/display_card.png)
+
+#### 3.磁盘
+**磁盘 - 高级选项 - 磁盘总线 IDE -> VirtIO**
