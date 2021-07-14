@@ -156,7 +156,7 @@
   </entry>
   <entry>
     <title><![CDATA[KVM安装凝思8解决鼠标漂移的问题]]></title>
-    <url>%2F2020%2F07%2F12%2FKVM%2FRockyMouse%2F</url>
+    <url>%2F2020%2F07%2F12%2FKVM%2FRocky8Mouse%2F</url>
     <content type="text"><![CDATA[KVM环境安装凝思8(V6.0.8)版本: Linx-6.0.80-20180821-amd64-DVD.iso安装完成后，鼠标漂移严重，环境无法使用，解决方法如下:需要在virt-manager修改虚拟机显卡配置项: 1.显示协议修改显示协议 由SPICE服务器 -&gt; VNC服务器 2.显卡修改显卡 由 QXL -&gt; Cirrus 3.磁盘磁盘 - 高级选项 - 磁盘总线 IDE -&gt; VirtIO]]></content>
       <categories>
         <category>KVM</category>
