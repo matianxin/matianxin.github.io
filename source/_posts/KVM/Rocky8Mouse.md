@@ -3,7 +3,7 @@ title: KVM安装凝思8解决鼠标漂移的问题
 tags: [KVM]
 categories: KVM
 description: KVM安装凝思8解决鼠标漂移的问题。
-date: 2020/7/12 19:30:00
+date: 2021/7/12 19:30:00
 ---
 
 KVM环境安装凝思8(V6.0.8)版本: Linx-6.0.80-20180821-amd64-DVD.iso
