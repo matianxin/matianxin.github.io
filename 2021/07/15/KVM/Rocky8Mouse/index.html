@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="圣特伦特星">
 <meta property="og:description" content="使用Openstack创建快照功能测试不同操作系统完成时间">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-07-15T06:54:46.860Z">
+<meta property="og:updated_time" content="2021-07-15T07:09:37.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="测试不同操作系统制作快照的时间">
 <meta name="twitter:description" content="使用Openstack创建快照功能测试不同操作系统完成时间">
@@ -386,8 +386,26 @@
 <p>调用novaclient API：<br><strong>novaclient.servers.create_image</strong></p>
 <p>实例镜像状态变化：</p>
 <p>queued（已排队） -&gt; saving（保存中） -&gt; active（已运行） / error（错误）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  系统        时间         详情               资源占用情况</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> Centos7    **17.6s**    queued: 10.5s     1VCPU 1G内存 10G磁盘 镜像磁盘745MB</span><br><span class="line">                         saving:  6.3s     1网卡：虚拟业务</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> Win7       **3m46.4s**  queued: 2m 39.2s  1VCPU 1G内存 20G磁盘 镜像磁盘8.7GB</span><br><span class="line">                         saving: 1m 6.6s   1网卡：虚拟管控</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> 凝思8       **1m33s**    queued: 58.5s     2VCPU 2G内存 20G磁盘 镜像磁盘3.3GB</span><br><span class="line">                         saving: 1m6.6s    1网卡：虚拟管控</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> 虚拟路由器   **20.2s**    queued: 13.5s     1VCPU 1G内存 20G磁盘 镜像磁盘857MB</span><br><span class="line">                         saving:  6.3s     4网卡：其它网络，虚拟管控，虚拟业务，虚拟业务</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> pfSense    **18.1s**    queued: 11.4s     2VCPU 2G内存 20G磁盘 镜像磁盘857MB</span><br><span class="line">                         saving:  6.1s     4网卡：其它网络，虚拟管控，虚拟业务，虚拟业务</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> 纵向        **17.1s**    queued: 11.5s     1VCPU 1G内存 10G磁盘 镜像磁盘652MB</span><br><span class="line">                         saving:  5.3s     4网卡：虚拟业务，虚拟业务，虚拟管控，外部网络</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> 隔离        **12.9s**    queued: 8.3s      1VCPU 1G内存 10G磁盘 镜像磁盘≈540MB</span><br><span class="line">                         saving: 4.2s      5网卡：虚拟业务，虚拟业务，虚拟管控，虚拟业务，虚拟业务</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> 监测装置    **39.1s**     queued: 27.2s     1VCPU 2G内存 25G磁盘 镜像磁盘1.4GB</span><br><span class="line">                         saving: 11.5s      2网卡：虚拟业务，虚拟管控</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br><span class="line"> 网安平台    **13m3.3s**   queued: 7m3s      8VCPU 16G内存 100G磁盘 镜像磁盘21GB</span><br><span class="line">                         saving: 5m59.7s    2网卡：虚拟业务，外部网络</span><br><span class="line">---------- ------------ ----------------- ----------------------------------------</span><br></pre></td></tr></table></figure>
-
+<p>  系统        时间         详情               资源占用情况</p>
+<hr>
+<p> Centos7    <strong>17.6s</strong>    queued: 10.5s     1VCPU 1G内存 10G磁盘 镜像磁盘745MB<br>                         saving:  6.3s     1网卡：虚拟业务</p>
+<hr>
+<p> Win7       <strong>3m46.4s</strong>  queued: 2m 39.2s  1VCPU 1G内存 20G磁盘 镜像磁盘8.7GB<br>                         saving: 1m 6.6s   1网卡：虚拟管控</p>
+<hr>
+<p> 凝思8       <strong>1m33s</strong>    queued: 58.5s     2VCPU 2G内存 20G磁盘 镜像磁盘3.3GB<br>                         saving: 1m6.6s    1网卡：虚拟管控</p>
+<hr>
+<p> 虚拟路由器   <strong>20.2s</strong>    queued: 13.5s     1VCPU 1G内存 20G磁盘 镜像磁盘857MB<br>                         saving:  6.3s     4网卡：其它网络，虚拟管控，虚拟业务，虚拟业务</p>
+<hr>
+<p> pfSense    <strong>18.1s</strong>    queued: 11.4s     2VCPU 2G内存 20G磁盘 镜像磁盘857MB<br>                         saving:  6.1s     4网卡：其它网络，虚拟管控，虚拟业务，虚拟业务</p>
+<hr>
+<p> 纵向        <strong>17.1s</strong>    queued: 11.5s     1VCPU 1G内存 10G磁盘 镜像磁盘652MB<br>                         saving:  5.3s     4网卡：虚拟业务，虚拟业务，虚拟管控，外部网络</p>
+<hr>
+<p> 隔离        <strong>12.9s</strong>    queued: 8.3s      1VCPU 1G内存 10G磁盘 镜像磁盘≈540MB<br>                         saving: 4.2s      5网卡：虚拟业务，虚拟业务，虚拟管控，虚拟业务，虚拟业务</p>
+<hr>
+<p> 监测装置    <strong>39.1s</strong>     queued: 27.2s     1VCPU 2G内存 25G磁盘 镜像磁盘1.4GB<br>                         saving: 11.5s      2网卡：虚拟业务，虚拟管控</p>
+<hr>
+<p> 网安平台    <strong>13m3.3s</strong>   queued: 7m3s      8VCPU 16G内存 100G磁盘 镜像磁盘21GB<br>                         saving: 5m59.7s    2网卡：虚拟业务，外部网络</p>
+<hr>
 <p>根据上述测试结果总结：<br>1、创建快照（制作镜像）所需时间与磁盘镜像占用空间大小成正比，<br>    也就是说镜像占用磁盘空间越大，创建快照时间越长。<br>2、创建快照所需时间与实例类型及实例网卡个数无关。</p>
 
       
@@ -428,6 +446,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/08/04/Linux/ubuntuAptgetSource/" rel="prev" title="Ubuntu16.04下的apt-get内网本地源的搭建">
+                Ubuntu16.04下的apt-get内网本地源的搭建 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -497,7 +519,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -580,7 +602,7 @@
 		<div class="widget-wrap">
 			<div id="myCanvasContainer" class="widget tagcloud">
 				<canvas width="200" height="200" id="resCanvas" style="width=100%">
-					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/FreeBSD/">FreeBSD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KVM/">KVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kvm/">kvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libguestfs/">libguestfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">5</span></li></ul>
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/FreeBSD/">FreeBSD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KVM/">KVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kvm/">kvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libguestfs/">libguestfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">5</span></li></ul>
 				</canvas>
 			</div>
 		</div>
