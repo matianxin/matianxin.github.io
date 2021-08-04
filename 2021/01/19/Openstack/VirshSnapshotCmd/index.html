@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<!DOCTYPE html>
 
 
@@ -1121,3 +1122,1128 @@
 
 </body>
 </html>
+=======
+﻿<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="kvm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="KVM 介绍：使用 libvirt 做 QEMU/KVM 内部快照">
+<meta name="keywords" content="kvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QEMU &#x2F; KVM 快照相关命令介绍">
+<meta property="og:url" content="https://matianxin.github.io/2021/01/19/Openstack/VirshSnapshotCmd/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="KVM 介绍：使用 libvirt 做 QEMU/KVM 内部快照">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-01-19T08:41:17.700Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QEMU &#x2F; KVM 快照相关命令介绍">
+<meta name="twitter:description" content="KVM 介绍：使用 libvirt 做 QEMU/KVM 内部快照">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://matianxin.github.io/2021/01/19/Openstack/VirshSnapshotCmd/">
+
+
+
+
+
+  <title>QEMU / KVM 快照相关命令介绍 | 圣特伦特星</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<!-- <a href="https://github.com/matianxin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
+	
+	<a href="https://github.com/matianxin" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">圣特伦特星</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">差以毫厘，谬以千里。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://matianxin.github.io/2021/01/19/Openstack/VirshSnapshotCmd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="圣特伦特星">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/matx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="圣特伦特星">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">QEMU / KVM 快照相关命令介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-19T11:30:00+08:00">
+                2021-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/KVM/" itemprop="url" rel="index">
+                    <span itemprop="name">KVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  KVM 介绍：使用 libvirt 做 QEMU/KVM 内部快照
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>• INSTANCE_NAME： 实例instance名称<br>• SNAPSHOT_NAME： 快照名称<br>• SNAPSHOT_DESCRIPTION： 快照描述</p>
+<p>1.创建快照命令：<br><strong>virsh snapshot-create-as –domain INSTANCE_NAME –name SNAPSHOT_NAME –description SNAPSHOT_DESCRIPTION</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@compute144 ~]<span class="comment"># virsh snapshot-create-as --domain instance-00001286 --name scene-init --description scene-init</span></span><br><span class="line">Domain snapshot scene-init created</span><br></pre></td></tr></table></figure>
+
+<p>2.删除快照命令：<br><strong>virsh snapshot-delete INSTANCE_NAME SNAPSHOT_NAME</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@compute144 ~]<span class="comment"># virsh snapshot-delete instance-00001286 scene-init</span></span><br><span class="line">Domain snapshot scene-init deleted</span><br></pre></td></tr></table></figure>
+
+<p>3.恢复快照命令：<br><strong>virsh snapshot-revert INSTANCE_NAME SNAPSHOT_NAME</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@compute144 ~]<span class="comment"># virsh snapshot-revert instance-00001286 scene-init</span></span><br></pre></td></tr></table></figure>
+
+<p>4.查看快照disk信息<br><strong>qemu-img info disk</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">根据instance_name得到实例的uuid</span><br><span class="line">[root@compute144 ~]<span class="comment"># cd /var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7</span></span><br><span class="line">[root@compute144 <span class="number">27</span>a7b4d6<span class="number">-9036</span><span class="number">-4625</span><span class="number">-99</span>f2-dbe6141d7eb7]<span class="comment"># qemu-img info disk</span></span><br><span class="line">image: disk</span><br><span class="line">file format: qcow2</span><br><span class="line">virtual size: <span class="number">10</span>G (<span class="number">10737418240</span> bytes)</span><br><span class="line">disk size: <span class="number">445</span>M</span><br><span class="line">cluster_size: <span class="number">65536</span></span><br><span class="line">backing file: /<span class="keyword">var</span>/lib/nova/instances/_base</span><br><span class="line">ID        TAG                 VM SIZE                DATE       VM CLOCK</span><br><span class="line"><span class="number">1</span>         scene-init             <span class="number">253</span>M <span class="number">2021</span><span class="number">-01</span><span class="number">-18</span> <span class="number">11</span>:<span class="number">48</span>:<span class="number">18</span>   <span class="number">02</span>:<span class="number">25</span>:<span class="number">45.194</span></span><br><span class="line">Format specific information:</span><br><span class="line">    compat: <span class="number">1.1</span></span><br><span class="line">    lazy refcounts: <span class="keyword">false</span></span><br><span class="line">    refcount bits: <span class="number">16</span></span><br><span class="line">    corrupt: fals</span><br><span class="line"></span><br><span class="line">* 此功能必须为虚拟机关机状态下生效，否则：</span><br><span class="line">qemu-img: Could not open <span class="string">'disk'</span>: Failed to get shared <span class="string">"write"</span> lock</span><br><span class="line">Is another process using the image [disk]?</span><br></pre></td></tr></table></figure>
+
+<p>5.查看快照列表<br><strong>virsh snapshot-list INSTANCE_NAME</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@compute144 ~]<span class="comment"># virsh snapshot-list instance-00001286</span></span><br><span class="line"> Name                 Creation Time             State</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"> scene-init           <span class="number">2021</span><span class="number">-01</span><span class="number">-19</span> <span class="number">08</span>:<span class="number">51</span>:<span class="number">22</span> +<span class="number">0800</span> shutoff</span><br></pre></td></tr></table></figure>
+
+<p>6.查看快照信息<br><strong>virsh snapshot-info INSTANCE_NAME –current</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@compute144 ~]<span class="comment"># virsh snapshot-info instance-00001286 --current</span></span><br><span class="line">Name:           scene-init</span><br><span class="line">Domain:         instance<span class="number">-00001286</span></span><br><span class="line">Current:        yes</span><br><span class="line">State:          shutoff</span><br><span class="line">Location:       internal</span><br><span class="line"><span class="keyword">Parent</span>:         -</span><br><span class="line">Children:       <span class="number">0</span></span><br><span class="line">Descendants:    <span class="number">0</span></span><br><span class="line">Metadata:       yes</span><br></pre></td></tr></table></figure>
+
+<p>7.查看当前快照所有信息<br><strong>virsh snapshot-current INSTANCE_NAME</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">[root@compute144 ~]<span class="comment"># virsh snapshot-current instance-00001286</span></span><br><span class="line">&lt;domainsnapshot&gt;</span><br><span class="line">  &lt;name&gt;scene-init&lt;/name&gt;</span><br><span class="line">  &lt;description&gt;scene-init&lt;/description&gt;</span><br><span class="line">  &lt;state&gt;shutoff&lt;/state&gt;</span><br><span class="line">  &lt;creationTime&gt;<span class="number">1611017482</span>&lt;/creationTime&gt;</span><br><span class="line">  &lt;memory snapshot=<span class="string">'no'</span>/&gt;</span><br><span class="line">  &lt;disks&gt;</span><br><span class="line">    &lt;disk name=<span class="string">'vda'</span> snapshot=<span class="string">'internal'</span>/&gt;</span><br><span class="line">    &lt;disk name=<span class="string">'hda'</span> snapshot=<span class="string">'no'</span>/&gt;</span><br><span class="line">  &lt;/disks&gt;</span><br><span class="line">  &lt;domain type=<span class="string">'kvm'</span>&gt;</span><br><span class="line">    &lt;name&gt;instance<span class="number">-00001286</span>&lt;/name&gt;</span><br><span class="line">    &lt;uuid&gt;<span class="number">27</span>a7b4d6<span class="number">-9036</span><span class="number">-4625</span><span class="number">-99</span>f2-dbe6141d7eb7&lt;/uuid&gt;</span><br><span class="line">    &lt;metadata&gt;</span><br><span class="line">      &lt;nova:instance xmlns:nova=<span class="string">"http://openstack.org/xmlns/libvirt/nova/1.0"</span>&gt;</span><br><span class="line">        &lt;nova:package version=<span class="string">"17.0.10-1.el7"</span>/&gt;</span><br><span class="line">        &lt;nova:name&gt;ps_T15Z2PS-SCENE220@<span class="number">-1</span>&lt;/nova:name&gt;</span><br><span class="line">        &lt;nova:creationTime&gt;<span class="number">2021</span><span class="number">-01</span><span class="number">-18</span> <span class="number">06</span>:<span class="number">41</span>:<span class="number">30</span>&lt;/nova:creationTime&gt;</span><br><span class="line">        &lt;nova:flavor name=<span class="string">"&amp;#x4E3B;&amp;#x7AD9;&amp;#x7EB5;&amp;#x5411;"</span>&gt;</span><br><span class="line">          &lt;nova:memory&gt;<span class="number">1024</span>&lt;/nova:memory&gt;</span><br><span class="line">          &lt;nova:disk&gt;<span class="number">10</span>&lt;/nova:disk&gt;</span><br><span class="line">          &lt;nova:swap&gt;<span class="number">0</span>&lt;/nova:swap&gt;</span><br><span class="line">          &lt;nova:ephemeral&gt;<span class="number">0</span>&lt;/nova:ephemeral&gt;</span><br><span class="line">          &lt;nova:vcpus&gt;<span class="number">1</span>&lt;/nova:vcpus&gt;</span><br><span class="line">        &lt;/nova:flavor&gt;</span><br><span class="line">        &lt;nova:owner&gt;</span><br><span class="line">          &lt;nova:user uuid=<span class="string">"d5853486b6904865abaf98e1eedfd926"</span>&gt;admin&lt;/nova:user&gt;</span><br><span class="line">          &lt;nova:project uuid=<span class="string">"a385d3107887463abebad53b48dda754"</span>&gt;admin&lt;/nova:project&gt;</span><br><span class="line">        &lt;/nova:owner&gt;</span><br><span class="line">        &lt;nova:root type=<span class="string">"image"</span> uuid=<span class="string">"ebe94aab-979a-4311-bf59-9be20a3f44e7"</span>/&gt;</span><br><span class="line">      &lt;/nova:instance&gt;</span><br><span class="line">    &lt;/metadata&gt;</span><br><span class="line">    &lt;memory unit=<span class="string">'KiB'</span>&gt;<span class="number">1048576</span>&lt;/memory&gt;</span><br><span class="line">    &lt;currentMemory unit=<span class="string">'KiB'</span>&gt;<span class="number">1048576</span>&lt;/currentMemory&gt;</span><br><span class="line">    &lt;vcpu placement=<span class="string">'static'</span>&gt;<span class="number">1</span>&lt;/vcpu&gt;</span><br><span class="line">    &lt;cputune&gt;</span><br><span class="line">      &lt;shares&gt;<span class="number">1024</span>&lt;/shares&gt;</span><br><span class="line">    &lt;/cputune&gt;</span><br><span class="line">    &lt;sysinfo type=<span class="string">'smbios'</span>&gt;</span><br><span class="line">      &lt;system&gt;</span><br><span class="line">        &lt;entry name=<span class="string">'manufacturer'</span>&gt;RDO&lt;/entry&gt;</span><br><span class="line">        &lt;entry name=<span class="string">'product'</span>&gt;OpenStack Compute&lt;/entry&gt;</span><br><span class="line">        &lt;entry name=<span class="string">'version'</span>&gt;<span class="number">17.0</span><span class="number">.10</span><span class="number">-1.</span>el7&lt;/entry&gt;</span><br><span class="line">        &lt;entry name=<span class="string">'serial'</span>&gt;<span class="number">12</span>c77e03<span class="number">-1355</span><span class="number">-43</span>af-a482<span class="number">-61</span>ecf2aad317&lt;/entry&gt;</span><br><span class="line">        &lt;entry name=<span class="string">'uuid'</span>&gt;<span class="number">27</span>a7b4d6<span class="number">-9036</span><span class="number">-4625</span><span class="number">-99</span>f2-dbe6141d7eb7&lt;/entry&gt;</span><br><span class="line">        &lt;entry name=<span class="string">'family'</span>&gt;Virtual Machine&lt;/entry&gt;</span><br><span class="line">      &lt;/system&gt;</span><br><span class="line">    &lt;/sysinfo&gt;</span><br><span class="line">    &lt;os&gt;</span><br><span class="line">      &lt;type arch=<span class="string">'x86_64'</span> machine=<span class="string">'pc-i440fx-rhel7.6.0'</span>&gt;hvm&lt;/type&gt;</span><br><span class="line">      &lt;boot dev=<span class="string">'hd'</span>/&gt;</span><br><span class="line">      &lt;smbios mode=<span class="string">'sysinfo'</span>/&gt;</span><br><span class="line">    &lt;/os&gt;</span><br><span class="line">    &lt;features&gt;</span><br><span class="line">      &lt;acpi/&gt;</span><br><span class="line">      &lt;apic/&gt;</span><br><span class="line">    &lt;/features&gt;</span><br><span class="line">    &lt;cpu mode=<span class="string">'host-model'</span> check=<span class="string">'partial'</span>&gt;</span><br><span class="line">      &lt;model fallback=<span class="string">'allow'</span>/&gt;</span><br><span class="line">      &lt;topology sockets=<span class="string">'1'</span> cores=<span class="string">'1'</span> threads=<span class="string">'1'</span>/&gt;</span><br><span class="line">    &lt;/cpu&gt;</span><br><span class="line">    &lt;clock offset=<span class="string">'utc'</span>&gt;</span><br><span class="line">      &lt;timer name=<span class="string">'pit'</span> tickpolicy=<span class="string">'delay'</span>/&gt;</span><br><span class="line">      &lt;timer name=<span class="string">'rtc'</span> tickpolicy=<span class="string">'catchup'</span>/&gt;</span><br><span class="line">      &lt;timer name=<span class="string">'hpet'</span> present=<span class="string">'no'</span>/&gt;</span><br><span class="line">    &lt;/clock&gt;</span><br><span class="line">    &lt;on_poweroff&gt;destroy&lt;/on_poweroff&gt;</span><br><span class="line">    &lt;on_reboot&gt;restart&lt;/on_reboot&gt;</span><br><span class="line">    &lt;on_crash&gt;destroy&lt;/on_crash&gt;</span><br><span class="line">    &lt;devices&gt;</span><br><span class="line">      &lt;emulator&gt;/usr/libexec/qemu-kvm&lt;/emulator&gt;</span><br><span class="line">      &lt;disk type=<span class="string">'file'</span> device=<span class="string">'disk'</span>&gt;</span><br><span class="line">        &lt;driver name=<span class="string">'qemu'</span> type=<span class="string">'qcow2'</span> cache=<span class="string">'none'</span>/&gt;</span><br><span class="line">        &lt;source file=<span class="string">'/var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7/disk'</span>/&gt;</span><br><span class="line">        &lt;target dev=<span class="string">'vda'</span> bus=<span class="string">'virtio'</span>/&gt;</span><br><span class="line">        &lt;address type=<span class="string">'pci'</span> domain=<span class="string">'0x0000'</span> bus=<span class="string">'0x00'</span> slot=<span class="string">'0x07'</span> <span class="function"><span class="keyword">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">disk</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">disk</span> <span class="title">type</span>='<span class="title">file</span>' <span class="title">device</span>='<span class="title">cdrom</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">driver</span> <span class="title">name</span>='<span class="title">qemu</span>' <span class="title">type</span>='<span class="title">raw</span>' <span class="title">cache</span>='<span class="title">none</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">source</span> <span class="title">file</span>='/<span class="title">var</span>/<span class="title">lib</span>/<span class="title">nova</span>/<span class="title">instances</span>/27<span class="title">a7b4d6</span>-9036-4625-99<span class="title">f2</span>-<span class="title">dbe6141d7eb7</span>/<span class="title">disk</span>.<span class="title">config</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">dev</span>='<span class="title">hda</span>' <span class="title">bus</span>='<span class="title">ide</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">readonly</span>/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">drive</span>' <span class="title">controller</span>='0' <span class="title">bus</span>='0' <span class="title">target</span>='0' <span class="title">unit</span>='0'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">disk</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">controller</span> <span class="title">type</span>='<span class="title">ide</span>' <span class="title">index</span>='0'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x01</span>' <span class="title">function</span>='0<span class="title">x1</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">controller</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">controller</span> <span class="title">type</span>='<span class="title">usb</span>' <span class="title">index</span>='0' <span class="title">model</span>='<span class="title">piix3</span>-<span class="title">uhci</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x01</span>' <span class="title">function</span>='0<span class="title">x2</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">controller</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">controller</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">index</span>='0' <span class="title">model</span>='<span class="title">pci</span>-<span class="title">root</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">interface</span> <span class="title">type</span>='<span class="title">bridge</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mac</span> <span class="title">address</span>='<span class="title">fa</span>:16:3<span class="title">e</span>:70:8<span class="title">f</span>:<span class="title">e9</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">source</span> <span class="title">bridge</span>='<span class="title">qbr9a416b99</span>-<span class="title">f4</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">dev</span>='<span class="title">tap9a416b99</span>-<span class="title">f4</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">model</span> <span class="title">type</span>='<span class="title">virtio</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mtu</span> <span class="title">size</span>='1450'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x03</span>' <span class="title">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">interface</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">interface</span> <span class="title">type</span>='<span class="title">bridge</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mac</span> <span class="title">address</span>='<span class="title">fa</span>:16:3<span class="title">e</span>:<span class="title">cb</span>:8<span class="title">b</span>:<span class="title">c6</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">source</span> <span class="title">bridge</span>='<span class="title">qbr4e232a0d</span>-3<span class="title">e</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">dev</span>='<span class="title">tap4e232a0d</span>-3<span class="title">e</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">model</span> <span class="title">type</span>='<span class="title">virtio</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mtu</span> <span class="title">size</span>='1500'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x04</span>' <span class="title">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">interface</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">interface</span> <span class="title">type</span>='<span class="title">bridge</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mac</span> <span class="title">address</span>='<span class="title">fa</span>:16:3<span class="title">e</span>:<span class="title">dd</span>:4<span class="title">e</span>:8<span class="title">d</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">source</span> <span class="title">bridge</span>='<span class="title">qbr3a023c95</span>-<span class="title">a5</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">dev</span>='<span class="title">tap3a023c95</span>-<span class="title">a5</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">model</span> <span class="title">type</span>='<span class="title">virtio</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mtu</span> <span class="title">size</span>='1500'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x05</span>' <span class="title">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">interface</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">interface</span> <span class="title">type</span>='<span class="title">bridge</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mac</span> <span class="title">address</span>='<span class="title">fa</span>:16:3<span class="title">e</span>:66:<span class="title">a0</span>:<span class="title">b7</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">source</span> <span class="title">bridge</span>='<span class="title">qbr0c33b092</span>-<span class="title">d0</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">dev</span>='<span class="title">tap0c33b092</span>-<span class="title">d0</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">model</span> <span class="title">type</span>='<span class="title">virtio</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">mtu</span> <span class="title">size</span>='1450'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x06</span>' <span class="title">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">interface</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">serial</span> <span class="title">type</span>='<span class="title">pty</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">log</span> <span class="title">file</span>='/<span class="title">var</span>/<span class="title">lib</span>/<span class="title">nova</span>/<span class="title">instances</span>/27<span class="title">a7b4d6</span>-9036-4625-99<span class="title">f2</span>-<span class="title">dbe6141d7eb7</span>/<span class="title">console</span>.<span class="title">log</span>' <span class="title">append</span>='<span class="title">off</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">type</span>='<span class="title">isa</span>-<span class="title">serial</span>' <span class="title">port</span>='0'&gt;</span></span><br><span class="line"><span class="function">          &lt;<span class="title">model</span> <span class="title">name</span>='<span class="title">isa</span>-<span class="title">serial</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;/<span class="title">target</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">serial</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">console</span> <span class="title">type</span>='<span class="title">pty</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">log</span> <span class="title">file</span>='/<span class="title">var</span>/<span class="title">lib</span>/<span class="title">nova</span>/<span class="title">instances</span>/27<span class="title">a7b4d6</span>-9036-4625-99<span class="title">f2</span>-<span class="title">dbe6141d7eb7</span>/<span class="title">console</span>.<span class="title">log</span>' <span class="title">append</span>='<span class="title">off</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">target</span> <span class="title">type</span>='<span class="title">serial</span>' <span class="title">port</span>='0'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">console</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">input</span> <span class="title">type</span>='<span class="title">tablet</span>' <span class="title">bus</span>='<span class="title">usb</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">usb</span>' <span class="title">bus</span>='0' <span class="title">port</span>='1'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">input</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">input</span> <span class="title">type</span>='<span class="title">mouse</span>' <span class="title">bus</span>='<span class="title">ps2</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">input</span> <span class="title">type</span>='<span class="title">keyboard</span>' <span class="title">bus</span>='<span class="title">ps2</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">graphics</span> <span class="title">type</span>='<span class="title">vnc</span>' <span class="title">port</span>='-1' <span class="title">autoport</span>='<span class="title">yes</span>' <span class="title">listen</span>='0.0.0.0' <span class="title">keymap</span>='<span class="title">en</span>-<span class="title">us</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">listen</span> <span class="title">type</span>='<span class="title">address</span>' <span class="title">address</span>='0.0.0.0'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">graphics</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">video</span>&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">model</span> <span class="title">type</span>='<span class="title">cirrus</span>' <span class="title">vram</span>='16384' <span class="title">heads</span>='1' <span class="title">primary</span>='<span class="title">yes</span>'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x02</span>' <span class="title">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">video</span>&gt;</span></span><br><span class="line"><span class="function">      &lt;<span class="title">memballoon</span> <span class="title">model</span>='<span class="title">virtio</span>'&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">stats</span> <span class="title">period</span>='10'/&gt;</span></span><br><span class="line"><span class="function">        &lt;<span class="title">address</span> <span class="title">type</span>='<span class="title">pci</span>' <span class="title">domain</span>='0<span class="title">x0000</span>' <span class="title">bus</span>='0<span class="title">x00</span>' <span class="title">slot</span>='0<span class="title">x08</span>' <span class="title">function</span>='0<span class="title">x0</span>'/&gt;</span></span><br><span class="line"><span class="function">      &lt;/<span class="title">memballoon</span>&gt;</span></span><br><span class="line"><span class="function">    &lt;/<span class="title">devices</span>&gt;</span></span><br><span class="line"><span class="function">  &lt;/<span class="title">domain</span>&gt;</span></span><br><span class="line"><span class="function">&lt;/<span class="title">domainsnapshot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kvm/" rel="tag"><i class="fa fa-tag"></i> kvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/18/Openstack/QemuKvmSnapshot/" rel="next" title="QEMU / KVM 快照介绍">
+                <i class="fa fa-chevron-left"></i> QEMU / KVM 快照介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/02/18/Other/zerorpc/" rel="prev" title="zerorpc优化">
+                zerorpc优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/matx.jpg" alt="圣特伦特星">
+            
+              <p class="site-author-name" itemprop="name">圣特伦特星</p>
+              <p class="site-description motion-element" itemprop="description">“在这样一个时代，你必须努力奔跑才能停留在原地。”在这样一个时代，积极只是你的人生不发生倒退的前提。我们积极的奔跑了，关于事情的结局，不妨佛系一点，毕竟这个世界上我们无能为力的事情还挺多的，放过自己又何尝不是一种幸福？</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/shengteluntexing" target="_blank" title="SegmentFault">
+                      
+                        <i class="fa fa-fw fa-coffee"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/matianxin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:trentmtx@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/matianxin" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="200" height="200" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/FreeBSD/">FreeBSD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KVM/">KVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eletric-power/">eletric power</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kedong/">kedong</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kvm/">kvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libguestfs/">libguestfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/monitor/">monitor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/">sqlalchemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/switch/">switch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a><span class="tag-list-count">5</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+			  
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">圣特伦特星</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+>>>>>>> 4b185b4c0c9b5115227e15c0fa90fb7968c9c7cf
