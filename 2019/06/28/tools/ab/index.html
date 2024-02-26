@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="工具">
+  
+    <meta name="description" content="压力测试工具ab使用及安装方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="压力测试工具ab使用方法">
+<meta property="og:url" content="http://maitianxin.github.io/2019/06/28/tools/ab/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="压力测试工具ab使用及安装方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-28T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-23T09:01:01.264Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>压力测试工具ab使用方法 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="压力测试工具ab使用方法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-06-28 10:00" pubdate>
+          2019年6月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          815 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">压力测试工具ab使用方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><em><strong>安装</strong></em><br>在CentOS7-mini环境下，ab运行需要依赖apr-util，httpd-tools包，安装命令为：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> apr-util httpd-tools -y<br></code></pre></td></tr></table></figure>
+
+<p><em><strong>执行测试</strong></em></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-attr">#vi post.txt</span><br><span class="hljs-attr">uuid=n-vp0</span>e<span class="hljs-meta">o8</span>l<span class="hljs-name">m0</span>c&amp;<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ab -c <span class="hljs-number">10</span> -n <span class="hljs-number">10</span> -p <span class="hljs-string">&#x27;post.txt&#x27;</span> -T <span class="hljs-string">&#x27;application/x-www-form-urlencoded&#x27;</span>  http:<span class="hljs-regexp">//</span><span class="hljs-number">192.100</span>.<span class="hljs-number">200.140</span>:<span class="hljs-number">8000</span><span class="hljs-regexp">/api/i</span>nstance/show<br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">This</span> <span class="hljs-string">is</span> <span class="hljs-string">ApacheBench,</span> <span class="hljs-string">Version</span> <span class="hljs-number">2.3</span> <span class="hljs-string">&lt;$Revision:</span> <span class="hljs-number">1430300</span> <span class="hljs-string">$&gt;</span><br><span class="hljs-string">Copyright</span> <span class="hljs-number">1996 </span><span class="hljs-string">Adam</span> <span class="hljs-string">Twiss,</span> <span class="hljs-string">Zeus</span> <span class="hljs-string">Technology</span> <span class="hljs-string">Ltd,</span> <span class="hljs-string">http://www.zeustech.net/</span><br><span class="hljs-string">Licensed</span> <span class="hljs-string">to</span> <span class="hljs-string">The</span> <span class="hljs-string">Apache</span> <span class="hljs-string">Software</span> <span class="hljs-string">Foundation,</span> <span class="hljs-string">http://www.apache.org/</span><br><br><span class="hljs-string">Benchmarking</span> <span class="hljs-number">192.100</span><span class="hljs-number">.200</span><span class="hljs-number">.140</span> <span class="hljs-string">(be</span> <span class="hljs-string">patient).....done</span><br><br><br><span class="hljs-attr">Server Software:</span>        <span class="hljs-string">nginx/1.9.9</span><br><span class="hljs-attr">Server Hostname:</span>        <span class="hljs-number">192.100</span><span class="hljs-number">.200</span><span class="hljs-number">.140</span><br><span class="hljs-attr">Server Port:</span>            <span class="hljs-number">8000</span><br><br><span class="hljs-attr">Document Path:</span>          <span class="hljs-string">/api/instance/show</span><br><span class="hljs-attr">Document Length:</span>        <span class="hljs-number">23</span> <span class="hljs-string">bytes</span><br><br><span class="hljs-attr">Concurrency Level:</span>      <span class="hljs-number">10</span><br><span class="hljs-attr">Time taken for tests:</span>   <span class="hljs-number">1.378</span> <span class="hljs-string">seconds</span><br><span class="hljs-attr">Complete requests:</span>      <span class="hljs-number">10</span><br><span class="hljs-attr">Failed requests:</span>        <span class="hljs-number">6</span><br>   <span class="hljs-string">(Connect:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">Receive:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">Length:</span> <span class="hljs-number">6</span><span class="hljs-string">,</span> <span class="hljs-attr">Exceptions:</span> <span class="hljs-number">0</span><span class="hljs-string">)</span><br><span class="hljs-attr">Write errors:</span>           <span class="hljs-number">0</span><br><span class="hljs-attr">Non-2xx responses:</span>      <span class="hljs-number">3</span><br><span class="hljs-attr">Total transferred:</span>      <span class="hljs-number">3398 </span><span class="hljs-string">bytes</span><br><span class="hljs-attr">Total body sent:</span>        <span class="hljs-number">1940</span><br><span class="hljs-attr">HTML transferred:</span>       <span class="hljs-number">1787 </span><span class="hljs-string">bytes</span><br><span class="hljs-attr">Requests per second:</span>    <span class="hljs-number">7.26</span> [<span class="hljs-comment">#/sec] (mean)</span><br><span class="hljs-attr">Time per request:</span>       <span class="hljs-number">1377.853</span> [<span class="hljs-string">ms</span>] <span class="hljs-string">(mean)</span><br><span class="hljs-attr">Time per request:</span>       <span class="hljs-number">137.785</span> [<span class="hljs-string">ms</span>] <span class="hljs-string">(mean</span>, <span class="hljs-string">across</span> <span class="hljs-string">all</span> <span class="hljs-string">concurrent</span> <span class="hljs-string">requests)</span><br><span class="hljs-attr">Transfer rate:</span>          <span class="hljs-number">2.41</span> [<span class="hljs-string">Kbytes/sec</span>] <span class="hljs-string">received</span><br>                        <span class="hljs-number">1.37</span> <span class="hljs-string">kb/s</span> <span class="hljs-string">sent</span><br>                        <span class="hljs-number">3.78</span> <span class="hljs-string">kb/s</span> <span class="hljs-string">total</span><br><br><span class="hljs-string">Connection</span> <span class="hljs-string">Times</span> <span class="hljs-string">(ms)</span><br>              <span class="hljs-string">min</span>  <span class="hljs-string">mean</span>[<span class="hljs-string">+/-sd</span>] <span class="hljs-string">median</span>   <span class="hljs-string">max</span><br><span class="hljs-attr">Connect:</span>        <span class="hljs-number">0</span>    <span class="hljs-number">0</span>   <span class="hljs-number">0.1</span>      <span class="hljs-number">0</span>       <span class="hljs-number">1</span><br><span class="hljs-attr">Processing:</span>    <span class="hljs-number">68</span>  <span class="hljs-number">543</span> <span class="hljs-number">548.0</span>    <span class="hljs-number">246</span>    <span class="hljs-number">1256</span><br><span class="hljs-attr">Waiting:</span>       <span class="hljs-number">68</span>  <span class="hljs-number">543</span> <span class="hljs-number">548.0</span>    <span class="hljs-number">246</span>    <span class="hljs-number">1256</span><br><span class="hljs-attr">Total:</span>         <span class="hljs-number">69</span>  <span class="hljs-number">544</span> <span class="hljs-number">548.0</span>    <span class="hljs-number">247</span>    <span class="hljs-number">1257</span><br><br><span class="hljs-string">Percentage</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">requests</span> <span class="hljs-string">served</span> <span class="hljs-string">within</span> <span class="hljs-string">a</span> <span class="hljs-string">certain</span> <span class="hljs-string">time</span> <span class="hljs-string">(ms)</span><br>  <span class="hljs-number">50</span><span class="hljs-string">%</span>    <span class="hljs-number">247</span><br>  <span class="hljs-number">66</span><span class="hljs-string">%</span>   <span class="hljs-number">1095</span><br>  <span class="hljs-number">75</span><span class="hljs-string">%</span>   <span class="hljs-number">1157</span><br>  <span class="hljs-number">80</span><span class="hljs-string">%</span>   <span class="hljs-number">1196</span><br>  <span class="hljs-number">90</span><span class="hljs-string">%</span>   <span class="hljs-number">1257</span><br>  <span class="hljs-number">95</span><span class="hljs-string">%</span>   <span class="hljs-number">1257</span><br>  <span class="hljs-number">98</span><span class="hljs-string">%</span>   <span class="hljs-number">1257</span><br>  <span class="hljs-number">99</span><span class="hljs-string">%</span>   <span class="hljs-number">1257</span><br> <span class="hljs-number">100</span><span class="hljs-string">%</span>   <span class="hljs-number">1257</span> <span class="hljs-string">(longest</span> <span class="hljs-string">request)</span><br></code></pre></td></tr></table></figure>
+
+<p><em><strong>参数说明：</strong></em></p>
+<p>-n 10 表示请求总数为10</p>
+<p>-c 10 表示并发用户数为10</p>
+<p><a target="_blank" rel="noopener" href="http://192.100.200.140:8000/api/instance/show">http://192.100.200.140:8000/api/instance/show</a> 表示这写请求的目标URL</p>
+<p>测试结果也一目了然，测试出的吞吐率为：<br><strong>Requests per second</strong>: 2015.93 [#&#x2F;sec] (mean) 初次之外还有其他一些信息。</p>
+<p><strong>Server Software</strong> 表示被测试的Web服务器软件名称</p>
+<p><strong>Server Hostname</strong> 表示请求的URL主机名</p>
+<p><strong>Server Port</strong> 表示被测试的Web服务器软件的监听端口</p>
+<p><strong>Document Path</strong> 表示请求的URL中的根绝对路径，通过该文件的后缀名，我们一般可以了解该请求的类型</p>
+<p><strong>Document Length</strong> 表示HTTP响应数据的正文长度</p>
+<p><strong>Concurrency Level</strong> 表示并发用户数，这是我们设置的参数之一</p>
+<p><strong>Time taken for tests</strong> 表示所有这些请求被处理完成所花费的总时间</p>
+<p><strong>Complete requests</strong> 表示总请求数量，这是我们设置的参数之一</p>
+<p><strong>Failed requests</strong> 表示失败的请求数量，这里的失败是指请求在连接服务器、发送数据等环节发生异常，以及无响应后超时的情况。如果接收到的HTTP响应数据的头信息中含有2XX以外的状态码，则会在测试结果中显示另一个名为 “Non-2xx responses”的统计项，用于统计这部分请求数，这些请求并不算在失败的请求中。</p>
+<p><strong>Total transferred</strong> 表示所有请求的响应数据长度总和，包括每个HTTP响应数据的头信息和正文数据的长度。注意这里不包括HTTP请求数据的长度，仅仅为web服务器流向用户PC的应用层数据总长度。</p>
+<p><strong>HTML transferred</strong> 表示所有请求的响应数据中正文数据的总和，也就是减去了Total transferred中HTTP响应数据中的头信息的长度。</p>
+<p><strong>Requests per second</strong> 吞吐率，计算公式：Complete requests &#x2F; Time taken for tests</p>
+<p><strong>Time per request</strong> 用户平均请求等待时间，计算公式：Time token for tests&#x2F;（Complete requests&#x2F;Concurrency Level）</p>
+<p><strong>Time per requet(across all concurrent request)</strong> 服务器平均请求等待时间，计算公式：Time taken for tests&#x2F;Complete requests，正好是吞吐率的倒数。也可以这么统计：Time per request&#x2F;Concurrency Level</p>
+<p><strong>Transfer rate</strong> 表示这些请求在单位时间内从服务器获取的数据长度，计算公式：Total trnasferred&#x2F; Time taken for tests，这个统计很好的说明服务器的处理能力达到极限时，其出口宽带的需求量。</p>
+<p><strong>Percentage of requests served within a certain time（ms）</strong> 这部分数据用于描述每个请求处理时间的分布情况，比如以上测试，80%的请求处理时间都不超过6ms，这个处理时间是指前面的Time per request，即对于单个用户而言，平均每个请求的处理时间。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7/" class="print-no-link">#工具</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>压力测试工具ab使用方法</div>
+      <div>http://maitianxin.github.io/2019/06/28/tools/ab/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年6月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/01/mysql/too_many_connections/" title="Mysql 1040 Too many connections 错误与解决办法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Mysql 1040 Too many connections 错误与解决办法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/06/20/openstack/too_many_open_files/" title="Openstack Too many open files 错误与解决办法">
+                        <span class="hidden-mobile">Openstack Too many open files 错误与解决办法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Openstack">
+  
+    <meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack Queens 环境搭建（五）Nova服务">
+<meta property="og:url" content="http://maitianxin.github.io/2019/03/19/openstack/queens/openstack_queens_install_5/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-19T02:25:00.000Z">
+<meta property="article:modified_time" content="2024-02-23T08:38:59.666Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Openstack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Openstack Queens 环境搭建（五）Nova服务 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Openstack Queens 环境搭建（五）Nova服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-19 10:25" pubdate>
+          2019年3月19日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Openstack Queens 环境搭建（五）Nova服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>Controller节点：</strong><br><em><strong>创建 nova_api, nova,和 nova_cell0 的数据库，授予权限：</strong></em></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql">$ mysql <span class="hljs-operator">-</span>u root <span class="hljs-operator">-</span>p<br><br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span><span class="hljs-keyword">CREATE</span> DATABASE nova_api;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">CREATE</span> DATABASE nova;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">CREATE</span> DATABASE nova_cell0;<br><br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> nova_api.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;nova&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> nova_api.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;nova&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> nova.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;nova&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> nova.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;nova&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> nova_cell0.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;nova&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> nova_cell0.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;nova&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br><br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> exit;<br></code></pre></td></tr></table></figure>
+
+<p><em><strong>创建nova用户：</strong></em><br><code>$ . admin-openrc</code></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack user create --domain default --password-prompt nova<br>User Password: 123456<br><span class="hljs-section">Repeat User Password: 123456</span><br><span class="hljs-section">+---------------------+----------------------------------+</span><br><span class="hljs-section">| Field               | Value                            |</span><br><span class="hljs-section">+---------------------+----------------------------------+</span><br>| domain<span class="hljs-emphasis">_id           | default                          |</span><br><span class="hljs-emphasis">| enabled             | True                             |</span><br><span class="hljs-emphasis">| id                  | 81f1d5dfad5a42bb806d197ceb9881ce |</span><br><span class="hljs-emphasis">| name                | nova                             |</span><br><span class="hljs-emphasis">| options             | &#123;&#125;                               |</span><br><span class="hljs-emphasis">| password_expires_</span>at | None                             |<br><span class="hljs-code">+---------------------+</span>----------------------------------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">$ openstack <span class="hljs-keyword">role</span> <span class="hljs-title">add</span> --project service --<span class="hljs-keyword">user</span> <span class="hljs-title">nova</span> admin<br></code></pre></td></tr></table></figure>
+<p><em><strong>创建nova服务实体：</strong></em></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack service create --name nova --description &quot;OpenStack Compute&quot; compute</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br><span class="hljs-section">| Field       | Value                            |</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br>| description | OpenStack Compute                |<br>| enabled     | True                             |<br>| id          | 3e011d345e4442fe8a232ab5ab1f8323 |<br>| name        | nova                             |<br><span class="hljs-section">| type        | compute                          |</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<p><em><strong>创建Compute API服务端点：</strong></em></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack endpoint create --region RegionOne compute public http://controller:8774/v2.1</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | 343b6a8fc9564623aca0097b2383650d |<br>| interface    | public                           |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | 3e011d345e4442fe8a232ab5ab1f8323 |</span><br><span class="hljs-emphasis">| service_name | nova                             |</span><br><span class="hljs-emphasis">| service_</span>type | compute                          |<br><span class="hljs-section">| url          | http://controller:8774/v2.1      |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack endpoint create --region RegionOne compute internal http://controller:8774/v2.1</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | 3458cf55ac8b44d58c949fe88bf9afe3 |<br>| interface    | internal                         |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | 3e011d345e4442fe8a232ab5ab1f8323 |</span><br><span class="hljs-emphasis">| service_name | nova                             |</span><br><span class="hljs-emphasis">| service_</span>type | compute                          |<br><span class="hljs-section">| url          | http://controller:8774/v2.1      |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack endpoint create --region RegionOne compute admin http://controller:8774/v2.1</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | 9f9115389c2a49a2874761b92c849bb0 |<br>| interface    | admin                            |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | 3e011d345e4442fe8a232ab5ab1f8323 |</span><br><span class="hljs-emphasis">| service_name | nova                             |</span><br><span class="hljs-emphasis">| service_</span>type | compute                          |<br><span class="hljs-section">| url          | http://controller:8774/v2.1      |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<p><em><strong>创建Placement服务相关：</strong></em></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack user create --domain default --password-prompt placement<br>User Password: 123456<br><span class="hljs-section">Repeat User Password: 123456</span><br><span class="hljs-section">+---------------------+----------------------------------+</span><br><span class="hljs-section">| Field               | Value                            |</span><br><span class="hljs-section">+---------------------+----------------------------------+</span><br>| domain<span class="hljs-emphasis">_id           | default                          |</span><br><span class="hljs-emphasis">| enabled             | True                             |</span><br><span class="hljs-emphasis">| id                  | 74870bc86a7c4108869c620099bffc30 |</span><br><span class="hljs-emphasis">| name                | placement                        |</span><br><span class="hljs-emphasis">| options             | &#123;&#125;                               |</span><br><span class="hljs-emphasis">| password_expires_</span>at | None                             |<br><span class="hljs-code">+---------------------+</span>----------------------------------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">$ openstack <span class="hljs-keyword">role</span> <span class="hljs-title">add</span> --project service --<span class="hljs-keyword">user</span> <span class="hljs-title">placement</span> admin<br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack service create --name placement --description &quot;Placement API&quot; placement</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br><span class="hljs-section">| Field       | Value                            |</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br>| description | Placement API                    |<br>| enabled     | True                             |<br>| id          | bbd270a97c3a499fb73765120094e9da |<br>| name        | placement                        |<br><span class="hljs-section">| type        | placement                        |</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack endpoint create --region RegionOne placement public http://controller:8778</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | d79b3b62302a4055924762ac676fc9b4 |<br>| interface    | public                           |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | bbd270a97c3a499fb73765120094e9da |</span><br><span class="hljs-emphasis">| service_name | placement                        |</span><br><span class="hljs-emphasis">| service_</span>type | placement                        |<br><span class="hljs-section">| url          | http://controller:8778           |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack endpoint create --region RegionOne placement internal http://controller:8778</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | 5424919fbee34a7a92946c607706b38a |<br>| interface    | internal                         |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | bbd270a97c3a499fb73765120094e9da |</span><br><span class="hljs-emphasis">| service_name | placement                        |</span><br><span class="hljs-emphasis">| service_</span>type | placement                        |<br><span class="hljs-section">| url          | http://controller:8778           |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack endpoint create --region RegionOne placement admin http://controller:8778</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | d9d5626cdb5442ac91dff8c1588f4726 |<br>| interface    | admin                            |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | bbd270a97c3a499fb73765120094e9da |</span><br><span class="hljs-emphasis">| service_name | placement                        |</span><br><span class="hljs-emphasis">| service_</span>type | placement                        |<br><span class="hljs-section">| url          | http://controller:8778           |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<p><em><strong>安装和配置：</strong></em></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install openstack-nova-api openstack-nova-conductor openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler openstack-nova-placement-api</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># vi /etc/nova/nova.conf</span><br><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">my_ip</span>=<span class="hljs-number">192.100</span>.<span class="hljs-number">10.160</span><br><span class="hljs-attr">use_neutron</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">firewall_driver</span>=nova.virt.firewall.NoopFirewallDriver<br><span class="hljs-attr">enabled_apis</span>=osapi_compute,metadata<br><span class="hljs-attr">transport_url</span>=rabbit://openstack:<span class="hljs-number">123456</span>@controller<br><span class="hljs-section">[api]</span><br><span class="hljs-attr">auth_strategy</span>=keystone<br><span class="hljs-section">[api_database]</span><br><span class="hljs-attr">connection</span> = mysql+pymysql://nova:<span class="hljs-number">123456</span>@controller/nova_api<br><span class="hljs-section">[database]</span><br><span class="hljs-attr">connection</span> = mysql+pymysql://nova:<span class="hljs-number">123456</span>@controller/nova<br><span class="hljs-section">[glance]</span><br><span class="hljs-attr">api_servers</span> = http://controller:<span class="hljs-number">9292</span><br><span class="hljs-section">[keystone_authtoken]</span><br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span>/v3<br><span class="hljs-attr">memcached_servers</span> = controller:<span class="hljs-number">11211</span><br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">project_domain_name</span> = default<br><span class="hljs-attr">user_domain_name</span> = default<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">username</span> = nova<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br><span class="hljs-section">[libvirt]</span><br><span class="hljs-comment">#virt_type=kvm</span><br><span class="hljs-section">[neutron]</span><br><span class="hljs-attr">url</span> = http://controller:<span class="hljs-number">9696</span><br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">35357</span><br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">project_domain_name</span> = default<br><span class="hljs-attr">user_domain_name</span> = default<br><span class="hljs-attr">region_name</span> = RegionOne<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">username</span> = neutron<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br><span class="hljs-attr">service_metadata_proxy</span> = <span class="hljs-literal">true</span><br><span class="hljs-attr">metadata_proxy_shared_secret</span> = <span class="hljs-number">123456</span><br><span class="hljs-section">[oslo_concurrency]</span><br><span class="hljs-attr">lock_path</span>=/var/lib/nova/tmp<br><span class="hljs-section">[placement]</span><br><span class="hljs-attr">os_region_name</span> = RegionOne<br><span class="hljs-attr">project_domain_name</span> = Default<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">user_domain_name</span> = Default<br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span>/v3<br><span class="hljs-attr">username</span> = placement<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br><span class="hljs-section">[vnc]</span><br><span class="hljs-attr">enabled</span>=<span class="hljs-literal">true</span><br><span class="hljs-attr">server_listen</span>=<span class="hljs-variable">$my_ip</span><br><span class="hljs-attr">server_proxyclient_address</span>=<span class="hljs-variable">$my_ip</span><br><span class="hljs-comment">#novncproxy_base_url=http://127.0.0.1:6080/vnc_auto.html</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gherkin"><span class="hljs-comment"># vi /etc/httpd/conf.d/00-nova-placement-api.conf            在最下方加入</span><br><span class="hljs-variable">&lt;Directory /usr/bin&gt;</span><br>   <span class="hljs-variable">&lt;IfVersion &gt;</span>= 2.4&gt;<br>      Require all granted<br>   <span class="hljs-variable">&lt;/IfVersion&gt;</span><br>   <span class="hljs-variable">&lt;IfVersion &lt; 2.4&gt;</span><br>      Order allow,deny<br>      Allow from all<br>   <span class="hljs-variable">&lt;/IfVersion&gt;</span><br><span class="hljs-variable">&lt;/Directory&gt;</span><br></code></pre></td></tr></table></figure>
+<p>完成安装：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># systemctl restart httpd</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">su -s /bin/sh -c <span class="hljs-string">&quot;nova-manage api_db sync&quot;</span> nova</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">su -s /bin/sh -c <span class="hljs-string">&quot;nova-manage cell_v2 map_cell0&quot;</span> nova</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">su -s /bin/sh -c <span class="hljs-string">&quot;nova-manage cell_v2 create_cell --name=cell1 --verbose&quot;</span> nova</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">su -s /bin/sh -c <span class="hljs-string">&quot;nova-manage db sync&quot;</span> nova</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section"># nova-manage cell_v2 list_cells</span><br><span class="hljs-section">+-------+--------------------------------------+------------------------------------+-------------------------------------------------+</span><br><span class="hljs-section">|  名称 |                 UUID                 |           Transport URL            |                    数据库连接                   |</span><br><span class="hljs-section">+-------+--------------------------------------+------------------------------------+-------------------------------------------------+</span><br>| cell0 | 00000000-0000-0000-0000-000000000000 |               none:/               | mysql+pymysql://nova:<span class="hljs-strong">***</span><span class="hljs-strong">*@controller/nova_cell0 |</span><br><span class="hljs-strong">| cell1 | c795b2eb-4814-4fe7-b9ff-090a1b1b2be5 | rabbit://openstack:****@controller |    mysql+pymysql://nova:****</span>@controller/nova    |<br><span class="hljs-code">+-------+</span>--------------------------------------<span class="hljs-code">+------------------------------------+</span>-------------------------------------------------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs protobuf"># systemctl enable openstack-nova-api.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-consoleauth.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-scheduler.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-conductor.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-novncproxy.service<br># systemctl start openstack-nova-api.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-consoleauth.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-scheduler.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-conductor.<span class="hljs-keyword">service </span><span class="hljs-title class_">openstack</span>-nova-novncproxy.service<br></code></pre></td></tr></table></figure>
+
+<p><strong>Compute节点：</strong><br><em><strong>安装和配置：</strong></em></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install openstack-nova-compute</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># vi /etc/nova/nova.conf</span><br><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">my_ip</span> = <span class="hljs-number">192.100</span>.<span class="hljs-number">10.161</span><br><span class="hljs-attr">enabled_apis</span> = osapi_compute,metadata<br><span class="hljs-attr">use_neutron</span> = <span class="hljs-literal">True</span><br><span class="hljs-attr">firewall_driver</span> = nova.virt.firewall.NoopFirewallDriver<br><span class="hljs-attr">transport_url</span> = rabbit://openstack:<span class="hljs-number">123456</span>@controller<br><span class="hljs-section">[api]</span><br><span class="hljs-attr">auth_strategy</span> = keystone<br><span class="hljs-section">[vnc]</span><br><span class="hljs-attr">enabled</span> = <span class="hljs-literal">True</span><br><span class="hljs-attr">server_listen</span> = <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><br><span class="hljs-attr">server_proxyclient_address</span> = <span class="hljs-variable">$my_ip</span><br><span class="hljs-attr">novncproxy_base_url</span> = http://controller:<span class="hljs-number">6080</span>/vnc_auto.html<br><span class="hljs-section">[glance]</span><br><span class="hljs-attr">api_servers</span> = http://controller:<span class="hljs-number">9292</span><br><span class="hljs-section">[oslo_concurrency]</span><br><span class="hljs-attr">lock_path</span> = /var/lib/nova/tmp<br><span class="hljs-section">[placement]</span><br><span class="hljs-attr">os_region_name</span> = RegionOne<br><span class="hljs-attr">project_domain_name</span> = Default<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">user_domain_name</span> = Default<br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span>/v3<br><span class="hljs-attr">username</span> = placement<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br><span class="hljs-section">[keystone_authtoken]</span><br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span>/v3<br><span class="hljs-attr">memcached_servers</span> = controller:<span class="hljs-number">11211</span><br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">project_domain_name</span> = default<br><span class="hljs-attr">user_domain_name</span> = default<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">username</span> = nova<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+<p><em><strong>完成安装</strong></em></p>
+<figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs thrift"># systemctl enable libvirtd.<span class="hljs-keyword">service</span> openstack-nova-compute.<span class="hljs-keyword">service</span><br># systemctl start libvirtd.<span class="hljs-keyword">service</span> openstack-nova-compute.<span class="hljs-keyword">service</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Controller节点：</strong><br><em><strong>将计算节点添加到cell数据库：</strong></em><br><code>$ . admin-openrc</code></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack compute service list --service nova-compute</span><br><span class="hljs-section">+----+--------------+-----------------------+------+---------+-------+----------------------------+</span><br><span class="hljs-section">| ID | Binary       | Host                  | Zone | Status  | State | Updated At                 |</span><br><span class="hljs-section">+----+--------------+-----------------------+------+---------+-------+----------------------------+</span><br><span class="hljs-section">|  9 | nova-compute | localhost.localdomain | nova | enabled | up    | 2018-09-13T02:59:06.000000 |</span><br><span class="hljs-section">+----+--------------+-----------------------+------+---------+-------+----------------------------+</span><br></code></pre></td></tr></table></figure>
+<p>发现计算主机：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># su -s /bin/sh -c &quot;nova-manage cell_v2 discover_hosts --verbose&quot; nova<br><br>/usr/lib/python2<span class="hljs-number">.7</span>/site-packages/oslo_db/sqlalchemy/enginefacade.py:<span class="hljs-number">332</span>: NotSupportedWarning: <span class="hljs-keyword">Configuration</span> <span class="hljs-keyword">option</span>(s) [<span class="hljs-string">&#x27;use_tpool&#x27;</span>] <span class="hljs-keyword">not</span> supported<br>  <span class="hljs-keyword">exception</span>.NotSupportedWarning<br><span class="hljs-built_in">Found</span> <span class="hljs-number">2</span> cell mappings.<br>Skipping cell0 since it does <span class="hljs-keyword">not</span> contain hosts.<br>Getting computes <span class="hljs-keyword">from</span> cell <span class="hljs-string">&#x27;cell1&#x27;</span>: c795b2eb<span class="hljs-number">-4814</span><span class="hljs-number">-4</span>fe7-b9ff<span class="hljs-number">-090</span>a1b1b2be5<br>Checking host <span class="hljs-keyword">mapping</span> <span class="hljs-keyword">for</span> compute host <span class="hljs-string">&#x27;localhost.localdomain&#x27;</span>: <span class="hljs-number">58</span>be78ad<span class="hljs-number">-5220</span><span class="hljs-number">-4869</span>-ab31<span class="hljs-number">-33</span>c9674ecfd1<br>Creating host <span class="hljs-keyword">mapping</span> <span class="hljs-keyword">for</span> compute host <span class="hljs-string">&#x27;localhost.localdomain&#x27;</span>: <span class="hljs-number">58</span>be78ad<span class="hljs-number">-5220</span><span class="hljs-number">-4869</span>-ab31<span class="hljs-number">-33</span>c9674ecfd1<br><span class="hljs-built_in">Found</span> <span class="hljs-number">1</span> unmapped computes <span class="hljs-keyword">in</span> cell: c795b2eb<span class="hljs-number">-4814</span><span class="hljs-number">-4</span>fe7-b9ff<span class="hljs-number">-090</span>a1b1b2be5<br></code></pre></td></tr></table></figure>
+<p>注意：添加新计算节点时，必须在控制器节点上运行nova-manage cell_v2 discover_hosts以注册这些新计算节点。<br>或者，您可以在 &#x2F;etc&#x2F;nova&#x2F;nova.conf 中设置适当的间隔：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[scheduler]</span><br><span class="hljs-attr">discover_hosts_in_cells_interval</span> = <span class="hljs-number">300</span><br></code></pre></td></tr></table></figure>
+<p>验证：<br><code>$ . admin-openrc</code></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack compute service list<br>+----+------------------+-----------------------+----------+---------+-------+----------------------------+<br>|<span class="hljs-string"> ID </span>|<span class="hljs-string"> Binary           </span>|<span class="hljs-string"> Host                  </span>|<span class="hljs-string"> Zone     </span>|<span class="hljs-string"> Status  </span>|<span class="hljs-string"> State </span>|<span class="hljs-string"> Updated At                 </span>|<br>+----+------------------+-----------------------+----------+---------+-------+----------------------------+<br>|<span class="hljs-string">  1 </span>|<span class="hljs-string"> nova-conductor   </span>|<span class="hljs-string"> controller            </span>|<span class="hljs-string"> internal </span>|<span class="hljs-string"> enabled </span>|<span class="hljs-string"> up    </span>|<span class="hljs-string"> 2018-09-13T03:00:28.000000 </span>|<br>|<span class="hljs-string">  3 </span>|<span class="hljs-string"> nova-consoleauth </span>|<span class="hljs-string"> controller            </span>|<span class="hljs-string"> internal </span>|<span class="hljs-string"> enabled </span>|<span class="hljs-string"> up    </span>|<span class="hljs-string"> 2018-09-13T03:00:29.000000 </span>|<br>|<span class="hljs-string">  4 </span>|<span class="hljs-string"> nova-scheduler   </span>|<span class="hljs-string"> controller            </span>|<span class="hljs-string"> internal </span>|<span class="hljs-string"> enabled </span>|<span class="hljs-string"> up    </span>|<span class="hljs-string"> 2018-09-13T03:00:29.000000 </span>|<br>|<span class="hljs-string">  9 </span>|<span class="hljs-string"> nova-compute     </span>|<span class="hljs-string"> localhost.localdomain </span>|<span class="hljs-string"> nova     </span>|<span class="hljs-string"> enabled </span>|<span class="hljs-string"> up    </span>|<span class="hljs-string"> 2018-09-13T03:00:26.000000 </span>|<br>+----+------------------+-----------------------+----------+---------+-------+----------------------------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack catalog list<br>+-----------+-----------+-----------------------------------------+<br>|<span class="hljs-string"> Name      </span>|<span class="hljs-string"> Type      </span>|<span class="hljs-string"> Endpoints                               </span>|<br>+-----------+-----------+-----------------------------------------+<br>|<span class="hljs-string"> keystone  </span>|<span class="hljs-string"> identity  </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:5000/v3/    </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:5000/v3/  </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:5000/v3/     </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> nova      </span>|<span class="hljs-string"> compute   </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:8774/v2.1   </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:8774/v2.1 </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:8774/v2.1    </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> glance    </span>|<span class="hljs-string"> image     </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:9292      </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:9292         </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:9292        </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> placement </span>|<span class="hljs-string"> placement </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:8778      </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:8778        </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:8778         </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>+-----------+-----------+-----------------------------------------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack image list</span><br><span class="hljs-section">+--------------------------------------+--------+--------+</span><br><span class="hljs-section">| ID                                   | Name   | Status |</span><br><span class="hljs-section">+--------------------------------------+--------+--------+</span><br><span class="hljs-section">| ad7da2d4-cb83-4a41-836f-e58e47e899f5 | cirros | active |</span><br><span class="hljs-section">+--------------------------------------+--------+--------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"># nova-status upgrade check<br>/usr/lib/python2.7/site-packages/oslo<span class="hljs-emphasis">_db/sqlalchemy/enginefacade.py:332: NotSupportedWarning: Configuration option(s) [&#x27;use_tpool&#x27;] not supported</span><br><span class="hljs-emphasis">  exception.NotSupportedWarning</span><br><span class="hljs-emphasis">Option &quot;os_region_</span>name&quot; from group &quot;placement&quot; is deprecated. Use option &quot;region-name&quot; from group &quot;placement&quot;.<br><span class="hljs-code">+-------------------------------+</span><br><span class="hljs-section">| 升级检查结果                  |</span><br><span class="hljs-section">+-------------------------------+</span><br>| 检查: Cells v2                |<br>| 结果: 成功                    |<br><span class="hljs-section">| 详情: None                    |</span><br><span class="hljs-section">+-------------------------------+</span><br>| 检查: Placement API           |<br>| 结果: 成功                    |<br><span class="hljs-section">| 详情: None                    |</span><br><span class="hljs-section">+-------------------------------+</span><br>| 检查: Resource Providers      |<br>| 结果: 成功                    |<br><span class="hljs-section">| 详情: None                    |</span><br><span class="hljs-section">+-------------------------------+</span><br>| 检查: Ironic Flavor Migration |<br>| 结果: 成功                    |<br><span class="hljs-section">| 详情: None                    |</span><br><span class="hljs-section">+-------------------------------+</span><br>| 检查: API Service Version     |<br>| 结果: 成功                    |<br><span class="hljs-section">| 详情: None                    |</span><br><span class="hljs-section">+-------------------------------+</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Openstack Queens 环境搭建（五）Nova服务</div>
+      <div>http://maitianxin.github.io/2019/03/19/openstack/queens/openstack_queens_install_5/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年3月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/03/19/openstack/queens/openstack_queens_install_6/" title="Openstack Queens 环境搭建（六）Neutron服务">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Openstack Queens 环境搭建（六）Neutron服务</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/19/openstack/queens/openstack_queens_install_4/" title="Openstack Queens 环境搭建（四）Glance服务">
+                        <span class="hidden-mobile">Openstack Queens 环境搭建（四）Glance服务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

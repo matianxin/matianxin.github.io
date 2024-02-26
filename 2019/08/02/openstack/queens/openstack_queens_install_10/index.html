@@ -1,0 +1,817 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Openstack">
+  
+    <meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack Queens 环境搭建（十）Ceilometer + Gnocchi">
+<meta property="og:url" content="http://maitianxin.github.io/2019/08/02/openstack/queens/openstack_queens_install_10/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-02T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T02:55:58.606Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Openstack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Openstack Queens 环境搭建（十）Ceilometer + Gnocchi - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Openstack Queens 环境搭建（十）Ceilometer + Gnocchi"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-08-02 10:00" pubdate>
+          2019年8月2日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Openstack Queens 环境搭建（十）Ceilometer + Gnocchi</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="ceilometer概述"><a href="#ceilometer概述" class="headerlink" title="ceilometer概述"></a>ceilometer概述</h2><hr>
+<h3 id="什么是ceilometer"><a href="#什么是ceilometer" class="headerlink" title="什么是ceilometer"></a>什么是ceilometer</h3><p>Ceilometer是OpenStack中的一个子项目，它像一个漏斗一样，能把OpenStack内部发生的几乎所有的事件都收集起来，然后为计费和监控以及其它服务提供数据支撑。</p>
+<p><strong>Ceilometer服务主要功能：</strong></p>
+<p>有效地轮询与OpenStack服务相关的计量数据。<br>通过监视从服务发送的通知来收集事件和计量数据。<br>将收集的数据发布到各种目标，包括数据存储和消息队列。</p>
+<h3 id="ceilometer如何进行监控"><a href="#ceilometer如何进行监控" class="headerlink" title="ceilometer如何进行监控"></a>ceilometer如何进行监控</h3><p>Ceilometer监控通过在计算节点部署Compute服务，轮询其计算节点上的instance，获取各自的CPU、网络、磁盘等监控信息，发送到RabbitMQ，Collector服务负责接收信息进行持久化存储，也可通过libvirt和openstack服务的API采集数据。</p>
+<h3 id="监控信息存储"><a href="#监控信息存储" class="headerlink" title="监控信息存储"></a>监控信息存储</h3><p>Ceilometer以前提供了存储和API解决方案。截至N版本，此功能已被正式弃用并且不鼓励。<br>为了有效存储和统计分析ceilometer数据，建议使用Gnocchi。<br>采集信息的存储可以有多种，如文件，数据库等，openstack queens版本默认采用gnocchi+文件形式存储。</p>
+<h2 id="gnocchi概述"><a href="#gnocchi概述" class="headerlink" title="gnocchi概述"></a>gnocchi概述</h2><hr>
+<h3 id="gnocchi是什么"><a href="#gnocchi是什么" class="headerlink" title="gnocchi是什么"></a>gnocchi是什么</h3><p>Gnocchi是一个多租户时间序列，计量和资源数据库。<br>提供了HTTP REST接口来创建和操作数据。<br>Gnocchi设计用于超大规模计量数据的存储，同时向操作者和用户提供对度量和资源信息的访问。<br>Gnocchi是OpenStack项目的一部分。因此它支持OpenStack，但也能完全独立的工作。</p>
+<h3 id="gnocchi项目起源"><a href="#gnocchi项目起源" class="headerlink" title="gnocchi项目起源"></a>gnocchi项目起源</h3><p>早期的openstack各类资源的计量数据(measurement) 存储在SQL数据库中的sample表中。随着云环境中需要被监控的资源增多和时间的推移，计量数据的增长变得难以预测；计量数据的使用方面，查询操作首先要从巨大的sample单表中过滤所需条目，然后还会涉及到相关的聚合计算；可想而知，由此带来的性能开销绝对是无法忍受的，并且随着时间的推移这个瓶颈会愈加明显直至奔溃。要解决上述问题方法有很多，比如分表：每个监控指标（Metirc）一张表，那么一个资源可能会有多张表（比如一个instance至少会有cpu，cpu.util，memory，memory.usage，disk.* 等监控指标metrics）；这似乎有点夸张，即使这样都可以接受的话，那么查询时对计量数据的聚合操作也还是个问题。<br>为解决以上问题，红帽的Julien Danjou，发起了Gnocchi项目来解决这类问题。其总体思路是：把各个计量指标Metric的计量数据measurement直接写入后端存储中；并在measurement写入之前根据预先设定的归档策略进行聚合操作；查询时直接读取对应的文件即可获得聚合后的监控信息点；gnocchi提供资源索引，这样能更快的找到每个资源的基础信息metadata和其相关的metrics信息。<br>注：数据存储分级：(资源项)resource-&gt;(资源指标条目)metric-&gt;(实际数据)measure</p>
+<h3 id="为什么使用gnocchi"><a href="#为什么使用gnocchi" class="headerlink" title="为什么使用gnocchi"></a>为什么使用gnocchi</h3><p>Gnocchi已能够具备在云计算环境中提供可用的时间序列数据库的需要，提供存储大量度量数据并且易于扩展的能力。<br>Gnocchi项目于2014年开始，作为OpenStack Ceilometer项目的分支，以解决Ceilometer在将标准数据库用作计量数据的存储后端时遇到的性能问题。<br>Gnocchi使用各种技术压缩存储数据，降低了数据存储的空间。</p>
+<h2 id="ceilometer-gnocchi环境搭建"><a href="#ceilometer-gnocchi环境搭建" class="headerlink" title="ceilometer+gnocchi环境搭建"></a>ceilometer+gnocchi环境搭建</h2><hr>
+<p>安装部署ceilometer服务前，主机必须已经正确安装keystone、nova、neutron、image服务。部署过程须用到uwsgi和redis。</p>
+<h3 id="Compute节点安装"><a href="#Compute节点安装" class="headerlink" title="Compute节点安装"></a>Compute节点安装</h3><h4 id="安装ceilometer相关包："><a href="#安装ceilometer相关包：" class="headerlink" title="安装ceilometer相关包："></a>安装ceilometer相关包：</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install openstack-ceilometer-compute</span><br><span class="hljs-meta"># yum install openstack-ceilometer-ipmi (optional)</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>编辑&#x2F;etc&#x2F;ceilometer&#x2F;ceilometer.conf文件并完成以下操作<br>在该[DEFAULT]部分中，配置RabbitMQ 消息队列访问</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[DEFAULT]</span><br>...<br>transport_url  =  rabbit:<span class="hljs-comment">//openstack:123456@controller</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在该[service_credentials]部分中，配置服务凭据：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[service_credentials]</span><br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span><br><span class="hljs-attr">project_domain_id</span> = default<br><span class="hljs-attr">user_domain_id</span> = default<br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">username</span> = ceilometer<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br><span class="hljs-attr">interface</span> = internalURL<br><span class="hljs-attr">region_name</span> = RegionOne<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置计算服务，编辑&#x2F;etc&#x2F;nova&#x2F;nova.conf文件并在以下[DEFAULT]部分配置通知：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abnf">[DEFAULT]<br>...<br>instance_usage_audit  <span class="hljs-operator">=</span>  True<br>instance_usage_audit_period  <span class="hljs-operator">=</span>  hour<br>notify_on_state_change  <span class="hljs-operator">=</span>  vm_and_task_state<br>[oslo_messaging_notifications]<br>...<br><span class="hljs-attribute">driver</span>  <span class="hljs-operator">=</span>  messagingv2<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置计算以轮询IPMI，编辑&#x2F;etc&#x2F;sudoers文件并添加包含：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dts">ceilometer ALL = (root) NOPASSWD: <span class="hljs-keyword">/usr/</span>bin/ceilometer-rootwrap <span class="hljs-keyword">/etc/</span>ceilometer/rootwrap.conf *<br>编辑<span class="hljs-keyword">/etc/</span>ceilometer/polling.yaml以包含所需：<br><br>- name: ipmi<br><span class="hljs-symbol">      interval:</span> <span class="hljs-number">300</span><br><span class="hljs-symbol">      meters:</span><br>        - hardware.ipmi.temperature<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="完成安装"><a href="#完成安装" class="headerlink" title="完成安装"></a>完成安装</h4><p>启动代理并将其配置为在系统引导时启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl <span class="hljs-built_in">enable</span> openstack-ceilometer-compute.service</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl start openstack-ceilometer-compute.service</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl <span class="hljs-built_in">enable</span> openstack-ceilometer-ipmi.service (optional)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl start openstack-ceilometer-ipmi.service (optional)</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="重新启动Compute服务"><a href="#重新启动Compute服务" class="headerlink" title="重新启动Compute服务"></a>重新启动Compute服务</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># systemctl restart openstack-nova-compute.service</span><br></code></pre></td></tr></table></figure>
+<h3 id="Controller节点安装"><a href="#Controller节点安装" class="headerlink" title="Controller节点安装"></a>Controller节点安装</h3><p>获取admin凭据来访问仅管理员CLI命令<br><code>$ . admin-openrc</code></p>
+<p>要创建服务凭据，请完成以下步骤：</p>
+<h4 id="创建ceilometer用户："><a href="#创建ceilometer用户：" class="headerlink" title="创建ceilometer用户："></a>创建ceilometer用户：</h4><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">openstack user create --domain default --password-prompt ceilometer<br>User Password:123456<br><span class="hljs-section">Repeat User Password:123456</span><br><span class="hljs-section">+-----------+----------------------------------+</span><br><span class="hljs-section">| Field     | Value                            |</span><br><span class="hljs-section">+-----------+----------------------------------+</span><br>| domain_id | e0353a670a9e496da891347c589539e9 |<br>| enabled   | True                             |<br>| id        | c859c96f57bd4989a8ea1a0b1d8ff7cd |<br><span class="hljs-section">| name      | ceilometer                       |</span><br><span class="hljs-section">+-----------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="将admin角色添加到ceilometer用户。"><a href="#将admin角色添加到ceilometer用户。" class="headerlink" title="将admin角色添加到ceilometer用户。"></a>将admin角色添加到ceilometer用户。</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">$ openstack <span class="hljs-keyword">role</span> <span class="hljs-title">add</span> --project service --<span class="hljs-keyword">user</span> <span class="hljs-title">ceilometer</span> admin<br></code></pre></td></tr></table></figure>
+
+<p>在Keystone注册Gnocchi服务</p>
+<h4 id="创建gnocchi用户："><a href="#创建gnocchi用户：" class="headerlink" title="创建gnocchi用户："></a>创建gnocchi用户：</h4><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack user create --domain default --password-prompt gnocchi<br>User Password:123456<br><span class="hljs-section">Repeat User Password:123456</span><br><span class="hljs-section">+-----------+----------------------------------+</span><br><span class="hljs-section">| Field     | Value                            |</span><br><span class="hljs-section">+-----------+----------------------------------+</span><br>| domain_id | e0353a670a9e496da891347c589539e9 |<br>| enabled   | True                             |<br>| id        | 8bacd064f6434ef2b6bbfbedb79b0318 |<br><span class="hljs-section">| name      | gnocchi                          |</span><br><span class="hljs-section">+-----------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="创建gnocchi服务实体"><a href="#创建gnocchi服务实体" class="headerlink" title="创建gnocchi服务实体"></a>创建gnocchi服务实体</h4><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack service create --name gnocchi \<br><span class="hljs-section">  --description &quot;Metric Service&quot; metric</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br><span class="hljs-section">| Field       | Value                            |</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br>| description | Metric Service                   |<br>| enabled     | True                             |<br>| id          | 205978b411674e5a9990428f81d69384 |<br>| name        | gnocchi                          |<br><span class="hljs-section">| type        | metric                           |</span><br><span class="hljs-section">+-------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="将admin角色添加到gnocchi用户"><a href="#将admin角色添加到gnocchi用户" class="headerlink" title="将admin角色添加到gnocchi用户"></a>将admin角色添加到gnocchi用户</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">$ openstack <span class="hljs-keyword">role</span> <span class="hljs-title">add</span> --project service --<span class="hljs-keyword">user</span> <span class="hljs-title">gnocchi</span> admin<br></code></pre></td></tr></table></figure>
+
+<h4 id="创建Ceilometer服务API端点"><a href="#创建Ceilometer服务API端点" class="headerlink" title="创建Ceilometer服务API端点"></a>创建Ceilometer服务API端点</h4><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack endpoint create --region RegionOne \<br><span class="hljs-section">  metric public http://controller:8041</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | b808b67b848d443e9eaaa5e5d796970c |<br>| interface    | public                           |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | 205978b411674e5a9990428f81d69384 |</span><br><span class="hljs-emphasis">| service_name | gnocchi                          |</span><br><span class="hljs-emphasis">| service_</span>type | metric                           |<br><span class="hljs-section">| url          | http://controller:8041           |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack endpoint create --region RegionOne \<br><span class="hljs-section">  metric internal http://controller:8041</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | c7009b1c2ee54b71b771fa3d0ae4f948 |<br>| interface    | internal                         |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | 205978b411674e5a9990428f81d69384 |</span><br><span class="hljs-emphasis">| service_name | gnocchi                          |</span><br><span class="hljs-emphasis">| service_</span>type | metric                           |<br><span class="hljs-section">| url          | http://controller:8041           |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack endpoint create --region RegionOne \<br><span class="hljs-section">  metric admin http://controller:8041</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br><span class="hljs-section">| Field        | Value                            |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br>| enabled      | True                             |<br>| id           | b2c00566d0604551b5fe1540c699db3d |<br>| interface    | admin                            |<br>| region       | RegionOne                        |<br>| region<span class="hljs-emphasis">_id    | RegionOne                        |</span><br><span class="hljs-emphasis">| service_id   | 205978b411674e5a9990428f81d69384 |</span><br><span class="hljs-emphasis">| service_name | gnocchi                          |</span><br><span class="hljs-emphasis">| service_</span>type | metric                           |<br><span class="hljs-section">| url          | http://controller:8041           |</span><br><span class="hljs-section">+--------------+----------------------------------+</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="安装Gnocchi"><a href="#安装Gnocchi" class="headerlink" title="安装Gnocchi"></a>安装Gnocchi</h3><h4 id="安装服务组件"><a href="#安装服务组件" class="headerlink" title="安装服务组件"></a>安装服务组件</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install openstack-gnocchi-api openstack-gnocchi-metricd python-gnocchiclient</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs nsis">新建文件 /etc/httpd/conf.d/<span class="hljs-number">10</span>-gnocchi_wsgi.conf<br><br>Listen <span class="hljs-number">8041</span><br>&lt;VirtualHost *:<span class="hljs-number">8041</span>&gt;<br>  ServerName controller<br>  <span class="hljs-comment">## Vhost docroot</span><br>  DocumentRoot <span class="hljs-string">&quot;/var/www/cgi-bin/gnocchi&quot;</span><br>  <span class="hljs-comment">## Directories, there should at least be a declaration for /var/www/cgi-bin/gnocchi</span><br>  &lt;<span class="hljs-literal">Directory</span> <span class="hljs-string">&quot;/var/www/cgi-bin/gnocchi&quot;</span>&gt;<br>    Options Indexes FollowSymLinks MultiViews<br>    AllowOverride <span class="hljs-literal">None</span><br>    Require <span class="hljs-literal">all</span> granted<br>  &lt;/<span class="hljs-literal">Directory</span>&gt;<br>  <span class="hljs-comment">## Logging</span><br>  ErrorLog <span class="hljs-string">&quot;/var/log/httpd/gnocchi_wsgi_error.log&quot;</span><br>  ServerSignature <span class="hljs-literal">Off</span><br>  CustomLog <span class="hljs-string">&quot;/var/log/httpd/gnocchi_wsgi_access.log&quot;</span> combined<br>  SetEnvIf X-Forwarded-Proto https HTTPS=<span class="hljs-number">1</span><br>  WSGIApplicationGroup %&#123;GLOBAL&#125;<br>  WSGIDaemonProcess gnocchi display-<span class="hljs-keyword">name</span>=gnocchi_wsgi group=gnocchi processes=<span class="hljs-number">8</span> threads=<span class="hljs-number">8</span> <span class="hljs-literal">user</span>=gnocchi<br>  WSGIProcessGroup gnocchi<br>  WSGIScriptAlias / <span class="hljs-string">&quot;/var/www/cgi-bin/gnocchi/app&quot;</span><br>&lt;/VirtualHost&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="创建文件夹路径下app文件"><a href="#创建文件夹路径下app文件" class="headerlink" title="创建文件夹路径下app文件"></a>创建文件夹路径下app文件</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">mkdir <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/cgi-bin/g</span>nocchi/<br>vim <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/cgi-bin/g</span>nocchi/app<br></code></pre></td></tr></table></figure>
+<p>app文件如下：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#!/usr/bin/python</span><br><span class="hljs-comment"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span><br><span class="hljs-comment"># you may not use this file except in compliance with the License.</span><br><span class="hljs-comment"># You may obtain a copy of the License at</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment">#    http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Unless required by applicable law or agreed to in writing, software</span><br><span class="hljs-comment"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="hljs-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or</span><br><span class="hljs-comment"># implied.</span><br><span class="hljs-comment"># See the License for the specific language governing permissions and</span><br><span class="hljs-comment"># limitations under the License.</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    import sys<br>    from gnocchi.cli import api<br>    sys.<span class="hljs-keyword">exit</span>(api.api())<br><span class="hljs-keyword">else</span>:<br>    from gnocchi.cli import api<br>    from gnocchi.rest import app<br>    application = app.load_app(api.prepare_service())<br></code></pre></td></tr></table></figure>
+
+<h4 id="文件夹修改权限"><a href="#文件夹修改权限" class="headerlink" title="文件夹修改权限"></a>文件夹修改权限</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">chown</span> -R gnocchi.gnocchi /var/www/cgi-bin/gnocchi</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">chmod</span> +777 /var/www/cgi-bin/gnocchi</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="重启httpd服务"><a href="#重启httpd服务" class="headerlink" title="重启httpd服务"></a>重启httpd服务</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># systemctl restart httpd</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="为Gnocchi的索引器创建数据库"><a href="#为Gnocchi的索引器创建数据库" class="headerlink" title="为Gnocchi的索引器创建数据库"></a>为Gnocchi的索引器创建数据库</h4><p>使用数据库访问客户端以root用户身份连接到数据库服务器</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql">$ mysql <span class="hljs-operator">-</span>u root <span class="hljs-operator">-</span>p<br><span class="hljs-keyword">CREATE</span> DATABASE gnocchi;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> gnocchi.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;gnocchi&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> gnocchi.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;gnocchi&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>编辑&#x2F;etc&#x2F;gnocchi&#x2F;gnocchi.conf文件并添加Keystone选项</p>
+<ul>
+<li><p>在[api]中，配置gnocchi以使用keystone：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[api]</span><br><span class="hljs-attr">auth_mode</span> = keystone<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在[keystone_authtoken]部分中，配置keystone身份验证：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[keystone_authtoken]</span><br>...<br>auth_type = password<br>auth_url = http:<span class="hljs-comment">//controller:5000/v3</span><br>project_domain_name = Default<br>user_domain_name = Default<br>project_name = service<br>username = gnocchi<br>password = <span class="hljs-number">123456</span><br><span class="hljs-keyword">interface</span> = <span class="hljs-symbol">internalURL</span><br><span class="hljs-symbol">region_name</span> = <span class="hljs-symbol">RegionOne</span><br>[<span class="hljs-symbol">indexer</span>]<br><span class="hljs-symbol">url</span> = <span class="hljs-symbol">mysql</span>+<span class="hljs-symbol">pymysql</span>://<span class="hljs-symbol">gnocchi</span>:<span class="hljs-symbol">GNOCCHI_DBPASS</span>@<span class="hljs-symbol">controller</span>/<span class="hljs-symbol">gnocchi</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在[storage]部分中，配置位置以存储度量标准数据。在这种情况下，我们将它存储到本地文件系统。有关更耐用和高性能驱动程序的列表，<br>请参阅Gnocchi文档：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[storage]</span><br><span class="hljs-comment"># coordination_url is not required but specifying one will improve</span><br><span class="hljs-comment"># performance with better workload division across workers.</span><br><span class="hljs-attr">coordination_url</span> = redis://controller:<span class="hljs-number">6379</span><br><span class="hljs-attr">file_basepath</span> = /var/lib/gnocchi<br><span class="hljs-attr">driver</span> = file<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="初始化Gnocchi："><a href="#初始化Gnocchi：" class="headerlink" title="初始化Gnocchi："></a>初始化Gnocchi：</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gnocchi-upgrade</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="完成Gnocchi安装"><a href="#完成Gnocchi安装" class="headerlink" title="完成Gnocchi安装"></a>完成Gnocchi安装</h4><p>启动Gnocchi服务并将其配置为在系统引导时启动</p>
+<figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs thrift"># systemctl enable openstack-gnocchi-api.<span class="hljs-keyword">service</span> openstack-gnocchi-metricd.<span class="hljs-keyword">service</span><br># systemctl start openstack-gnocchi-api.<span class="hljs-keyword">service</span>  openstack-gnocchi-metricd.<span class="hljs-keyword">service</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="安装Ceilometer包"><a href="#安装Ceilometer包" class="headerlink" title="安装Ceilometer包"></a>安装Ceilometer包</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install openstack-ceilometer-notification openstack-ceilometer-central</span><br></code></pre></td></tr></table></figure>
+
+<p>编辑&#x2F;etc&#x2F;ceilometer&#x2F;pipeline.yaml文件并完成以下部分，配置Gnocchi连接：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">publishers</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-comment"># set address of Gnocchi</span><br>    <span class="hljs-comment"># + filter out Gnocchi-related activity meters (Swift driver)</span><br>    <span class="hljs-comment"># + set default archive policy</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">gnocchi://?filter_project=service&amp;archive_policy=low</span><br></code></pre></td></tr></table></figure>
+
+<p>编辑&#x2F;etc&#x2F;ceilometer&#x2F;ceilometer.conf文件并完成以下操作</p>
+<ul>
+<li><p>在该[DEFAULT]部分中，配置RabbitMQ消息队列访问：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[DEFAULT]</span><br>...<br>transport_url  =  rabbit:<span class="hljs-comment">//openstack:123456@controller</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在该[service_credentials]部分中，配置服务凭据：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs makefile">[service_credentials]<br>...<br>auth_type = password<br>auth_url = http://controller:5000/v3<br>project_domain_id = default<br>user_domain_id = default<br>project_name = service<br>username = ceilometer<br>password = 123456<br>interface = internalURL<br>region_name = RegionOne<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>在Gnocchi创建Ceilometer资源。Gnocchi应该在这个阶段运行：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># ceilometer-upgrade</span><br></code></pre></td></tr></table></figure>
+
+<p>完成安装<br>启动Ceilometer服务并将其配置为在系统引导时启动：</p>
+<figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs thrift"># systemctl enable openstack-ceilometer-notification.<span class="hljs-keyword">service</span> \<br>  openstack-ceilometer-central.<span class="hljs-keyword">service</span><br># systemctl start openstack-ceilometer-notification.<span class="hljs-keyword">service</span> \<br>  openstack-ceilometer-central.<span class="hljs-keyword">service</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="glance-neutron服务配置"><a href="#glance-neutron服务配置" class="headerlink" title="glance neutron服务配置"></a>glance neutron服务配置</h3><p>Image</p>
+<p>编辑&#x2F;etc&#x2F;glance&#x2F;glance-api.conf文件并完成以下操作：</p>
+<ul>
+<li>在[DEFAULT]，[oslo_messaging_notifications]部分中，配置通知和RabbitMQ消息代理访问：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">transport_url</span> = rabbit://openstack:<span class="hljs-number">123456</span>@controller<br><span class="hljs-section">[oslo_messaging_notifications]</span><br><span class="hljs-attr">driver</span> = messagingv2<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>编辑&#x2F;etc&#x2F;glance&#x2F;glance-registry.conf文件并完成以下操作：</p>
+<ul>
+<li>在[DEFAULT]，[oslo_messaging_notifications]部分中，配置通知和RabbitMQ消息代理访问：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">transport_url</span> = rabbit://openstack:<span class="hljs-number">123456</span>@controller<br><span class="hljs-section">[oslo_messaging_notifications]</span><br><span class="hljs-attr">driver</span> = messagingv2<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>完成安装<br>重新启动Image服务：</p>
+<figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs thrift"># systemctl restart openstack-glance-api.<span class="hljs-keyword">service</span> openstack-glance-registry.<span class="hljs-keyword">service</span><br></code></pre></td></tr></table></figure>
+
+<p>Neutron</p>
+<p>配置网络服务以使用Ceilometer</p>
+<p>编辑&#x2F;etc&#x2F;neutron&#x2F;neutron.conf并完成以下操作：<br>在这些[oslo_messaging_notifications]部分中，启用通知：<br>[oslo_messaging_notifications]<br>…<br>driver  &#x3D;  messagingv2<br>完成安装</p>
+<p>重启网络服务：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># systemctl <span class="hljs-keyword">restart</span> neutron-<span class="hljs-keyword">server</span>.service<br></code></pre></td></tr></table></figure>
+<p>配置环境变量及gnocchi文件夹权限<br>更改目录权限，否则gnocchi存储文件数据时报错，没有权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">chmod</span> +777 /var/lib/gnocchi</span><br></code></pre></td></tr></table></figure>
+
+<p>&#x2F;root&#x2F;admin-openrc添加gnocchi相关环境变量</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs clean"># <span class="hljs-keyword">export</span> OS_AUTH_TYPE=password<br></code></pre></td></tr></table></figure>
+
+<h2 id="监控项列表"><a href="#监控项列表" class="headerlink" title="监控项列表"></a>监控项列表</h2><p>注意：使用ceilometer监控虚拟机的memory.usage，要求libvirt版本1.1.1+，qemu版本1.5+。并且需要镜像支持balloon，即镜像中安装有balloon的driver。（一般linux镜像都默认包含，但是windows镜像需要另行安装）<br>虚拟机的Cpu：使用时间（cpu）,使用率（cpu_util），分配vcpu个数（vcpus）<br>虚拟机的硬盘：分配总大小（disk.root.size），占用宿主机大小（disk.usage）<br>虚拟机的内存：总大小（memory），使用大小（memory.usage）<br>虚拟机的网络：网络流量（bandwidth），网络下ip个数（ip.floating）<br>虚拟机的镜像：镜像大小（image.download）<br>节点的cpu、硬盘、内存等使用信息可通过linux常用命令监视</p>
+<p><strong>nova实例监控项</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Unit</th>
+<th>Resource</th>
+<th>Origin</th>
+<th>Support Note</th>
+<th>翻译</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>memory</td>
+<td>Gauge</td>
+<td>MB</td>
+<td>instance ID</td>
+<td>Notification</td>
+<td>Libvirt, Hyper-V</td>
+<td>Volume of RAM allocated to the instance</td>
+</tr>
+<tr>
+<td>memory.usage</td>
+<td>Gauge</td>
+<td>MB</td>
+<td>instance ID Pollster</td>
+<td>Libvirt, Hyper-V, vSphere, XenAPI</td>
+<td>Volume of RAM used by the instance</td>
+<td>from the amount of its allocated memory</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>参考：<a target="_blank" rel="noopener" href="https://docs.openstack.org/ceilometer/latest/admin/telemetry-measurements.html">https://docs.openstack.org/ceilometer/latest/admin/telemetry-measurements.html</a></p>
+<h2 id="详细监控方法介绍"><a href="#详细监控方法介绍" class="headerlink" title="详细监控方法介绍"></a>详细监控方法介绍</h2><p><strong>采集信息查询方法</strong></p>
+<p>此方案中采集信息以gnocchi+文件方式存储。获取采集信息有两种方式，分别为 gnocchi-api和gnocchi 命令。以下采用gnocchi命令做详细介绍：<br>注：数据存储分级：(资源项)resource-&gt;(资源指标条目)metric-&gt;(实际数据)measure</p>
+<p><strong>获取权限</strong></p>
+<p><code># . admin-openrc</code></p>
+<p><strong>获取监控资源列表</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># gnocchi resource list</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>获取实例监控资源对象信息列表</strong><br>获取某一instance下所有监控条目</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># gnocchi resource show 8bb00e90-7e3f-5ef6-bee5-00e7c6bbc5fc</span><br>+-----------------------+-------------------------------------------------------------------+<br>|<span class="hljs-string"> Field                 </span>|<span class="hljs-string"> Value                                                             </span>|<br>+-----------------------+-------------------------------------------------------------------+<br>|<span class="hljs-string"> created_by_project_id </span>|<span class="hljs-string"> e06fb4ce67a24aa687dffb9d8dcc6b1e                                  </span>|<br>|<span class="hljs-string"> created_by_user_id    </span>|<span class="hljs-string"> 4895e340408e42c383ea8d82e459b182                                  </span>|<br>|<span class="hljs-string"> creator               </span>|<span class="hljs-string"> 4895e340408e42c383ea8d82e459b182:e06fb4ce67a24aa687dffb9d8dcc6b1e </span>|<br>|<span class="hljs-string"> ended_at              </span>|<span class="hljs-string"> None                                                              </span>|<br>|<span class="hljs-string"> id                    </span>|<span class="hljs-string"> 8bb00e90-7e3f-5ef6-bee5-00e7c6bbc5fc                              </span>|<br>|<span class="hljs-string"> metrics               </span>|<span class="hljs-string"> disk.device.allocation: 427a316e-1ef9-4054-8253-604b80e8f003      </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.capacity: 6915cd9b-1346-46db-8e86-438fd1884b49        </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.latency: fcfbc2ae-eddf-4ff9-bda9-33b9a2ba9c3d         </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.read.bytes: 6df3416c-ad02-401e-84e4-5ac0b75febf2      </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.read.latency: 4014d3c6-51ea-4e24-b8e6-649ed6ee896d    </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.usage: 7cd08e21-a0e1-4fce-8dc8-0e8b96d711d4           </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.write.bytes: b29abf7c-a9c4-4afc-89a5-ef766739028b     </span>|<br>|<span class="hljs-string">                       </span>|<span class="hljs-string"> disk.device.write.latency: f82d69ec-98d6-45e8-bc13-cd040f8cc2ef   </span>|<br>|<span class="hljs-string"> original_resource_id  </span>|<span class="hljs-string"> 86d618b5-aadc-4346-b620-7f44fc35c7ad-vda                          </span>|<br>|<span class="hljs-string"> project_id            </span>|<span class="hljs-string"> 40026f6973464ee9a19ad04f6221e213                                  </span>|<br>|<span class="hljs-string"> revision_end          </span>|<span class="hljs-string"> None                                                              </span>|<br>|<span class="hljs-string"> revision_start        </span>|<span class="hljs-string"> 2019-05-07T05:08:10.450142+00:00                                  </span>|<br>|<span class="hljs-string"> started_at            </span>|<span class="hljs-string"> 2019-05-07T05:08:10.450123+00:00                                  </span>|<br>|<span class="hljs-string"> type                  </span>|<span class="hljs-string"> instance_disk                                                     </span>|<br>|<span class="hljs-string"> user_id               </span>|<span class="hljs-string"> 5a4da861d8e84cbdabd98b9804bc1547                                  </span>|<br>+-----------------------+-------------------------------------------------------------------+<br></code></pre></td></tr></table></figure>
+<p><strong>获取实例监控条目详细信息</strong></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs subunit"># gnocchi measures show 897356e6-d0bb<span class="hljs-string">-43</span>cd<span class="hljs-string">-9</span>cbd<span class="hljs-string">-43</span>ab2808384d<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Openstack Queens 环境搭建（十）Ceilometer + Gnocchi</div>
+      <div>http://maitianxin.github.io/2019/08/02/openstack/queens/openstack_queens_install_10/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年8月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/08/06/other/monitor/" title="collectd + influxDB + Grafana 搭建监控平台">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">collectd + influxDB + Grafana 搭建监控平台</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/08/01/openstack/queens/openstack_queens_install_9/" title="Openstack Queens 环境搭建（九）Cinder服务">
+                        <span class="hidden-mobile">Openstack Queens 环境搭建（九）Cinder服务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

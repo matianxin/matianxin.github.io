@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="KVM">
+  
+    <meta name="description" content="KVM 介绍：使用 libvirt 做 QEMU&#x2F;KVM 内部快照">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QEMU &#x2F; KVM 快照相关命令介绍">
+<meta property="og:url" content="http://maitianxin.github.io/2021/01/19/linux/virsh_snapshot_cmd/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="KVM 介绍：使用 libvirt 做 QEMU&#x2F;KVM 内部快照">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-19T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T07:34:58.863Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="KVM">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>QEMU / KVM 快照相关命令介绍 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="QEMU / KVM 快照相关命令介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-01-19 10:00" pubdate>
+          2021年1月19日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">QEMU / KVM 快照相关命令介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>• INSTANCE_NAME： 实例instance名称<br>• SNAPSHOT_NAME： 快照名称<br>• SNAPSHOT_DESCRIPTION： 快照描述</p>
+<p><strong>1.创建快照命令：</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span> –<span class="hljs-keyword">domain</span> INSTANCE_NAME –<span class="hljs-type">name</span> SNAPSHOT_NAME –description SNAPSHOT_DESCRIPTION<br></code></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@compute144 ~]# virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span> <span class="hljs-comment">--domain instance-00001286 --name scene-init --description scene-init</span><br><span class="hljs-keyword">Domain</span> <span class="hljs-keyword">snapshot</span> scene-init created<br></code></pre></td></tr></table></figure>
+
+<p><strong>2.删除快照命令：</strong></p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">delete</span> INSTANCE_NAME SNAPSHOT_NAME<br></code></pre></td></tr></table></figure>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mel">[root@compute144 ~]# virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">delete</span> <span class="hljs-keyword">instance</span><span class="hljs-number">-00001286</span> scene-init<br>Domain <span class="hljs-keyword">snapshot</span> scene-init deleted<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.恢复快照命令：</strong></p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq">virsh snapshot-<span class="hljs-built_in">revert</span> INSTANCE_NAME SNAPSHOT_NAME<br></code></pre></td></tr></table></figure>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">[root@compute144 ~]# virsh <span class="hljs-keyword">snapshot</span>-revert <span class="hljs-keyword">instance</span><span class="hljs-number">-00001286</span> scene-init<br></code></pre></td></tr></table></figure>
+
+<p><strong>4.查看快照disk信息</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">qemu-img <span class="hljs-built_in">info</span> disk<br></code></pre></td></tr></table></figure>
+
+<p>根据instance_name得到实例的uuid</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@compute144</span> <span class="hljs-string">~</span>]<span class="hljs-comment"># cd /var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7</span><br>[<span class="hljs-string">root@compute144</span> <span class="hljs-string">27a7b4d6-9036-4625-99f2-dbe6141d7eb7</span>]<span class="hljs-comment"># qemu-img info disk</span><br><span class="hljs-attr">image:</span> <span class="hljs-string">disk</span><br><span class="hljs-attr">file format:</span> <span class="hljs-string">qcow2</span><br><span class="hljs-attr">virtual size:</span> <span class="hljs-string">10G</span> <span class="hljs-string">(10737418240</span> <span class="hljs-string">bytes)</span><br><span class="hljs-attr">disk size:</span> <span class="hljs-string">445M</span><br><span class="hljs-attr">cluster_size:</span> <span class="hljs-number">65536</span><br><span class="hljs-attr">backing file:</span> <span class="hljs-string">/var/lib/nova/instances/_base</span><br><span class="hljs-string">ID</span>        <span class="hljs-string">TAG</span>                 <span class="hljs-string">VM</span> <span class="hljs-string">SIZE</span>                <span class="hljs-string">DATE</span>       <span class="hljs-string">VM</span> <span class="hljs-string">CLOCK</span><br><span class="hljs-number">1</span>         <span class="hljs-string">scene-init</span>             <span class="hljs-string">253M</span> <span class="hljs-number">2021-01-18 11:48:18   </span><span class="hljs-number">02</span><span class="hljs-string">:25:45.194</span><br><span class="hljs-attr">Format specific information:</span><br>    <span class="hljs-attr">compat:</span> <span class="hljs-number">1.1</span><br>    <span class="hljs-attr">lazy refcounts:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">refcount bits:</span> <span class="hljs-number">16</span><br>    <span class="hljs-attr">corrupt:</span> <span class="hljs-string">fals</span><br><br><span class="hljs-string">*</span> <span class="hljs-string">此功能必须为虚拟机关机状态下生效，否则：</span><br><span class="hljs-attr">qemu-img:</span> <span class="hljs-string">Could</span> <span class="hljs-string">not</span> <span class="hljs-string">open</span> <span class="hljs-attr">&#x27;disk&#x27;:</span> <span class="hljs-string">Failed</span> <span class="hljs-string">to</span> <span class="hljs-string">get</span> <span class="hljs-string">shared</span> <span class="hljs-string">&quot;write&quot;</span> <span class="hljs-string">lock</span><br><span class="hljs-string">Is</span> <span class="hljs-string">another</span> <span class="hljs-string">process</span> <span class="hljs-string">using</span> <span class="hljs-string">the</span> <span class="hljs-string">image</span> [<span class="hljs-string">disk</span>]<span class="hljs-string">?</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>5.查看快照列表</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">virsh snapshot-list INSTANCE_NAME</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">[root@compute144 ~]# virsh snapshot-list instance-00001286<br><span class="hljs-section"> Name                 Creation Time             State</span><br><span class="hljs-section">------------------------------------------------------------</span><br><span class="hljs-code"> scene-init           2021-01-19 08:51:22 +0800 shutoff</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>6.查看快照信息</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">info</span> INSTANCE_NAME –<span class="hljs-keyword">current</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@compute144</span> <span class="hljs-string">~</span>]<span class="hljs-comment"># virsh snapshot-info instance-00001286 --current</span><br><span class="hljs-attr">Name:</span>           <span class="hljs-string">scene-init</span><br><span class="hljs-attr">Domain:</span>         <span class="hljs-string">instance-00001286</span><br><span class="hljs-attr">Current:</span>        <span class="hljs-literal">yes</span><br><span class="hljs-attr">State:</span>          <span class="hljs-string">shutoff</span><br><span class="hljs-attr">Location:</span>       <span class="hljs-string">internal</span><br><span class="hljs-attr">Parent:</span>         <span class="hljs-bullet">-</span><br><span class="hljs-attr">Children:</span>       <span class="hljs-number">0</span><br><span class="hljs-attr">Descendants:</span>    <span class="hljs-number">0</span><br><span class="hljs-attr">Metadata:</span>       <span class="hljs-literal">yes</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>7.查看当前快照所有信息</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">current</span> INSTANCE_NAME<br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><code class="hljs xml">[root@compute144 ~]# virsh snapshot-current instance-00001286<br><span class="hljs-tag">&lt;<span class="hljs-name">domainsnapshot</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>scene-init<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>scene-init<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">state</span>&gt;</span>shutoff<span class="hljs-tag">&lt;/<span class="hljs-name">state</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">creationTime</span>&gt;</span>1611017482<span class="hljs-tag">&lt;/<span class="hljs-name">creationTime</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">memory</span> <span class="hljs-attr">snapshot</span>=<span class="hljs-string">&#x27;no&#x27;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">disks</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">disk</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;vda&#x27;</span> <span class="hljs-attr">snapshot</span>=<span class="hljs-string">&#x27;internal&#x27;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">disk</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;hda&#x27;</span> <span class="hljs-attr">snapshot</span>=<span class="hljs-string">&#x27;no&#x27;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">disks</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">domain</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;kvm&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>instance-00001286<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">uuid</span>&gt;</span>27a7b4d6-9036-4625-99f2-dbe6141d7eb7<span class="hljs-tag">&lt;/<span class="hljs-name">uuid</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">metadata</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">nova:instance</span> <span class="hljs-attr">xmlns:nova</span>=<span class="hljs-string">&quot;http://openstack.org/xmlns/libvirt/nova/1.0&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">nova:package</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;17.0.10-1.el7&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">nova:name</span>&gt;</span>ps_T15Z2PS-SCENE220@-1<span class="hljs-tag">&lt;/<span class="hljs-name">nova:name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">nova:creationTime</span>&gt;</span>2021-01-18 06:41:30<span class="hljs-tag">&lt;/<span class="hljs-name">nova:creationTime</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">nova:flavor</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;<span class="hljs-symbol">&amp;#x4E3B;</span><span class="hljs-symbol">&amp;#x7AD9;</span><span class="hljs-symbol">&amp;#x7EB5;</span><span class="hljs-symbol">&amp;#x5411;</span>&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:memory</span>&gt;</span>1024<span class="hljs-tag">&lt;/<span class="hljs-name">nova:memory</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:disk</span>&gt;</span>10<span class="hljs-tag">&lt;/<span class="hljs-name">nova:disk</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:swap</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">nova:swap</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:ephemeral</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">nova:ephemeral</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:vcpus</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">nova:vcpus</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">nova:flavor</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">nova:owner</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:user</span> <span class="hljs-attr">uuid</span>=<span class="hljs-string">&quot;d5853486b6904865abaf98e1eedfd926&quot;</span>&gt;</span>admin<span class="hljs-tag">&lt;/<span class="hljs-name">nova:user</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">nova:project</span> <span class="hljs-attr">uuid</span>=<span class="hljs-string">&quot;a385d3107887463abebad53b48dda754&quot;</span>&gt;</span>admin<span class="hljs-tag">&lt;/<span class="hljs-name">nova:project</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">nova:owner</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">nova:root</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;image&quot;</span> <span class="hljs-attr">uuid</span>=<span class="hljs-string">&quot;ebe94aab-979a-4311-bf59-9be20a3f44e7&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">nova:instance</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">metadata</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">memory</span> <span class="hljs-attr">unit</span>=<span class="hljs-string">&#x27;KiB&#x27;</span>&gt;</span>1048576<span class="hljs-tag">&lt;/<span class="hljs-name">memory</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">currentMemory</span> <span class="hljs-attr">unit</span>=<span class="hljs-string">&#x27;KiB&#x27;</span>&gt;</span>1048576<span class="hljs-tag">&lt;/<span class="hljs-name">currentMemory</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">vcpu</span> <span class="hljs-attr">placement</span>=<span class="hljs-string">&#x27;static&#x27;</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">vcpu</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cputune</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">shares</span>&gt;</span>1024<span class="hljs-tag">&lt;/<span class="hljs-name">shares</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cputune</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sysinfo</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;smbios&#x27;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">system</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;manufacturer&#x27;</span>&gt;</span>RDO<span class="hljs-tag">&lt;/<span class="hljs-name">entry</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;product&#x27;</span>&gt;</span>OpenStack Compute<span class="hljs-tag">&lt;/<span class="hljs-name">entry</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;version&#x27;</span>&gt;</span>17.0.10-1.el7<span class="hljs-tag">&lt;/<span class="hljs-name">entry</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;serial&#x27;</span>&gt;</span>12c77e03-1355-43af-a482-61ecf2aad317<span class="hljs-tag">&lt;/<span class="hljs-name">entry</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;uuid&#x27;</span>&gt;</span>27a7b4d6-9036-4625-99f2-dbe6141d7eb7<span class="hljs-tag">&lt;/<span class="hljs-name">entry</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;family&#x27;</span>&gt;</span>Virtual Machine<span class="hljs-tag">&lt;/<span class="hljs-name">entry</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">system</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">sysinfo</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">os</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">type</span> <span class="hljs-attr">arch</span>=<span class="hljs-string">&#x27;x86_64&#x27;</span> <span class="hljs-attr">machine</span>=<span class="hljs-string">&#x27;pc-i440fx-rhel7.6.0&#x27;</span>&gt;</span>hvm<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">boot</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;hd&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">smbios</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&#x27;sysinfo&#x27;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">os</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">features</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">acpi</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">apic</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">features</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cpu</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&#x27;host-model&#x27;</span> <span class="hljs-attr">check</span>=<span class="hljs-string">&#x27;partial&#x27;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#x27;allow&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">topology</span> <span class="hljs-attr">sockets</span>=<span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-attr">cores</span>=<span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-attr">threads</span>=<span class="hljs-string">&#x27;1&#x27;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cpu</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">clock</span> <span class="hljs-attr">offset</span>=<span class="hljs-string">&#x27;utc&#x27;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">timer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;pit&#x27;</span> <span class="hljs-attr">tickpolicy</span>=<span class="hljs-string">&#x27;delay&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">timer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;rtc&#x27;</span> <span class="hljs-attr">tickpolicy</span>=<span class="hljs-string">&#x27;catchup&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">timer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;hpet&#x27;</span> <span class="hljs-attr">present</span>=<span class="hljs-string">&#x27;no&#x27;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">clock</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">on_poweroff</span>&gt;</span>destroy<span class="hljs-tag">&lt;/<span class="hljs-name">on_poweroff</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">on_reboot</span>&gt;</span>restart<span class="hljs-tag">&lt;/<span class="hljs-name">on_reboot</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">on_crash</span>&gt;</span>destroy<span class="hljs-tag">&lt;/<span class="hljs-name">on_crash</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">devices</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">emulator</span>&gt;</span>/usr/libexec/qemu-kvm<span class="hljs-tag">&lt;/<span class="hljs-name">emulator</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">disk</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;file&#x27;</span> <span class="hljs-attr">device</span>=<span class="hljs-string">&#x27;disk&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">driver</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;qemu&#x27;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;qcow2&#x27;</span> <span class="hljs-attr">cache</span>=<span class="hljs-string">&#x27;none&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">file</span>=<span class="hljs-string">&#x27;/var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7/disk&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;vda&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;virtio&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x07&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">disk</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">disk</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;file&#x27;</span> <span class="hljs-attr">device</span>=<span class="hljs-string">&#x27;cdrom&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">driver</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;qemu&#x27;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;raw&#x27;</span> <span class="hljs-attr">cache</span>=<span class="hljs-string">&#x27;none&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">file</span>=<span class="hljs-string">&#x27;/var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7/disk.config&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;hda&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;ide&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">readonly</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;drive&#x27;</span> <span class="hljs-attr">controller</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">unit</span>=<span class="hljs-string">&#x27;0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">disk</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">controller</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;ide&#x27;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&#x27;0&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x01&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x1&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">controller</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">controller</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;usb&#x27;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">model</span>=<span class="hljs-string">&#x27;piix3-uhci&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x01&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x2&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">controller</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">controller</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">model</span>=<span class="hljs-string">&#x27;pci-root&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">interface</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;bridge&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mac</span> <span class="hljs-attr">address</span>=<span class="hljs-string">&#x27;fa:16:3e:70:8f:e9&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">bridge</span>=<span class="hljs-string">&#x27;qbr9a416b99-f4&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;tap9a416b99-f4&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;virtio&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mtu</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&#x27;1450&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x03&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">interface</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">interface</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;bridge&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mac</span> <span class="hljs-attr">address</span>=<span class="hljs-string">&#x27;fa:16:3e:cb:8b:c6&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">bridge</span>=<span class="hljs-string">&#x27;qbr4e232a0d-3e&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;tap4e232a0d-3e&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;virtio&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mtu</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&#x27;1500&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x04&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">interface</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">interface</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;bridge&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mac</span> <span class="hljs-attr">address</span>=<span class="hljs-string">&#x27;fa:16:3e:dd:4e:8d&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">bridge</span>=<span class="hljs-string">&#x27;qbr3a023c95-a5&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;tap3a023c95-a5&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;virtio&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mtu</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&#x27;1500&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x05&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">interface</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">interface</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;bridge&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mac</span> <span class="hljs-attr">address</span>=<span class="hljs-string">&#x27;fa:16:3e:66:a0:b7&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">bridge</span>=<span class="hljs-string">&#x27;qbr0c33b092-d0&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">dev</span>=<span class="hljs-string">&#x27;tap0c33b092-d0&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;virtio&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mtu</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&#x27;1450&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x06&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">interface</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">serial</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pty&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">log</span> <span class="hljs-attr">file</span>=<span class="hljs-string">&#x27;/var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7/console.log&#x27;</span> <span class="hljs-attr">append</span>=<span class="hljs-string">&#x27;off&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;isa-serial&#x27;</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&#x27;0&#x27;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;isa-serial&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">serial</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">console</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pty&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">log</span> <span class="hljs-attr">file</span>=<span class="hljs-string">&#x27;/var/lib/nova/instances/27a7b4d6-9036-4625-99f2-dbe6141d7eb7/console.log&#x27;</span> <span class="hljs-attr">append</span>=<span class="hljs-string">&#x27;off&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;serial&#x27;</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&#x27;0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">console</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;tablet&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;usb&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;usb&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&#x27;1&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">input</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;mouse&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;ps2&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;keyboard&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;ps2&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">graphics</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;vnc&#x27;</span> <span class="hljs-attr">port</span>=<span class="hljs-string">&#x27;-1&#x27;</span> <span class="hljs-attr">autoport</span>=<span class="hljs-string">&#x27;yes&#x27;</span> <span class="hljs-attr">listen</span>=<span class="hljs-string">&#x27;0.0.0.0&#x27;</span> <span class="hljs-attr">keymap</span>=<span class="hljs-string">&#x27;en-us&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">listen</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;address&#x27;</span> <span class="hljs-attr">address</span>=<span class="hljs-string">&#x27;0.0.0.0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">graphics</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">video</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">model</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;cirrus&#x27;</span> <span class="hljs-attr">vram</span>=<span class="hljs-string">&#x27;16384&#x27;</span> <span class="hljs-attr">heads</span>=<span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-attr">primary</span>=<span class="hljs-string">&#x27;yes&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x02&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">memballoon</span> <span class="hljs-attr">model</span>=<span class="hljs-string">&#x27;virtio&#x27;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">stats</span> <span class="hljs-attr">period</span>=<span class="hljs-string">&#x27;10&#x27;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">address</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;pci&#x27;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&#x27;0x0000&#x27;</span> <span class="hljs-attr">bus</span>=<span class="hljs-string">&#x27;0x00&#x27;</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&#x27;0x08&#x27;</span> <span class="hljs-attr">function</span>=<span class="hljs-string">&#x27;0x0&#x27;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">memballoon</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">devices</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">domain</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">domainsnapshot</span>&gt;</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/KVM/" class="category-chain-item">KVM</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/KVM/" class="print-no-link">#KVM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>QEMU / KVM 快照相关命令介绍</div>
+      <div>http://maitianxin.github.io/2021/01/19/linux/virsh_snapshot_cmd/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年1月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/02/18/other/zerorpc/" title="zerorpc优化">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">zerorpc优化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/18/linux/qemu_snapshot/" title="QEMU / KVM 快照介绍">
+                        <span class="hidden-mobile">QEMU / KVM 快照介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

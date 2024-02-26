@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Openstack">
+  
+    <meta name="description" content="Openstack可供参考的常用命令列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack命令行">
+<meta property="og:url" content="http://maitianxin.github.io/2019/07/11/openstack/openstack_terminal/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="Openstack可供参考的常用命令列表">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-11T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T01:45:37.578Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Openstack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Openstack命令行 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Openstack命令行"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-07-11 10:00" pubdate>
+          2019年7月11日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Openstack命令行</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>Keystone</strong><br><strong>列出所有的用户</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">$ openstack user list</span><br><span class="hljs-section">+----------------------------------+-----------+</span><br><span class="hljs-section">| ID                               | Name      |</span><br><span class="hljs-section">+----------------------------------+-----------+</span><br>| 2ac5fe07105a43518ae444a37640222b | demo      |<br>| 5bc73e84451b4e71906232bd3849422d | neutron   |<br>| 84b0b75df69f4413a1380c9efc249b2d | placement |<br>| 87bf7fb4671f4524a6fa64ad75856594 | admin     |<br>| 9aaa5aa26b414d35b37b851ccf749a55 | nova      |<br><span class="hljs-section">| eee2818e703e47c5a434e5926c90e7fb | glance    |</span><br><span class="hljs-section">+----------------------------------+-----------+</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>列出认证服务目录</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack catalog list<br>+-----------+-----------+-----------------------------------------+<br>|<span class="hljs-string"> Name      </span>|<span class="hljs-string"> Type      </span>|<span class="hljs-string"> Endpoints                               </span>|<br>+-----------+-----------+-----------------------------------------+<br>|<span class="hljs-string"> placement </span>|<span class="hljs-string"> placement </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:8778      </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:8778        </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:8778         </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> keystone  </span>|<span class="hljs-string"> identity  </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:5000/v3/  </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:5000/v3/    </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:5000/v3/     </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> neutron   </span>|<span class="hljs-string"> network   </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:9696        </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:9696         </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:9696      </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> glance    </span>|<span class="hljs-string"> image     </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:9292         </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:9292      </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:9292        </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>|<span class="hljs-string"> nova      </span>|<span class="hljs-string"> compute   </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   internal: http://controller:8774/v2.1 </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   admin: http://controller:8774/v2.1    </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string"> RegionOne                               </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">   public: http://controller:8774/v2.1   </span>|<br>|<span class="hljs-string">           </span>|<span class="hljs-string">           </span>|<span class="hljs-string">                                         </span>|<br>+-----------+-----------+-----------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p><strong>Glance</strong><br><strong>列出您可以访问的镜像</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack image list<br>+--------------------------------------+---------------------+--------+<br>|<span class="hljs-string"> ID                                   </span>|<span class="hljs-string"> Name                </span>|<span class="hljs-string"> Status </span>|<br>+--------------------------------------+---------------------+--------+<br>|<span class="hljs-string"> 70d455f6-1a00-48f5-9b21-5f8fca019014 </span>|<span class="hljs-string"> centos7-mini        </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> 1a7e4d60-3c26-41bb-be0c-34c467b2d3c3 </span>|<span class="hljs-string"> pstunnel            </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> b2464312-8acb-4ff9-ba20-75560e5577f4 </span>|<span class="hljs-string"> pstunnelA           </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> 705c7007-8a28-49e8-8df7-61bbfbf41bbd </span>|<span class="hljs-string"> pstunnelB           </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> ad02946e-9c1f-42f0-9a9e-235ae7012bc3 </span>|<span class="hljs-string"> router              </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> ae8c618d-3c6e-449c-9d2a-3f08bf84cc5e </span>|<span class="hljs-string"> router22            </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> b54361d4-bc24-46cb-94b2-b1f672b01c2a </span>|<span class="hljs-string"> sw-f-in-centos7_ext </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> 3a1adf75-c82e-4540-91e0-2167cb921612 </span>|<span class="hljs-string"> sw-f-in-centos7_int </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> ebfc7c40-4ac3-42ab-96ae-65e3c17af194 </span>|<span class="hljs-string"> sw-z-in-centos7_ext </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> 7355a66c-3f05-4ed5-9088-540faf71ebf8 </span>|<span class="hljs-string"> sw-z-in-centos7_int </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> 3b19c8ad-6012-406a-9e7f-e66416deeb1e </span>|<span class="hljs-string"> testforimage        </span>|<span class="hljs-string"> active </span>|<br>|<span class="hljs-string"> 436c5ab5-14e7-4eb8-95b9-e47d85e60e83 </span>|<span class="hljs-string"> win7                </span>|<span class="hljs-string"> active </span>|<br>+--------------------------------------+---------------------+--------+<br></code></pre></td></tr></table></figure>
+
+<p><strong>查看一个指定的镜像</strong><br><code>$ openstack image show [IMAGE-ID/IMAGE-Name]</code></p>
+<figure class="highlight plaintext"><figcaption><span>openstack image show 70d455f6-1a00-48f5-9b21-5f8fca019014</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs $">+------------------+------------------------------------------------------+<br>| Field            | Value                                                |<br>+------------------+------------------------------------------------------+<br>| checksum         | f3ab346b3ca2b88d1347c24adf0b234b                     |<br>| container_format | bare                                                 |<br>| created_at       | 2019-06-26T09:08:51Z                                 |<br>| disk_format      | qcow2                                                |<br>| file             | /v2/images/70d455f6-1a00-48f5-9b21-5f8fca019014/file |<br>| id               | 70d455f6-1a00-48f5-9b21-5f8fca019014                 |<br>| min_disk         | 0                                                    |<br>| min_ram          | 0                                                    |<br>| name             | centos7-mini                                         |<br>| owner            | 2e69bc10ab5f427bbbd6d40148d96309                     |<br>| protected        | False                                                |<br>| schema           | /v2/schemas/image                                    |<br>| size             | 3758882816                                           |<br>| status           | active                                               |<br>| tags             |                                                      |<br>| updated_at       | 2019-06-26T09:09:32Z                                 |<br>| virtual_size     | None                                                 |<br>| visibility       | public                                               |<br>+------------------+------------------------------------------------------+<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>上传QCOW2镜像</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack image create <span class="hljs-string">&quot;centos7-mini2&quot;</span> --file centos7-mini.qcow2 --disk-format qcow2 --container-format bare --public<br><br>+------------------+------------------------------------------------------+<br>|<span class="hljs-string"> Field            </span>|<span class="hljs-string"> Value                                                </span>|<br>+------------------+------------------------------------------------------+<br>|<span class="hljs-string"> checksum         </span>|<span class="hljs-string"> f3ab346b3ca2b88d1347c24adf0b234b                     </span>|<br>|<span class="hljs-string"> container_format </span>|<span class="hljs-string"> bare                                                 </span>|<br>|<span class="hljs-string"> created_at       </span>|<span class="hljs-string"> 2019-07-11T07:56:51Z                                 </span>|<br>|<span class="hljs-string"> disk_format      </span>|<span class="hljs-string"> qcow2                                                </span>|<br>|<span class="hljs-string"> file             </span>|<span class="hljs-string"> /v2/images/4072bdfb-f727-4e3f-a1f5-c3467b12a15e/file </span>|<br>|<span class="hljs-string"> id               </span>|<span class="hljs-string"> 4072bdfb-f727-4e3f-a1f5-c3467b12a15e                 </span>|<br>|<span class="hljs-string"> min_disk         </span>|<span class="hljs-string"> 0                                                    </span>|<br>|<span class="hljs-string"> min_ram          </span>|<span class="hljs-string"> 0                                                    </span>|<br>|<span class="hljs-string"> name             </span>|<span class="hljs-string"> centos7-mini2                                        </span>|<br>|<span class="hljs-string"> owner            </span>|<span class="hljs-string"> 2e69bc10ab5f427bbbd6d40148d96309                     </span>|<br>|<span class="hljs-string"> protected        </span>|<span class="hljs-string"> False                                                </span>|<br>|<span class="hljs-string"> schema           </span>|<span class="hljs-string"> /v2/schemas/image                                    </span>|<br>|<span class="hljs-string"> size             </span>|<span class="hljs-string"> 3758882816                                           </span>|<br>|<span class="hljs-string"> status           </span>|<span class="hljs-string"> active                                               </span>|<br>|<span class="hljs-string"> tags             </span>|<span class="hljs-string">                                                      </span>|<br>|<span class="hljs-string"> updated_at       </span>|<span class="hljs-string"> 2019-07-11T07:57:54Z                                 </span>|<br>|<span class="hljs-string"> virtual_size     </span>|<span class="hljs-string"> None                                                 </span>|<br>|<span class="hljs-string"> visibility       </span>|<span class="hljs-string"> public                                               </span>|<br>+------------------+------------------------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p><strong>删除指定的镜像</strong></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">$ openstack image <span class="hljs-keyword">delete</span> [IMAGE-ID/IMAGE-Name]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">$ openstack image <span class="hljs-keyword">delete</span> <span class="hljs-number">4072b</span>dfb-f727<span class="hljs-number">-4e3</span>f-a1f5-c3467b12a15e<br></code></pre></td></tr></table></figure>
+
+<p><strong>Nova</strong><br><strong>列出实例</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack server list<br>+--------------------------------------+-------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+<br>|<span class="hljs-string"> ID                                   </span>|<span class="hljs-string"> Name                    </span>|<span class="hljs-string"> Status  </span>|<span class="hljs-string"> Networks                                                                                                                                                                         </span>|<span class="hljs-string"> Image               </span>|<span class="hljs-string"> Flavor              </span>|<br>+--------------------------------------+-------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+<br>|<span class="hljs-string"> 2ec1ace1-ef83-4d30-837e-f7f2df344a6c </span>|<span class="hljs-string"> n-UDYIQCS6              </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> network_5261=192.168.1.3                                                                                                                                                         </span>|<span class="hljs-string"> win7                </span>|<span class="hljs-string"> win7                </span>|<br>|<span class="hljs-string"> 88a7d91d-3c29-461e-8d07-a0d272697a61 </span>|<span class="hljs-string"> n-L9QGOHRE              </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> network_12177=192.168.1.19                                                                                                                                                       </span>|<span class="hljs-string"> win7                </span>|<span class="hljs-string"> win7                </span>|<br>|<span class="hljs-string"> 274543b3-7890-4446-a5d0-1c6acfb9e1f4 </span>|<span class="hljs-string"> vm_n-4ejn7bk2c9o@28     </span>|<span class="hljs-string"> ACTIVE  </span>|<span class="hljs-string"> network_10888=192.168.1.18                                                                                                                                                       </span>|<span class="hljs-string"> win7                </span>|<span class="hljs-string"> win7                </span>|<br>|<span class="hljs-string"> c2cb7d6c-4f3e-4f32-bbd5-19639d415481 </span>|<span class="hljs-string"> sw_n-pf6p66vh4f_ext@33  </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> network_10360=192.168.1.3; n-XH29F3CG-net=8.8.8.9; network_21065=192.168.1.6; network_16174=192.168.1.5                                                                          </span>|<span class="hljs-string"> sw-z-in-centos7_ext </span>|<span class="hljs-string"> sw-z-in-centos7_ext </span>|<br>|<span class="hljs-string"> 5e009b71-4a8b-478a-9f17-349153a26ad4 </span>|<span class="hljs-string"> n-UE0N48YS              </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> network_11645=192.168.1.4; network_14835=192.168.1.13; network_20101=192.168.1.9; internal=20.0.0.23, 192.100.200.225; network_18377=192.168.1.3; network_8075=192.168.1.10      </span>|<span class="hljs-string"> pstunnel            </span>|<span class="hljs-string"> pstunnel            </span>|<br>|<span class="hljs-string"> 374aedbe-d7c3-4f89-a66d-020401a257dc </span>|<span class="hljs-string"> n-MF9XYLTQ_int          </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> network_23143=192.168.1.7; network_14693=192.168.1.7; network_13651=192.168.1.11                                                                                                 </span>|<span class="hljs-string"> sw-z-in-centos7_int </span>|<span class="hljs-string"> sw-z-in-centos7_int </span>|<br>|<span class="hljs-string"> acd8efcb-9350-4e19-a105-a1bcfb529697 </span>|<span class="hljs-string"> rt_n-une1ph6cts@20      </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> Rnet_n-une1ph6cts_0=192.168.3.1; Rnet_n-une1ph6cts_1=192.168.2.1                                                                                                                 </span>|<span class="hljs-string"> router              </span>|<span class="hljs-string"> router              </span>|<br>|<span class="hljs-string"> 1efe6a9a-d005-4b32-926f-bb94fb702a05 </span>|<span class="hljs-string"> vm_n-vp0eo8lm0c@20      </span>|<span class="hljs-string"> SHUTOFF </span>|<span class="hljs-string"> network_14083=192.168.1.10                                                                                                                                                       </span>|<span class="hljs-string">                     </span>|<span class="hljs-string">                     </span>|<br>+--------------------------------------+-------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+<br></code></pre></td></tr></table></figure>
+
+<p><strong>显示实例详细信息</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ openstack <span class="hljs-keyword">server</span> <span class="hljs-keyword">show</span> [<span class="hljs-keyword">SERVER</span>-ID/<span class="hljs-keyword">SERVER</span>-<span class="hljs-type">Name</span>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack server show 2ec1ace1-ef83-4d30-837e-f7f2df344a6c<br>+-------------------------------------+----------------------------------------------------------+<br>|<span class="hljs-string"> Field                               </span>|<span class="hljs-string"> Value                                                    </span>|<br>+-------------------------------------+----------------------------------------------------------+<br>|<span class="hljs-string"> OS-DCF:diskConfig                   </span>|<span class="hljs-string"> MANUAL                                                   </span>|<br>|<span class="hljs-string"> OS-EXT-AZ:availability_zone         </span>|<span class="hljs-string"> nova                                                     </span>|<br>|<span class="hljs-string"> OS-EXT-SRV-ATTR:host                </span>|<span class="hljs-string"> compute                                                  </span>|<br>|<span class="hljs-string"> OS-EXT-SRV-ATTR:hypervisor_hostname </span>|<span class="hljs-string"> compute                                                  </span>|<br>|<span class="hljs-string"> OS-EXT-SRV-ATTR:instance_name       </span>|<span class="hljs-string"> instance-00000294                                        </span>|<br>|<span class="hljs-string"> OS-EXT-STS:power_state              </span>|<span class="hljs-string"> Shutdown                                                 </span>|<br>|<span class="hljs-string"> OS-EXT-STS:task_state               </span>|<span class="hljs-string"> None                                                     </span>|<br>|<span class="hljs-string"> OS-EXT-STS:vm_state                 </span>|<span class="hljs-string"> stopped                                                  </span>|<br>|<span class="hljs-string"> OS-SRV-USG:launched_at              </span>|<span class="hljs-string"> 2019-07-11T06:30:19.000000                               </span>|<br>|<span class="hljs-string"> OS-SRV-USG:terminated_at            </span>|<span class="hljs-string"> None                                                     </span>|<br>|<span class="hljs-string"> accessIPv4                          </span>|<span class="hljs-string">                                                          </span>|<br>|<span class="hljs-string"> accessIPv6                          </span>|<span class="hljs-string">                                                          </span>|<br>|<span class="hljs-string"> addresses                           </span>|<span class="hljs-string"> network_5261=192.168.1.3                                 </span>|<br>|<span class="hljs-string"> config_drive                        </span>|<span class="hljs-string">                                                          </span>|<br>|<span class="hljs-string"> created                             </span>|<span class="hljs-string"> 2019-07-11T06:30:12Z                                     </span>|<br>|<span class="hljs-string"> flavor                              </span>|<span class="hljs-string"> win7 (fd8297ef-d7ac-4b4f-8c1e-1c90fcce488c)              </span>|<br>|<span class="hljs-string"> hostId                              </span>|<span class="hljs-string"> 37f71a5ebb11ac3ed0f0496a313bb9246829f1da1839c8fd3dc4f98b </span>|<br>|<span class="hljs-string"> id                                  </span>|<span class="hljs-string"> 2ec1ace1-ef83-4d30-837e-f7f2df344a6c                     </span>|<br>|<span class="hljs-string"> image                               </span>|<span class="hljs-string"> win7 (436c5ab5-14e7-4eb8-95b9-e47d85e60e83)              </span>|<br>|<span class="hljs-string"> key_name                            </span>|<span class="hljs-string"> None                                                     </span>|<br>|<span class="hljs-string"> name                                </span>|<span class="hljs-string"> n-UDYIQCS6                                               </span>|<br>|<span class="hljs-string"> project_id                          </span>|<span class="hljs-string"> 2e69bc10ab5f427bbbd6d40148d96309                         </span>|<br>|<span class="hljs-string"> properties                          </span>|<span class="hljs-string">                                                          </span>|<br>|<span class="hljs-string"> security_groups                     </span>|<span class="hljs-string"> name=&#x27;default&#x27;                                           </span>|<br>|<span class="hljs-string"> status                              </span>|<span class="hljs-string"> SHUTOFF                                                  </span>|<br>|<span class="hljs-string"> updated                             </span>|<span class="hljs-string"> 2019-07-11T06:31:30Z                                     </span>|<br>|<span class="hljs-string"> user_id                             </span>|<span class="hljs-string"> 87bf7fb4671f4524a6fa64ad75856594                         </span>|<br>|<span class="hljs-string"> volumes_attached                    </span>|<span class="hljs-string">                                                          </span>|<br>+-------------------------------------+----------------------------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p><strong>Neutron</strong><br><strong>列出所有网络</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">$ openstack network list<br><br><span class="hljs-code">+--------------------------------------+</span>----------------------<span class="hljs-code">+--------------------------------------+</span><br><span class="hljs-section">| ID                                   | Name                 | Subnets                              |</span><br><span class="hljs-section">+--------------------------------------+----------------------+--------------------------------------+</span><br>| 01e6c390-1d5e-4140-9ea3-98754bd0c58f | network_29287        | 8ed09dee-0e16-4514-8821-9a8e1f77c43a |<br><span class="hljs-section">| 030f303e-e3d3-46e1-a85a-5ea6cea4d3ba | n-69PSABRW-net       | e2ea53d0-1b29-43d3-910b-3296d96d004f |</span><br><span class="hljs-section">+--------------------------------------+----------------------+--------------------------------------+</span><br></code></pre></td></tr></table></figure>
+<p><strong>查看网络</strong></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-variable">$ </span>openstack network show NETWORK-ID<br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack network show 01e6c390-1d5e-4140-9ea3-98754bd0c58f<br>+---------------------------+--------------------------------------+<br>|<span class="hljs-string"> Field                     </span>|<span class="hljs-string"> Value                                </span>|<br>+---------------------------+--------------------------------------+<br>|<span class="hljs-string"> admin_state_up            </span>|<span class="hljs-string"> UP                                   </span>|<br>|<span class="hljs-string"> availability_zone_hints   </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> availability_zones        </span>|<span class="hljs-string"> nova                                 </span>|<br>|<span class="hljs-string"> created_at                </span>|<span class="hljs-string"> 2019-06-19T02:16:06Z                 </span>|<br>|<span class="hljs-string"> description               </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> dns_domain                </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> id                        </span>|<span class="hljs-string"> 01e6c390-1d5e-4140-9ea3-98754bd0c58f </span>|<br>|<span class="hljs-string"> ipv4_address_scope        </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> ipv6_address_scope        </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> is_default                </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> is_vlan_transparent       </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> mtu                       </span>|<span class="hljs-string"> 1500                                 </span>|<br>|<span class="hljs-string"> name                      </span>|<span class="hljs-string"> network_29287                        </span>|<br>|<span class="hljs-string"> port_security_enabled     </span>|<span class="hljs-string"> True                                 </span>|<br>|<span class="hljs-string"> project_id                </span>|<span class="hljs-string"> 2e69bc10ab5f427bbbd6d40148d96309     </span>|<br>|<span class="hljs-string"> provider:network_type     </span>|<span class="hljs-string"> vxlan                                </span>|<br>|<span class="hljs-string"> provider:physical_network </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> provider:segmentation_id  </span>|<span class="hljs-string"> 29287                                </span>|<br>|<span class="hljs-string"> qos_policy_id             </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> revision_number           </span>|<span class="hljs-string"> 3                                    </span>|<br>|<span class="hljs-string"> router:external           </span>|<span class="hljs-string"> Internal                             </span>|<br>|<span class="hljs-string"> segments                  </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> shared                    </span>|<span class="hljs-string"> True                                 </span>|<br>|<span class="hljs-string"> status                    </span>|<span class="hljs-string"> ACTIVE                               </span>|<br>|<span class="hljs-string"> subnets                   </span>|<span class="hljs-string"> 8ed09dee-0e16-4514-8821-9a8e1f77c43a </span>|<br>|<span class="hljs-string"> tags                      </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> updated_at                </span>|<span class="hljs-string"> 2019-06-19T02:16:07Z                 </span>|<br>+---------------------------+--------------------------------------+<br></code></pre></td></tr></table></figure>
+<p><strong>列出所有子网</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack subnet list<br><br>+--------------------------------------+-----------------------+--------------------------------------+------------------+<br>|<span class="hljs-string"> ID                                   </span>|<span class="hljs-string"> Name                  </span>|<span class="hljs-string"> Network                              </span>|<span class="hljs-string"> Subnet           </span>|<br>+--------------------------------------+-----------------------+--------------------------------------+------------------+<br>|<span class="hljs-string"> 00414731-ab21-4ee8-8bf2-86d960cc4339 </span>|<span class="hljs-string"> network_sub_18721     </span>|<span class="hljs-string"> 84d6ee39-77b3-4a0b-80f8-67922b63079a </span>|<span class="hljs-string"> 192.168.1.0/24   </span>|<br>|<span class="hljs-string"> 014cb2e2-bdbe-4849-aec7-5fe0581e3b67 </span>|<span class="hljs-string"> network_sub_20494     </span>|<span class="hljs-string"> 6eb235c5-798c-49de-8fd3-08aa64f9abaa </span>|<span class="hljs-string"> 192.168.1.0/24   </span>|<br>+--------------------------------------+-----------------------+--------------------------------------+------------------+<br></code></pre></td></tr></table></figure>
+
+<p><strong>查看子网</strong></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">$ openstack <span class="hljs-keyword">subnet </span><span class="hljs-keyword">show </span><span class="hljs-keyword">SUBNET-ID</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack subnet show 00414731-ab21-4ee8-8bf2-86d960cc4339<br>+-------------------+--------------------------------------+<br>|<span class="hljs-string"> Field             </span>|<span class="hljs-string"> Value                                </span>|<br>+-------------------+--------------------------------------+<br>|<span class="hljs-string"> allocation_pools  </span>|<span class="hljs-string"> 192.168.1.2-192.168.1.254            </span>|<br>|<span class="hljs-string"> cidr              </span>|<span class="hljs-string"> 192.168.1.0/24                       </span>|<br>|<span class="hljs-string"> created_at        </span>|<span class="hljs-string"> 2019-07-11T02:09:49Z                 </span>|<br>|<span class="hljs-string"> description       </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> dns_nameservers   </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> enable_dhcp       </span>|<span class="hljs-string"> True                                 </span>|<br>|<span class="hljs-string"> gateway_ip        </span>|<span class="hljs-string"> 192.168.1.1                          </span>|<br>|<span class="hljs-string"> host_routes       </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> id                </span>|<span class="hljs-string"> 00414731-ab21-4ee8-8bf2-86d960cc4339 </span>|<br>|<span class="hljs-string"> ip_version        </span>|<span class="hljs-string"> 4                                    </span>|<br>|<span class="hljs-string"> ipv6_address_mode </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> ipv6_ra_mode      </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> name              </span>|<span class="hljs-string"> network_sub_18721                    </span>|<br>|<span class="hljs-string"> network_id        </span>|<span class="hljs-string"> 84d6ee39-77b3-4a0b-80f8-67922b63079a </span>|<br>|<span class="hljs-string"> project_id        </span>|<span class="hljs-string"> 2e69bc10ab5f427bbbd6d40148d96309     </span>|<br>|<span class="hljs-string"> revision_number   </span>|<span class="hljs-string"> 0                                    </span>|<br>|<span class="hljs-string"> segment_id        </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> service_types     </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> subnetpool_id     </span>|<span class="hljs-string"> None                                 </span>|<br>|<span class="hljs-string"> tags              </span>|<span class="hljs-string">                                      </span>|<br>|<span class="hljs-string"> updated_at        </span>|<span class="hljs-string"> 2019-07-11T02:09:49Z                 </span>|<br>+-------------------+--------------------------------------+<br></code></pre></td></tr></table></figure>
+<p><strong>列出所有port</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack port list<br><br>+--------------------------------------+------+-------------------+--------------------------------------------------------------------------------+--------+<br>|<span class="hljs-string"> ID                                   </span>|<span class="hljs-string"> Name </span>|<span class="hljs-string"> MAC Address       </span>|<span class="hljs-string"> Fixed IP Addresses                                                             </span>|<span class="hljs-string"> Status </span>|<br>+--------------------------------------+------+-------------------+--------------------------------------------------------------------------------+--------+<br>|<span class="hljs-string"> 01f86921-016b-4df8-b526-ec81418b5df5 </span>|<span class="hljs-string">      </span>|<span class="hljs-string"> fa:16:3e:b9:c8:a8 </span>|<span class="hljs-string"> ip_address=&#x27;20.0.0.2&#x27;, subnet_id=&#x27;c00a64e4-8921-427c-aa71-74f7a2c55954&#x27;        </span>|<span class="hljs-string"> ACTIVE </span>|<br>|<span class="hljs-string"> 0280ba23-7a51-483c-a7a4-2351f277f739 </span>|<span class="hljs-string">      </span>|<span class="hljs-string"> fa:16:3e:ab:63:69 </span>|<span class="hljs-string"> ip_address=&#x27;192.168.2.1&#x27;, subnet_id=&#x27;c4b84a4b-ce15-49e8-ae6b-72566224682c&#x27;     </span>|<span class="hljs-string"> DOWN   </span>|<br>+--------------------------------------+------+-------------------+--------------------------------------------------------------------------------+--------+<br></code></pre></td></tr></table></figure>
+<p><strong>查看port</strong></p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vhdl">$ openstack <span class="hljs-keyword">port</span> show <span class="hljs-keyword">PORT</span>-ID<br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">$ openstack port show 01f86921-016b-4df8-b526-ec81418b5df5<br>+-----------------------+-------------------------------------------------------------------------------+<br>|<span class="hljs-string"> Field                 </span>|<span class="hljs-string"> Value                                                                         </span>|<br>+-----------------------+-------------------------------------------------------------------------------+<br>|<span class="hljs-string"> admin_state_up        </span>|<span class="hljs-string"> UP                                                                            </span>|<br>|<span class="hljs-string"> allowed_address_pairs </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> binding_host_id       </span>|<span class="hljs-string"> controller                                                                    </span>|<br>|<span class="hljs-string"> binding_profile       </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> binding_vif_details   </span>|<span class="hljs-string"> datapath_type=&#x27;system&#x27;, ovs_hybrid_plug=&#x27;True&#x27;, port_filter=&#x27;True&#x27;            </span>|<br>|<span class="hljs-string"> binding_vif_type      </span>|<span class="hljs-string"> ovs                                                                           </span>|<br>|<span class="hljs-string"> binding_vnic_type     </span>|<span class="hljs-string"> normal                                                                        </span>|<br>|<span class="hljs-string"> created_at            </span>|<span class="hljs-string"> 2019-06-19T01:41:33Z                                                          </span>|<br>|<span class="hljs-string"> data_plane_status     </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> description           </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> device_id             </span>|<span class="hljs-string"> dhcpd3377d3c-a0d1-5d71-9947-f17125c357bb-361f196b-154a-4e51-bc34-7162d043be1b </span>|<br>|<span class="hljs-string"> device_owner          </span>|<span class="hljs-string"> network:dhcp                                                                  </span>|<br>|<span class="hljs-string"> dns_assignment        </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> dns_name              </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> extra_dhcp_opts       </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> fixed_ips             </span>|<span class="hljs-string"> ip_address=&#x27;20.0.0.2&#x27;, subnet_id=&#x27;c00a64e4-8921-427c-aa71-74f7a2c55954&#x27;       </span>|<br>|<span class="hljs-string"> id                    </span>|<span class="hljs-string"> 01f86921-016b-4df8-b526-ec81418b5df5                                          </span>|<br>|<span class="hljs-string"> ip_address            </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> mac_address           </span>|<span class="hljs-string"> fa:16:3e:b9:c8:a8                                                             </span>|<br>|<span class="hljs-string"> name                  </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> network_id            </span>|<span class="hljs-string"> 361f196b-154a-4e51-bc34-7162d043be1b                                          </span>|<br>|<span class="hljs-string"> option_name           </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> option_value          </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> port_security_enabled </span>|<span class="hljs-string"> False                                                                         </span>|<br>|<span class="hljs-string"> project_id            </span>|<span class="hljs-string"> 2e69bc10ab5f427bbbd6d40148d96309                                              </span>|<br>|<span class="hljs-string"> qos_policy_id         </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> revision_number       </span>|<span class="hljs-string"> 6                                                                             </span>|<br>|<span class="hljs-string"> security_group_ids    </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> status                </span>|<span class="hljs-string"> ACTIVE                                                                        </span>|<br>|<span class="hljs-string"> subnet_id             </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> tags                  </span>|<span class="hljs-string">                                                                               </span>|<br>|<span class="hljs-string"> trunk_details         </span>|<span class="hljs-string"> None                                                                          </span>|<br>|<span class="hljs-string"> updated_at            </span>|<span class="hljs-string"> 2019-06-19T01:41:35Z                                                          </span>|<br>+-----------------------+-------------------------------------------------------------------------------+<br></code></pre></td></tr></table></figure>
+<p>摘自：Openstack官方文档 <a target="_blank" rel="noopener" href="https://docs.openstack.org/zh_CN/user-guide/cli-cheat-sheet.html">https://docs.openstack.org/zh_CN/user-guide/cli-cheat-sheet.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Openstack命令行</div>
+      <div>http://maitianxin.github.io/2019/07/11/openstack/openstack_terminal/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年7月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/17/other/sqlalchemy_engine/" title="SQLAlchemy 中的 Engine 是什么">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SQLAlchemy 中的 Engine 是什么</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/11/linux/top/" title="Linux top 命令详解">
+                        <span class="hidden-mobile">Linux top 命令详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

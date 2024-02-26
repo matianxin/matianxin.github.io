@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="KVM">
+  
+    <meta name="description" content="KVM 介绍：使用 libvirt 做 QEMU&#x2F;KVM 快照">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QEMU &#x2F; KVM 快照介绍">
+<meta property="og:url" content="http://maitianxin.github.io/2021/01/18/linux/qemu_snapshot/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="KVM 介绍：使用 libvirt 做 QEMU&#x2F;KVM 快照">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maitianxin.github.io/images/snapshot1.png">
+<meta property="og:image" content="http://maitianxin.github.io/images/snapshot2.png">
+<meta property="og:image" content="http://maitianxin.github.io/images/snapshot3.png">
+<meta property="article:published_time" content="2021-01-18T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T07:39:20.712Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="KVM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maitianxin.github.io/images/snapshot1.png">
+  
+  
+  
+  <title>QEMU / KVM 快照介绍 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="QEMU / KVM 快照介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-01-18 10:00" pubdate>
+          2021年1月18日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">QEMU / KVM 快照介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>1.QEMU&#x2F;KVM快照</strong></p>
+<p><strong>1.1 概念</strong><br>QEMU&#x2F;KVM 快照的定义：快照就是将虚机在某一个时间点上的磁盘、内存和设备状态保存一下，以备将来之用。它包括以下几类：</p>
+<p>磁盘快照：磁盘的内容（可能是虚机的全部磁盘或者部分磁盘）在某个时间点上被保存，然后可以被恢复。<br>磁盘数据的保存状态：<br>在一个运行着的系统上，一个磁盘快照很可能只是崩溃一致的（crash-consistent） 而不是完整一致（clean）的，也是说它所保存的磁盘状态可能相当于机器突然掉电时硬盘数据的状态，机器重启后需要通过 fsck 或者别的工具来恢复到完整一致的状态（类似于 Windows 机器在断电后会执行文件检查）。(注：命令 qemu-img check -f qcow2 –output&#x3D;qcow2 -r all filename-img.qcow2 可以对 qcow2 和 vid 格式的镜像做一致性检查。)<br>对一个非运行中的虚机来说，如果上次虚机关闭的时候磁盘是完整一致的，那么其被快照的磁盘快照也将是完整一致的。</p>
+<p>磁盘快照有两种：<br>• 内部快照 - 使用单个的 qcow2 的文件来保存快照和快照之后的改动。这种快照是 libvirt 的默认行为，现在的支持很完善（创建、回滚和删除），但是只能针对 qcow2 格式的磁盘镜像文件，而且其过程较慢等。<br>• 外部快照 - 快照是一个只读文件，快照之后的修改是另一个 qcow2 文件中。外置快照可以针对各种格式的磁盘镜像文件。外置快照的结果是形成一个<br>qcow2 文件链：original &lt;- snap1 &lt;- snap2 &lt;- snap3。</p>
+<p>内存状态（或者虚机状态）：只是保持内存和虚机使用的其它资源的状态。如果虚机状态快照在做和恢复之间磁盘没有被修改，那么虚机将保持一个持续的状态；如果被修改了，那么很可能导致数据corruption。<br>系统还原点（system checkpoint）：虚机的所有磁盘的快照和内存状态快照的集合，可用于恢复完整的系统状态（类似于系统休眠）。<br>关于 崩溃一致（crash-consistent）的附加说明：</p>
+<p>应该尽量避免在虚机I&#x2F;O繁忙的时候做快照。这种时候做快照不是可取的办法。<br>vmware 的做法是装一个 tools，它是个 PV driver，可以在做快照的时候挂起系统<br>似乎 KVM 也有类似的实现 QEMU Guest Agent，但是还不是很成熟，<br>可参考 <a target="_blank" rel="noopener" href="http://wiki.libvirt.org/page/Qemu_guest_agent">http://wiki.libvirt.org/page/Qemu_guest_agent</a></p>
+<p>快照还可以分为 live snapshot（热快照）和 Cold snapshot：<br>Live snapshot：系统运行状态下做的快照<br>Cold snapshot：系统停止状态下的快照<br>libvit 做 snapshot 的各个 API：</p>
+<p><img src="/images/snapshot1.png" srcset="/img/loading.gif" lazyload alt="API"></p>
+<p>分别来看看这些 API 是如何工作的：<br>virDomainSnapshotCreateXML (virDomainPtr domain, const char * xmlDesc, unsigned int flags)<br>作用：根据 xmlDesc 指定的 snapshot xml 和 flags 来创建虚机的快照。</p>
+<p><img src="/images/snapshot2.png" srcset="/img/loading.gif" lazyload alt="virDomainSnapshotCreateXML"></p>
+<p>其内部实现根据虚机的运行状态有两种情形：<br>• 对运行着的虚机，API 使用 QEMU Monitor 去做快照，磁盘镜像文件必须是 qcow2 格式，虚机的 CPU 被停止，快照结束后会重新启动。<br>• 对停止着的虚机，API 调用 qemu-img 方法来操作所有磁盘镜像文件。<br>这里有其实现代码，可见其基本的实现步骤：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-keyword">static</span> virDomainSnapshotPtr qemuDomainSnapshotCreateXML<br>&#123;<br>    ....<br>    <span class="hljs-built_in">call</span> qemuDomainSnapshotCreateDiskActive<br>    &#123;<br>        <span class="hljs-built_in">call</span> qemuProcessStopCPUs <span class="hljs-meta"># 停止 vCPUs</span><br>        <span class="hljs-keyword">for</span> each disk <span class="hljs-built_in">call</span> qemuDomainSnapshotCreateSingleDiskActive<br>        &#123;<br>            <span class="hljs-built_in">call</span> qemuMonitorDiskSnapshot <span class="hljs-meta"># 调用 QEMU Monitor 去为每个磁盘做snapshot</span><br>        &#125;<br>        <span class="hljs-built_in">call</span> qemuProcessStartCPUs <span class="hljs-meta"># 启动 vCPUs</span><br>     &#125;<br>     ....<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>virDomainSave 相关的几个 API<br>这几个API 功能都比较类似：</p>
+<p><img src="/images/snapshot3.png" srcset="/img/loading.gif" lazyload alt="virDomainSave"></p>
+<p><strong>1.2 使用 virsh 实验</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">virsh <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>/snapshort-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span><br></code></pre></td></tr></table></figure>
+
+<p>先看看它的用法：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">virsh # help <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span><br>  <span class="hljs-type">NAME</span><br>    <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span> - <span class="hljs-keyword">Create</span> a <span class="hljs-keyword">snapshot</span> <span class="hljs-keyword">from</span> a <span class="hljs-keyword">set</span> <span class="hljs-keyword">of</span> args<br><br>  SYNOPSIS<br>    <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span> &lt;<span class="hljs-keyword">domain</span>&gt; [&lt;<span class="hljs-type">name</span>&gt;] [&lt;description&gt;] [<span class="hljs-comment">--print-xml] [--no-metadata] [--halt] [--disk-only] [--reuse-external] [--quiesce] [--atomic] [--live] [--memspec &lt;string&gt;] [[--diskspec] &lt;string&gt;]...</span><br><br>  DESCRIPTION<br>    <span class="hljs-keyword">Create</span> a <span class="hljs-keyword">snapshot</span> (disk <span class="hljs-keyword">and</span> RAM) <span class="hljs-keyword">from</span> arguments<br><br>  <span class="hljs-keyword">OPTIONS</span><br>    [<span class="hljs-comment">--domain] &lt;string&gt;  domain name, id or uuid</span><br>    [<span class="hljs-comment">--name] &lt;string&gt;  name of snapshot</span><br>    [<span class="hljs-comment">--description] &lt;string&gt;  description of snapshot</span><br>    <span class="hljs-comment">--print-xml      print XML document rather than create</span><br>    <span class="hljs-comment">--no-metadata    take snapshot but create no metadata  #创建的快照不带任何元数据</span><br>    <span class="hljs-comment">--halt           halt domain after snapshot is created #快照创建后虚机会关闭</span><br>    <span class="hljs-comment">--disk-only      capture disk state but not vm state   #只对磁盘做快照，忽略其它参数</span><br>    <span class="hljs-comment">--reuse-external  reuse any existing external files</span><br>    <span class="hljs-comment">--quiesce        quiesce guest&#x27;s file systems #libvirt 会通过 QEMU GA 尝试去freeze和unfreeze客户机已经mounted的文件系统；如果客户机没有安装QEMU GA，则操作会失败。</span><br>    <span class="hljs-comment">--atomic         require atomic operation #快照要么完全成功要么完全失败，不允许部分成果。不是所有的VMM都支持。</span><br>    <span class="hljs-comment">--live           take a live snapshot     #当客户机处于运行状态下做快照</span><br>    <span class="hljs-comment">--memspec &lt;string&gt;  memory attributes: [file=]name[,snapshot=type]</span><br>    [<span class="hljs-comment">--diskspec] &lt;string&gt;  disk attributes: disk[,snapshot=type][,driver=type][,file=name]</span><br></code></pre></td></tr></table></figure>
+
+<p>其中一些参数，比如 –atomic，在一些老的 QEMU libary 上不支持，需要更新它到新的版本。根据 这篇文章，atomic 应该是 QEMU 1.0 中加入的。<br>（1）默认的话，该命令创建虚机的所有磁盘和内存做内部快照，创建快照时虚机处于 paused 状态，快照完成后变为 running 状态。持续时间较长。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">&lt;memory <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;internal&#x27;</span>/&gt;<br>  &lt;disks&gt;<br>    &lt;disk <span class="hljs-type">name</span>=<span class="hljs-string">&#x27;vda&#x27;</span> <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;internal&#x27;</span>/&gt;<br>    &lt;disk <span class="hljs-type">name</span>=<span class="hljs-string">&#x27;vdb&#x27;</span> <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;internal&#x27;</span>/&gt;<br>    &lt;disk <span class="hljs-type">name</span>=<span class="hljs-string">&#x27;vdc&#x27;</span> <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;internal&#x27;</span>/&gt;<br>  &lt;/disks&gt;<br></code></pre></td></tr></table></figure>
+<p>每个磁盘的镜像文件都包含了 snapshot 的信息：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@compute144</span> <span class="hljs-string">8984f8b3-8429-4d16-a6f6-bff239605f46</span>]<span class="hljs-comment"># qemu-img info disk</span><br><span class="hljs-attr">image:</span> <span class="hljs-string">disk</span><br><span class="hljs-attr">file format:</span> <span class="hljs-string">qcow2</span><br><span class="hljs-attr">virtual size:</span> <span class="hljs-string">10G</span> <span class="hljs-string">(10737418240</span> <span class="hljs-string">bytes)</span><br><span class="hljs-attr">disk size:</span> <span class="hljs-string">745M</span><br><span class="hljs-attr">cluster_size:</span> <span class="hljs-number">65536</span><br><span class="hljs-attr">backing file:</span> <span class="hljs-string">/var/lib/nova/instances/_base/af01f8737b75e5ccf8a5f51ce051bde57b71fdfb</span><br><span class="hljs-attr">Snapshot list:</span><br><span class="hljs-string">ID</span>        <span class="hljs-string">TAG</span>                 <span class="hljs-string">VM</span> <span class="hljs-string">SIZE</span>                <span class="hljs-string">DATE</span>       <span class="hljs-string">VM</span> <span class="hljs-string">CLOCK</span><br><span class="hljs-number">1</span>         <span class="hljs-number">123</span>                       <span class="hljs-number">0</span> <span class="hljs-number">2021-01-15 16:30:00   </span><span class="hljs-number">00</span><span class="hljs-string">:00:00.000</span><br><span class="hljs-number">2</span>         <span class="hljs-number">12345</span>                  <span class="hljs-string">230M</span> <span class="hljs-number">2021-01-15 16:40:42   </span><span class="hljs-number">00</span><span class="hljs-string">:07:27.665</span><br><span class="hljs-number">3</span>         <span class="hljs-number">345</span>                    <span class="hljs-string">229M</span> <span class="hljs-number">2021-01-15 16:57:44   </span><span class="hljs-number">00</span><span class="hljs-string">:07:16.928</span><br><span class="hljs-attr">Format specific information:</span><br>    <span class="hljs-attr">compat:</span> <span class="hljs-number">1.1</span><br>    <span class="hljs-attr">lazy refcounts:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">refcount bits:</span> <span class="hljs-number">16</span><br>    <span class="hljs-attr">corrupt:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<p>你可以运行 snapshot-revert 命令回滚到指定的snapshot。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">virsh</span> # snapshot-revert instance-<span class="hljs-number">0000002</span>e <span class="hljs-number">1433950148</span><br></code></pre></td></tr></table></figure>
+<p>根据 这篇文章，libvirt 将内存状态保存到某一个磁盘镜像文件内 （”state is saved inside one of the disks (as in qemu’s ‘savevm’system checkpoint implementation). If needed in the future,we can also add an attribute pointing out which disk saved the internal state; maybe disk&#x3D;’vda’.）</p>
+<p>（2）可以使用 “–memspec” 和 “–diskspec” 参数来给内存和磁盘外部快照。这时候，在获取内存状态之前需要 Pause 虚机，就会产生服务的 downtime。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">virsh # <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span> <span class="hljs-number">0000002</span>e livesnap2  <span class="hljs-comment">--memspec /home/s1/livesnap2mem,snapshot=external --diskspec vda,snapshot=external</span><br><span class="hljs-keyword">Domain</span> <span class="hljs-keyword">snapshot</span> livesnap2 created<br>virsh # <span class="hljs-keyword">snapshot</span>-dumpxml <span class="hljs-number">0000002</span>e livesnap2<br>  &lt;memory <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;external&#x27;</span> file=<span class="hljs-string">&#x27;/home/s1/livesnap2mem&#x27;</span>/&gt;<br>  &lt;disks&gt;<br>    &lt;disk <span class="hljs-type">name</span>=<span class="hljs-string">&#x27;vda&#x27;</span> <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;external&#x27;</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">&#x27;file&#x27;</span>&gt;<br>      &lt;driver <span class="hljs-keyword">type</span>=<span class="hljs-string">&#x27;qcow2&#x27;</span>/&gt;<br>      &lt;source file=<span class="hljs-string">&#x27;/home/s1/testvm/testvm1.livesnap2&#x27;</span>/&gt;<br>    &lt;/disk&gt;<br>  &lt;/disks&gt;<br></code></pre></td></tr></table></figure>
+<p>（3）可以使用 “–disk-only” 参数，这时会做所有磁盘的外部快照，但是不包含内存的快照。不指定快照文件名字的话，会放在原来的磁盘文件所在的目录中。多次快照后，会形成一个外部快照链，新的快照使用前一个快照的镜像文件作为 backing file。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs 1c">virsh <span class="hljs-meta"># snapshot-list instance-0000002e --tree</span><br><span class="hljs-number">1433950148</span> <span class="hljs-meta">#内部快照</span><br><span class="hljs-number">1433950810</span> <span class="hljs-meta">#内部快照</span><br><span class="hljs-number">1433950946</span> <span class="hljs-meta">#内部快照</span><br>snap1 <span class="hljs-meta">#第一个外部快照</span><br>  <span class="hljs-string">|</span><br>  +- snap2 <span class="hljs-meta">#第二个外部快照</span><br>      <span class="hljs-string">|</span><br>      +- <span class="hljs-number">1433954941</span> <span class="hljs-meta">#第三个外部快照</span><br>          <span class="hljs-string">|</span><br>          +- <span class="hljs-number">1433954977</span> <span class="hljs-meta">#第四个外部快照</span><br></code></pre></td></tr></table></figure>
+<p>而第一个外部快照的镜像文件是以虚机的原始镜像文件作为 backing file 的：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@compute1</span><span class="hljs-symbol">:/var/lib/nova/instances/eddc46a8-e026-</span><span class="hljs-number">4</span>b2c-af51-dfaa436fcc7b<span class="hljs-comment"># qemu-img info disk.snap1</span><br><span class="hljs-symbol">image:</span> disk.snap1<br>file <span class="hljs-symbol">format:</span> qcow2<br>virtual <span class="hljs-symbol">size:</span> <span class="hljs-number">30</span>M (<span class="hljs-number">31457280</span> bytes)<br>disk <span class="hljs-symbol">size:</span> <span class="hljs-number">196</span>K<br><span class="hljs-symbol">cluster_size:</span> <span class="hljs-number">65536</span><br>backing <span class="hljs-symbol">file:</span> /var/lib/nova/instances/eddc46a8-e026<span class="hljs-number">-4</span>b2c-af51-dfaa436fcc7b/disk.swap <span class="hljs-comment">#虚机的 swap disk 原始镜像文件</span><br>backing file <span class="hljs-symbol">format:</span> qcow2<br><span class="hljs-title class_">Format</span> specific <span class="hljs-symbol">information:</span><br>    <span class="hljs-symbol">compat:</span> <span class="hljs-number">1.1</span><br>    lazy <span class="hljs-symbol">refcounts:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<p>目前还不支持回滚到某一个extrenal disk snapshot。这篇文章 谈到了一个workaround。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@rh65 osdomains]# virsh <span class="hljs-keyword">snapshot</span>-revert d<span class="hljs-number">-2</span> <span class="hljs-number">1434467974</span><br>error: unsupported <span class="hljs-keyword">configuration</span>: revert <span class="hljs-keyword">to</span> <span class="hljs-keyword">external</span> disk <span class="hljs-keyword">snapshot</span> <span class="hljs-keyword">not</span> supported yet<br>（<span class="hljs-number">4</span>）还可以使用 “–live” 参数创建系统还原点，包括磁盘、内存和设备状态等。使用这个参数时，虚机不会被 Paused（那怎么实现的？）。其后果是增加了内存 dump 文件的大小，但是减少了系统的 downtime。该参数只能用于做外部的系统还原点（<span class="hljs-keyword">external</span> <span class="hljs-keyword">checkpoint</span>）。<br><br>virsh # <span class="hljs-keyword">snapshot</span>-<span class="hljs-keyword">create</span>-<span class="hljs-keyword">as</span> <span class="hljs-number">0000002</span>e livesnap3  <span class="hljs-comment">--memspec /home/s1/livesnap3mem,snapshot=external --diskspec vda,snapshot=external --live</span><br><span class="hljs-keyword">Domain</span> <span class="hljs-keyword">snapshot</span> livesnap3 created<br>virsh # <span class="hljs-keyword">snapshot</span>-dumpxml <span class="hljs-number">0000002</span>e livesnap3<br>  &lt;memory <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;external&#x27;</span> file=<span class="hljs-string">&#x27;/home/s1/livesnap3mem&#x27;</span>/&gt;<br>  &lt;disks&gt;<br>    &lt;disk <span class="hljs-type">name</span>=<span class="hljs-string">&#x27;vda&#x27;</span> <span class="hljs-keyword">snapshot</span>=<span class="hljs-string">&#x27;external&#x27;</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">&#x27;file&#x27;</span>&gt;<br>      &lt;driver <span class="hljs-keyword">type</span>=<span class="hljs-string">&#x27;qcow2&#x27;</span>/&gt;<br>      &lt;source file=<span class="hljs-string">&#x27;/home/s1/testvm/testvm1.livesnap3&#x27;</span>/&gt;<br>    &lt;/disk&gt;<br>  &lt;/disks&gt;<br></code></pre></td></tr></table></figure>
+<p>注意到加 “–live” 生成的快照和不加这个参数生成的快照不会被链在一起：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs 1c">virsh <span class="hljs-meta"># snapshot-list 0000002e --tree</span><br>livesnap1 <span class="hljs-meta">#没加 --live</span><br>  <span class="hljs-string">|</span><br>  +- livesnap2 <span class="hljs-meta">#没加 --live</span><br><br>livesnap3 <span class="hljs-meta">#加了 --live</span><br>  <span class="hljs-string">|</span><br>  +- livesnap4 <span class="hljs-meta">#加了 --live</span><br></code></pre></td></tr></table></figure>
+<p>不过，奇怪的是，使用 QEMU 2.3 的情况下，即使加了 –live 参数，虚机还是会被短暂的 Paused 住：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">[root@rh65 ~]# virsh snapshot-create-as d-2 --memspec /home/work/d-2/mem3,snapshot=external --diskspec hda,snapshot=external --live<br>Domain snapshot 1434478667 created<br><br>[root@rh65 ~]# virsh list --all<br><span class="hljs-section"> Id    Name                           State</span><br><span class="hljs-section">----------------------------------------------------</span><br><span class="hljs-code"> 40    osvm1                          running</span><br><span class="hljs-code"> 42    osvm2                          running</span><br><span class="hljs-code"> 43    d-2                            running</span><br><br>[root@rh65 ~]# virsh list --all<br><span class="hljs-section"> Id    Name                           State</span><br><span class="hljs-section">----------------------------------------------------</span><br><span class="hljs-code"> 40    osvm1                          running</span><br><span class="hljs-code"> 42    osvm2                          running</span><br><span class="hljs-code"> 43    d-2                            paused</span><br><br>[root@rh65 ~]# virsh list --all<br><span class="hljs-section"> Id    Name                           State</span><br><span class="hljs-section">----------------------------------------------------</span><br><span class="hljs-code"> 40    osvm1                          running</span><br><span class="hljs-code"> 42    osvm2                          running</span><br><span class="hljs-code"> 43    d-2                            running</span><br></code></pre></td></tr></table></figure>
+<p>可以使用 snapshot-revert 命令来回滚到指定的系统还原点，不过得使用 “-force” 参数 。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/KVM/" class="category-chain-item">KVM</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/KVM/" class="print-no-link">#KVM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>QEMU / KVM 快照介绍</div>
+      <div>http://maitianxin.github.io/2021/01/18/linux/qemu_snapshot/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年1月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/19/linux/virsh_snapshot_cmd/" title="QEMU / KVM 快照相关命令介绍">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">QEMU / KVM 快照相关命令介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/21/openstack/cloudinit_intro/" title="Cloud-init 初始化虚拟机配置">
+                        <span class="hidden-mobile">Cloud-init 初始化虚拟机配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

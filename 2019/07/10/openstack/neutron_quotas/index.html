@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Openstack">
+  
+    <meta name="description" content="Openstack修改系统网络配额">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack修改系统网络配额">
+<meta property="og:url" content="http://maitianxin.github.io/2019/07/10/openstack/neutron_quotas/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="Openstack修改系统网络配额">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-10T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T01:29:01.084Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Openstack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Openstack修改系统网络配额 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Openstack修改系统网络配额"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-07-10 10:00" pubdate>
+          2019年7月10日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Openstack修改系统网络配额</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>前言</strong><br>neutron在安装配置完成之后，openstack为了实现对所有tenant对网络资源的使用，针对neutron设置有专门的配额，以防止租户使用过多的资源，而对其他的tenant造成影响。和nova的quota相类似，neutron也使用单独的一个驱动来实现网络neutron的配额控制。</p>
+<p><strong>neutron默认的配额</strong><br>neutron默认的配额针对network，port，router，subnet，floatingip做了配额方面的限定，参考neutron的配置文件，获取quota的配额内容为:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[root@controller ~]</span><span class="hljs-comment"># vim /etc/neutron/neutron.conf</span><br><span class="hljs-section">[quotas]</span><br><span class="hljs-attr">quota_driver</span> = neutron.db.quota_db.DbQuotaDriver        配额驱动<br><span class="hljs-attr">quota_items</span> = network,subnet,port                       quota限定的范畴<br><span class="hljs-attr">default_quota</span> = -<span class="hljs-number">1</span>                                      默认的quota，-<span class="hljs-number">1</span>表示没有限制(未启用)<br><span class="hljs-attr">quota_network</span> = <span class="hljs-number">10</span>                                      建立的network个数<br><span class="hljs-attr">quota_subnet</span> = <span class="hljs-number">10</span>                                       建立的subnet个数<br><span class="hljs-attr">quota_port</span> = <span class="hljs-number">50</span>                                         允许的port个数<br><span class="hljs-attr">quota_security_group</span> = <span class="hljs-number">10</span>                               安全组的个数<br><span class="hljs-attr">quota_security_group_rule</span> = <span class="hljs-number">100</span>                         安全组规规则条数<br><span class="hljs-attr">quota_vip</span> = <span class="hljs-number">10</span>                                          vip个数，以下的quota_member和quota_health_monitors 都用于LBaaS场景<br><span class="hljs-attr">quota_pool</span> = <span class="hljs-number">10</span>                                         pool个数<br><span class="hljs-attr">quota_member</span> = -<span class="hljs-number">1</span>                                       member个数<br><span class="hljs-attr">quota_health_monitors</span> = -<span class="hljs-number">1</span>                              monitor个数<br><span class="hljs-attr">quota_router</span> = <span class="hljs-number">10</span>                                       router的个数<br><span class="hljs-attr">quota_floatingip</span> = <span class="hljs-number">50</span>                                   floating-ip个数<br></code></pre></td></tr></table></figure>
+
+<p><strong>修改neutron的配额</strong><br>查看neutron默认的配额</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># keystone tenant-list</span><br>+----------------------------------+----------+---------+<br>|<span class="hljs-string">                id                </span>|<span class="hljs-string">   name   </span>|<span class="hljs-string"> enabled </span>|<br>+----------------------------------+----------+---------+<br>|<span class="hljs-string"> 842ab3268a2c47e6a4b0d8774de805ae </span>|<span class="hljs-string">  admin   </span>|<span class="hljs-string">   True  </span>|<br>|<span class="hljs-string"> 7ff1dfb5a6f349958c3a949248e56236 </span>|<span class="hljs-string"> companyA </span>|<span class="hljs-string">   True  </span>|<span class="hljs-string">        #得到tenant的uuid号</span><br><span class="hljs-string"></span>|<span class="hljs-string"> 10d1465c00d049fab88dec1af0f56b1b </span>|<span class="hljs-string">   demo   </span>|<span class="hljs-string">   True  </span>|<br>|<span class="hljs-string"> 3b57a14f7c354a979c9f62b60f31a331 </span>|<span class="hljs-string"> service  </span>|<span class="hljs-string">   True  </span>|<br>+----------------------------------+----------+---------+<br></code></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># neutron quota-show --tenant-id 7ff1dfb5a6f349958c3a949248e56236</span><br>+---------------------+-------+<br>|<span class="hljs-string"> Field               </span>|<span class="hljs-string"> Value </span>|<br>+---------------------+-------+<br>|<span class="hljs-string"> floatingip          </span>|<span class="hljs-string"> 50    </span>|<br>|<span class="hljs-string"> health_monitor      </span>|<span class="hljs-string"> -1    </span>|<br>|<span class="hljs-string"> member              </span>|<span class="hljs-string"> -1    </span>|<br>|<span class="hljs-string"> network             </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> pool                </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> port                </span>|<span class="hljs-string"> 50    </span>|<span class="hljs-string">          #port，每台虚拟机都需要一个ip，即一个port，很容易就超过配额</span><br><span class="hljs-string"></span>|<span class="hljs-string"> router              </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> security_group      </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> security_group_rule </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> subnet              </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> vip                 </span>|<span class="hljs-string"> 10    </span>|<br>+---------------------+-------+<br></code></pre></td></tr></table></figure>
+<p>修改neutron配额</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># neutron quota-update --network 20 --subnet 20 --port 100  --router 5 --floatingip 100  --security-group 10 --security-group-rule 100 --tenant-id 7ff1dfb5a6f349958c3a949248e56236</span><br>+---------------------+-------+<br>|<span class="hljs-string"> Field               </span>|<span class="hljs-string"> Value </span>|<br>+---------------------+-------+<br>|<span class="hljs-string"> floatingip          </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> health_monitor      </span>|<span class="hljs-string"> -1    </span>|<br>|<span class="hljs-string"> member              </span>|<span class="hljs-string"> -1    </span>|<br>|<span class="hljs-string"> network             </span>|<span class="hljs-string"> 20    </span>|<br>|<span class="hljs-string"> pool                </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> port                </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> router              </span>|<span class="hljs-string"> 5     </span>|<br>|<span class="hljs-string"> security_group      </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> security_group_rule </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> subnet              </span>|<span class="hljs-string"> 20    </span>|<br>|<span class="hljs-string"> vip                 </span>|<span class="hljs-string"> 10    </span>|<br>+---------------------+-------+<br></code></pre></td></tr></table></figure>
+<p>校验neutron的quota配置</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># neutron quota-show --tenant-id 7ff1dfb5a6f349958c3a949248e56236</span><br>+---------------------+-------+<br>|<span class="hljs-string"> Field               </span>|<span class="hljs-string"> Value </span>|<br>+---------------------+-------+<br>|<span class="hljs-string"> floatingip          </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> health_monitor      </span>|<span class="hljs-string"> -1    </span>|<br>|<span class="hljs-string"> member              </span>|<span class="hljs-string"> -1    </span>|<br>|<span class="hljs-string"> network             </span>|<span class="hljs-string"> 20    </span>|<br>|<span class="hljs-string"> pool                </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> port                </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> router              </span>|<span class="hljs-string"> 5     </span>|<br>|<span class="hljs-string"> security_group      </span>|<span class="hljs-string"> 10    </span>|<br>|<span class="hljs-string"> security_group_rule </span>|<span class="hljs-string"> 100   </span>|<br>|<span class="hljs-string"> subnet              </span>|<span class="hljs-string"> 20    </span>|<br>|<span class="hljs-string"> vip                 </span>|<span class="hljs-string"> 10    </span>|<br>+---------------------+-------+<br></code></pre></td></tr></table></figure>
+<p>统计port的个数</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># neutron port-list</span><br>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------------+<br>|<span class="hljs-string"> id                                   </span>|<span class="hljs-string"> name </span>|<span class="hljs-string"> mac_address       </span>|<span class="hljs-string"> fixed_ips                                                                             </span>|<br>+--------------------------------------+------+-------------------+---------------------------------------------------------------------------------------+<br>|<span class="hljs-string"> 0060ec4a-957d-4571-b730-6b4a9bb3baf8 </span>|<span class="hljs-string">      </span>|<span class="hljs-string"> fa:16:3e:48:42:3d </span>|<span class="hljs-string"> &#123;&quot;subnet_id&quot;: &quot;9654a807-d4fa-49f1-abb6-2e45d776c69f&quot;, &quot;ip_address&quot;: &quot;10.16.4.19&quot;&#125;     </span>|<br>|<span class="hljs-string"> 00942be0-a3a9-471d-a4ba-336db0ee1539 </span>|<span class="hljs-string">      </span>|<span class="hljs-string"> fa:16:3e:73:75:03 </span>|<span class="hljs-string"> &#123;&quot;subnet_id&quot;: &quot;ad4a5ffc-3ccc-42c4-89a1-61e7b18632a3&quot;, &quot;ip_address&quot;: &quot;10.16.6.96&quot;&#125;     </span>|<br>|<span class="hljs-string"> 0119045c-8219-4744-bd58-a7e77294832c </span>|<span class="hljs-string">      </span>|<span class="hljs-string"> fa:16:3e:10:ed:7f </span>|<span class="hljs-string"> &#123;&quot;subnet_id&quot;: &quot;9654a807-d4fa-49f1-abb6-2e45d776c69f&quot;, &quot;ip_address&quot;: &quot;10.16.4.71&quot;&#125;     </span>|<br>|<span class="hljs-string"> 04f7d8ea-1849-4938-9ef7-e8114893132f </span>|<span class="hljs-string">      </span>|<span class="hljs-string"> fa:16:3e:50:86:1b </span>|<span class="hljs-string"> &#123;&quot;subnet_id&quot;: &quot;ad4a5ffc-3ccc-42c4-89a1-61e7b18632a3&quot;, &quot;ip_address&quot;: &quot;10.16.6.27&quot;&#125;     </span>|<br><br>[root<span class="hljs-meta">@controller</span> ~]<span class="hljs-comment"># neutron port-list |wc -l            #超过配额时，需要修改</span><br>194<br></code></pre></td></tr></table></figure>
+<p><strong>总结</strong><br>随着时间的推移，当越来越多的instance加入到openstack中，port也会相应增加，一个ip对应一个port，所以当port达到配额时，openstack会组织用户继续分配虚拟机，此时，就需要修改neutron的配额了，关于neutron配额的报错，可以参考neutron的日志&#x2F;var&#x2F;log&#x2F;neutron&#x2F;neutron-server.log，可以根据日志的信息，定位到报错的原因，具体不赘述。</p>
+<p><strong>附录</strong><br>neutron实现quota的代码解读</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br></pre></td><td class="code"><pre><code class="hljs python">[root@controller ~]<span class="hljs-comment"># vim /usr/lib/python2.6/site-packages/neutron/db/quota_db.py</span><br><br><span class="hljs-keyword">import</span> sqlalchemy <span class="hljs-keyword">as</span> sa<br><br><span class="hljs-keyword">from</span> neutron.common <span class="hljs-keyword">import</span> exceptions<br><span class="hljs-keyword">from</span> neutron.db <span class="hljs-keyword">import</span> model_base<br><span class="hljs-keyword">from</span> neutron.db <span class="hljs-keyword">import</span> models_v2<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">quota数据库表的表结构，tenant默认集成的配额从这里获取</span><br><span class="hljs-string">mysql&gt; desc quotas;</span><br><span class="hljs-string">+-----------+--------------+------+-----+---------+-------+</span><br><span class="hljs-string">| Field     | Type         | Null | Key | Default | Extra |</span><br><span class="hljs-string">+-----------+--------------+------+-----+---------+-------+</span><br><span class="hljs-string">| id        | varchar(36)  | NO   | PRI | NULL    |       |</span><br><span class="hljs-string">| tenant_id | varchar(255) | YES  | MUL | NULL    |       |</span><br><span class="hljs-string">| resource  | varchar(255) | YES  |     | NULL    |       |</span><br><span class="hljs-string">| limit     | int(11)      | YES  |     | NULL    |       |</span><br><span class="hljs-string">+-----------+--------------+------+-----+---------+-------+</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Quota</span>(model_base.BASEV2, models_v2.HasId):<br>    <span class="hljs-string">&quot;&quot;&quot;Represent a single quota override for a tenant.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    If there is no row for a given tenant id and resource, then the</span><br><span class="hljs-string">    default for the quota class is used.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    tenant_id = sa.Column(sa.String(<span class="hljs-number">255</span>), index=<span class="hljs-literal">True</span>)<br>    resource = sa.Column(sa.String(<span class="hljs-number">255</span>))<br>    limit = sa.Column(sa.Integer)<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">quota配额的具体实现，根据数据库的配置内容，实现quota的控制，即quota的增删改查方法</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DbQuotaDriver</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Driver to perform necessary checks to enforce quotas and obtain quota</span><br><span class="hljs-string">    information.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    The default driver utilizes the local database.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    得到租户tenant的quota，执行neutron quota-show --tenant-id uuid时调用的方法</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_tenant_quotas</span>(<span class="hljs-params">context, resources, tenant_id</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;Given a list of resources, retrieve the quotas for the given</span><br><span class="hljs-string">        tenant.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param context: The request context, for access checks.</span><br><span class="hljs-string">        :param resources: A dictionary of the registered resource keys.</span><br><span class="hljs-string">        :param tenant_id: The ID of the tenant to return quotas for.</span><br><span class="hljs-string">        :return dict: from resource name to dict of name and limit</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br><br>        <span class="hljs-comment"># init with defaults    得到quota默认的配额项item，即所谓的network，subnet，port和router等，以及对应的值</span><br>        tenant_quota = <span class="hljs-built_in">dict</span>((key, resource.default)<br>                            <span class="hljs-keyword">for</span> key, resource <span class="hljs-keyword">in</span> resources.items())<br><br>        <span class="hljs-comment"># update with tenant specific limits    从数据库中获取最新的quota配置信息，并更新</span><br>        q_qry = context.session.query(Quota).filter_by(tenant_id=tenant_id)<br>        tenant_quota.update((q[<span class="hljs-string">&#x27;resource&#x27;</span>], q[<span class="hljs-string">&#x27;limit&#x27;</span>]) <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> q_qry)<br><br>        <span class="hljs-keyword">return</span> tenant_quota<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    quota的删除，即执行neutron quota-delete 的方法，删除之后，tenant将会集成默认的的quota配置</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">delete_tenant_quota</span>(<span class="hljs-params">context, tenant_id</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;Delete the quota entries for a given tenant_id.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Atfer deletion, this tenant will use default quota values in conf.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment">#从neutron。quotas数据库中查询到所有的quota配置之后，过略某个具体的tenant的quota，之后执行delete()方法将其删除</span><br>        <span class="hljs-keyword">with</span> context.session.begin():<br>            tenant_quotas = context.session.query(Quota)<br>            tenant_quotas = tenant_quotas.filter_by(tenant_id=tenant_id)<br>            tenant_quotas.delete()<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    得到所有租户tenant的配额资源，即执行neutron quota-list所查看的内容</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_all_quotas</span>(<span class="hljs-params">context, resources</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;Given a list of resources, retrieve the quotas for the all tenants.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param context: The request context, for access checks.</span><br><span class="hljs-string">        :param resources: A dictionary of the registered resource keys.</span><br><span class="hljs-string">        :return quotas: list of dict of tenant_id:, resourcekey1:</span><br><span class="hljs-string">        resourcekey2: ...</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        tenant_default = <span class="hljs-built_in">dict</span>((key, resource.default)<br>                              <span class="hljs-keyword">for</span> key, resource <span class="hljs-keyword">in</span> resources.items())<br><br>        all_tenant_quotas = &#123;&#125;<br><br>        <span class="hljs-keyword">for</span> quota <span class="hljs-keyword">in</span> context.session.query(Quota):<br>            tenant_id = quota[<span class="hljs-string">&#x27;tenant_id&#x27;</span>]<br><br>            <span class="hljs-comment"># avoid setdefault() because only want to copy when actually req&#x27;d</span><br>            <span class="hljs-comment">#如果quotas表中，没有找到配置选项，说明使用默认的quota配置，直接用默认的copy过来即可，有配置则继承quotas表中的配置</span><br>            tenant_quota = all_tenant_quotas.get(tenant_id)<br>            <span class="hljs-keyword">if</span> tenant_quota <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>                tenant_quota = tenant_default.copy()<br>                tenant_quota[<span class="hljs-string">&#x27;tenant_id&#x27;</span>] = tenant_id<br>                all_tenant_quotas[tenant_id] = tenant_quota<br><br>            tenant_quota[quota[<span class="hljs-string">&#x27;resource&#x27;</span>]] = quota[<span class="hljs-string">&#x27;limit&#x27;</span>]<br><br>        <span class="hljs-keyword">return</span> all_tenant_quotas.values()<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">                更新quota的配置，即执行neutron quota-update命令的具体实现</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update_quota_limit</span>(<span class="hljs-params">context, tenant_id, resource, limit</span>):<br>        <span class="hljs-keyword">with</span> context.session.begin():<br>            tenant_quota = context.session.query(Quota).filter_by(<br>                tenant_id=tenant_id, resource=resource).first()<br><br>            <span class="hljs-comment">#有配置内容，则更新，没有则根据资源的配置内容，在数据库中添加对应的条目</span><br>            <span class="hljs-keyword">if</span> tenant_quota:<br>                tenant_quota.update(&#123;<span class="hljs-string">&#x27;limit&#x27;</span>: limit&#125;)<br>            <span class="hljs-keyword">else</span>:<br>                tenant_quota = Quota(tenant_id=tenant_id,<br>                                     resource=resource,<br>                                     limit=limit)<br>                context.session.add(tenant_quota)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_get_quotas</span>(<span class="hljs-params">self, context, tenant_id, resources, keys</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;Retrieves the quotas for specific resources.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        A helper method which retrieves the quotas for the specific</span><br><span class="hljs-string">        resources identified by keys, and which apply to the current</span><br><span class="hljs-string">        context.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param context: The request context, for access checks.</span><br><span class="hljs-string">        :param tenant_id: the tenant_id to check quota.</span><br><span class="hljs-string">        :param resources: A dictionary of the registered resources.</span><br><span class="hljs-string">        :param keys: A list of the desired quotas to retrieve.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        desired = <span class="hljs-built_in">set</span>(keys)<br>        sub_resources = <span class="hljs-built_in">dict</span>((k, v) <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> resources.items()<br>                             <span class="hljs-keyword">if</span> k <span class="hljs-keyword">in</span> desired)<br><br>        <span class="hljs-comment"># Make sure we accounted for all of them...</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(keys) != <span class="hljs-built_in">len</span>(sub_resources):<br>            unknown = desired - <span class="hljs-built_in">set</span>(sub_resources.keys())<br>            <span class="hljs-keyword">raise</span> exceptions.QuotaResourceUnknown(unknown=<span class="hljs-built_in">sorted</span>(unknown))<br><br>        <span class="hljs-comment"># Grab and return the quotas (without usages)</span><br>        quotas = DbQuotaDriver.get_tenant_quotas(<br>            context, sub_resources, tenant_id)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>((k, v) <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> quotas.items())<br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    neutron quota的校验，即在执行过程中，调用该方法，确认tenant的quota是否在合理的范围内</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">limit_check</span>(<span class="hljs-params">self, context, tenant_id, resources, values</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;Check simple quota limits.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        For limits--those quotas for which there is no usage</span><br><span class="hljs-string">        synchronization function--this method checks that a set of</span><br><span class="hljs-string">        proposed values are permitted by the limit restriction.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        This method will raise a QuotaResourceUnknown exception if a</span><br><span class="hljs-string">        given resource is unknown or if it is not a simple limit</span><br><span class="hljs-string">        resource.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        If any of the proposed values is over the defined quota, an</span><br><span class="hljs-string">        OverQuota exception will be raised with the sorted list of the</span><br><span class="hljs-string">        resources which are too high.  Otherwise, the method returns</span><br><span class="hljs-string">        nothing.</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param context: The request context, for access checks.</span><br><span class="hljs-string">        :param tenant_id: The tenant_id to check the quota.</span><br><span class="hljs-string">        :param resources: A dictionary of the registered resources.</span><br><span class="hljs-string">        :param values: A dictionary of the values to check against the</span><br><span class="hljs-string">                       quota.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br><br>        <span class="hljs-comment"># Ensure no value is less than zero    quota的配置值不能为负数</span><br>        unders = [key <span class="hljs-keyword">for</span> key, val <span class="hljs-keyword">in</span> values.items() <span class="hljs-keyword">if</span> val &lt; <span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">if</span> unders:<br>            <span class="hljs-keyword">raise</span> exceptions.InvalidQuotaValue(unders=<span class="hljs-built_in">sorted</span>(unders))<br><br>        <span class="hljs-comment"># Get the applicable quotas</span><br>        quotas = self._get_quotas(context, tenant_id, resources, values.keys())<br><br>        <span class="hljs-comment"># Check the quotas and construct a list of the resources that</span><br>        <span class="hljs-comment"># would be put over limit by the desired values</span><br>        overs = [key <span class="hljs-keyword">for</span> key, val <span class="hljs-keyword">in</span> values.items()<br>                 <span class="hljs-keyword">if</span> quotas[key] &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> quotas[key] &lt; val]<br>        <span class="hljs-keyword">if</span> overs:<br>            <span class="hljs-keyword">raise</span> exceptions.OverQuota(overs=<span class="hljs-built_in">sorted</span>(overs))<br></code></pre></td></tr></table></figure>
+<p>摘自：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018750816">https://segmentfault.com/a/1190000018750816</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Openstack修改系统网络配额</div>
+      <div>http://maitianxin.github.io/2019/07/10/openstack/neutron_quotas/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年7月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/10/mysql/mysql_engine/" title="MySQL中InnoDB和MyISAM的存储引擎区别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MySQL中InnoDB和MyISAM的存储引擎区别</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/01/mysql/too_many_connections/" title="Mysql 1040 Too many connections 错误与解决办法">
+                        <span class="hidden-mobile">Mysql 1040 Too many connections 错误与解决办法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

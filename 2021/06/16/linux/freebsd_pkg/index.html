@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Linux">
+  
+    <meta name="description" content="FreeBSD12更新pkg源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeBSD更新pkg">
+<meta property="og:url" content="http://maitianxin.github.io/2021/06/16/linux/freebsd_pkg/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="FreeBSD12更新pkg源。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-16T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T07:48:21.103Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>FreeBSD更新pkg - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FreeBSD更新pkg"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-06-16 10:00" pubdate>
+          2021年6月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">FreeBSD更新pkg</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>1.PKG二进制仓储源文件存储目录 的使用方法</strong></p>
+<p>系统中常用的PKG二进制仓储源文件存储目录有两个，一个是系统级仓储文件目录，另一个是用户级仓储文件目录，系统级仓储文件目录为 &#x2F;etc&#x2F;pkg&#x2F;， 而用户级别仓储文件目录为 &#x2F;usr&#x2F;local&#x2F;etc&#x2F;pkg&#x2F;repos&#x2F;，这个目录在默认情况下并不存在于系统中，需要用户手工建立，而这两个路径均由 &#x2F;usr&#x2F;local&#x2F;etc&#x2F;pkg.conf 中 REPOS_DIR 变量控制，原则上可以由用户自由定制。</p>
+<p><strong>2. 建立通用户级PKG二进制仓储源文件存储目录</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">mkdir</span> -p /usr/local/etc/pkg/repos</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 建立常用的用户级PKG二进制仓储源文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">cd</span> /usr/local/etc/pkg/repos</span><br></code></pre></td></tr></table></figure>
+<p>建立仓储源文件的格式要求为：必须使用 .conf 为后缀名结尾的文件。最好使用 “0.” 或者 “1-“ 等数字为前缀的文件名，因为同时启用多个 PKG 源文件时，PKG源文件名的第一个数字前缀直接影响着源的使用优先级，其文件格式的建立如下：</p>
+<p>定制第一个仓储文件为 0.bme.conf</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">bme:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">  url:</span> <span class="hljs-string">&quot;pkg+http://pkg0.bme.freebsd.org/$&#123;ABI&#125;/quarterly&quot;</span>,<br><span class="hljs-symbol">  mirror_type:</span> <span class="hljs-string">&quot;srv&quot;</span>,<br><span class="hljs-symbol">  signature_type:</span> <span class="hljs-string">&quot;none&quot;</span>,<br><span class="hljs-symbol">  fingerprints:</span> <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span>,<br><span class="hljs-symbol">  enabled:</span> yes<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>定制第二个仓储文件为 1.nyi.conf</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">nyi:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">  url:</span> <span class="hljs-string">&quot;pkg+http://pkg0.nyi.freebsd.org/$&#123;ABI&#125;/quarterly&quot;</span>,<br><span class="hljs-symbol">  mirror_type:</span> <span class="hljs-string">&quot;srv&quot;</span>,<br><span class="hljs-symbol">  signature_type:</span> <span class="hljs-string">&quot;none&quot;</span>,<br><span class="hljs-symbol">  fingerprints:</span> <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span>,<br><span class="hljs-symbol">  enabled:</span> yes<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>定制第三个仓储文件为 2.ydx.conf</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">ydx:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">  url:</span> <span class="hljs-string">&quot;pkg+http://pkg0.ydx.freebsd.org/$&#123;ABI&#125;/quarterly&quot;</span>,<br><span class="hljs-symbol">  mirror_type:</span> <span class="hljs-string">&quot;srv&quot;</span>,<br><span class="hljs-symbol">  signature_type:</span> <span class="hljs-string">&quot;none&quot;</span>,<br><span class="hljs-symbol">  fingerprints:</span> <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span>,<br><span class="hljs-symbol">  enabled:</span> yes<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>定制第四个仓储文件为 3.isc.conf</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">isc:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">  url:</span> <span class="hljs-string">&quot;pkg+http://pkg0.isc.freebsd.org/$&#123;ABI&#125;/quarterly&quot;</span>,<br><span class="hljs-symbol">  mirror_type:</span> <span class="hljs-string">&quot;srv&quot;</span>,<br><span class="hljs-symbol">  signature_type:</span> <span class="hljs-string">&quot;none&quot;</span>,<br><span class="hljs-symbol">  fingerprints:</span> <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span>,<br><span class="hljs-symbol">  enabled:</span> yes<br><span class="hljs-punctuation">&#125;</span><br>定制第五个仓储文件为 <span class="hljs-number">4.</span>chinafreebsd.conf<br><span class="hljs-symbol"></span><br><span class="hljs-symbol">chinafreebsd:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">  url:</span> <span class="hljs-string">&quot;pkg+http://pkg.reebsd.cn/$&#123;ABI&#125;/quarterly&quot;</span>,<br><span class="hljs-symbol">  mirror_type:</span> <span class="hljs-string">&quot;srv&quot;</span>,<br><span class="hljs-symbol">  signature_type:</span> <span class="hljs-string">&quot;none&quot;</span>,<br><span class="hljs-symbol">  fingerprints:</span> <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span>,<br><span class="hljs-symbol">  enabled:</span> yes<br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>重要:<br>建议只选用一个最快的PKG源，而不是同时启用多个，如果同时启用了多个 PKG 源，那么在安装软件包或升级 PKG 源时候请使用 -r 选项指定要操作的 PKG 源。<br>比如：pkg update -r chinafreebsd 或者 pkg install -r chinafreebsd -y xxxx 。</p>
+<p><strong>4. 禁用默认 PKG 仓储源</strong></p>
+<p>可以直接禁用系统级源文件，换源的主要目的是增加 pkg install 命令下载速度，或者是不能忍受默认源的龟速，用户可以直接禁用系统默认的官方源。比如：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"># echo <span class="hljs-string">&quot;FreeBSD: &#123; enabled: no &#125;&quot;</span> &gt; <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/etc/</span>pkg<span class="hljs-regexp">/repos/</span>FreeBSD.conf<br></code></pre></td></tr></table></figure>
+<p>注意:<br>此步骤不是必须，如果保留系统仓储源文件，则系统默认源将和用户源一同有效</p>
+<p><strong>5. 更新源</strong><br>所有源在使用前最好进行一次强制更新。比如：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs erlang"># pkg update -f Updating nyi repository catalogue...<br>Fetching meta.txz: <span class="hljs-number">100</span><span class="hljs-comment">%    944 B   0.9kB/s    00:01</span><br>Fetching packagesite.txz: <span class="hljs-number">100</span><span class="hljs-comment">%    6 MiB 268.1kB/s    00:22</span><br>Processing entries: <span class="hljs-number">100</span><span class="hljs-comment">%</span><br>nyi repository update completed. <span class="hljs-number">25828</span> packages processed.<br>Updating ydx repository catalogue...<br>Fetching meta.txz: <span class="hljs-number">100</span><span class="hljs-comment">%    944 B   0.9kB/s    00:01</span><br>Fetching packagesite.txz: <span class="hljs-number">100</span><span class="hljs-comment">%    1 KiB   0.0kB/s    01:00</span><br>......<br></code></pre></td></tr></table></figure>
+<p>或者更新某个想要使用的源。比如：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># pkg update -r bme Updating bme repository catalogue...</span><br><span class="hljs-attribute">Fetching</span> meta.txz: <span class="hljs-number">100</span>%    <span class="hljs-number">944</span> B   <span class="hljs-number">0</span>.<span class="hljs-number">9</span>kB/s    <span class="hljs-number">00</span>:<span class="hljs-number">01</span><br><span class="hljs-attribute">Fetching</span> packagesite.txz: <span class="hljs-number">100</span>%    <span class="hljs-number">6</span> MiB <span class="hljs-number">268</span>.<span class="hljs-number">1</span>kB/s    <span class="hljs-number">00</span>:<span class="hljs-number">22</span><br><span class="hljs-attribute">Processing</span> entries: <span class="hljs-number">100</span>%<br><span class="hljs-attribute">bme</span> repository update completed. <span class="hljs-number">25828</span> packages processed.<br></code></pre></td></tr></table></figure>
+
+<p><strong>6. 验证当前生效源</strong></p>
+<p>使用 pkg -vv 命令可以打印当前 PKG 的配置信息，以及所有生效源配置，例如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><code class="hljs protobuf"># pkg -vv Version                 : <span class="hljs-number">1.8</span>.<span class="hljs-number">8</span><br>PKG_DBDIR = <span class="hljs-string">&quot;/var/db/pkg&quot;</span>;<br>PKG_CACHEDIR = <span class="hljs-string">&quot;/var/cache/pkg&quot;</span>;<br>PORTSDIR = <span class="hljs-string">&quot;/usr/ports&quot;</span>;<br>INDEXDIR = <span class="hljs-string">&quot;&quot;</span>;<br>INDEXFILE = <span class="hljs-string">&quot;INDEX-11&quot;</span>;<br>HANDLE_RC_SCRIPTS = <span class="hljs-literal">false</span>;<br>DEFAULT_ALWAYS_YES = <span class="hljs-literal">false</span>;<br>ASSUME_ALWAYS_YES = <span class="hljs-literal">false</span>;<br>REPOS_DIR [<br>    <span class="hljs-string">&quot;/etc/pkg/&quot;</span>,<br>    <span class="hljs-string">&quot;/usr/local/etc/pkg/repos/&quot;</span>,<br>]<br>PLIST_KEYWORDS_DIR = <span class="hljs-string">&quot;&quot;</span>;<br>SYSLOG = <span class="hljs-literal">true</span>;<br>ABI = <span class="hljs-string">&quot;FreeBSD:11:amd64&quot;</span>;<br>ALTABI = <span class="hljs-string">&quot;freebsd:11:x86:64&quot;</span>;<br>DEVELOPER_MODE = <span class="hljs-literal">false</span>;<br>VULNXML_SITE = <span class="hljs-string">&quot;http://vuxml.freebsd.org/freebsd/vuln.xml.bz2&quot;</span>;<br>FETCH_RETRY = <span class="hljs-number">3</span>;<br>PKG_PLUGINS_DIR = <span class="hljs-string">&quot;/usr/local/lib/pkg/&quot;</span>;<br>PKG_ENABLE_PLUGINS = <span class="hljs-literal">true</span>;<br>PLUGINS [<br>]<br>DEBUG_SCRIPTS = <span class="hljs-literal">false</span>;<br>PLUGINS_CONF_DIR = <span class="hljs-string">&quot;/usr/local/etc/pkg/&quot;</span>;<br>PERMISSIVE = <span class="hljs-literal">false</span>;<br>REPO_AUTOUPDATE = <span class="hljs-literal">true</span>;<br>NAMESERVER = <span class="hljs-string">&quot;&quot;</span>;<br>HTTP_USER_AGENT = <span class="hljs-string">&quot;pkg/1.8.8&quot;</span>;<br>EVENT_PIPE = <span class="hljs-string">&quot;&quot;</span>;<br>FETCH_TIMEOUT = <span class="hljs-number">30</span>;<br>UNSET_TIMESTAMP = <span class="hljs-literal">false</span>;<br>SSH_RESTRICT_DIR = <span class="hljs-string">&quot;&quot;</span>;<br>PKG_ENV &#123;<br>&#125;<br>PKG_SSH_ARGS = <span class="hljs-string">&quot;&quot;</span>;<br>DEBUG_LEVEL = <span class="hljs-number">0</span>;<br>ALIAS &#123;<br>    all-depends = <span class="hljs-string">&quot;query %dn-%dv&quot;</span>;<br>    annotations = <span class="hljs-string">&quot;info -A&quot;</span>;<br>    build-depends = <span class="hljs-string">&quot;info -qd&quot;</span>;<br>    cinfo = <span class="hljs-string">&quot;info -Cx&quot;</span>;<br>    comment = <span class="hljs-string">&quot;query -i \&quot;%c\&quot;&quot;</span>;<br>    csearch = <span class="hljs-string">&quot;search -Cx&quot;</span>;<br>    desc = <span class="hljs-string">&quot;query -i \&quot;%e\&quot;&quot;</span>;<br>    download = <span class="hljs-string">&quot;fetch&quot;</span>;<br>    iinfo = <span class="hljs-string">&quot;info -ix&quot;</span>;<br>    isearch = <span class="hljs-string">&quot;search -ix&quot;</span>;<br>    prime-list = <span class="hljs-string">&quot;query -e &#x27;%a = 0&#x27; &#x27;%n&#x27;&quot;</span>;<br>    leaf = <span class="hljs-string">&quot;query -e &#x27;%#r == 0&#x27; &#x27;%n-%v&#x27;&quot;</span>;<br>    list = <span class="hljs-string">&quot;info -ql&quot;</span>;<br>    noauto = <span class="hljs-string">&quot;query -e &#x27;%a == 0&#x27; &#x27;%n-%v&#x27;&quot;</span>;<br>    options = <span class="hljs-string">&quot;query -i \&quot;%n - %Ok: %Ov\&quot;&quot;</span>;<br>    origin = <span class="hljs-string">&quot;info -qo&quot;</span>;<br>    provided-depends = <span class="hljs-string">&quot;info -qb&quot;</span>;<br>    raw = <span class="hljs-string">&quot;info -R&quot;</span>;<br>    <span class="hljs-keyword">required</span>-depends = <span class="hljs-string">&quot;info -qr&quot;</span>;<br>    roptions = <span class="hljs-string">&quot;rquery -i \&quot;%n - %Ok: %Ov\&quot;&quot;</span>;<br>    shared-depends = <span class="hljs-string">&quot;info -qB&quot;</span>;<br>    show = <span class="hljs-string">&quot;info -f -k&quot;</span>;<br>    size = <span class="hljs-string">&quot;info -sq&quot;</span>;<br>&#125;<br>CUDF_SOLVER = <span class="hljs-string">&quot;&quot;</span>;<br>SAT_SOLVER = <span class="hljs-string">&quot;&quot;</span>;<br>RUN_SCRIPTS = <span class="hljs-literal">true</span>;<br>CASE_SENSITIVE_MATCH = <span class="hljs-literal">false</span>;<br>LOCK_WAIT = <span class="hljs-number">1</span>;<br>LOCK_RETRIES = <span class="hljs-number">5</span>;<br>SQLITE_PROFILE = <span class="hljs-literal">false</span>;<br>WORKERS_COUNT = <span class="hljs-number">0</span>;<br>READ_LOCK = <span class="hljs-literal">false</span>;<br>PLIST_ACCEPT_DIRECTORIES = <span class="hljs-literal">false</span>;<br>IP_VERSION = <span class="hljs-number">0</span>;<br>AUTOMERGE = <span class="hljs-literal">true</span>;<br>VERSION_SOURCE = <span class="hljs-string">&quot;&quot;</span>;<br>CONSERVATIVE_UPGRADE = <span class="hljs-literal">true</span>;<br>PKG_CREATE_VERBOSE = <span class="hljs-literal">false</span>;<br>AUTOCLEAN = <span class="hljs-literal">false</span>;<br>DOT_FILE = <span class="hljs-string">&quot;&quot;</span>;<br>REPOSITORIES &#123;<br>&#125;<br>VALID_URL_SCHEME [<br>    <span class="hljs-string">&quot;pkg+http&quot;</span>,<br>    <span class="hljs-string">&quot;pkg+https&quot;</span>,<br>    <span class="hljs-string">&quot;https&quot;</span>,<br>    <span class="hljs-string">&quot;http&quot;</span>,<br>    <span class="hljs-string">&quot;file&quot;</span>,<br>    <span class="hljs-string">&quot;ssh&quot;</span>,<br>    <span class="hljs-string">&quot;ftp&quot;</span>,<br>    <span class="hljs-string">&quot;ftps&quot;</span>,<br>    <span class="hljs-string">&quot;pkg+ssh&quot;</span>,<br>    <span class="hljs-string">&quot;pkg+ftp&quot;</span>,<br>    <span class="hljs-string">&quot;pkg+ftps&quot;</span>,<br>]<br>ALLOW_BASE_SHLIBS = <span class="hljs-literal">false</span>;<br>WARN_SIZE_LIMIT = <span class="hljs-number">1048576</span>;<br><br><br>Repositories:<br>  bme: &#123;<br>    url             : <span class="hljs-string">&quot;pkg+http://pkg0.bme.freebsd.org/FreeBSD:11:amd64/quarterly&quot;</span>,<br>    enabled         : yes,<br>    priority        : <span class="hljs-number">0</span>,<br>    mirror_type     : <span class="hljs-string">&quot;SRV&quot;</span>,<br>    fingerprints    : <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span><br>  &#125;<br>  nyi: &#123;<br>    url             : <span class="hljs-string">&quot;pkg+http://pkg0.nyi.freebsd.org/FreeBSD:11:amd64/quarterly&quot;</span>,<br>    enabled         : yes,<br>    priority        : <span class="hljs-number">0</span>,<br>    mirror_type     : <span class="hljs-string">&quot;SRV&quot;</span>,<br>    fingerprints    : <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span><br>  &#125;<br>  ydx: &#123;<br>    url             : <span class="hljs-string">&quot;pkg+http://pkg0.ydx.freebsd.org/FreeBSD:11:amd64/quarterly&quot;</span>,<br>    enabled         : yes,<br>    priority        : <span class="hljs-number">0</span>,<br>    mirror_type     : <span class="hljs-string">&quot;SRV&quot;</span>,<br>    fingerprints    : <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span><br>  &#125;<br>  isc: &#123;<br>    url             : <span class="hljs-string">&quot;pkg+http://pkg0.isc.freebsd.org/FreeBSD:11:amd64/quarterly&quot;</span>,<br>    enabled         : yes,<br>    priority        : <span class="hljs-number">0</span>,<br>    mirror_type     : <span class="hljs-string">&quot;SRV&quot;</span>,<br>    fingerprints    : <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span><br>  &#125;<br>  chinafreebsd: &#123;<br>    url             : <span class="hljs-string">&quot;pkg+http://pkg.freebsd.cn/FreeBSD:11:amd64/quarterly&quot;</span>,<br>    enabled         : yes,<br>    priority        : <span class="hljs-number">0</span>,<br>    mirror_type     : <span class="hljs-string">&quot;SRV&quot;</span>,<br>    fingerprints    : <span class="hljs-string">&quot;/usr/share/keys/pkg&quot;</span><br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>7. 用 -r 选项使用任意指定源安装软件</strong></p>
+<p>安装二进制安装包时可以使用 -r 选项选定要使用的源，源名称为源文件中第一行中冒号之前的名称 比如 bme</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># pkg install -y -r bme vim-lite</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FreeBSD更新pkg</div>
+      <div>http://maitianxin.github.io/2021/06/16/linux/freebsd_pkg/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年6月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/05/openstack/state_error/" title="Openstack 虚拟机修改ERROR状态为ACTIVE">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Openstack 虚拟机修改ERROR状态为ACTIVE</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/23/tools/libguestfs/" title="libguestfs 简介">
+                        <span class="hidden-mobile">libguestfs 简介</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

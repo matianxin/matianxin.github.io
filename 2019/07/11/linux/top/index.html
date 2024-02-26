@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Linux">
+  
+    <meta name="description" content="top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux top 命令详解">
+<meta property="og:url" content="http://maitianxin.github.io/2019/07/11/linux/top/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。下面详细介绍它的使用方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-11T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T02:01:27.841Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Linux top 命令详解 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux top 命令详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-07-11 10:00" pubdate>
+          2019年7月11日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Linux top 命令详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs tap">$ top<br><br>top - 10:14:44 up<span class="hljs-number"> 15 </span>days, 20:18, <span class="hljs-number"> 8 </span>users,  load average: 6.99, 3.36, 2.62<br>Tasks:<span class="hljs-number"> 985 </span>total,  <span class="hljs-number"> 2 </span>running,<span class="hljs-number"> 983 </span>sleeping,  <span class="hljs-number"> 0 </span>stopped,  <span class="hljs-number"> 0 </span>zombie<br>%Cpu(s):  0.7 us, 13.2 sy,  7.2 ni, 78.7 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st<br>KiB Mem :<span class="hljs-number"> 16142800 </span>total, <span class="hljs-number"> 1201456 </span>free,<span class="hljs-number"> 14020500 </span>used,  <span class="hljs-number"> 920844 </span>buff/cache<br>KiB Swap: <span class="hljs-number"> 8191996 </span>total, <span class="hljs-number"> 6339272 </span>free, <span class="hljs-number"> 1852724 </span>used. <span class="hljs-number"> 1396492 </span>avail Mem<br><br>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND<br>22195 root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span>4995348<span class="hljs-number"> 264576 </span><span class="hljs-number"> 18712 </span>S   7.9  1.6  26:02.20 gnome-shell<br>28393 root     <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span><span class="hljs-number"> 438932 </span><span class="hljs-number"> 95064 </span> <span class="hljs-number"> 6416 </span>S   3.3  0.6  16:52.90 python<br>25155 root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span><span class="hljs-number"> 163096 </span> <span class="hljs-number"> 3436 </span> <span class="hljs-number"> 1684 </span>S   1.7  0.0   0:22.93 top<br><span class="hljs-number"> 4092 </span>root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span><span class="hljs-number"> 413152 </span><span class="hljs-number"> 96096 </span> <span class="hljs-number"> 4812 </span>S   1.3  0.6  33:59.19 Xvnc<br>23570 nova     <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span><span class="hljs-number"> 456196 </span><span class="hljs-number"> 29632 </span> <span class="hljs-number"> 4524 </span>S   1.3  0.2 131:28.54 nova-conductor<br>23724 nova     <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span><span class="hljs-number"> 513364 </span><span class="hljs-number"> 42712 </span> <span class="hljs-number"> 4908 </span>S   1.3  0.3 135:03.59 nova-api<br>12833 neutron  <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span><span class="hljs-number"> 497996 </span>135052  <span class="hljs-number"> 4608 </span>S   1.0  0.8  59:59.61 neutron-dhcp-ag<br>20537 nobody   <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span><span class="hljs-number"> 254952 </span><span class="hljs-number"> 10144 </span> <span class="hljs-number"> 4152 </span>S   1.0  0.1   0:01.45 php-fpm<br>28987 root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span><span class="hljs-number"> 162940 </span> <span class="hljs-number"> 3248 </span> <span class="hljs-number"> 1620 </span>R   1.0  0.0   0:00.22 top<br><span class="hljs-number"> 5016 </span>root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span><span class="hljs-number"> 527732 </span> <span class="hljs-number"> 3760 </span> <span class="hljs-number"> 1500 </span>S   0.7  0.0   0:34.49 ibus-daemon<br><span class="hljs-number"> 7012 </span>root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span><span class="hljs-number"> 928104 </span><span class="hljs-number"> 26384 </span> <span class="hljs-number"> 8988 </span>S   0.7  0.2   9:19.03 gnome-terminal-<br><span class="hljs-number"> 8040 </span>openvsw+ <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span>1316280<span class="hljs-number"> 160352 </span><span class="hljs-number"> 12192 </span>S   0.7  1.0 170:13.54 ovs-vswitchd<br><span class="hljs-number"> 9408 </span>etcd     <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span>  11.6g  <span class="hljs-number"> 9896 </span> <span class="hljs-number"> 2052 </span>S   0.7  0.1 176:00.49 etcd<br>23586 glance   <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span><span class="hljs-number"> 502376 </span><span class="hljs-number"> 13540 </span> <span class="hljs-number"> 4984 </span>R   0.7  0.1  99:49.88 glance-api<br>   <span class="hljs-number"> 1 </span>root     <span class="hljs-number"> 26 </span> <span class="hljs-number"> 6 </span><span class="hljs-number"> 201696 </span> <span class="hljs-number"> 5700 </span> <span class="hljs-number"> 2100 </span>S   0.3  0.0   5:16.81 systemd<br>   <span class="hljs-number"> 3 </span>root     <span class="hljs-number"> 20 </span> <span class="hljs-number"> 0 </span>     <span class="hljs-number"> 0 </span>    <span class="hljs-number"> 0 </span>    <span class="hljs-number"> 0 </span>S   0.3  0.0   1:49.34 ksoftirqd/0<br></code></pre></td></tr></table></figure>
+
+<p><strong>统计信息区</strong><br>前五行是系统整体的统计信息。</p>
+<p>第一行是任务队列信息，同 uptime。 命令的执行结果。其内容如下：</p>
+<ul>
+<li>10:14:44 系统当前时间</li>
+<li>up 15 days, 20:18 系统运行时间，格式为时:分</li>
+<li>8 users 当前登录用户数</li>
+<li>load average: 6.99, 3.36, 2.62 系统负载，即任务队列的平均长度。<ul>
+<li>三个数值分别为1分钟、5分钟、15分钟前到现在的平均值。</li>
+</ul>
+</li>
+</ul>
+<p>第二、三行为进程和CPU的信息。当有多个CPU时，这些内容可能会超过两行。内容如下：</p>
+<p>Tasks:</p>
+<ul>
+<li>985 total 进程总数</li>
+<li>2 running 正在运行的进程数</li>
+<li>983 sleeping 睡眠的进程数</li>
+<li>0 stopped 停止的进程数</li>
+<li>0 zombie 僵尸进程数</li>
+</ul>
+<p>Cpu(s):</p>
+<ul>
+<li>0.7% us 用户空间占用CPU百分比</li>
+<li>13.2% sy 内核空间占用CPU百分比</li>
+<li>7.2% ni 用户进程空间内改变过优先级的进程占用CPU百分比</li>
+<li>78.7% id 空闲CPU百分比</li>
+<li>0.1% wa 等待输入输出的CPU时间百分比</li>
+<li>0.0% hi</li>
+<li>0.0% si</li>
+</ul>
+<p>最后两行为内存信息。内容如下：</p>
+<p>Mem:</p>
+<ul>
+<li>16142800 total 物理内存总量</li>
+<li>14020500 used 使用的物理内存总量</li>
+<li>1201456 free 空闲内存总量</li>
+<li>920844 buff&#x2F;cache 用作内核缓存的内存量</li>
+</ul>
+<p>Swap:</p>
+<ul>
+<li>8191996 total 交换区总量</li>
+<li>1852724k used 使用的交换区总量</li>
+<li>6339272 free 空闲交换区总量</li>
+<li>1396492 avail Mem</li>
+</ul>
+<p>统计信息区域的下方显示了各个进程的详细信息。首先来认识一下各列的含义。</p>
+<p>序号 列名 含义</p>
+<ul>
+<li>a PID 进程id</li>
+<li>b PPID 父进程id</li>
+<li>c RUSER Real user name</li>
+<li>d UID 进程所有者的用户id</li>
+<li>e USER 进程所有者的用户名</li>
+<li>f GROUP 进程所有者的组名</li>
+<li>g TTY 启动进程的终端名。不是从终端启动的进程则显示为 ?</li>
+<li>h PR 优先级</li>
+<li>i NI nice值。负值表示高优先级，正值表示低优先级</li>
+<li>j P 最后使用的CPU，仅在多CPU环境下有意义</li>
+<li>k %CPU 上次更新到现在的CPU时间占用百分比</li>
+<li>l TIME 进程使用的CPU时间总计，单位秒</li>
+<li>m TIME+ 进程使用的CPU时间总计，单位1&#x2F;100秒</li>
+<li>n %MEM 进程使用的物理内存百分比</li>
+<li>o VIRT 进程使用的虚拟内存总量，单位kb。VIRT&#x3D;SWAP+RES</li>
+<li>p SWAP 进程使用的虚拟内存中，被换出的大小，单位kb。</li>
+<li>q RES 进程使用的、未被换出的物理内存大小，单位kb。RES&#x3D;CODE+DATA</li>
+<li>r CODE 可执行代码占用的物理内存大小，单位kb</li>
+<li>s DATA 可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb</li>
+<li>t SHR 共享内存大小，单位kb</li>
+<li>u nFLT 页面错误次数</li>
+<li>v nDRT 最后一次写入到现在，被修改过的页面数。</li>
+<li>w S 进程状态。</li>
+<li>D&#x3D;不可中断的睡眠状态</li>
+<li>R&#x3D;运行</li>
+<li>S&#x3D;睡眠</li>
+<li>T&#x3D;跟踪&#x2F;停止</li>
+<li>Z&#x3D;僵尸进程</li>
+<li>x COMMAND 命令名&#x2F;命令行</li>
+<li>y WCHAN 若该进程在睡眠，则显示睡眠中的系统函数名</li>
+<li>z Flags 任务标志，参考</li>
+</ul>
+<p>默认情况下仅显示比较重要的<br>PID、USER、PR、NI、VIRT、RES、SHR、S、%CPU、%MEM、TIME+、COMMAND列。<br>可以通过下面的快捷键来更改显示内容。<br>更改显示内容<br>通过 f 键可以选择显示的内容。<br>按 f 键之后会显示列的列表，<br>按 a-z 即可显示或隐藏对应的列，最后按回车键确定。<br>按 o 键可以改变列的显示顺序。<br>按小写的 a-z 可以将相应的列向右移动，<br>而大写的 A-Z可以将相应的列向左移动。最后按回车键确定。<br>按大写的 F 或 O 键，然后按 a-z 可以将进程按照相应的列进行排序。<br>而大写的 R 键可以将当前的排序倒转。</p>
+<p><strong>命令使用</strong></p>
+<p><strong>1. 工具（命令）名称</strong><br>top</p>
+<p><strong>2. 工具（命令）作用</strong><br>显示系统当前的进程和其他状况；<br>top是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止.<br>比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
+<p><strong>3. 环境设置</strong><br>在Linux下使用。</p>
+<p><strong>4. 使用方法</strong></p>
+<p><strong>4.1 使用格式</strong><br>top [-][d][p][q][c][C][S][s][n]</p>
+<p><strong>4.2 参数说明</strong></p>
+<p>d 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。<br>p 通过指定监控进程ID来仅仅监控某个进程的状态。<br>q 该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。<br>S 指定累计模式<br>s 使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。<br>i 使top不显示任何闲置或者僵死进程。<br>c 显示整个命令行而不只是显示命令名</p>
+<p><strong>4.3 其他</strong><br>下面介绍在top命令执行过程中可以使用的一些交互命令。从使用角度来看，熟练的掌握这些命令比掌握选项还重要一些。这些命令都是单字母的，如果在命令行选项中使用了s选项，则可能其中一些命令会被屏蔽掉。</p>
+<ul>
+<li>Ctrl+L 擦除并且重写屏幕。</li>
+<li>h或者? 显示帮助画面，给出一些简短的命令总结说明。</li>
+<li>k 终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。</li>
+<li>i 忽略闲置和僵死进程。这是一个开关式命令。</li>
+<li>q 退出程序。</li>
+<li>r 重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。</li>
+<li>S 切换到累计模式。</li>
+<li>s 改变两次刷新之间的延迟时间。系统将提示用户输入新的时间，单位为s。如果有小数，就换算成ms。输入0值则系统将不断刷新，默认值是5s。需要注意的是如果设置太小的时间，很可能会引起不断刷新，从而根本来不及看清显示的情况，而且系统负载也会大大增加。</li>
+<li>f或者F 从当前显示中添加或者删除项目。</li>
+<li>o或者O 改变显示项目的顺序。</li>
+<li>l 切换显示平均负载和启动时间信息。</li>
+<li>m 切换显示内存信息。</li>
+<li>t 切换显示进程和CPU状态信息。</li>
+<li>c 切换显示命令名称和完整命令行。</li>
+<li>M 根据驻留内存大小进行排序。</li>
+<li>P 根据CPU使用百分比大小进行排序。</li>
+<li>T 根据时间&#x2F;累计时间进行排序。</li>
+<li>W 将当前设置写入~&#x2F;.toprc文件中。这是写top配置文件的推荐方法。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux top 命令详解</div>
+      <div>http://maitianxin.github.io/2019/07/11/linux/top/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年7月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/11/openstack/openstack_terminal/" title="Openstack命令行">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Openstack命令行</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/10/mysql/mysql_engine/" title="MySQL中InnoDB和MyISAM的存储引擎区别">
+                        <span class="hidden-mobile">MySQL中InnoDB和MyISAM的存储引擎区别</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

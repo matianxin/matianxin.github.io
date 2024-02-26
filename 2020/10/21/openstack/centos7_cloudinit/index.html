@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Openstack">
+  
+    <meta name="description" content="Centos7 CloudInit 安装使用及配置说明">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7 CloudInit 安装使用及配置说明">
+<meta property="og:url" content="http://maitianxin.github.io/2020/10/21/openstack/centos7_cloudinit/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="Centos7 CloudInit 安装使用及配置说明">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-21T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T07:19:39.137Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Openstack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Centos7 CloudInit 安装使用及配置说明 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Centos7 CloudInit 安装使用及配置说明"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-10-21 10:00" pubdate>
+          2020年10月21日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Centos7 CloudInit 安装使用及配置说明</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>1.使用本地YUM源安装cloud-init及其依赖，cloud-init版本18.2</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br></pre></td><td class="code"><pre><code class="hljs subunit">[root@localhost ~] yum -y install cloud-init<br><br>Loaded plugins: fastestmirror<br>Determining fastest mirrors<br>Resolving Dependencies<br>--&gt; Running transaction check<br>---&gt; Package cloud-init.x86_64 0:18.2<span class="hljs-string">-1</span>.el7.centos will be installed<br>--&gt; Processing Dependency: python-six for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: python-requests for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: python-prettytable for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: python-jsonpatch for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: python-jinja2 for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: pyserial for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: policycoreutils-python for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Processing Dependency: PyYAML for package: cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64<br>--&gt; Running transaction check<br>---&gt; Package PyYAML.x86_64 0:3.10<span class="hljs-string">-11</span>.el7 will be installed<br>--&gt; Processing Dependency: libyaml<span class="hljs-string">-0</span>.so.2()(64bit) for package: PyYAML<span class="hljs-string">-3</span>.10<span class="hljs-string">-11</span>.el7.x86_64<br>---&gt; Package policycoreutils-python.x86_64 0:2.5<span class="hljs-string">-29</span>.el7 will be installed<br>--&gt; Processing Dependency: policycoreutils = 2.5<span class="hljs-string">-29</span>.el7 for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: setools-libs &gt;= 3.3.8<span class="hljs-string">-4</span> for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libsemanage-python &gt;= 2.5<span class="hljs-string">-14</span> for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: audit-libs-python &gt;= 2.1.3<span class="hljs-string">-4</span> for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: python-IPy for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libqpol.so.1(VERS_1.4)(64bit) for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libqpol.so.1(VERS_1.2)(64bit) for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libcgroup for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libapol.so.4(VERS_4.0)(64bit) for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: checkpolicy for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libqpol.so.1()(64bit) for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libapol.so.4()(64bit) for package: policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>---&gt; Package pyserial.noarch 0:2.6<span class="hljs-string">-6</span>.el7 will be installed<br>---&gt; Package python-prettytable.noarch 0:0.7.2<span class="hljs-string">-3</span>.el7 will be installed<br>---&gt; Package python2-jinja2.noarch 0:2.10<span class="hljs-string">-2</span>.el7 will be installed<br>--&gt; Processing Dependency: python2-babel &gt;= 0.8 for package: python2-jinja2<span class="hljs-string">-2</span>.10<span class="hljs-string">-2</span>.el7.noarch<br>--&gt; Processing Dependency: python2-markupsafe for package: python2-jinja2<span class="hljs-string">-2</span>.10<span class="hljs-string">-2</span>.el7.noarch<br>---&gt; Package python2-jsonpatch.noarch 0:1.21<span class="hljs-string">-1</span>.el7 will be installed<br>--&gt; Processing Dependency: python2-jsonpointer for package: python2-jsonpatch<span class="hljs-string">-1</span>.21<span class="hljs-string">-1</span>.el7.noarch<br>---&gt; Package python2-requests.noarch 0:2.14.2<span class="hljs-string">-1</span>.el7 will be installed<br>--&gt; Processing Dependency: python2-urllib3 = 1.21.1 for package: python2-requests<span class="hljs-string">-2</span>.14.2<span class="hljs-string">-1</span>.el7.noarch<br>--&gt; Processing Dependency: python-idna for package: python2-requests<span class="hljs-string">-2</span>.14.2<span class="hljs-string">-1</span>.el7.noarch<br>--&gt; Processing Dependency: python-chardet for package: python2-requests<span class="hljs-string">-2</span>.14.2<span class="hljs-string">-1</span>.el7.noarch<br>---&gt; Package python2-six.noarch 0:1.10.0<span class="hljs-string">-9</span>.el7 will be installed<br>--&gt; Running transaction check<br>---&gt; Package audit-libs-python.x86_64 0:2.8.4<span class="hljs-string">-4</span>.el7 will be installed<br>--&gt; Processing Dependency: audit-libs(x86<span class="hljs-string">-64</span>) = 2.8.4<span class="hljs-string">-4</span>.el7 for package: audit-libs-python<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64<br>---&gt; Package checkpolicy.x86_64 0:2.5<span class="hljs-string">-8</span>.el7 will be installed<br>---&gt; Package libcgroup.x86_64 0:0.41<span class="hljs-string">-20</span>.el7 will be installed<br>---&gt; Package libsemanage-python.x86_64 0:2.5<span class="hljs-string">-14</span>.el7 will be installed<br>--&gt; Processing Dependency: libsemanage = 2.5<span class="hljs-string">-14</span>.el7 for package: libsemanage-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.el7.x86_64<br>---&gt; Package libyaml.x86_64 0:0.1.4<span class="hljs-string">-11</span>.el7_0 will be installed<br>---&gt; Package policycoreutils.x86_64 0:2.5<span class="hljs-string">-22</span>.el7 will be updated<br>---&gt; Package policycoreutils.x86_64 0:2.5<span class="hljs-string">-29</span>.el7 will be an update<br>--&gt; Processing Dependency: libsepol &gt;= 2.5<span class="hljs-string">-10</span> for package: policycoreutils<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>--&gt; Processing Dependency: libselinux-utils &gt;= 2.5<span class="hljs-string">-14</span> for package: policycoreutils<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64<br>---&gt; Package python-IPy.noarch 0:0.75<span class="hljs-string">-6</span>.el7 will be installed<br>---&gt; Package python-chardet.noarch 0:2.2.1<span class="hljs-string">-1</span>.el7_1 will be installed<br>---&gt; Package python2-babel.noarch 0:2.3.4<span class="hljs-string">-1</span>.el7 will be installed<br>--&gt; Processing Dependency: pytz for package: python2-babel<span class="hljs-string">-2</span>.3.4<span class="hljs-string">-1</span>.el7.noarch<br>---&gt; Package python2-idna.noarch 0:2.5<span class="hljs-string">-1</span>.el7 will be installed<br>---&gt; Package python2-jsonpointer.noarch 0:1.10<span class="hljs-string">-4</span>.el7 will be installed<br>---&gt; Package python2-markupsafe.x86_64 0:0.23<span class="hljs-string">-16</span>.el7 will be installed<br>---&gt; Package python2-urllib3.noarch 0:1.21.1<span class="hljs-string">-1</span>.el7 will be installed<br>--&gt; Processing Dependency: python2-pyOpenSSL for package: python2-urllib3<span class="hljs-string">-1</span>.21.1<span class="hljs-string">-1</span>.el7.noarch<br>--&gt; Processing Dependency: python-pysocks for package: python2-urllib3<span class="hljs-string">-1</span>.21.1<span class="hljs-string">-1</span>.el7.noarch<br>--&gt; Processing Dependency: python-cryptography for package: python2-urllib3<span class="hljs-string">-1</span>.21.1<span class="hljs-string">-1</span>.el7.noarch<br>---&gt; Package setools-libs.x86_64 0:3.3.8<span class="hljs-string">-4</span>.el7 will be installed<br>--&gt; Processing Dependency: libselinux &gt;= 2.5<span class="hljs-string">-14</span>.1 for package: setools-libs<span class="hljs-string">-3</span>.3.8<span class="hljs-string">-4</span>.el7.x86_64<br>--&gt; Running transaction check<br>---&gt; Package audit-libs.x86_64 0:2.8.1<span class="hljs-string">-3</span>.el7 will be updated<br>--&gt; Processing Dependency: audit-libs(x86<span class="hljs-string">-64</span>) = 2.8.1<span class="hljs-string">-3</span>.el7 for package: audit<span class="hljs-string">-2</span>.8.1<span class="hljs-string">-3</span>.el7.x86_64<br>---&gt; Package audit-libs.x86_64 0:2.8.4<span class="hljs-string">-4</span>.el7 will be an update<br>---&gt; Package libselinux.x86_64 0:2.5<span class="hljs-string">-12</span>.el7 will be updated<br>--&gt; Processing Dependency: libselinux(x86<span class="hljs-string">-64</span>) = 2.5<span class="hljs-string">-12</span>.el7 for package: libselinux-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64<br>---&gt; Package libselinux.x86_64 0:2.5<span class="hljs-string">-14</span>.1.el7 will be an update<br>---&gt; Package libselinux-utils.x86_64 0:2.5<span class="hljs-string">-12</span>.el7 will be updated<br>---&gt; Package libselinux-utils.x86_64 0:2.5<span class="hljs-string">-14</span>.1.el7 will be an update<br>---&gt; Package libsemanage.x86_64 0:2.5<span class="hljs-string">-11</span>.el7 will be updated<br>---&gt; Package libsemanage.x86_64 0:2.5<span class="hljs-string">-14</span>.el7 will be an update<br>---&gt; Package libsepol.x86_64 0:2.5<span class="hljs-string">-8</span>.1.el7 will be updated<br>---&gt; Package libsepol.x86_64 0:2.5<span class="hljs-string">-10</span>.el7 will be an update<br>---&gt; Package python2-cryptography.x86_64 0:2.1.4<span class="hljs-string">-2</span>.el7 will be installed<br>--&gt; Processing Dependency: python2-cffi &gt;= 1.7 for package: python2-cryptography<span class="hljs-string">-2</span>.1.4<span class="hljs-string">-2</span>.el7.x86_64<br>--&gt; Processing Dependency: python2-asn1crypto &gt;= 0.21 for package: python2-cryptography<span class="hljs-string">-2</span>.1.4<span class="hljs-string">-2</span>.el7.x86_64<br>--&gt; Processing Dependency: python-enum34 for package: python2-cryptography<span class="hljs-string">-2</span>.1.4<span class="hljs-string">-2</span>.el7.x86_64<br>---&gt; Package python2-pyOpenSSL.noarch 0:17.3.0<span class="hljs-string">-3</span>.el7 will be installed<br>---&gt; Package python2-pysocks.noarch 0:1.5.6<span class="hljs-string">-3</span>.el7 will be installed<br>---&gt; Package pytz.noarch 0:2016.10<span class="hljs-string">-2</span>.el7 will be installed<br>--&gt; Running transaction check<br>---&gt; Package audit.x86_64 0:2.8.1<span class="hljs-string">-3</span>.el7 will be updated<br>---&gt; Package audit.x86_64 0:2.8.4<span class="hljs-string">-4</span>.el7 will be an update<br>---&gt; Package libselinux-python.x86_64 0:2.5<span class="hljs-string">-12</span>.el7 will be updated<br>---&gt; Package libselinux-python.x86_64 0:2.5<span class="hljs-string">-14</span>.1.el7 will be an update<br>---&gt; Package python-enum34.noarch 0:1.0.4<span class="hljs-string">-1</span>.el7 will be installed<br>---&gt; Package python2-asn1crypto.noarch 0:0.23.0<span class="hljs-string">-2</span>.el7 will be installed<br>---&gt; Package python2-cffi.x86_64 0:1.11.2<span class="hljs-string">-1</span>.el7 will be installed<br>--&gt; Processing Dependency: python-pycparser for package: python2-cffi<span class="hljs-string">-1</span>.11.2<span class="hljs-string">-1</span>.el7.x86_64<br>--&gt; Running transaction check<br>---&gt; Package python-pycparser.noarch 0:2.14<span class="hljs-string">-1</span>.el7 will be installed<br>--&gt; Processing Dependency: python-ply for package: python-pycparser<span class="hljs-string">-2</span>.14<span class="hljs-string">-1</span>.el7.noarch<br>--&gt; Running transaction check<br>---&gt; Package python-ply.noarch 0:3.4<span class="hljs-string">-11</span>.el7 will be installed<br>--&gt; Finished Dependency Resolution<br><br>Dependencies Resolved<br><br>================================================================================<br> Package                     Arch        Version                Repository<br>                                                                           Size<br>================================================================================<br>Installing:<br> cloud-init                  x86_64      18.2<span class="hljs-string">-1</span>.el7.centos      kdpa      776 k<br>Installing for dependencies:<br> PyYAML                      x86_64      3.10<span class="hljs-string">-11</span>.el7            kdpa      153 k<br> audit-libs-python           x86_64      2.8.4<span class="hljs-string">-4</span>.el7            kdpa       76 k<br> checkpolicy                 x86_64      2.5<span class="hljs-string">-8</span>.el7              kdpa      295 k<br> libcgroup                   x86_64      0.41<span class="hljs-string">-20</span>.el7            kdpa       66 k<br> libsemanage-python          x86_64      2.5<span class="hljs-string">-14</span>.el7             kdpa      113 k<br> libyaml                     x86_64      0.1.4<span class="hljs-string">-11</span>.el7_0         kdpa       55 k<br> policycoreutils-python      x86_64      2.5<span class="hljs-string">-29</span>.el7             kdpa      456 k<br> pyserial                    noarch      2.6<span class="hljs-string">-6</span>.el7              kdpa      124 k<br> python-IPy                  noarch      0.75<span class="hljs-string">-6</span>.el7             kdpa       32 k<br> python-chardet              noarch      2.2.1<span class="hljs-string">-1</span>.el7_1          kdpa      227 k<br> python-enum34               noarch      1.0.4<span class="hljs-string">-1</span>.el7            kdpa       52 k<br> python-ply                  noarch      3.4<span class="hljs-string">-11</span>.el7             kdpa      123 k<br> python-prettytable          noarch      0.7.2<span class="hljs-string">-3</span>.el7            kdpa       37 k<br> python-pycparser            noarch      2.14<span class="hljs-string">-1</span>.el7             kdpa      104 k<br> python2-asn1crypto          noarch      0.23.0<span class="hljs-string">-2</span>.el7           kdpa      172 k<br> python2-babel               noarch      2.3.4<span class="hljs-string">-1</span>.el7            kdpa      4.8 M<br> python2-cffi                x86_64      1.11.2<span class="hljs-string">-1</span>.el7           kdpa      229 k<br> python2-cryptography        x86_64      2.1.4<span class="hljs-string">-2</span>.el7            kdpa      510 k<br> python2-idna                noarch      2.5<span class="hljs-string">-1</span>.el7              kdpa       94 k<br> python2-jinja2              noarch      2.10<span class="hljs-string">-2</span>.el7             kdpa      527 k<br> python2-jsonpatch           noarch      1.21<span class="hljs-string">-1</span>.el7             kdpa       21 k<br> python2-jsonpointer         noarch      1.10<span class="hljs-string">-4</span>.el7             kdpa       14 k<br> python2-markupsafe          x86_64      0.23<span class="hljs-string">-16</span>.el7            kdpa       32 k<br> python2-pyOpenSSL           noarch      17.3.0<span class="hljs-string">-3</span>.el7           kdpa       92 k<br> python2-pysocks             noarch      1.5.6<span class="hljs-string">-3</span>.el7            kdpa       20 k<br> python2-requests            noarch      2.14.2<span class="hljs-string">-1</span>.el7           kdpa      116 k<br> python2-six                 noarch      1.10.0<span class="hljs-string">-9</span>.el7           kdpa       31 k<br> python2-urllib3             noarch      1.21.1<span class="hljs-string">-1</span>.el7           kdpa      173 k<br> pytz                        noarch      2016.10<span class="hljs-string">-2</span>.el7          kdpa       46 k<br> setools-libs                x86_64      3.3.8<span class="hljs-string">-4</span>.el7            kdpa      620 k<br>Updating for dependencies:<br> audit                       x86_64      2.8.4<span class="hljs-string">-4</span>.el7            kdpa      250 k<br> audit-libs                  x86_64      2.8.4<span class="hljs-string">-4</span>.el7            kdpa      100 k<br> libselinux                  x86_64      2.5<span class="hljs-string">-14</span>.1.el7           kdpa      162 k<br> libselinux-python           x86_64      2.5<span class="hljs-string">-14</span>.1.el7           kdpa      235 k<br> libselinux-utils            x86_64      2.5<span class="hljs-string">-14</span>.1.el7           kdpa      151 k<br> libsemanage                 x86_64      2.5<span class="hljs-string">-14</span>.el7             kdpa      151 k<br> libsepol                    x86_64      2.5<span class="hljs-string">-10</span>.el7             kdpa      297 k<br> policycoreutils             x86_64      2.5<span class="hljs-string">-29</span>.el7             kdpa      916 k<br><br>Transaction Summary<br>================================================================================<br>Install  1 Package  (<span class="hljs-string">+30</span> Dependent packages)<br>Upgrade             (  8 Dependent packages)<br><br>Total download size: 12 M<br>Downloading packages:<br>Delta RPMs disabled because /usr/bin/applydeltarpm not installed.<br>--------------------------------------------------------------------------------<br>Total                                               16 MB/s |  12 MB  00:00     <br>Running transaction check<br>Running transaction test<br>Transaction test succeeded<br>Running transaction<br>  Updating   : libsepol<span class="hljs-string">-2</span>.5<span class="hljs-string">-10</span>.el7.x86_64                                  1/47 <br>  Updating   : libselinux<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.1.el7.x86_64                              2/47 <br>  Updating   : audit-libs<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64                               3/47 <br>  Installing : python2-idna<span class="hljs-string">-2</span>.5<span class="hljs-string">-1</span>.el7.noarch                               4/47 <br>  Installing : python2-six<span class="hljs-string">-1</span>.10.0<span class="hljs-string">-9</span>.el7.noarch                             5/47 <br>  Updating   : libsemanage<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.el7.x86_64                               6/47 <br>  Updating   : libselinux-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.1.el7.x86_64                       7/47 <br>  Installing : libsemanage-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.el7.x86_64                        8/47 <br>  Installing : audit-libs-python<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64                        9/47 <br>  Installing : setools-libs<span class="hljs-string">-3</span>.3.8<span class="hljs-string">-4</span>.el7.x86_64                            10/47 <br>  Updating   : libselinux-utils<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.1.el7.x86_64                       11/47 <br>  Updating   : policycoreutils<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64                          12/47 <br>  Installing : python-chardet<span class="hljs-string">-2</span>.2.1<span class="hljs-string">-1</span>.el7_1.noarch                        13/47 <br>  Installing : python-prettytable<span class="hljs-string">-0</span>.7.2<span class="hljs-string">-3</span>.el7.noarch                      14/47 <br>  Installing : libyaml<span class="hljs-string">-0</span>.1.4<span class="hljs-string">-11</span>.el7_0.x86_64                              15/47 <br>  Installing : PyYAML<span class="hljs-string">-3</span>.10<span class="hljs-string">-11</span>.el7.x86_64                                  16/47 <br>  Installing : python-ply<span class="hljs-string">-3</span>.4<span class="hljs-string">-11</span>.el7.noarch                               17/47 <br>  Installing : python-pycparser<span class="hljs-string">-2</span>.14<span class="hljs-string">-1</span>.el7.noarch                         18/47 <br>  Installing : python2-cffi<span class="hljs-string">-1</span>.11.2<span class="hljs-string">-1</span>.el7.x86_64                           19/47 <br>  Installing : checkpolicy<span class="hljs-string">-2</span>.5<span class="hljs-string">-8</span>.el7.x86_64                               20/47 <br>  Installing : python2-asn1crypto<span class="hljs-string">-0</span>.23.0<span class="hljs-string">-2</span>.el7.noarch                     21/47 <br>  Installing : python2-markupsafe<span class="hljs-string">-0</span>.23<span class="hljs-string">-16</span>.el7.x86_64                      22/47 <br>  Installing : python2-jsonpointer<span class="hljs-string">-1</span>.10<span class="hljs-string">-4</span>.el7.noarch                      23/47 <br>  Installing : python2-jsonpatch<span class="hljs-string">-1</span>.21<span class="hljs-string">-1</span>.el7.noarch                        24/47 <br>  Installing : python-IPy<span class="hljs-string">-0</span>.75<span class="hljs-string">-6</span>.el7.noarch                               25/47 <br>  Installing : python2-pysocks<span class="hljs-string">-1</span>.5.6<span class="hljs-string">-3</span>.el7.noarch                         26/47 <br>  Installing : pytz<span class="hljs-string">-2016</span>.10<span class="hljs-string">-2</span>.el7.noarch                                  27/47 <br>  Installing : python2-babel<span class="hljs-string">-2</span>.3.4<span class="hljs-string">-1</span>.el7.noarch                           28/47 <br>  Installing : python2-jinja2<span class="hljs-string">-2</span>.10<span class="hljs-string">-2</span>.el7.noarch                           29/47 <br>  Installing : pyserial<span class="hljs-string">-2</span>.6<span class="hljs-string">-6</span>.el7.noarch                                  30/47 <br>  Installing : python-enum34<span class="hljs-string">-1</span>.0.4<span class="hljs-string">-1</span>.el7.noarch                           31/47 <br>  Installing : python2-cryptography<span class="hljs-string">-2</span>.1.4<span class="hljs-string">-2</span>.el7.x86_64                    32/47 <br>  Installing : python2-pyOpenSSL<span class="hljs-string">-17</span>.3.0<span class="hljs-string">-3</span>.el7.noarch                      33/47 <br>  Installing : python2-urllib3<span class="hljs-string">-1</span>.21.1<span class="hljs-string">-1</span>.el7.noarch                        34/47 <br>  Installing : python2-requests<span class="hljs-string">-2</span>.14.2<span class="hljs-string">-1</span>.el7.noarch                       35/47 <br>  Installing : libcgroup<span class="hljs-string">-0</span>.41<span class="hljs-string">-20</span>.el7.x86_64                               36/47 <br>  Installing : policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64                   37/47 <br>  Installing : cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64                        38/47 <br>  Updating   : audit<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64                                   39/47 <br>  Cleanup    : policycoreutils<span class="hljs-string">-2</span>.5<span class="hljs-string">-22</span>.el7.x86_64                          40/47 <br>  Cleanup    : libsemanage<span class="hljs-string">-2</span>.5<span class="hljs-string">-11</span>.el7.x86_64                              41/47 <br>  Cleanup    : libselinux-utils<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64                         42/47 <br>  Cleanup    : libselinux-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64                        43/47 <br>  Cleanup    : libselinux<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64                               44/47 <br>  Cleanup    : audit<span class="hljs-string">-2</span>.8.1<span class="hljs-string">-3</span>.el7.x86_64                                   45/47 <br>  Cleanup    : audit-libs<span class="hljs-string">-2</span>.8.1<span class="hljs-string">-3</span>.el7.x86_64                              46/47 <br>  Cleanup    : libsepol<span class="hljs-string">-2</span>.5<span class="hljs-string">-8</span>.1.el7.x86_64                                47/47 <br>  Verifying  : libcgroup<span class="hljs-string">-0</span>.41<span class="hljs-string">-20</span>.el7.x86_64                                1/47 <br>  Verifying  : python-enum34<span class="hljs-string">-1</span>.0.4<span class="hljs-string">-1</span>.el7.noarch                            2/47 <br>  Verifying  : pyserial<span class="hljs-string">-2</span>.6<span class="hljs-string">-6</span>.el7.noarch                                   3/47 <br>  Verifying  : cloud-init<span class="hljs-string">-18</span>.2<span class="hljs-string">-1</span>.el7.centos.x86_64                         4/47 <br>  Verifying  : audit-libs<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64                               5/47 <br>  Verifying  : audit<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64                                    6/47 <br>  Verifying  : pytz<span class="hljs-string">-2016</span>.10<span class="hljs-string">-2</span>.el7.noarch                                   7/47 <br>  Verifying  : python2-pysocks<span class="hljs-string">-1</span>.5.6<span class="hljs-string">-3</span>.el7.noarch                          8/47 <br>  Verifying  : python-IPy<span class="hljs-string">-0</span>.75<span class="hljs-string">-6</span>.el7.noarch                                9/47 <br>  Verifying  : python2-cffi<span class="hljs-string">-1</span>.11.2<span class="hljs-string">-1</span>.el7.x86_64                           10/47 <br>  Verifying  : python2-requests<span class="hljs-string">-2</span>.14.2<span class="hljs-string">-1</span>.el7.noarch                       11/47 <br>  Verifying  : python2-jsonpatch<span class="hljs-string">-1</span>.21<span class="hljs-string">-1</span>.el7.noarch                        12/47 <br>  Verifying  : python2-jsonpointer<span class="hljs-string">-1</span>.10<span class="hljs-string">-4</span>.el7.noarch                      13/47 <br>  Verifying  : setools-libs<span class="hljs-string">-3</span>.3.8<span class="hljs-string">-4</span>.el7.x86_64                            14/47 <br>  Verifying  : policycoreutils<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64                          15/47 <br>  Verifying  : python2-markupsafe<span class="hljs-string">-0</span>.23<span class="hljs-string">-16</span>.el7.x86_64                      16/47 <br>  Verifying  : python2-urllib3<span class="hljs-string">-1</span>.21.1<span class="hljs-string">-1</span>.el7.noarch                        17/47 <br>  Verifying  : libsemanage-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.el7.x86_64                       18/47 <br>  Verifying  : python2-asn1crypto<span class="hljs-string">-0</span>.23.0<span class="hljs-string">-2</span>.el7.noarch                     19/47 <br>  Verifying  : python2-babel<span class="hljs-string">-2</span>.3.4<span class="hljs-string">-1</span>.el7.noarch                           20/47 <br>  Verifying  : libsemanage<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.el7.x86_64                              21/47 <br>  Verifying  : libsepol<span class="hljs-string">-2</span>.5<span class="hljs-string">-10</span>.el7.x86_64                                 22/47 <br>  Verifying  : python2-cryptography<span class="hljs-string">-2</span>.1.4<span class="hljs-string">-2</span>.el7.x86_64                    23/47 <br>  Verifying  : checkpolicy<span class="hljs-string">-2</span>.5<span class="hljs-string">-8</span>.el7.x86_64                               24/47 <br>  Verifying  : python-ply<span class="hljs-string">-3</span>.4<span class="hljs-string">-11</span>.el7.noarch                               25/47 <br>  Verifying  : python2-six<span class="hljs-string">-1</span>.10.0<span class="hljs-string">-9</span>.el7.noarch                            26/47 <br>  Verifying  : libselinux-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.1.el7.x86_64                      27/47 <br>  Verifying  : audit-libs-python<span class="hljs-string">-2</span>.8.4<span class="hljs-string">-4</span>.el7.x86_64                       28/47 <br>  Verifying  : python-pycparser<span class="hljs-string">-2</span>.14<span class="hljs-string">-1</span>.el7.noarch                         29/47 <br>  Verifying  : libyaml<span class="hljs-string">-0</span>.1.4<span class="hljs-string">-11</span>.el7_0.x86_64                              30/47 <br>  Verifying  : python-prettytable<span class="hljs-string">-0</span>.7.2<span class="hljs-string">-3</span>.el7.noarch                      31/47 <br>  Verifying  : libselinux-utils<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.1.el7.x86_64                       32/47 <br>  Verifying  : policycoreutils-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-29</span>.el7.x86_64                   33/47 <br>  Verifying  : python2-idna<span class="hljs-string">-2</span>.5<span class="hljs-string">-1</span>.el7.noarch                              34/47 <br>  Verifying  : python-chardet<span class="hljs-string">-2</span>.2.1<span class="hljs-string">-1</span>.el7_1.noarch                        35/47 <br>  Verifying  : PyYAML<span class="hljs-string">-3</span>.10<span class="hljs-string">-11</span>.el7.x86_64                                  36/47 <br>  Verifying  : libselinux<span class="hljs-string">-2</span>.5<span class="hljs-string">-14</span>.1.el7.x86_64                             37/47 <br>  Verifying  : python2-jinja2<span class="hljs-string">-2</span>.10<span class="hljs-string">-2</span>.el7.noarch                           38/47 <br>  Verifying  : python2-pyOpenSSL<span class="hljs-string">-17</span>.3.0<span class="hljs-string">-3</span>.el7.noarch                      39/47 <br>  Verifying  : libsemanage<span class="hljs-string">-2</span>.5<span class="hljs-string">-11</span>.el7.x86_64                              40/47 <br>  Verifying  : libselinux-python<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64                        41/47 <br>  Verifying  : audit-libs<span class="hljs-string">-2</span>.8.1<span class="hljs-string">-3</span>.el7.x86_64                              42/47 <br>  Verifying  : libselinux-utils<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64                         43/47 <br>  Verifying  : policycoreutils<span class="hljs-string">-2</span>.5<span class="hljs-string">-22</span>.el7.x86_64                          44/47 <br>  Verifying  : audit<span class="hljs-string">-2</span>.8.1<span class="hljs-string">-3</span>.el7.x86_64                                   45/47 <br>  Verifying  : libsepol<span class="hljs-string">-2</span>.5<span class="hljs-string">-8</span>.1.el7.x86_64                                46/47 <br>  Verifying  : libselinux<span class="hljs-string">-2</span>.5<span class="hljs-string">-12</span>.el7.x86_64                               47/47 <br><br>Installed:<br>  cloud-init.x86_64 0:18.2<span class="hljs-string">-1</span>.el7.centos                                         <br><br>Dependency Installed:<br>  PyYAML.x86_64 0:3.10<span class="hljs-string">-11</span>.el7                                                   <br>  audit-libs-python.x86_64 0:2.8.4<span class="hljs-string">-4</span>.el7                                        <br>  checkpolicy.x86_64 0:2.5<span class="hljs-string">-8</span>.el7                                                <br>  libcgroup.x86_64 0:0.41<span class="hljs-string">-20</span>.el7                                                <br>  libsemanage-python.x86_64 0:2.5<span class="hljs-string">-14</span>.el7                                        <br>  libyaml.x86_64 0:0.1.4<span class="hljs-string">-11</span>.el7_0                                               <br>  policycoreutils-python.x86_64 0:2.5<span class="hljs-string">-29</span>.el7                                    <br>  pyserial.noarch 0:2.6<span class="hljs-string">-6</span>.el7                                                   <br>  python-IPy.noarch 0:0.75<span class="hljs-string">-6</span>.el7                                                <br>  python-chardet.noarch 0:2.2.1<span class="hljs-string">-1</span>.el7_1                                         <br>  python-enum34.noarch 0:1.0.4<span class="hljs-string">-1</span>.el7                                            <br>  python-ply.noarch 0:3.4<span class="hljs-string">-11</span>.el7                                                <br>  python-prettytable.noarch 0:0.7.2<span class="hljs-string">-3</span>.el7                                       <br>  python-pycparser.noarch 0:2.14<span class="hljs-string">-1</span>.el7                                          <br>  python2-asn1crypto.noarch 0:0.23.0<span class="hljs-string">-2</span>.el7                                      <br>  python2-babel.noarch 0:2.3.4<span class="hljs-string">-1</span>.el7                                            <br>  python2-cffi.x86_64 0:1.11.2<span class="hljs-string">-1</span>.el7                                            <br>  python2-cryptography.x86_64 0:2.1.4<span class="hljs-string">-2</span>.el7                                     <br>  python2-idna.noarch 0:2.5<span class="hljs-string">-1</span>.el7                                               <br>  python2-jinja2.noarch 0:2.10<span class="hljs-string">-2</span>.el7                                            <br>  python2-jsonpatch.noarch 0:1.21<span class="hljs-string">-1</span>.el7                                         <br>  python2-jsonpointer.noarch 0:1.10<span class="hljs-string">-4</span>.el7                                       <br>  python2-markupsafe.x86_64 0:0.23<span class="hljs-string">-16</span>.el7                                       <br>  python2-pyOpenSSL.noarch 0:17.3.0<span class="hljs-string">-3</span>.el7                                       <br>  python2-pysocks.noarch 0:1.5.6<span class="hljs-string">-3</span>.el7                                          <br>  python2-requests.noarch 0:2.14.2<span class="hljs-string">-1</span>.el7                                        <br>  python2-six.noarch 0:1.10.0<span class="hljs-string">-9</span>.el7                                             <br>  python2-urllib3.noarch 0:1.21.1<span class="hljs-string">-1</span>.el7                                         <br>  pytz.noarch 0:2016.10<span class="hljs-string">-2</span>.el7                                                   <br>  setools-libs.x86_64 0:3.3.8<span class="hljs-string">-4</span>.el7                                             <br><br>Dependency Updated:<br>  audit.x86_64 0:2.8.4<span class="hljs-string">-4</span>.el7                                                    <br>  audit-libs.x86_64 0:2.8.4<span class="hljs-string">-4</span>.el7                                               <br>  libselinux.x86_64 0:2.5<span class="hljs-string">-14</span>.1.el7                                              <br>  libselinux-python.x86_64 0:2.5<span class="hljs-string">-14</span>.1.el7                                       <br>  libselinux-utils.x86_64 0:2.5<span class="hljs-string">-14</span>.1.el7                                        <br>  libsemanage.x86_64 0:2.5<span class="hljs-string">-14</span>.el7                                               <br>  libsepol.x86_64 0:2.5<span class="hljs-string">-10</span>.el7                                                  <br>  policycoreutils.x86_64 0:2.5<span class="hljs-string">-29</span>.el7                                           <br><br>Complete!<br></code></pre></td></tr></table></figure>
+
+<p>2.查看cloud-init是否安装成功。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift">[root<span class="hljs-meta">@localhost</span> <span class="hljs-operator">~</span>] cloud<span class="hljs-operator">-</span><span class="hljs-keyword">init</span> <span class="hljs-operator">-</span>v<br><span class="hljs-regexp">/bin/</span>cloud<span class="hljs-operator">-</span><span class="hljs-keyword">init</span> <span class="hljs-number">18.2</span><br></code></pre></td></tr></table></figure>
+
+<p>3.cloud-init默认日志路径：&#x2F;var&#x2F;log&#x2F;cloud-init.log</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Centos7 CloudInit 安装使用及配置说明</div>
+      <div>http://maitianxin.github.io/2020/10/21/openstack/centos7_cloudinit/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年10月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/21/openstack/cloudinit_intro/" title="Cloud-init 初始化虚拟机配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Cloud-init 初始化虚拟机配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/20/openstack/windows_cloudbase_init/" title="Windows CloudBase-Init 安装使用及配置说明">
+                        <span class="hidden-mobile">Windows CloudBase-Init 安装使用及配置说明</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

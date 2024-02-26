@@ -1,0 +1,760 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Openstack">
+  
+    <meta name="description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack Queens 环境搭建（九）Cinder服务">
+<meta property="og:url" content="http://maitianxin.github.io/2019/08/01/openstack/queens/openstack_queens_install_9/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="OpenStack项目是一个开源云计算平台，支持所有类型的云环境。该项目旨在实现简单，大规模的可扩展性和丰富的功能。OpenStack通过各种补充服务提供基础架构即服务（IaaS）解决方案。每项服务都提供了一个应用程序编程接口（API），以促进这种集成。本文涵盖了使用适用于具有足够Linux经验的OpenStack新用户的功能性示例体系结构，逐步部署主要OpenStack服务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-01T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T02:32:29.095Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Openstack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Openstack Queens 环境搭建（九）Cinder服务 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Openstack Queens 环境搭建（九）Cinder服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-08-01 10:00" pubdate>
+          2019年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Openstack Queens 环境搭建（九）Cinder服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="存储服务概念"><a href="#存储服务概念" class="headerlink" title="存储服务概念"></a>存储服务概念</h3><hr>
+<p>OpenStack块存储服务(Cinder)将持久性存储添加到一个虚拟机。块存储提供了管理卷的基础设施，并与OpenStack计算交互，为实例提供卷。该服务还支持卷快照和卷类型的管理。<br>块存储服务由以下组件组成:<br><strong>cinder-api</strong><br>接收API请求，并将其路由到cinders -volume以进行操作。<br><strong>cinder-volume</strong><br>直接与块存储服务和进程(如cinders -scheduler)交互。它还可以通过消息队列与这些进程进行交互。cinders -volume服务响应发送到块存储服务的读写请求，以维护状态。它可以通过驱动程序体系结构与各种存储提供者交互。<br><strong>cinder-scheduler daemon</strong><br>选择要在其上创建卷的最佳存储提供程序节点。与nova-scheduler类似的组件。<br><strong>cinder-backup daemon</strong><br>Cinder-backup服务向备份存储提供程序提供任何类型的备份卷。与cinders -volume服务一样，它可以通过驱动程序体系结构与各种存储提供者交互。<br><strong>Messaging queue</strong><br>在块存储进程之间路由信息。</p>
+<h3 id="Controller节点"><a href="#Controller节点" class="headerlink" title="Controller节点"></a>Controller节点</h3><hr>
+<h4 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h4><p>在安装和配置块存储服务之前，必须创建数据库、服务凭据和API端点。</p>
+<h4 id="创建数据库，为cinder数据库授权"><a href="#创建数据库，为cinder数据库授权" class="headerlink" title="创建数据库，为cinder数据库授权"></a>创建数据库，为cinder数据库授权</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"># mysql <span class="hljs-operator">-</span>uroot <span class="hljs-operator">-</span>p123456<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">create</span> database cinder;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> privileges <span class="hljs-keyword">on</span> cinder.<span class="hljs-operator">*</span> <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;cinder&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> privileges <span class="hljs-keyword">on</span> cinder.<span class="hljs-operator">*</span> <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;cinder&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="创建服务凭据"><a href="#创建服务凭据" class="headerlink" title="创建服务凭据"></a>创建服务凭据</h4><p>生成管理凭证，以获得访问只有管理CLI命令:</p>
+<p><code># . admin-openrc</code></p>
+<h4 id="创建cinder用户"><a href="#创建cinder用户" class="headerlink" title="创建cinder用户"></a>创建cinder用户</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># openstack <span class="hljs-keyword">user</span> <span class="hljs-keyword">create</span> <span class="hljs-comment">--domain default --password-prompt cinder</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="添加admin角色到cinder用户中"><a href="#添加admin角色到cinder用户中" class="headerlink" title="添加admin角色到cinder用户中"></a>添加admin角色到cinder用户中</h4><p>（无返回值）</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># openstack <span class="hljs-keyword">role</span> <span class="hljs-keyword">add</span> <span class="hljs-comment">--project service --user cinder admin</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="创建cinder2和cinderv3服务实体"><a href="#创建cinder2和cinderv3服务实体" class="headerlink" title="创建cinder2和cinderv3服务实体"></a>创建cinder2和cinderv3服务实体</h4><p>注：块存储服务需要两个服务实体。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># openstack service create --name cinderv2 \</span><br>   --description <span class="hljs-string">&quot;OpenStack Block Storage&quot;</span> volumev2<br><span class="hljs-comment"># openstack service create --name cinderv3 \</span><br>   --description <span class="hljs-string">&quot;OpenStack Block Storage&quot;</span> volumev3<br><span class="hljs-comment"># openstack endpoint create --region RegionOne \</span><br>   volumev3 public http:<span class="hljs-regexp">//</span>controller:<span class="hljs-number">8776</span><span class="hljs-regexp">/v3/</span>%\(project_id\)s<br><span class="hljs-comment"># openstack endpoint create --region RegionOne \</span><br>   volumev3 internal http:<span class="hljs-regexp">//</span>controller:<span class="hljs-number">8776</span><span class="hljs-regexp">/v3/</span>%\(project_id\)s<br><span class="hljs-comment"># openstack endpoint create --region RegionOne \</span><br>  volumev3 admin http:<span class="hljs-regexp">//</span>controller:<span class="hljs-number">8776</span><span class="hljs-regexp">/v3/</span>%\(project_id\)s<br></code></pre></td></tr></table></figure>
+
+<h4 id="安装配置组件"><a href="#安装配置组件" class="headerlink" title="安装配置组件"></a>安装配置组件</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install -y openstack-cinder</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>编辑 &#x2F;etc&#x2F;cinder&#x2F;cinder.conf文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">vi  /etc/cinder/cinder.conf</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>在[database]选项，配置数据库访问:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[database]</span><br><span class="hljs-attr">connection</span> = mysql+pymysql://cinder:<span class="hljs-number">123456</span>@controller/cinder<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在[DEFAULT]部分，配置RabbitMQ消息队列访问:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">transport_url</span> = rabbit://openstack:<span class="hljs-number">123456</span>@controller<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在[DEFAULT]和[keystone_authtoken]选项，配置身份服务访问:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">auth_strategy</span> = keystone<br><span class="hljs-section">[keystone_authtoken]</span><br><span class="hljs-attr">auth_uri</span> = http://controller:<span class="hljs-number">5000</span><br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span><br><span class="hljs-attr">memcached_servers</span> = controller:<span class="hljs-number">11211</span><br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">project_domain_id</span> = default<br><span class="hljs-attr">user_domain_id</span> = default<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">username</span> = cinder<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在[DEFAULT]选项，配置my_ip选项，使用Controller节点的管理接口IP地址:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">my_ip</span> = <span class="hljs-number">192.100</span>.<span class="hljs-number">200.68</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在[oslo_concurrency]选项，配置lock路径:</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[oslo_concurrency]</span><br><span class="hljs-attr">lock_path</span> = /var/lib/cinder/tmp<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>同步块存储数据（忽略此输出中的任何弃用消息。）</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">su -s /bin//sh -c <span class="hljs-string">&quot;cinder-manage db sync&quot;</span> cinder</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>配置计算服务以使用块存储<br>编辑 &#x2F;etc&#x2F;nova&#x2F;nova.conf 文件<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># vi /etc/nova/nova.conf</span><br><span class="hljs-section">[cinder]</span><br><span class="hljs-attr">os_regioon_name</span> = RegionOne<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h4><figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs thrift"># systemctl restart openstack-nova-api.<span class="hljs-keyword">service</span><br># systemctl enable openstack-cinder-api.<span class="hljs-keyword">service</span> openstack-cinder-scheduler.<span class="hljs-keyword">service</span><br># systemctl start openstack-cinder-api.<span class="hljs-keyword">service</span> openstack-cinder-scheduler.<span class="hljs-keyword">service</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="存储节点"><a href="#存储节点" class="headerlink" title="存储节点"></a>存储节点</h3><hr>
+<h4 id="安装LVM包"><a href="#安装LVM包" class="headerlink" title="安装LVM包"></a>安装LVM包</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install -y lvm2</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="启动LVM元数据服务，并将其配置为在系统启动时启动"><a href="#启动LVM元数据服务，并将其配置为在系统启动时启动" class="headerlink" title="启动LVM元数据服务，并将其配置为在系统启动时启动"></a>启动LVM元数据服务，并将其配置为在系统启动时启动</h4><p>注：一些发行版默认安装LVM。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl <span class="hljs-built_in">enable</span> lvm2-lvmetad.service</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">systemctl start lvm2-lvmetad.service</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="创建LVM物理卷-dev-sdb"><a href="#创建LVM物理卷-dev-sdb" class="headerlink" title="创建LVM物理卷&#x2F;dev&#x2F;sdb:"></a>创建LVM物理卷&#x2F;dev&#x2F;sdb:</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># pvcreate /dev/sdb</span><br>  Physical <span class="hljs-keyword">volume</span><span class="language-bash"> <span class="hljs-string">&quot;/dev/sdb&quot;</span> successfully created.</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="创建LVM卷组cinder-volmes"><a href="#创建LVM卷组cinder-volmes" class="headerlink" title="创建LVM卷组cinder-volmes"></a>创建LVM卷组cinder-volmes</h4><p>注：块存储服务在此卷组中创建逻辑卷。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-comment"># vgcreate cinder-volumes /dev/sdb</span><br>  Volume <span class="hljs-keyword">group</span> <span class="hljs-title">&quot;cinder-volumes</span><span class="hljs-string">&quot; successfully created</span><br></code></pre></td></tr></table></figure>
+
+<p>只有实例可以访问块存储卷。然而，底层操作系统管理与卷相关联的设备。默认情况下，LVM卷扫描工具扫描&#x2F;dev目录中包含卷的块存储设备。如果项目在其卷上使用LVM，那么扫描工具将检测这些卷并试图缓存它们，这会导致底层操作系统和项目卷出现各种问题。必须重新配置LVM，以便只扫描包含cinder-volume卷组的设备。</p>
+<h4 id="编辑-etc-lvm-lvm-conf文件"><a href="#编辑-etc-lvm-lvm-conf文件" class="headerlink" title="编辑 &#x2F;etc&#x2F;lvm&#x2F;lvm.conf文件"></a>编辑 &#x2F;etc&#x2F;lvm&#x2F;lvm.conf文件</h4><p>在devices选项，添加一个接受&#x2F;dev&#x2F;sdb设备并拒绝所有其他设备的过滤器:<br>注：filter数组中的每个项都以for accept或r for reject开头，并包含一个用于设备名称的正则表达式。数组必须以r&#x2F;结束。<br>*&#x2F; 拒绝任何剩余设备。您可以使用vgs -vvvv命令来测试过滤器。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">devices &#123;<br><span class="hljs-string">...</span><br>filter = [ <span class="hljs-string">&quot;a/sdb/&quot;</span>, <span class="hljs-string">&quot;r/.*/&quot;</span>]<br><span class="hljs-string">...</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="安装配置组件-1"><a href="#安装配置组件-1" class="headerlink" title="安装配置组件"></a>安装配置组件</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># yum install -y openstack-cinder targetcli python-keystone</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="编辑-etc-cinder-cinder-conf-文件"><a href="#编辑-etc-cinder-cinder-conf-文件" class="headerlink" title="编辑&#x2F;etc&#x2F;cinder&#x2F;cinder.conf 文件"></a>编辑&#x2F;etc&#x2F;cinder&#x2F;cinder.conf 文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">vi /etc/cinder/cinder.conf</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[database]选项，配置数据库访问</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[database]</span><br><span class="hljs-attr">connection</span> = mysql+pymysql://cinder:<span class="hljs-number">123456</span>@controller/cinder<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[DEFAULT]选项，配置RabbitMQ消息队列访问:</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">transport_url</span> = rabbit://openstack:<span class="hljs-number">123456</span>@controller<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[DEFAULT]和[keystone_authtoken]选项，配置身份服务访问:</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">auth_strategy</span> = keystone<br><span class="hljs-section">[keystone_authtoken]</span><br><span class="hljs-attr">auth_uri</span> = http://controller:<span class="hljs-number">5000</span><br><span class="hljs-attr">auth_url</span> = http://controller:<span class="hljs-number">5000</span><br><span class="hljs-attr">memcached_servers</span> = controller:<span class="hljs-number">11211</span><br><span class="hljs-attr">auth_type</span> = password<br><span class="hljs-attr">project_domain_id</span> = default<br><span class="hljs-attr">user_domain_id</span> = default<br><span class="hljs-attr">project_name</span> = service<br><span class="hljs-attr">username</span> = cinder<br><span class="hljs-attr">password</span> = <span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[DEFAULT]部分，配置my_ip选项:</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">my_ip</span> = <span class="hljs-number">192.168</span>.<span class="hljs-number">100.69</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[DEFAULT]选项，配置映像服务API的位置:</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">glance_api_servers</span> = http://controller:<span class="hljs-number">9292</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[lvm]选项，使用lvm驱动程序、Cinder卷组、iSCSI协议和iSCSI服务配置lvm后端。如果[lvm]部分不存在，则添加它:</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[lvm]</span><br><span class="hljs-attr">volume_driver</span> = cinder.volume.drivers.lvm.LVMVolumeDriver<br><span class="hljs-attr">volume_group</span> = cinder-volumes<br><span class="hljs-attr">iscsi_protocol</span> = iscsi<br><span class="hljs-attr">iscsi_helper</span> = lioadm<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[DEFAULT]部分，启用LVM后端:</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[DEFAULT]</span><br><span class="hljs-attr">enabled_backends</span> = lvm<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在[oslo_concurrency]节中，配置lock路径</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[oslo_concurrency]</span><br><span class="hljs-attr">lock_path</span> = /var/lib/cinder/tmp<br></code></pre></td></tr></table></figure>
+
+<h4 id="开启服务"><a href="#开启服务" class="headerlink" title="开启服务"></a>开启服务</h4><p>启动块存储卷服务，包括它的依赖项，并配置它们在系统启动时启动:</p>
+<figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs thrift"># systemctl enable openstack-cinder-volume.<span class="hljs-keyword">service</span> target.<span class="hljs-keyword">service</span><br># systemctl restart openstack-cinder-volume.<span class="hljs-keyword">service</span> target.<span class="hljs-keyword">service</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="校验操作"><a href="#校验操作" class="headerlink" title="校验操作"></a>校验操作</h4><p>生成临时环境变量</p>
+<p><code># . admin-openrc</code><br>列出服务组件以验证每个流程的成功启动:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># openstack volume service list</span><br></code></pre></td></tr></table></figure>
+
+<p>创建一个1G的卷，并查看其状态</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta"># cinder create --display-name myVolume 1</span><br><span class="hljs-meta"># cinder list</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Openstack Queens 环境搭建（九）Cinder服务</div>
+      <div>http://maitianxin.github.io/2019/08/01/openstack/queens/openstack_queens_install_9/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年8月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/08/02/openstack/queens/openstack_queens_install_10/" title="Openstack Queens 环境搭建（十）Ceilometer + Gnocchi">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Openstack Queens 环境搭建（十）Ceilometer + Gnocchi</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/29/openstack/queens/openstack_queens_install_8/" title="Openstack Queens 环境搭建（八）计算节点实例首次孵化优化">
+                        <span class="hidden-mobile">Openstack Queens 环境搭建（八）计算节点实例首次孵化优化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

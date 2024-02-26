@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Tools">
+  
+    <meta name="description" content="centos7部署dzzoffice最新版详细教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7部署dzzoffice私有网盘">
+<meta property="og:url" content="http://maitianxin.github.io/2020/06/01/tools/dzzoffice/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="centos7部署dzzoffice最新版详细教程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-01T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-26T06:40:07.180Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>centos7部署dzzoffice私有网盘 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="centos7部署dzzoffice私有网盘"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-06-01 10:00" pubdate>
+          2020年6月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          932 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">centos7部署dzzoffice私有网盘</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="搭建Lamp框架-Linux-apache-mariadb-php"><a href="#搭建Lamp框架-Linux-apache-mariadb-php" class="headerlink" title="搭建Lamp框架(Linux+apache+mariadb+php)"></a>搭建Lamp框架(Linux+apache+mariadb+php)</h3><p>1.首先安装wget</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y wget<br></code></pre></td></tr></table></figure>
+
+<p>2.下载epel额外包及YUM源配置</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/epel/</span>RPM-GPG-KEY-EPEL-<span class="hljs-number">7</span>       <span class="hljs-comment">#epel额外包的密钥</span><br>wget https:<span class="hljs-regexp">//mi</span>rrors.aliyun.com<span class="hljs-regexp">/epel/</span>epel-release-latest-<span class="hljs-number">7</span>.noarch.rpm    <span class="hljs-comment">#epel额外包的yum的配置</span><br></code></pre></td></tr></table></figure>
+
+<p>3.导入密钥，为了防止安装错误，安装yum的配置文件</p>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs capnproto">rpm --<span class="hljs-keyword">import</span>   RPM-GPG-KEY-EPEL-<span class="hljs-number">7</span>    <span class="hljs-comment">#导入epel额外包的密钥</span><br>rpm -ivh epel-release-latest-<span class="hljs-number">7</span>.noarch.rpm    <span class="hljs-comment">#安装epel额外包的yum配置</span><br></code></pre></td></tr></table></figure>
+
+<p>4.安装升级php，作为依赖httpd都安装好了，apache(httpd)和php就安装好了</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stylus">yum install -y php php-mysql           #升级php的软件包<br><br> php                x86_64        <span class="hljs-number">7.3</span>.<span class="hljs-number">4</span>-<span class="hljs-number">1</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.remi</span>              php           <span class="hljs-number">3.2</span> M<br>为依赖而安装:<br> libargon2          x86_64        <span class="hljs-number">20161029</span>-<span class="hljs-number">3</span><span class="hljs-selector-class">.el7</span>                epel           <span class="hljs-number">23</span> k<br> apr                x86_64        <span class="hljs-number">1.4</span>.<span class="hljs-number">8</span>-<span class="hljs-number">3</span><span class="hljs-selector-class">.el7_4</span>.<span class="hljs-number">1</span>               centos        <span class="hljs-number">103</span> k<br> apr-util           x86_64        <span class="hljs-number">1.5</span>.<span class="hljs-number">2</span>-<span class="hljs-number">6</span><span class="hljs-selector-class">.el7</span>                   centos         <span class="hljs-number">92</span> k<br> httpd              x86_64        <span class="hljs-number">2.4</span>.<span class="hljs-number">6</span>-<span class="hljs-number">88</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.centos</span>           centos        <span class="hljs-number">2.7</span> M<br> httpd-tools        x86_64        <span class="hljs-number">2.4</span>.<span class="hljs-number">6</span>-<span class="hljs-number">88</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.centos</span>           centos         <span class="hljs-number">90</span> k<br> mailcap            noarch        <span class="hljs-number">2.1</span>.<span class="hljs-number">41</span>-<span class="hljs-number">2</span><span class="hljs-selector-class">.el7</span>                  centos         <span class="hljs-number">31</span> k<br> php-cli            x86_64        <span class="hljs-number">7.3</span>.<span class="hljs-number">4</span>-<span class="hljs-number">1</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.remi</span>              php           <span class="hljs-number">4.9</span> M<br> php-common         x86_64        <span class="hljs-number">7.3</span>.<span class="hljs-number">4</span>-<span class="hljs-number">1</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.remi</span>              php           <span class="hljs-number">1.1</span> M<br> php-json           x86_64        <span class="hljs-number">7.3</span>.<span class="hljs-number">4</span>-<span class="hljs-number">1</span><span class="hljs-selector-class">.el7</span><span class="hljs-selector-class">.remi</span>              php            <span class="hljs-number">63</span> k<br>———————————<br></code></pre></td></tr></table></figure>
+
+<p>5.安装mariadb数据库</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta">yum -y install mariadb mariadb-<span class="hljs-keyword">server</span>    <span class="hljs-meta">#安装mariadb数据库</span><br></code></pre></td></tr></table></figure>
+
+<p>6.关闭防火墙服务及关机selinux</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">systemctl stop firewalld<br>systemctl <span class="hljs-built_in">disable</span> firewalld<br>setenforce 0<br>vim /etc/selinux<span class="hljs-built_in">/config </span>-&gt; disabled<br></code></pre></td></tr></table></figure>
+
+<p>7.开启mariadb和httpd,设置开机自动启动；执行脚本，设置mariadb数据库参数</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">[root@localhost ~]<span class="hljs-comment"># systemctl start mariadb      #开启mariadb</span><br>[root@localhost ~]<span class="hljs-comment"># systemctl start  httpd       #开启httpd</span><br>[root@localhost ~]<span class="hljs-comment"># systemctl enable mariadb     #设置开机自动开启mariadb</span><br>[root@localhost ~]<span class="hljs-comment"># systemctl enable httpd       #设置开机自动开启httpd</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql_secure_installation                <span class="hljs-comment">#执行脚本</span><br>...<span class="hljs-comment">#省略部分内容</span><br>Set root password? [Y/n] y<br>New password: 123456<br>Re-enter new password: 123456<br>Password updated successfully!<br>Reload privilege tables now? [Y/n] y<br> ... Success!<br>Disallow root login remotely? [Y/n] n<br> ... skipping.<br>Remove <span class="hljs-built_in">test</span> database and access to it? [Y/n] y<br> - Dropping <span class="hljs-built_in">test</span> database...<br> ... Success!<br> - Removing privileges on <span class="hljs-built_in">test</span> database...<br> ... Success!<br>Reload privilege tables now? [Y/n] y<br> ... Success!<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装dzzoffice"><a href="#安装dzzoffice" class="headerlink" title="安装dzzoffice"></a>安装dzzoffice</h3><p>1.下载最新稳定版本，我现在是2.02为最新版</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/zyx0814/</span>dzzoffice<span class="hljs-regexp">/archive/</span><span class="hljs-number">2.02</span>.tar.gz<br></code></pre></td></tr></table></figure>
+
+<p>2.解压文件</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -zxvf <span class="hljs-number">2</span>.<span class="hljs-number">02</span>.tar.gz<br></code></pre></td></tr></table></figure>
+
+<p>3.将解压后的文件移动到apache的目录下，并改名为dzzoffice</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">mv</span> dzzoffice-<span class="hljs-number">2</span>.<span class="hljs-number">02</span> /var/www/html/dzzoffice<br></code></pre></td></tr></table></figure>
+
+<p>4.然后将目录权限授权给apache启动用户，默认为apache用户，如果自己修改了，则以你修改的为准</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /var/www/html/<br><span class="hljs-built_in">chown</span> -R apache. dzzoffice<br></code></pre></td></tr></table></figure>
+
+<p>5.启动apache</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nsis"><span class="hljs-params">system</span>ctl start httpd<br><span class="hljs-params">system</span>ctl enable httpd    <span class="hljs-comment"># 设置开机启动apache</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="访问页面进行安装"><a href="#访问页面进行安装" class="headerlink" title="访问页面进行安装"></a>访问页面进行安装</h3><p>上一步已启动apache，现在可以直接访问你服务器的ip或域名，后跟dzzoffice的路径来来访问dzzoffice，<br>访问如：<a target="_blank" rel="noopener" href="http://ip/dzzoffice">http://ip/dzzoffice</a> 会自动跳转到安装界面：</p>
+<p>安装完成后，手动删除安装文件</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">rm -rf <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>dzzoffice<span class="hljs-regexp">/install/i</span>ndex.php<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装onlyoffice插件"><a href="#安装onlyoffice插件" class="headerlink" title="安装onlyoffice插件"></a>安装onlyoffice插件</h3><p>dzzoffice本身不支持excel或者文档的在线浏览和编辑，需要额外的第三方工具进行支持，<br>在官方文档中也有说明：<a target="_blank" rel="noopener" href="http://dzzoffice.com/corpus/list?cid=3#">http://dzzoffice.com/corpus/list?cid=3#</a></p>
+<p>这里我现在安装onlyoffice作为在线文档服务器，部署方式，由于直接在服务器上部署比较繁琐，这里我直接使用docker部署docker版本。首先安装docker，然后用docker启动onlyoffice</p>
+<p>1.删除旧版本，确保机器没有docker</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta">yum remove docker docker-<span class="hljs-keyword">client</span> docker-<span class="hljs-keyword">client</span>-latest docker-<span class="hljs-keyword">common</span> \<br>    docker-latest docker-latest-logrotate docker-logrotate docker-engine<br></code></pre></td></tr></table></figure>
+
+<p>2.安装依赖</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">yum</span> install -y yum-utils device-mapper-persistent-<span class="hljs-class"><span class="hljs-keyword">data</span> lvm2</span><br></code></pre></td></tr></table></figure>
+
+<p>3.安装yum仓库</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">yum-config-manager --<span class="hljs-built_in">add</span>-repo https://download.docker.<span class="hljs-keyword">com</span>/linux/centos/docker-<span class="hljs-keyword">ce</span>.repo<br></code></pre></td></tr></table></figure>
+
+<p>4.安装docker</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">yum install docker-<span class="hljs-keyword">ce</span> docker-<span class="hljs-keyword">ce</span>-cli containerd.io<br></code></pre></td></tr></table></figure>
+
+<p>5.启动docker</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nsis"><span class="hljs-params">system</span>ctl start docker<br><span class="hljs-params">system</span>ctl enable docker<br></code></pre></td></tr></table></figure>
+
+<p>6.启动onlyoffice，使用本地的8000端口</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">docker <span class="hljs-built_in">run</span> -i -t -d -p8000:80 <span class="hljs-attribute">--restart</span>=always onlyoffice/documentserver<br></code></pre></td></tr></table></figure>
+
+<p>启动onlyoffice服务后，在浏览器中访问<a href="http://ip:8000查看是否可以正常使用，如果出现如下界面，则为正常">http://ip:8000查看是否可以正常使用，如果出现如下界面，则为正常</a><br>√ Document Server is running</p>
+<p>请输入OnlyOffice Document Server API地址:<br><a target="_blank" rel="noopener" href="http://dzzoffice_ip:8000/">http://DZZOFFICE_IP:8000</a></p>
+<p>填写您的onlyoffice Document Server API地址，如:<a target="_blank" rel="noopener" href="http://192.168.0.2:90/">http://192.168.0.2:90/</a> 根据你的文档服务器填写<br>请输入文件服务器(dzzoffice服务器)地址:</p>
+<p>填写您的文件服务器地址，如:<a target="_blank" rel="noopener" href="http://dzzoffice.com:90/,%E6%A0%B9%E6%8D%AE%E4%BD%A0%E7%9A%84dzzoffice%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%B0%E5%9D%80%E5%A1%AB%E5%86%99,%E7%95%99%E7%A9%BA%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E5%9C%B0%E5%9D%80%E3%80%82tips:%E8%AE%BE%E7%BD%AE%E5%86%85%E7%BD%91%E5%9C%B0%E5%9D%80%E5%8F%AF%E4%BB%A5%E6%8F%90%E9%AB%98%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E9%80%9F%E5%BA%A6">http://dzzoffice.com:90/,根据你的dzzoffice服务器地址填写,留空使用当前地址。tips:设置内网地址可以提高文件传输速度</a></p>
+<p>缩略图后缀列表:<br>支持生成缩略图的后缀列表，用小写字母。多个用英文逗号隔开，如：pdf,doc,docx,ppt,pptx,xls,xlsx<br>点击保存，然后启动应用</p>
+<p>然后在文档，excel应用中，就可以直接点击在线浏览和编辑啦。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7/" class="print-no-link">#工具</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>centos7部署dzzoffice私有网盘</div>
+      <div>http://maitianxin.github.io/2020/06/01/tools/dzzoffice/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年6月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/06/01/linux/too_many/" title="Too many open files的四种解决办法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Too many open files的四种解决办法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/20/other/ctf_reverse/" title="CTF中Reverse介绍">
+                        <span class="hidden-mobile">CTF中Reverse介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
