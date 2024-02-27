@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/github-mark.png">
+  <link rel="icon" href="/img/github-mark.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Matianxin">
+  <meta name="keywords" content="Ceph">
+  
+    <meta name="description" content="Ceph-Luminous版本安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ceph-Luminous版本安装">
+<meta property="og:url" content="http://maitianxin.github.io/2022/03/14/other/ceph/index.html">
+<meta property="og:site_name" content="圣特伦特星">
+<meta property="og:description" content="Ceph-Luminous版本安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maitianxin.github.io/images/ceph.png">
+<meta property="og:image" content="http://maitianxin.github.io/images/ceph2.png">
+<meta property="article:published_time" content="2022-03-14T06:44:00.000Z">
+<meta property="article:modified_time" content="2024-02-27T06:31:26.657Z">
+<meta property="article:author" content="Matianxin">
+<meta property="article:tag" content="Ceph">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maitianxin.github.io/images/ceph.png">
+  
+  
+  
+  <title>Ceph-Luminous版本安装 - 圣特伦特星</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maitianxin.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>圣特伦特星</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Ceph-Luminous版本安装"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-14 14:44" pubdate>
+          2022年3月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Ceph-Luminous版本安装</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>基于CentOS 7.5 1804<br>ceph-deploy 版本：2.0.1<br>ceph版本：12.2.13 luminous (stable)</p>
+<h3 id="设置yum源"><a href="#设置yum源" class="headerlink" title="设置yum源"></a>设置yum源</h3><p>在全部控制与计算节点设置epel与ceph yum源（base yum源已更新），以ceph205节点为例；</p>
+<p>epel：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/">http://mirrors.aliyun.com/repo/</a></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs swift">[root<span class="hljs-meta">@ceph205</span> <span class="hljs-operator">~</span>]# wget <span class="hljs-operator">-</span><span class="hljs-type">O</span> <span class="hljs-regexp">/etc/</span>yum.repos.d<span class="hljs-regexp">/epel-7.repo http:/</span><span class="hljs-regexp">/mirrors.aliyun.com/</span>repo<span class="hljs-operator">/</span>epel<span class="hljs-operator">-</span><span class="hljs-number">7</span>.repo<br></code></pre></td></tr></table></figure>
+
+<p>ceph：<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/ceph/">http://mirrors.aliyun.com/ceph/</a></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 编辑ceph.repo文件，使用luminous版本</span><br><span class="hljs-section">[root@ceph205 ~]</span><span class="hljs-comment"># vim /etc/yum.repos.d/ceph.repo </span><br><span class="hljs-section">[ceph]</span><br><span class="hljs-attr">name</span>=ceph<br><span class="hljs-attr">baseurl</span>=http://mirrors.aliyun.com/ceph/rpm-luminous/el7/x<span class="hljs-number">86_64</span>/<br><span class="hljs-attr">enabled</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">gpgcheck</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">type</span>=rpm-md<br><span class="hljs-attr">gpgkey</span>=http://mirrors.aliyun.com/ceph/keys/release.asc<br><span class="hljs-section">[ceph-noarch]</span><br><span class="hljs-attr">name</span>=cephnoarch<br><span class="hljs-attr">baseurl</span>=http://mirrors.aliyun.com/ceph/rpm-luminous/el7/noarch/<br><span class="hljs-attr">enabled</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">gpgcheck</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">type</span>=rpm-md<br><span class="hljs-attr">gpgkey</span>=http://mirrors.aliyun.com/ceph/keys/release.asc<br><span class="hljs-section">[ceph-source]</span><br><span class="hljs-attr">name</span>=ceph-source<br><span class="hljs-attr">baseurl</span>=http://mirrors.aliyun.com/ceph/rpm-luminous/el7/SRPMS/<br><span class="hljs-attr">enabled</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">gpgcheck</span>=<span class="hljs-number">1</span><br><span class="hljs-attr">type</span>=rpm-md<br><span class="hljs-attr">gpgkey</span>=http://mirrors.aliyun.com/ceph/keys/release.asc<br><span class="hljs-section">[root@ceph205 ~]</span><span class="hljs-comment"># yum clean all</span><br><span class="hljs-section">[root@ceph205 ~]</span><span class="hljs-comment"># yum makecache</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h3><p>所有节点设置相应主机名即可，以ceph205节点为例；<br>[root@localhost ~]# hostnamectl set-hostname ceph205</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-string">[root@ceph205 ~]</span>$ cat /etc/hosts<br><span class="hljs-number">127.0.0.1</span>   localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::<span class="hljs-number">1</span>         localhost localhost.localdomain localhost6 localhost6.localdomain6<br><br><span class="hljs-number">192.168.1.201</span>  controller<br><span class="hljs-number">192.168.1.202</span>  compute202<br><span class="hljs-number">192.168.1.205</span>  ceph205<br></code></pre></td></tr></table></figure>
+
+<h3 id="设置ntp"><a href="#设置ntp" class="headerlink" title="设置ntp"></a>设置ntp</h3><p>所有节点保持时钟同步，配置ceph205节点为时钟服务器<br>[root@ceph205 ~]# yum -y install chrony</p>
+<p>所有节点保持时钟同步，<br>配置ceph205节点为例配置controller</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">server</span> controller iburst<br><span class="hljs-attribute">allow</span> <span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span><br></code></pre></td></tr></table></figure>
+
+<p>所有节点服务重启，并查看同步状态</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs maxima">systemctl <span class="hljs-built_in">restart</span> chronyd.service<br>chronyc sources -v<br></code></pre></td></tr></table></figure>
+
+<h3 id="关闭防火墙selinux"><a href="#关闭防火墙selinux" class="headerlink" title="关闭防火墙selinux"></a>关闭防火墙selinux</h3><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@ceph205</span> ~]<span class="hljs-meta"># systemctl stop firewalld</span><br>[root<span class="hljs-symbol">@ceph205</span> ~]<span class="hljs-meta"># systemctl disable firewalld</span><br>[root<span class="hljs-symbol">@ceph205</span> ~]<span class="hljs-meta"># setenforce 0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p>所有节点执行</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">[root@ceph205 ~]<span class="hljs-comment"># useradd -d /home/ceph -m cephde</span><br>[root@ceph205 ~]<span class="hljs-comment"># passwd cephde</span><br>New password: <span class="hljs-number">123456</span><br>Retype <span class="hljs-keyword">new</span> password: <span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 修改visudo文件，使cephde用户在sudo列表中；<br># 在<span class="hljs-number">92</span>行” root    <span class="hljs-keyword">ALL</span><span class="hljs-operator">=</span>(<span class="hljs-keyword">ALL</span>)       <span class="hljs-keyword">ALL</span>”下新增一行：” cephde    <span class="hljs-keyword">ALL</span><span class="hljs-operator">=</span>(<span class="hljs-keyword">ALL</span>)       <span class="hljs-keyword">ALL</span>”<br>[root<span class="hljs-variable">@ceph205</span> <span class="hljs-operator">~</span>]# visudo<br> cephde    <span class="hljs-keyword">ALL</span><span class="hljs-operator">=</span>(<span class="hljs-keyword">ALL</span>)       <span class="hljs-keyword">ALL</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="用户赋权"><a href="#用户赋权" class="headerlink" title="用户赋权"></a>用户赋权</h3><p>设置cephde用户具备无密码sudo（root）权限；<br>切换到cephde用户下操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@ceph205 ~]<span class="hljs-comment"># su - cephde</span><br>[cephde@ceph205 ~]$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;cephde ALL = (root) NOPASSWD:ALL&quot;</span> | sudo <span class="hljs-built_in">tee</span> /etc/sudoers.d/cephde<br>[sudo] password <span class="hljs-keyword">for</span> cephde:123456<br>[cephde@ceph205 ~]$ sudo <span class="hljs-built_in">chmod</span> 0440 /etc/sudoers.d/cephde<br></code></pre></td></tr></table></figure>
+
+<h3 id="设置ssh免密登陆"><a href="#设置ssh免密登陆" class="headerlink" title="设置ssh免密登陆"></a>设置ssh免密登陆</h3><p>ceph-deploy不支持密码输入，需要在管理控制节点生产ssh秘钥，并将公钥分发到各ceph节点；<br>在用户cephde下生成秘钥，不能使用sudo或root用户；<br>默认在用户目录下生成~&#x2F;.ssh目录，含生成的秘钥对；<br>“Enter passphrase”时，回车，口令为空；</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">[root<span class="hljs-meta">@ceph205</span> ~]<span class="hljs-comment"># su - cephde</span><br>[cephde<span class="hljs-meta">@ceph205</span> ~]$ ssh-keygen -t rsa<br>Enter file in which to save the key (/home/ceph/.ssh/id_rsa): <br>Enter passphrase (empty for no passphrase): <br>Enter same passphrase again:<br><br>Your identification has been saved in /home/ceph/.ssh/id_rsa.<br>Your public key has been saved in /home/ceph/.ssh/id_rsa.pub.<br>The key fingerprint is:<br>SHA256:3KermFNE4L0YONDp2Duj0XsPxtAVLcLsTWXYbdtT+HI cephde<span class="hljs-meta">@ceph205</span><br>The key&#x27;s randomart image is:<br>+---[RSA 2048]----+<br>|<span class="hljs-string">  .. +...=o.   . </span>|<br>|<span class="hljs-string">   .oo+.=oo o . .</span>|<br>|<span class="hljs-string">   +o.o=o. . o o </span>|<br>|<span class="hljs-string">  . oo.=oo  . + E</span>|<br>|<span class="hljs-string">   ...o.S . .  + </span>|<br>|<span class="hljs-string">  . =o  .  o     </span>|<br>|<span class="hljs-string">   o ++.  .      </span>|<br>|<span class="hljs-string">  . ..o+   .     </span>|<br>|<span class="hljs-string">     .ooo..      </span>|<br>+----[SHA256]-----+<br></code></pre></td></tr></table></figure>
+
+<h3 id="分发密钥"><a href="#分发密钥" class="headerlink" title="分发密钥"></a>分发密钥</h3><p>前提是各控制与存储节点已生成相关用户；<br>初次连接其他节点时需要确认；<br>首次分发公钥需要密码；<br>分发成功后，在~&#x2F;.ssh&#x2F;下生成known_hosts文件，记录相关登陆信息；<br>以ceph205节点免密登陆ceph206节点为例</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs livescript">[cephde@ceph205 ~]$ ssh-copy-id cephde@ceph206<br>Are you sure you want <span class="hljs-keyword">to</span> <span class="hljs-keyword">continue</span> connecting (<span class="hljs-literal">yes</span>/<span class="hljs-literal">no</span>)? <span class="hljs-literal">yes</span><br>cephde@ceph206<span class="hljs-string">&#x27;s password:</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="安装ceph-deploy"><a href="#安装ceph-deploy" class="headerlink" title="安装ceph-deploy"></a>安装ceph-deploy</h3><p>在规划的控制管理节点安装ceph-deploy工具，以ceph205节点为例，这里我只把ceph205规划为管理节点。</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">[root@ceph205 ~]<span class="hljs-comment"># yum install ceph-deploy -y</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="创建ceph集群"><a href="#创建ceph集群" class="headerlink" title="创建ceph集群"></a>创建ceph集群</h3><p>在cephde账户下操作，切忌使用sudo操作；<br>在管理节点上生成一个目录用于存放集群相关配置文件；</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal">[root<span class="hljs-variable">@ceph205</span> ~]<span class="hljs-comment"># su - cephde</span><br>[cephde<span class="hljs-variable">@ceph205</span> ~]<span class="hljs-variable">$ </span>mkdir cephcluster<br></code></pre></td></tr></table></figure>
+
+<p>后续ceph-deploy相关操作全部在所创建的目录执行；<br>将规划中的MON（monitor）节点纳入集群，即创建集群</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs typescript">[cephde<span class="hljs-meta">@ceph205</span> ~]$ cd ~<span class="hljs-regexp">/cephcluster/</span><br>[cephde<span class="hljs-meta">@ceph205</span> cephcluster]$ ceph-deploy <span class="hljs-keyword">new</span> ceph205<br>报错如下：<br>[cephde<span class="hljs-meta">@ceph205</span> cephcluster]$ ceph-deploy <span class="hljs-keyword">new</span> ceph205<br><span class="hljs-title class_">Traceback</span> (most recent call last):<br>  <span class="hljs-title class_">File</span> <span class="hljs-string">&quot;/bin/ceph-deploy&quot;</span>, line <span class="hljs-number">18</span>, <span class="hljs-keyword">in</span> &lt;<span class="hljs-variable language_">module</span>&gt;<br>    <span class="hljs-keyword">from</span> ceph_deploy.<span class="hljs-property">cli</span> <span class="hljs-keyword">import</span> main<br>  <span class="hljs-title class_">File</span> <span class="hljs-string">&quot;/usr/lib/python2.7/site-packages/ceph_deploy/cli.py&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;<span class="hljs-variable language_">module</span>&gt;<br>    <span class="hljs-keyword">import</span> pkg_resources<br><span class="hljs-title class_">ImportError</span>: <span class="hljs-title class_">No</span> <span class="hljs-variable language_">module</span> named pkg_resources<br></code></pre></td></tr></table></figure>
+
+<p>原因：缺少python-setuptools安装包<br>[cephde@ceph205 ~]$ sudo yum install python-setuptools<br>在所有节点安装，否则会报错</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[ceph_deploy.conf][<span class="hljs-built_in">DEBUG</span> ] found configuration file at: /home/ceph/.cephdeploy.conf<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] Invoked (2.0.1): /bin/ceph-deploy new ceph205<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] ceph-deploy options:<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  username                      : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  func                          : &lt;function new at 0x7f9eeac24d70&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  verbose                       : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  overwrite_conf                : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  quiet                         : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cd_conf                       : &lt;ceph_deploy.conf.cephdeploy.Conf<span class="hljs-built_in"> instance </span>at 0x7f9eea39e3b0&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cluster                       : ceph<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  ssh_copykey                   : <span class="hljs-literal">True</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  mon                           : [<span class="hljs-string">&#x27;ceph205&#x27;</span>]<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  public_network                : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  ceph_conf                     : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cluster_network               : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  default_release               : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  fsid                          : None<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Creating new cluster named ceph<br>[ceph_deploy.new][<span class="hljs-built_in">INFO</span>  ] making sure passwordless SSH succeeds<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> connection </span>detected need <span class="hljs-keyword">for</span> sudo<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] connected <span class="hljs-keyword">to</span> host: ceph205 <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect platform information <span class="hljs-keyword">from</span> remote host<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect machine<span class="hljs-built_in"> type</span><br><span class="hljs-built_in"></span>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">find</span> the location of an executable<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/sbin<span class="hljs-built_in">/ip </span>link show<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/sbin<span class="hljs-built_in">/ip </span>addr show<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> IP </span>addresses found: [u<span class="hljs-string">&#x27;192.168.1.205&#x27;</span>]<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Resolving host ceph205<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Monitor ceph205 at 192.168.1.205<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Monitor initial members are [<span class="hljs-string">&#x27;ceph205&#x27;</span>]<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Monitor addrs are [<span class="hljs-string">&#x27;192.168.1.205&#x27;</span>]<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Creating a random mon key<span class="hljs-built_in">..</span>.<br>[ceph_deploy.new][<span class="hljs-built_in">DEBUG</span> ] Writing monitor keyring <span class="hljs-keyword">to</span> ceph.mon.ke<br></code></pre></td></tr></table></figure>
+
+<h3 id="修改集群配置文件（optional）"><a href="#修改集群配置文件（optional）" class="headerlink" title="修改集群配置文件（optional）"></a>修改集群配置文件（optional）</h3><p>生成集群后在集群目录下生成3个文件，其中ceph.conf即是配置文件；<br>默认可不修改，为使服务按规划启动，可做适当修改；<br>以下红色字体部分是在默认生成的conf文件上新增的配置</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs makefile">[cephde@ceph205 cephcluster]$ cat ceph.conf <br>[global]<br>fsid = 1f277463-7f9b-46cd-8ed7-c44e1493b131<br>mon_initial_members = ceph205<br>mon_host = 192.168.1.205<br>auth_cluster_required = cephx<br>auth_service_required = cephx<br>auth_client_required = cephx<br><span class="hljs-comment"># public network：前端mon网络，client访问网络；确保public network与mon_host在相同网段，否则初始化时可能会有错误；</span><br><span class="hljs-comment"># cluster network：后端osd心跳，数据/流复制恢复等网络</span><br>public network = 192.168.1.0/24<br>cluster network = 192.168.1.0/24<br><br><span class="hljs-comment"># 默认的副本数为3，实验环境变更为2</span><br>osd pool default size = 2<br> <br><span class="hljs-comment"># 默认保护机制不允许删除pool，根据情况设置</span><br>mon_allow_pool_delete = true<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装ceph"><a href="#安装ceph" class="headerlink" title="安装ceph"></a>安装ceph</h3><p>在全部控制管理与存储节点安装ceph；<br>理论上在控制节点的ceph集群目录使用ceph-deploy可统一安装，命令：ceph-deploy install ceph205 ceph206 …；<br>但由于网速原因大概率会失败，可在各存储节点独立安装ceph与ceph-radosgw，以ceph205节点为例</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@ceph205</span> ~]<span class="hljs-meta"># yum install -y ceph ceph-radosgw</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="初始化ceph-mon"><a href="#初始化ceph-mon" class="headerlink" title="初始化ceph_mon"></a>初始化ceph_mon</h3><p>在控制管理节点初始化monitor</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">[cephde<span class="hljs-variable">@ceph205</span> cephcluster]$ ceph<span class="hljs-operator">-</span>deploy mon <span class="hljs-keyword">create</span><span class="hljs-operator">-</span><span class="hljs-keyword">initial</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[ceph_deploy.conf][<span class="hljs-built_in">DEBUG</span> ] found configuration file at: /home/ceph/.cephdeploy.conf<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] Invoked (2.0.1): /bin/ceph-deploy mon create-initial<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] ceph-deploy options:<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  username                      : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  verbose                       : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  overwrite_conf                : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  subcommand                    : create-initial<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  quiet                         : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cd_conf                       : &lt;ceph_deploy.conf.cephdeploy.Conf<span class="hljs-built_in"> instance </span>at 0x7f5de121ed40&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cluster                       : ceph<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  func                          : &lt;function mon at 0x7f5de1275398&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  ceph_conf                     : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  default_release               : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  keyrings                      : None<br>[ceph_deploy.mon][<span class="hljs-built_in">DEBUG</span> ] Deploying mon, cluster ceph hosts ceph205<br>[ceph_deploy.mon][<span class="hljs-built_in">DEBUG</span> ] detecting platform <span class="hljs-keyword">for</span> host ceph205 <span class="hljs-built_in">..</span>.<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> connection </span>detected need <span class="hljs-keyword">for</span> sudo<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] connected <span class="hljs-keyword">to</span> host: ceph205 <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect platform information <span class="hljs-keyword">from</span> remote host<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect machine<span class="hljs-built_in"> type</span><br><span class="hljs-built_in"></span>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">find</span> the location of an executable<br>[ceph_deploy.mon][<span class="hljs-built_in">INFO</span>  ] distro info: CentOS Linux 7.5.1804 Core<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] determining <span class="hljs-keyword">if</span> provided host has same hostname <span class="hljs-keyword">in</span> remote<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">get</span> remote short hostname<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] deploying mon <span class="hljs-keyword">to</span> ceph205<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">get</span> remote short hostname<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] remote hostname: ceph205<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] write cluster configuration <span class="hljs-keyword">to</span> /etc/ceph/&#123;cluster&#125;.conf<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] create the mon path <span class="hljs-keyword">if</span> it does <span class="hljs-keyword">not</span> exist<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] checking <span class="hljs-keyword">for</span> done path: /var/lib/ceph/mon/ceph-ceph205/done<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] done path does <span class="hljs-keyword">not</span> exist: /var/lib/ceph/mon/ceph-ceph205/done<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] creating keyring file: /var/lib/ceph/tmp/ceph-ceph205.mon.keyring<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] create the monitor keyring file<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo ceph-mon --cluster ceph --mkfs -i ceph205 --keyring /var/lib/ceph/tmp/ceph-ceph205.mon.keyring --setuser 167 --setgroup 167<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] unlinking keyring file /var/lib/ceph/tmp/ceph-ceph205.mon.keyring<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] create a done file <span class="hljs-keyword">to</span> avoid re-doing the mon deployment<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] create the init path <span class="hljs-keyword">if</span> it does <span class="hljs-keyword">not</span> exist<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo systemctl <span class="hljs-built_in">enable</span> ceph.target<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo systemctl <span class="hljs-built_in">enable</span> ceph-mon@ceph205<br>[ceph205][WARNIN] Created symlink <span class="hljs-keyword">from</span> /etc/systemd/system/ceph-mon.target.wants/ceph-mon@ceph205.service <span class="hljs-keyword">to</span> /usr/lib/systemd/system/ceph-mon@.service.<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo systemctl start ceph-mon@ceph205<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo ceph <span class="hljs-attribute">--cluster</span>=ceph --admin-daemon /var/run/ceph/ceph-mon.ceph205.asok mon_status<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] ********************************************************************************<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] status <span class="hljs-keyword">for</span> monitor: mon.ceph205<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;election_epoch&quot;</span>: 3, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;extra_probe_peers&quot;</span>: [], <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;feature_map&quot;</span>: &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;mon&quot;</span>: &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;group&quot;</span>: &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;features&quot;</span>: <span class="hljs-string">&quot;0x3ffddff8eeacfffb&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;num&quot;</span>: 1, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;release&quot;</span>: <span class="hljs-string">&quot;luminous&quot;</span><br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       &#125;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     &#125;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   &#125;, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;features&quot;</span>: &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;quorum_con&quot;</span>: <span class="hljs-string">&quot;4611087853746454523&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;quorum_mon&quot;</span>: [<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;kraken&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;luminous&quot;</span><br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     ], <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;required_con&quot;</span>: <span class="hljs-string">&quot;153140804152475648&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;required_mon&quot;</span>: [<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;kraken&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;luminous&quot;</span><br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     ]<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   &#125;, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;monmap&quot;</span>: &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;created&quot;</span>: <span class="hljs-string">&quot;2022-03-13 21:57:15.211494&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;epoch&quot;</span>: 1, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;features&quot;</span>: &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;optional&quot;</span>: [], <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       <span class="hljs-string">&quot;persistent&quot;</span>: [<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;kraken&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;luminous&quot;</span><br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       ]<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     &#125;, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;fsid&quot;</span>: <span class="hljs-string">&quot;b6904020-ab52-497b-9078-c130310853bb&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;modified&quot;</span>: <span class="hljs-string">&quot;2022-03-13 21:57:15.211494&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     <span class="hljs-string">&quot;mons&quot;</span>: [<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       &#123;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;addr&quot;</span>: <span class="hljs-string">&quot;192.168.1.205:6789/0&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ceph205&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;public_addr&quot;</span>: <span class="hljs-string">&quot;192.168.1.205:6789/0&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]         <span class="hljs-string">&quot;rank&quot;</span>: 0<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       &#125;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     ]<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   &#125;, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ceph205&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;outside_quorum&quot;</span>: [], <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;quorum&quot;</span>: [<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]     0<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   ], <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;rank&quot;</span>: 0, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;state&quot;</span>: <span class="hljs-string">&quot;leader&quot;</span>, <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   <span class="hljs-string">&quot;sync_provider&quot;</span>: []<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] &#125;<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] ********************************************************************************<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] monitor: mon.ceph205 is running<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo ceph <span class="hljs-attribute">--cluster</span>=ceph --admin-daemon /var/run/ceph/ceph-mon.ceph205.asok mon_status<br>[ceph_deploy.mon][<span class="hljs-built_in">INFO</span>  ] processing monitor mon.ceph205<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> connection </span>detected need <span class="hljs-keyword">for</span> sudo<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] connected <span class="hljs-keyword">to</span> host: ceph205 <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect platform information <span class="hljs-keyword">from</span> remote host<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect machine<span class="hljs-built_in"> type</span><br><span class="hljs-built_in"></span>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">find</span> the location of an executable<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo ceph <span class="hljs-attribute">--cluster</span>=ceph --admin-daemon /var/run/ceph/ceph-mon.ceph205.asok mon_status<br>[ceph_deploy.mon][<span class="hljs-built_in">INFO</span>  ] mon.ceph205 monitor has reached quorum!<br>[ceph_deploy.mon][<span class="hljs-built_in">INFO</span>  ] all initial monitors are running <span class="hljs-keyword">and</span> have formed quorum<br>[ceph_deploy.mon][<span class="hljs-built_in">INFO</span>  ] Running gatherkeys<span class="hljs-built_in">..</span>.<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Storing keys <span class="hljs-keyword">in</span> temp directory /tmp/tmpJsXF9o<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> connection </span>detected need <span class="hljs-keyword">for</span> sudo<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] connected <span class="hljs-keyword">to</span> host: ceph205 <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect platform information <span class="hljs-keyword">from</span> remote host<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect machine<span class="hljs-built_in"> type</span><br><span class="hljs-built_in"></span>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">get</span> remote short hostname<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] fetch remote file<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph <span class="hljs-attribute">--admin-daemon</span>=/var/run/ceph/ceph-mon.ceph205.asok mon_status<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth <span class="hljs-built_in">get</span> client.admin<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth get-or-create client.admin osd allow * mds allow * mon allow * mgr allow *<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth <span class="hljs-built_in">get</span> client.bootstrap-mds<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth get-or-create client.bootstrap-mds mon allow<span class="hljs-built_in"> profile </span>bootstrap-mds<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth <span class="hljs-built_in">get</span> client.bootstrap-mgr<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth get-or-create client.bootstrap-mgr mon allow<span class="hljs-built_in"> profile </span>bootstrap-mgr<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth <span class="hljs-built_in">get</span> client.bootstrap-osd<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth get-or-create client.bootstrap-osd mon allow<span class="hljs-built_in"> profile </span>bootstrap-osd<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth <span class="hljs-built_in">get</span> client.bootstrap-rgw<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/bin/ceph <span class="hljs-attribute">--connect-timeout</span>=25 <span class="hljs-attribute">--cluster</span>=ceph --name mon. <span class="hljs-attribute">--keyring</span>=/var/lib/ceph/mon/ceph-ceph205/keyring auth get-or-create client.bootstrap-rgw mon allow<span class="hljs-built_in"> profile </span>bootstrap-rgw<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Storing ceph.client.admin.keyring<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Storing ceph.bootstrap-mds.keyring<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Storing ceph.bootstrap-mgr.keyring<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] keyring <span class="hljs-string">&#x27;ceph.mon.keyring&#x27;</span> already exists<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Storing ceph.bootstrap-osd.keyring<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Storing ceph.bootstrap-rgw.keyring<br>[ceph_deploy.gatherkeys][<span class="hljs-built_in">INFO</span>  ] Destroy temp directory /tmp/tmpJsXF9o<br></code></pre></td></tr></table></figure>
+
+<p>初始化完成后，在集群目录下新增多个秘钥文件</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs tap">[cephde@ceph205 cephcluster]$ ls -l<br>total 44<br>-rw-------.<span class="hljs-number"> 1 </span>cephde cephde   <span class="hljs-number"> 71 </span>Mar<span class="hljs-number"> 13 </span>21:57 ceph.bootstrap-mds.keyring<br>-rw-------.<span class="hljs-number"> 1 </span>cephde cephde   <span class="hljs-number"> 71 </span>Mar<span class="hljs-number"> 13 </span>21:57 ceph.bootstrap-mgr.keyring<br>-rw-------.<span class="hljs-number"> 1 </span>cephde cephde   <span class="hljs-number"> 71 </span>Mar<span class="hljs-number"> 13 </span>21:57 ceph.bootstrap-osd.keyring<br>-rw-------.<span class="hljs-number"> 1 </span>cephde cephde   <span class="hljs-number"> 71 </span>Mar<span class="hljs-number"> 13 </span>21:57 ceph.bootstrap-rgw.keyring<br>-rw-------.<span class="hljs-number"> 1 </span>cephde cephde   <span class="hljs-number"> 63 </span>Mar<span class="hljs-number"> 13 </span>21:57 ceph.client.admin.keyring<br>-rw-rw-r--.<span class="hljs-number"> 1 </span>cephde cephde  <span class="hljs-number"> 319 </span>Mar<span class="hljs-number"> 13 </span>21:51 ceph.conf<br>-rw-rw-r--.<span class="hljs-number"> 1 </span>cephde cephde<span class="hljs-number"> 15527 </span>Mar<span class="hljs-number"> 13 </span>21:57 ceph-deploy-ceph.log<br>-rw-------.<span class="hljs-number"> 1 </span>cephde cephde   <span class="hljs-number"> 73 </span>Mar<span class="hljs-number"> 13 </span>21:45 ceph.mon.keyring<br></code></pre></td></tr></table></figure>
+
+<p>查看状态</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs smali">[cephde@ceph205 cephcluster]$ sudo<span class="hljs-keyword"> system</span>ctl status ceph-mon@ceph205<br>● ceph-mon@ceph205.service - Ceph cluster<span class="hljs-built_in"> monitor </span>daemon<br>   Loaded: loaded (/usr/lib/systemd/system/ceph-mon@.service; enabled; vendor preset: disabled)<br>   Active: active (running) since Sun 2022-03-13 21:57:15 EDT; 2min 1s ago<br> Main PID: 12389 (ceph-mon)<br>   CGroup: /system.slice/system-ceph\x2dmon.slice/ceph-mon@ceph205.service<br>           └─12389 /usr/bin/ceph-mon -f --cluster ceph --id ceph205 --setuser ceph --setgroup ceph...<br><br>Mar 13 21:57:15 ceph205<span class="hljs-keyword"> system</span>d[1]: Started Ceph cluster<span class="hljs-built_in"> monitor </span>daemon.<br>Mar 13 21:57:15 ceph205<span class="hljs-keyword"> system</span>d[1]: Starting Ceph cluster<span class="hljs-built_in"> monitor </span>daemon...<br></code></pre></td></tr></table></figure>
+
+<h3 id="分发ceph-conf与秘钥"><a href="#分发ceph-conf与秘钥" class="headerlink" title="分发ceph.conf与秘钥"></a>分发ceph.conf与秘钥</h3><p>分发ceph配置文件与秘钥到其他控制管理节点与存储节点；<br>注意分发节点本身也需要包含在内，默认没有秘钥文件，需要分发；<br>如果被分发节点已经配置文件（统一变更配置文件场景），可以使用如下命令：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">ceph-deploy  <span class="hljs-comment">--overwrite-conf admin xxx</span><br></code></pre></td></tr></table></figure>
+<p>分发的配置文件与秘钥在各节点&#x2F;etc&#x2F;ceph&#x2F;目录</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[cephde@ceph205 cephcluster]$ ceph-deploy admin ceph205<br>[ceph_deploy.conf][<span class="hljs-built_in">DEBUG</span> ] found configuration file at: /home/ceph/.cephdeploy.conf<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] Invoked (2.0.1): /bin/ceph-deploy admin ceph205<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] ceph-deploy options:<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  username                      : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  verbose                       : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  overwrite_conf                : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  quiet                         : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cd_conf                       : &lt;ceph_deploy.conf.cephdeploy.Conf<span class="hljs-built_in"> instance </span>at 0x7f58e80d52d8&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cluster                       : ceph<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] <span class="hljs-built_in"> client </span>                       : [<span class="hljs-string">&#x27;ceph205&#x27;</span>]<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  func                          : &lt;function admin at 0x7f58e8be51b8&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  ceph_conf                     : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  default_release               : <span class="hljs-literal">False</span><br>[ceph_deploy.admin][<span class="hljs-built_in">DEBUG</span> ] Pushing admin keys <span class="hljs-keyword">and</span> conf <span class="hljs-keyword">to</span> ceph205<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> connection </span>detected need <span class="hljs-keyword">for</span> sudo<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] connected <span class="hljs-keyword">to</span> host: ceph205 <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect platform information <span class="hljs-keyword">from</span> remote host<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect machine<span class="hljs-built_in"> type</span><br><span class="hljs-built_in"></span>[ceph205][<span class="hljs-built_in">DEBUG</span> ] write cluster configuration <span class="hljs-keyword">to</span> /etc/ceph/&#123;cluster&#125;.conf<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="安装ceph-mgr"><a href="#安装ceph-mgr" class="headerlink" title="安装ceph_mgr"></a>安装ceph_mgr</h3><p>luminous版本必须安装mgr（dashboard）</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-comment">[cephde@ceph205 cephcluster]</span>$  ceph-deploy mgr create ceph205:ceph205_mgr<br><span class="hljs-comment">[ceph_deploy.conf]</span><span class="hljs-comment">[DEBUG ]</span> found configuration file at: /home/ceph/.cephdeploy.conf<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span> Invoked (2.0.1): /bin/ceph-deploy mgr create ceph205:ceph205_mgr<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span> ceph-deploy options:<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  username                      : None<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  verbose                       : False<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  mgr                           : <span class="hljs-comment">[(&#x27;ceph205&#x27;, &#x27;ceph205_mgr&#x27;)]</span><br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  overwrite_conf                : False<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  subcommand                    : create<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  quiet                         : False<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  cd_conf                       : &lt;ceph_deploy.conf.cephdeploy.Conf instance at 0x7f670a3505f0&gt;<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  cluster                       : ceph<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  func                          : &lt;function mgr at 0x7f670ac320c8&gt;<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  ceph_conf                     : None<br><span class="hljs-comment">[ceph_deploy.cli]</span><span class="hljs-comment">[INFO  ]</span>  default_release               : False<br><span class="hljs-comment">[ceph_deploy.mgr]</span><span class="hljs-comment">[DEBUG ]</span> Deploying mgr, cluster ceph hosts ceph205:ceph205_mgr<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> connection detected need for sudo<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> connected to host: ceph205 <br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> detect platform information from remote host<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> detect machine type<br><span class="hljs-comment">[ceph_deploy.mgr]</span><span class="hljs-comment">[INFO  ]</span> Distro info: CentOS Linux 7.5.1804 Core<br><span class="hljs-comment">[ceph_deploy.mgr]</span><span class="hljs-comment">[DEBUG ]</span> remote host will use systemd<br><span class="hljs-comment">[ceph_deploy.mgr]</span><span class="hljs-comment">[DEBUG ]</span> deploying mgr bootstrap to ceph205<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> write cluster configuration to /etc/ceph/&#123;cluster&#125;.conf<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[WARNIN]</span> mgr keyring does not exist yet, creating one<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> create a keyring file<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[DEBUG ]</span> create path recursively if it doesn&#x27;t exist<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[INFO  ]</span> Running command: sudo ceph --cluster ceph --name client.bootstrap-mgr --keyring /var/lib/ceph/bootstrap-mgr/ceph.keyring auth get-or-create mgr.ceph205_mgr mon allow profile mgr osd allow * mds allow * -o /var/lib/ceph/mgr/ceph-ceph205_mgr/keyring<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[INFO  ]</span> Running command: sudo systemctl enable ceph-mgr@ceph205_mgr<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[WARNIN]</span> Created symlink from /etc/systemd/system/ceph-mgr.target.wants/ceph-mgr@ceph205_mgr.service to /usr/lib/systemd/system/ceph-mgr@.service.<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[INFO  ]</span> Running command: sudo systemctl start ceph-mgr@ceph205_mgr<br><span class="hljs-comment">[ceph205]</span><span class="hljs-comment">[INFO  ]</span> Running command: sudo systemctl enable ceph.target<br></code></pre></td></tr></table></figure>
+
+<p>查看状态</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mel">[cephde@ceph205 cephcluster]$ systemctl status ceph-mgr@ceph205_mgr<br>● ceph-mgr@ceph205_mgr.service - Ceph <span class="hljs-keyword">cluster</span> manager daemon<br>   Loaded: loaded (/usr/lib/systemd/<span class="hljs-keyword">system</span>/ceph-mgr@.service; enabled; vendor preset: disabled)<br>   Active: active (running) since Sun <span class="hljs-number">2022</span><span class="hljs-number">-03</span><span class="hljs-number">-13</span> <span class="hljs-number">22</span>:<span class="hljs-number">01</span>:<span class="hljs-number">43</span> EDT; <span class="hljs-number">36</span>s ago<br> Main PID: <span class="hljs-number">13048</span> (ceph-mgr)<br>   CGroup: /<span class="hljs-keyword">system</span>.slice/<span class="hljs-keyword">system</span>-ceph\x2dmgr.slice/ceph-mgr@ceph205_mgr.service<br>           └─<span class="hljs-number">13048</span> /usr/bin/ceph-mgr -f --<span class="hljs-keyword">cluster</span> ceph --id ceph205_mgr --setuser ceph --setgroup ...<br></code></pre></td></tr></table></figure>
+
+<h3 id="启动mgr"><a href="#启动mgr" class="headerlink" title="启动mgr"></a>启动mgr</h3><p>可查看mgr默认开启的服务：(sudo) ceph mgr module ls；<br>默认dashboard服务在可开启列表中，但并未启动，需要手工开启</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal">[cephde<span class="hljs-variable">@ceph205</span> cephcluster]<span class="hljs-variable">$ </span>sudo ceph mgr <span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">enable</span> <span class="hljs-title">dashboard</span></span><br></code></pre></td></tr></table></figure>
+
+<p>dashboard服务已开启，默认监听全部地址的tcp7000端口；<br>如果需要设置dashboard的监听地址与端口，如下：<br>设置监听地址：(sudo) ceph config-key put mgr&#x2F;dashboard&#x2F;server_addr x.x.x.x<br>设置监听端口：(sudo) ceph config-key put mgr&#x2F;dashboard&#x2F;server_port x</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal">[cephde<span class="hljs-variable">@ceph205</span> cephcluster]<span class="hljs-variable">$ </span>sudo netstat -tunlp | grep mgr<br></code></pre></td></tr></table></figure>
+<p>没有netstat工具的先安装net-tools</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir">[cephde<span class="hljs-variable">@ceph205</span> cephcluster]<span class="hljs-variable">$ </span>sudo netstat -tunlp | grep mgr<br>tcp        <span class="hljs-number">0</span>      <span class="hljs-number">0</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">1.205</span><span class="hljs-symbol">:</span><span class="hljs-number">6800</span>      <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><span class="hljs-symbol">:*</span>               <span class="hljs-title class_">LISTEN</span>      <span class="hljs-number">13048</span>/ceph-mgr      <br>tcp6       <span class="hljs-number">0</span>      <span class="hljs-number">0</span> ::<span class="hljs-symbol">:</span><span class="hljs-number">7000</span>                 ::<span class="hljs-symbol">:*</span>                    <span class="hljs-title class_">LISTEN</span>      <span class="hljs-number">13048</span>/ceph-mgr <br></code></pre></td></tr></table></figure>
+
+<p>web登陆： <a target="_blank" rel="noopener" href="http://192.168.1.205:7000/">http://192.168.1.205:7000/</a></p>
+<p><img src="/images/ceph.png" srcset="/img/loading.gif" lazyload alt="Ceph"></p>
+<h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><p>查看monitor状态</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tap">[cephde@ceph205 cephcluster]$ sudo ceph mon stat<br>e1:<span class="hljs-number"> 1 </span>mons at &#123;ceph205=192.168.1.205:6789/0&#125;, election epoch 3, leader<span class="hljs-number"> 0 </span>ceph205, quorum<span class="hljs-number"> 0 </span>ceph205<br></code></pre></td></tr></table></figure>
+
+<p>查看ceph状态：ceph health (detail)，ceph -s，ceph -w等；<br>状态显示mgr处于active-standby模式</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">[cephde@ceph205 cephcluster]$ sudo ceph -s</span><br><span class="hljs-attribute">  cluster</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">id</span><span class="hljs-punctuation">:</span> <span class="hljs-string">    b6904020-ab52-497b-9078-c130310853bb</span><br>    <span class="hljs-attribute">health</span><span class="hljs-punctuation">:</span> <span class="hljs-string">HEALTH_WARN</span><br>            <span class="hljs-attribute">OSD count 0 &lt; osd_pool_default_size 2</span><br><span class="hljs-attribute"> </span><br><span class="hljs-attribute">  services</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">mon</span><span class="hljs-punctuation">:</span> <span class="hljs-string">1 daemons, quorum ceph205</span><br>    <span class="hljs-attribute">mgr</span><span class="hljs-punctuation">:</span> <span class="hljs-string">ceph205_mgr(active)</span><br>    <span class="hljs-attribute">osd</span><span class="hljs-punctuation">:</span> <span class="hljs-string">0 osds: 0 up, 0 in</span><br> <br>  <span class="hljs-attribute">data</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">pools</span><span class="hljs-punctuation">:</span> <span class="hljs-string">  0 pools, 0 pgs</span><br>    <span class="hljs-attribute">objects</span><span class="hljs-punctuation">:</span> <span class="hljs-string">0 objects, 0B</span><br>    <span class="hljs-attribute">usage</span><span class="hljs-punctuation">:</span> <span class="hljs-string">  0B used, 0B / 0B avail</span><br>    <span class="hljs-attribute">pgs</span><span class="hljs-punctuation">:     </span><br><span class="hljs-punctuation"></span><br></code></pre></td></tr></table></figure>
+
+<p>可在各节点查看认证信息等</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">[cephde@ceph205 cephcluster]$ sudo ceph auth list</span><br><span class="hljs-attribute">installed auth entries</span><span class="hljs-punctuation">:</span><br><span class="hljs-punctuation"></span><br><span class="hljs-attribute">client.admin</span><br><span class="hljs-attribute">	key</span><span class="hljs-punctuation">:</span> <span class="hljs-string">AQD/oC5i6dI/CxAAIR4LRDD5lp4zRYi7tAsMAA==</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mds] allow *</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mgr] allow *</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mon] allow *</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[osd] allow *</span><br><span class="hljs-attribute">client.bootstrap-mds</span><br><span class="hljs-attribute">	key</span><span class="hljs-punctuation">:</span> <span class="hljs-string">AQD/oC5iUfrENhAA+7kkfqcDNWsiIBrEmtRtnQ==</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mon] allow profile bootstrap-mds</span><br><span class="hljs-attribute">client.bootstrap-mgr</span><br><span class="hljs-attribute">	key</span><span class="hljs-punctuation">:</span> <span class="hljs-string">AQAAoS5iwaskJxAA6/AHsOW5EcWhwRSCVmGCkw==</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mon] allow profile bootstrap-mgr</span><br><span class="hljs-attribute">client.bootstrap-osd</span><br><span class="hljs-attribute">	key</span><span class="hljs-punctuation">:</span> <span class="hljs-string">AQABoS5iXEqJGRAAnHW4Li928UaUAreGLvdyWw==</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mon] allow profile bootstrap-osd</span><br><span class="hljs-attribute">client.bootstrap-rgw</span><br><span class="hljs-attribute">	key</span><span class="hljs-punctuation">:</span> <span class="hljs-string">AQACoS5i0NZ9ERAA71OfRtQSyv9ar1ROTFEYWA==</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mon] allow profile bootstrap-rgw</span><br><span class="hljs-attribute">mgr.ceph205_mgr</span><br><span class="hljs-attribute">	key</span><span class="hljs-punctuation">:</span> <span class="hljs-string">AQAGoi5iEjbiMhAACS7iZgSN35Rzu1O7ojvneg==</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mds] allow *</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[mon] allow profile mgr</span><br>	<span class="hljs-attribute">caps</span><span class="hljs-punctuation">:</span> <span class="hljs-string">[osd] allow *</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="创建osd-存储"><a href="#创建osd-存储" class="headerlink" title="创建osd(存储)"></a>创建osd(存储)</h3><p>osd位于存储节点，可查看存储节点磁盘状况，以ceph205节点为例<br>新添加了一块标准硬盘 100G</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs tap">[cephde@ceph205 cephcluster]$ lsblk<br>NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br>sda               8:0   <span class="hljs-number"> 0 </span>  20G <span class="hljs-number"> 0 </span>disk <br>├─sda1            8:1   <span class="hljs-number"> 0 </span>   1G <span class="hljs-number"> 0 </span>part /boot<br>└─sda2            8:2   <span class="hljs-number"> 0 </span>  19G <span class="hljs-number"> 0 </span>part <br>  ├─centos-root 253:0   <span class="hljs-number"> 0 </span>  17G <span class="hljs-number"> 0 </span>lvm  /<br>  └─centos-swap 253:1   <span class="hljs-number"> 0 </span>   2G <span class="hljs-number"> 0 </span>lvm  [SWAP]<br>sdb               8:16  <span class="hljs-number"> 0 </span> 100G <span class="hljs-number"> 0 </span>disk <br>sr0              11:0   <span class="hljs-number"> 1 </span>1024M <span class="hljs-number"> 0 </span>rom<br></code></pre></td></tr></table></figure>
+
+<p>实际创建osd时，可通过管理节点使用ceph-deploy创建；<br>本例中有1个osd节点，每个osd节点可运行4个osd进程（在6800~7300端口范围内，每进程监听1个本地端口）</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-attr">[cephde@ceph205 cephcluster]</span>$ ceph-deploy osd create ceph205 <span class="hljs-attr">--data</span> /dev/sdb<br><span class="hljs-selector-attr">[ceph_deploy.conf]</span><span class="hljs-selector-attr">[DEBUG ]</span> found configuration file at: /home/ceph/<span class="hljs-selector-class">.cephdeploy</span><span class="hljs-selector-class">.conf</span><br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span> Invoked (<span class="hljs-number">2.0</span>.<span class="hljs-number">1</span>): /bin/ceph-deploy osd create ceph205 <span class="hljs-attr">--data</span> /dev/sdb<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span> ceph-deploy options:<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  verbose                       : False<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  bluestore                     : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  cd_conf                       : &lt;ceph_deploy<span class="hljs-selector-class">.conf</span><span class="hljs-selector-class">.cephdeploy</span><span class="hljs-selector-class">.Conf</span> instance at <span class="hljs-number">0</span>x7fec16c56320&gt;<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  cluster                       : ceph<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  fs_type                       : xfs<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  block_wal                     : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  default_release               : False<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  username                      : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  journal                       : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  subcommand                    : create<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  host                          : ceph205<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  filestore                     : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  func                          : &lt;function osd at <span class="hljs-number">0</span>x7fec16c8a848&gt;<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  ceph_conf                     : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  zap_disk                      : False<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  data                          : /dev/sdb<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  block_db                      : None<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  dmcrypt                       : False<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  overwrite_conf                : False<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  dmcrypt_key_dir               : /etc/ceph/dmcrypt-keys<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  quiet                         : False<br><span class="hljs-selector-attr">[ceph_deploy.cli]</span><span class="hljs-selector-attr">[INFO  ]</span>  debug                         : False<br><span class="hljs-selector-attr">[ceph_deploy.osd]</span><span class="hljs-selector-attr">[DEBUG ]</span> Creating OSD on cluster ceph with data device /dev/sdb<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> connection detected need <span class="hljs-keyword">for</span> sudo<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> connected to host: ceph205 <br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> detect platform information from remote host<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> detect machine type<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> find the location of an executable<br><span class="hljs-selector-attr">[ceph_deploy.osd]</span><span class="hljs-selector-attr">[INFO  ]</span> Distro info: CentOS Linux <span class="hljs-number">7.5</span>.<span class="hljs-number">1804</span> Core<br><span class="hljs-selector-attr">[ceph_deploy.osd]</span><span class="hljs-selector-attr">[DEBUG ]</span> Deploying osd to ceph205<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> write cluster configuration to /etc/ceph/&#123;cluster&#125;<span class="hljs-selector-class">.conf</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> osd keyring does not exist yet, creating one<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> create <span class="hljs-selector-tag">a</span> keyring file<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> find the location of an executable<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[INFO  ]</span> Running command: sudo /usr/sbin/ceph-volume <span class="hljs-attr">--cluster</span> ceph lvm create <span class="hljs-attr">--bluestore</span> <span class="hljs-attr">--data</span> /dev/sdb<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: /bin/ceph-authtool <span class="hljs-attr">--gen-print-key</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: /bin/ceph <span class="hljs-attr">--cluster</span> ceph <span class="hljs-attr">--name</span> client<span class="hljs-selector-class">.bootstrap-osd</span> <span class="hljs-attr">--keyring</span> /var/lib/ceph/bootstrap-osd/ceph<span class="hljs-selector-class">.keyring</span> -<span class="hljs-selector-tag">i</span> - osd new <span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: vgcreate <span class="hljs-attr">--force</span> <span class="hljs-attr">--yes</span> ceph-<span class="hljs-number">5605</span>d7c5-<span class="hljs-number">8</span>a23-<span class="hljs-number">4</span>e96-ba0d-<span class="hljs-number">6633</span>fcdfde09 /dev/sdb<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stdout: Physical volume <span class="hljs-string">&quot;/dev/sdb&quot;</span> successfully created.<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stdout: Volume group <span class="hljs-string">&quot;ceph-5605d7c5-8a23-4e96-ba0d-6633fcdfde09&quot;</span> successfully created<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: lvcreate <span class="hljs-attr">--yes</span> -l <span class="hljs-number">100%</span>FREE -n osd-block-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f ceph-<span class="hljs-number">5605</span>d7c5-<span class="hljs-number">8</span>a23-<span class="hljs-number">4</span>e96-ba0d-<span class="hljs-number">6633</span>fcdfde09<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stdout: Logical volume <span class="hljs-string">&quot;osd-block-07ec31da-a1ba-48ee-a833-37a6eba0615f&quot;</span> created.<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: /bin/ceph-authtool <span class="hljs-attr">--gen-print-key</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: mount -t tmpfs tmpfs /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: restorecon /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -h ceph:ceph /dev/ceph-<span class="hljs-number">5605</span>d7c5-<span class="hljs-number">8</span>a23-<span class="hljs-number">4</span>e96-ba0d-<span class="hljs-number">6633</span>fcdfde09/osd-block-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -R ceph:ceph /dev/dm-<span class="hljs-number">2</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: ln -s /dev/ceph-<span class="hljs-number">5605</span>d7c5-<span class="hljs-number">8</span>a23-<span class="hljs-number">4</span>e96-ba0d-<span class="hljs-number">6633</span>fcdfde09/osd-block-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/block<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: ceph <span class="hljs-attr">--cluster</span> ceph <span class="hljs-attr">--name</span> client<span class="hljs-selector-class">.bootstrap-osd</span> <span class="hljs-attr">--keyring</span> /var/lib/ceph/bootstrap-osd/ceph<span class="hljs-selector-class">.keyring</span> mon getmap -o /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/activate<span class="hljs-selector-class">.monmap</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stderr: got monmap epoch <span class="hljs-number">1</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: ceph-authtool /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/keyring <span class="hljs-attr">--create-keyring</span> <span class="hljs-attr">--name</span> osd.<span class="hljs-number">0</span> <span class="hljs-attr">--add-key</span> AQBipC5i8TYVNBAAmu4r3BrEFQF+gdSB5VgM9w==<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stdout: creating /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/keyring<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> added entity osd.<span class="hljs-number">0</span> auth <span class="hljs-built_in">auth</span>(auid = <span class="hljs-number">18446744073709551615</span> key=AQBipC5i8TYVNBAAmu4r3BrEFQF+gdSB5VgM9w== with <span class="hljs-number">0</span> caps)<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -R ceph:ceph /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/keyring<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -R ceph:ceph /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: /bin/ceph-osd <span class="hljs-attr">--cluster</span> ceph <span class="hljs-attr">--osd-objectstore</span> bluestore <span class="hljs-attr">--mkfs</span> -<span class="hljs-selector-tag">i</span> <span class="hljs-number">0</span> <span class="hljs-attr">--monmap</span> /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/activate<span class="hljs-selector-class">.monmap</span> <span class="hljs-attr">--keyfile</span> - <span class="hljs-attr">--osd-data</span> /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/ <span class="hljs-attr">--osd-uuid</span> <span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f <span class="hljs-attr">--setuser</span> ceph <span class="hljs-attr">--setgroup</span> ceph<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> --&gt; ceph-volume lvm prepare successful <span class="hljs-keyword">for</span>: /dev/sdb<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -R ceph:ceph /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: ceph-bluestore-tool <span class="hljs-attr">--cluster</span>=ceph prime-osd-dir <span class="hljs-attr">--dev</span> /dev/ceph-<span class="hljs-number">5605</span>d7c5-<span class="hljs-number">8</span>a23-<span class="hljs-number">4</span>e96-ba0d-<span class="hljs-number">6633</span>fcdfde09/osd-block-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f <span class="hljs-attr">--path</span> /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: ln -snf /dev/ceph-<span class="hljs-number">5605</span>d7c5-<span class="hljs-number">8</span>a23-<span class="hljs-number">4</span>e96-ba0d-<span class="hljs-number">6633</span>fcdfde09/osd-block-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/block<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -h ceph:ceph /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span>/block<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -R ceph:ceph /dev/dm-<span class="hljs-number">2</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: chown -R ceph:ceph /var/lib/ceph/osd/ceph-<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: systemctl enable ceph-volume@lvm-<span class="hljs-number">0</span>-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stderr: Created symlink from /etc/systemd/system/multi-user<span class="hljs-selector-class">.target</span>.wants/ceph-volume@lvm-<span class="hljs-number">0</span>-<span class="hljs-number">07</span>ec31da-a1ba-<span class="hljs-number">48</span>ee-a833-<span class="hljs-number">37</span>a6eba0615f<span class="hljs-selector-class">.service</span> to /usr/lib/systemd/system/ceph-volume@<span class="hljs-selector-class">.service</span>.<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: systemctl enable <span class="hljs-attr">--runtime</span> ceph-osd@<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span>  stderr: Created symlink from /run/systemd/system/ceph-osd<span class="hljs-selector-class">.target</span>.wants/ceph-osd@<span class="hljs-number">0</span><span class="hljs-selector-class">.service</span> to /usr/lib/systemd/system/ceph-osd@<span class="hljs-selector-class">.service</span>.<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> Running command: systemctl start ceph-osd@<span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> --&gt; ceph-volume lvm activate successful <span class="hljs-keyword">for</span> osd ID: <span class="hljs-number">0</span><br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[WARNIN]</span> --&gt; ceph-volume lvm create successful <span class="hljs-keyword">for</span>: /dev/sdb<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[INFO  ]</span> checking OSD status...<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[DEBUG ]</span> find the location of an executable<br><span class="hljs-selector-attr">[ceph205]</span><span class="hljs-selector-attr">[INFO  ]</span> Running command: sudo /bin/ceph <span class="hljs-attr">--cluster</span>=ceph osd stat <span class="hljs-attr">--format</span>=json<br><span class="hljs-selector-attr">[ceph_deploy.osd]</span><span class="hljs-selector-attr">[DEBUG ]</span> Host ceph205 is now ready <span class="hljs-keyword">for</span> osd use.<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看osd状态"><a href="#查看osd状态" class="headerlink" title="查看osd状态"></a>查看osd状态</h3><p>在管理节点查看</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs routeros">[cephde@ceph205 cephcluster]$ ceph-deploy osd list ceph205<br>[ceph_deploy.conf][<span class="hljs-built_in">DEBUG</span> ] found configuration file at: /home/ceph/.cephdeploy.conf<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] Invoked (2.0.1): /bin/ceph-deploy osd list ceph205<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ] ceph-deploy options:<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  username                      : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  verbose                       : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  <span class="hljs-built_in">debug</span>                         : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  overwrite_conf                : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  subcommand                    : list<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  quiet                         : <span class="hljs-literal">False</span><br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cd_conf                       : &lt;ceph_deploy.conf.cephdeploy.Conf<span class="hljs-built_in"> instance </span>at 0x7fa82a791320&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  cluster                       : ceph<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  host                          : [<span class="hljs-string">&#x27;ceph205&#x27;</span>]<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  func                          : &lt;function osd at 0x7fa82a7c5848&gt;<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  ceph_conf                     : None<br>[ceph_deploy.cli][<span class="hljs-built_in">INFO</span>  ]  default_release               : <span class="hljs-literal">False</span><br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]<span class="hljs-built_in"> connection </span>detected need <span class="hljs-keyword">for</span> sudo<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] connected <span class="hljs-keyword">to</span> host: ceph205 <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect platform information <span class="hljs-keyword">from</span> remote host<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] detect machine<span class="hljs-built_in"> type</span><br><span class="hljs-built_in"></span>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">find</span> the location of an executable<br>[ceph_deploy.osd][<span class="hljs-built_in">INFO</span>  ] Distro info: CentOS Linux 7.5.1804 Core<br>[ceph_deploy.osd][<span class="hljs-built_in">DEBUG</span> ] Listing disks on ceph205<span class="hljs-built_in">..</span>.<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <span class="hljs-built_in">find</span> the location of an executable<br>[ceph205][<span class="hljs-built_in">INFO</span>  ] Running command: sudo /usr/sbin/ceph-volume lvm list<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] ====== osd.0 =======<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]   [block]    /dev/ceph-5605d7c5-8a23-4e96-ba0d-6633fcdfde09/osd-block-07ec31da-a1ba-48ee-a833-37a6eba0615f<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ] <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]      <span class="hljs-built_in"> type </span>                     block<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       osd id                    0<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       cluster fsid              b6904020-ab52-497b-9078-c130310853bb<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       cluster name              ceph<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       osd fsid                  07ec31da-a1ba-48ee-a833-37a6eba0615f<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       encrypted                 0<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       cephx lockbox<span class="hljs-built_in"> secret </span>     <br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       block uuid                rP8tcN-oDS7-ALLN-S2iA-wW8F-nIcz-m73oWh<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       block device              /dev/ceph-5605d7c5-8a23-4e96-ba0d-6633fcdfde09/osd-block-07ec31da-a1ba-48ee-a833-37a6eba0615f<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       vdo                       0<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       crush device class        None<br>[ceph205][<span class="hljs-built_in">DEBUG</span> ]       devices                   /dev/sdb<br></code></pre></td></tr></table></figure>
+
+<p>在管理节点查看osd状态等</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs fortran">[cephde@ceph205 cephcluster]$ sudo ceph osd stat<br><span class="hljs-number">1</span> osds: <span class="hljs-number">1</span> up, <span class="hljs-number">1</span> <span class="hljs-keyword">in</span><br>[cephde@ceph205 cephcluster]$ sudo ceph osd tree<br>ID <span class="hljs-keyword">CLASS</span> WEIGHT  <span class="hljs-keyword">TYPE</span> <span class="hljs-keyword">NAME</span>        <span class="hljs-keyword">STATUS</span> REWEIGHT PRI-AFF <br>-<span class="hljs-number">1</span>       <span class="hljs-number">0.09769</span> root <span class="hljs-keyword">default</span>                             <br>-<span class="hljs-number">3</span>       <span class="hljs-number">0.09769</span>     host ceph205                         <br> <span class="hljs-number">0</span>   hdd <span class="hljs-number">0.09769</span>         osd<span class="hljs-number">.0</span>        up  <span class="hljs-number">1.00000</span> <span class="hljs-number">1.00000</span> <br></code></pre></td></tr></table></figure>
+
+<p>在管理节点查看容量及使用情况</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fortran">[cephde@ceph205 cephcluster]$ sudo ceph df<br>GLOBAL:<br>    <span class="hljs-built_in">SIZE</span>       AVAIL       RAW USED     %RAW USED <br>    <span class="hljs-number">100</span>GiB     <span class="hljs-number">99.0</span>GiB      <span class="hljs-number">1.00</span>GiB          <span class="hljs-number">1.00</span> <br>POOLS:<br>    <span class="hljs-keyword">NAME</span>     ID     USED     %USED     <span class="hljs-built_in">MAX</span> AVAIL     OBJECTS<br></code></pre></td></tr></table></figure>
+
+<p>在osd节点查看</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs tap">[cephde@ceph205 cephcluster]$ lsblk<br>NAME                                                              MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br>sda                                                                 8:0   <span class="hljs-number"> 0 </span>  20G <span class="hljs-number"> 0 </span>disk <br>├─sda1                                                              8:1   <span class="hljs-number"> 0 </span>   1G <span class="hljs-number"> 0 </span>part /boot<br>└─sda2                                                              8:2   <span class="hljs-number"> 0 </span>  19G <span class="hljs-number"> 0 </span>part <br>  ├─centos-root                                                   253:0   <span class="hljs-number"> 0 </span>  17G <span class="hljs-number"> 0 </span>lvm  /<br>  └─centos-swap                                                   253:1   <span class="hljs-number"> 0 </span>   2G <span class="hljs-number"> 0 </span>lvm  [SWAP]<br>sdb                                                                 8:16  <span class="hljs-number"> 0 </span> 100G <span class="hljs-number"> 0 </span>disk <br>└─ceph--5605d7c5--8a23--4e96--ba0d--6633fcdfde09-osd--block--07ec31da--a1ba--48ee--a833--37a6eba0615f<br>                                                                  253:2   <span class="hljs-number"> 0 </span> 100G <span class="hljs-number"> 0 </span>lvm  <br>sr0                                                                11:0   <span class="hljs-number"> 1 </span>1024M <span class="hljs-number"> 0 </span>rom <br></code></pre></td></tr></table></figure>
+
+<p>ceph-osd进程，根据启动顺序，每个osd进程有特定的序号</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs mel">[cephde@ceph205 cephcluster]$ systemctl status ceph-osd@0<br>● ceph-osd@0.service - Ceph object storage daemon osd<span class="hljs-number">.0</span><br>   Loaded: loaded (/usr/lib/systemd/<span class="hljs-keyword">system</span>/ceph-osd@.service; enabled-runtime; vendor preset: disabled)<br>   Active: active (running) since Sun <span class="hljs-number">2022</span><span class="hljs-number">-03</span><span class="hljs-number">-13</span> <span class="hljs-number">22</span>:<span class="hljs-number">11</span>:<span class="hljs-number">51</span> EDT; <span class="hljs-number">3</span><span class="hljs-keyword">min</span> <span class="hljs-number">30</span>s ago<br>  Process: <span class="hljs-number">23971</span> ExecStartPre=/usr/lib/ceph/ceph-osd-prestart.sh --<span class="hljs-keyword">cluster</span> $&#123;CLUSTER&#125; --id %i (code=exited, status=<span class="hljs-number">0</span>/SUCCESS)<br> Main PID: <span class="hljs-number">23976</span> (ceph-osd)<br>   CGroup: /<span class="hljs-keyword">system</span>.slice/<span class="hljs-keyword">system</span>-ceph\x2dosd.slice/ceph-osd@0.service<br>           └─<span class="hljs-number">23976</span> /usr/bin/ceph-osd -f --<span class="hljs-keyword">cluster</span> ceph --id <span class="hljs-number">0</span> --setuser ceph --setgroup ceph<br></code></pre></td></tr></table></figure>
+
+<p>osd进程端口号；或：ps aux | grep osd | grep -v grep</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dns">[cephde@ceph205 cephcluster]$ sudo netstat -tunlp | grep osd<br>tcp        <span class="hljs-number">0</span>      <span class="hljs-number">0 192.168.1</span>.<span class="hljs-number">205:6801</span>      <span class="hljs-number">0.0.0.0</span>:*               LISTEN      <span class="hljs-number">23976</span>/ceph-osd      <br>tcp        <span class="hljs-number">0</span>      <span class="hljs-number">0 192.168.1</span>.<span class="hljs-number">205:6802</span>      <span class="hljs-number">0.0.0.0</span>:*               LISTEN      <span class="hljs-number">23976</span>/ceph-osd      <br>tcp        <span class="hljs-number">0</span>      <span class="hljs-number">0 192.168.1</span>.<span class="hljs-number">205:6803</span>      <span class="hljs-number">0.0.0.0</span>:*               LISTEN      <span class="hljs-number">23976</span>/ceph-osd      <br>tcp        <span class="hljs-number">0</span>      <span class="hljs-number">0 192.168.1</span>.<span class="hljs-number">205:6804</span>      <span class="hljs-number">0.0.0.0</span>:*               LISTEN      <span class="hljs-number">23976</span>/ceph-osd<br></code></pre></td></tr></table></figure>
+
+<p>或登陆mgr_dashboard：<a target="_blank" rel="noopener" href="http://192.168.1.205:7000/">http://192.168.1.205:7000</a><br><img src="/images/ceph2.png" srcset="/img/loading.gif" lazyload alt="Ceph2"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Ceph/" class="category-chain-item">Ceph</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Ceph/" class="print-no-link">#Ceph</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Ceph-Luminous版本安装</div>
+      <div>http://maitianxin.github.io/2022/03/14/other/ceph/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Matianxin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/16/linux/centos_svn/" title="CentOS安装SVN服务器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CentOS安装SVN服务器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/30/openstack/zun/zun_controller/" title="Zun Controller安装依赖对比">
+                        <span class="hidden-mobile">Zun Controller安装依赖对比</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>By 圣特伦特星 </span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>2024</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
