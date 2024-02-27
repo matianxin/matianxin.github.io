@@ -14,36 +14,27 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Matianxin">
-  <meta name="keywords" content="Openstack,Docker">
+  <meta name="keywords" content="Other">
   
-    <meta name="description" content="Docker的出现，对OpenStack产生了一定的影响，有些声音说：Docker会使得OpenStack遭受背弃。而事实却与之相反，我们看到两个社区发展的依然很好，Docker与OpenStack各有侧重，分别解决了不一样的问题，且两者的使用场景也不太一样。">
+    <meta name="description" content="JWT Token">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Openstack与Docker的融合">
-<meta property="og:url" content="http://maitianxin.github.io/2021/12/27/docker/openstack_docker/index.html">
+<meta property="og:title" content="JWT Token">
+<meta property="og:url" content="http://maitianxin.github.io/2022/04/14/other/jwt_token/index.html">
 <meta property="og:site_name" content="圣特伦特星">
-<meta property="og:description" content="Docker的出现，对OpenStack产生了一定的影响，有些声音说：Docker会使得OpenStack遭受背弃。而事实却与之相反，我们看到两个社区发展的依然很好，Docker与OpenStack各有侧重，分别解决了不一样的问题，且两者的使用场景也不太一样。">
+<meta property="og:description" content="JWT Token">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/ops_docker_1.jpeg">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/ops_docker_2.jpeg">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/nova_docker.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/zun_1.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/zun_2.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/magnum_1.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/magnum_2.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/heat_docker.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/kuryr.png">
-<meta property="og:image" content="http://maitianxin.github.io/images/openstack/kolla.png">
-<meta property="article:published_time" content="2021-12-27T02:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-26T08:39:14.643Z">
+<meta property="og:image" content="http://maitianxin.github.io/images/jwt_token.jpg">
+<meta property="og:image" content="http://maitianxin.github.io/images/jwt_include.jpg">
+<meta property="article:published_time" content="2022-04-14T06:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-27T02:59:46.055Z">
 <meta property="article:author" content="Matianxin">
-<meta property="article:tag" content="Openstack">
-<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="其它">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://maitianxin.github.io/images/openstack/ops_docker_1.jpeg">
+<meta name="twitter:image" content="http://maitianxin.github.io/images/jwt_token.jpg">
   
   
   
-  <title>Openstack与Docker的融合 - 圣特伦特星</title>
+  <title>JWT Token - 圣特伦特星</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -209,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Openstack与Docker的融合"></span>
+            <span id="subtitle" data-typed-text="JWT Token"></span>
           
         </div>
 
@@ -220,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-12-27 10:00" pubdate>
-          2021年12月27日 上午
+        <time datetime="2022-04-14 14:00" pubdate>
+          2022年4月14日 下午
         </time>
       </span>
     
@@ -232,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          460 字
         
       </span>
     
@@ -243,7 +234,7 @@
         
         
         
-          14 分钟
+          4 分钟
         
       </span>
     
@@ -280,32 +271,43 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Openstack与Docker的融合</h1>
+            <h1 id="seo-header">JWT Token</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="OpenStack-Docker-综述"><a href="#OpenStack-Docker-综述" class="headerlink" title="OpenStack &amp; Docker 综述"></a>OpenStack &amp; Docker 综述</h2><p>时至今日，云计算已经从概念、评估而逐步进入了 Gartner 定义的复苏期 （Slope of Enlightenment） ，逐步在企业中落地推广。而云计算中热门的两个技术 OpenStack 与 Docker也早已是企业中不可或缺的技术话题，看看国内围绕两大技术的创业公司、技术Meetup、技术大会以及各联盟组织就可见一斑。Google Trends 的趋势曲线也印证了两大技术的火热情况：<br><img src="/images/openstack/ops_docker_1.jpeg" srcset="/img/loading.gif" lazyload alt="Past 5 Years the trends of Openstack &amp; Docker"></p>
-<p>先简单回顾一下两大技术的历史和现状：<br>OpenStack 起源于2010年7月的 Austin 版本，作为典型的云计算 IaaS 层的具体实现工具，在与当年的 OpenNebula、CloudStack 的血拼中脱颖而出。通过命名为 Nova、Neutron、Keystone、Glance 等各组件实现对裸机、虚机、块存储、对象存储、文件目录、网络、负载均衡、防火墙等数据中心基础架构的统一调度管理，目前已经发布到 W 版本，形成了较强的开源生态圈和产业链，同时也成为了国内企业开源私有云构建的事实首选。</p>
-<p>Docker 起源于2013年3月的首版，是基于LXC为基础构建的容器引擎，通过 Namespace 和 Cgroup 实现了资源隔离和调配，使用分层存储来构建镜像，这些特性实现了将 OS 和应用捆绑的方法，直接造成了整个玩法的变革，使得应用系统环境标准化、集装箱化传递成为现实。如果说 OpenStack 只能让数据中心的架构师、系统网络工程师兴奋的话，那么 Docker 则是可以让开发、测试、应用运维、系统网络工程师都兴奋的东西（从曲线的热度即可印证），同时随着DevOps、CI&#x2F;CD、微服务的火热，Docker 正好是实现上述名词的极佳载体。由于 Docker 本身是缺乏集群调度、管理、监控、服务注册发现等集群化运行管理能力的，因此目前也存在三种主流的 COEs（Container Orchestration Engines） 容器调度引擎：原生的 Docker Swarm、Google 的 Kubernetes（Borg 简化版）以及 Apache Mesos，这三种主流的 COEs 目前还在都还在发展中，下图为 Google Trends：<br><img src="/images/openstack/ops_docker_2.jpeg" srcset="/img/loading.gif" lazyload alt="Past 1 Year and trends of Kubernetes &amp; mesos &amp; docker swarm"></p>
-<h2 id="OpenStack-Docker-的融合开源技术方案"><a href="#OpenStack-Docker-的融合开源技术方案" class="headerlink" title="OpenStack &amp; Docker 的融合开源技术方案"></a>OpenStack &amp; Docker 的融合开源技术方案</h2><h3 id="Nova-Docker"><a href="#Nova-Docker" class="headerlink" title="Nova Docker"></a>Nova Docker</h3><p><img src="/images/openstack/nova_docker.png" srcset="/img/loading.gif" lazyload alt="Nova Docker"><br>该方案将容器像 VM 一样操作，通过增加 Nova Docker driver，实现对 Docker容器的启停、创建等常规 VM 的操作，可以通过 Docker save 方式将镜像存放在 Glance 之中，该种方案很大的好处在于可以使用现成的 OpenStack Neutron 来管理网络、实现租户的资源配额、使用 Host OS（注：此处不等于 BareMetal ）等 OpenStack 的天然好处。然而缺点也明显，没法使用 Docker&#x2F;COEs 带来的更有价值功能，例如服务发现、端口映射等。国内某大型电商就使用的该方案。该方案是早期的集成方案。目前已经不在官方版本中。</p>
-<p>参考 <a target="_blank" rel="noopener" href="https://wiki.openstack.org/wiki/Docker">https://wiki.openstack.org/wiki/Docker</a></p>
-<h3 id="Zun"><a href="#Zun" class="headerlink" title="Zun"></a>Zun</h3><p><img src="/images/openstack/zun_1.png" srcset="/img/loading.gif" lazyload alt="Zun"><br><img src="/images/openstack/zun_2.png" srcset="/img/loading.gif" lazyload alt="Zun组件关联"></p>
-<p><strong>OpenStack是一个主流的开源云管理平台，旨在提供丰富的云平台服务，支持轻松实施、大规模向上&#x2F;下扩展和统一标准。数百家全球知名企业正在以OpenStack为基础运营业务，以降低成本并加快行动。</strong></p>
-<p>Zun是Openstack的一个组件，提供容器管理服务，出现于2016年6月。</p>
-<p>Zun的目标是提供统一的Openstack API用于启动和管理容器，支持多种容器技术。Zun原来称为Higgins，后改名为Zun。Zun计划支持多种容器技术，Docker，Rkt，clear container等，目前只支持Docker。OpenStack Queens版本发布，由于容器社区的火热，一项值得关注的补充则为“Zun”，它在OpenStack项目中负责提供容器服务，旨在通过与Neutron、Cinder、Keystone以及其它核心OpenStack服务相集成以实现容器的快速普及。通过这种方式，OpenStack的原有网络、存储以及身份验证工具将全部适用于容器体系，从而确保容器能够满足安全与合规性要求。</p>
-<p>参考 <a target="_blank" rel="noopener" href="https://wiki.openstack.org/wiki/Zun">https://wiki.openstack.org/wiki/Zun</a></p>
-<h3 id="Magnum"><a href="#Magnum" class="headerlink" title="Magnum"></a>Magnum</h3><p><img src="/images/openstack/magnum_1.png" srcset="/img/loading.gif" lazyload alt="Magnum1"><br><img src="/images/openstack/magnum_2.png" srcset="/img/loading.gif" lazyload alt="Magnum2"><br>Magnum是OpenStack中一个提供容器集群部署的服务。<br>Magnum是一个Pass层的OpenStack项目。Magnum使用Heat部署一个包含Docker和Kubernetes的操作系统镜像，让容器集群运行在虚拟机（Virtual Machine）或者裸机（Bare Metal）中。</p>
-<p>Magnum项目创建之初，项目目标以Caas为宗旨，即容器即服务。但在后续的发展过程中，社区更倾向于分离容器的集群部署功能和Docker容器集群的管理功能。因此Magnum重新修改了项目目标，Magnum本身专注于容器的集群部署功能。另一个项目Zun专注管理Docker容器集群。</p>
-<p>参考 <a target="_blank" rel="noopener" href="https://wiki.openstack.org/wiki/Magnum">https://wiki.openstack.org/wiki/Magnum</a></p>
-<h3 id="Heat-Docker-plugin"><a href="#Heat-Docker-plugin" class="headerlink" title="Heat Docker plugin"></a>Heat Docker plugin</h3><p><img src="/images/openstack/heat_docker.png" srcset="/img/loading.gif" lazyload alt="Heat Docker Plugin"><br>该方案不依赖于 Nova 的调用，而是通过 OpenStack 编排组件 Heat 进行编排调用，通过使用 Heat Docker plugin 在创建的 VM 上使用 Heat Templates 设定 Docker 的参数，这样则可以使用 Docker API 提供的所有功能，缺点在于 VM 上使用 Docker，无法实现资源调度，需要较多的配置工作，无法实现规模集群管理 。</p>
-<p>参考 <a target="_blank" rel="noopener" href="https://github.com/MarouenMechtri/Docker-containers-deployment-with-OpenStack-Heat">https://github.com/MarouenMechtri/Docker-containers-deployment-with-OpenStack-Heat</a></p>
-<h3 id="Kuryr"><a href="#Kuryr" class="headerlink" title="Kuryr"></a>Kuryr</h3><p><img src="/images/openstack/kuryr.png" srcset="/img/loading.gif" lazyload alt="Kuryr"><br>刚才提到了由于 COEs 网络方案的多样性与变数，因此社区专门孵化了 Kuryr 项目，该项目用于实现 Neutron 与 Docker&#x2F;COEs 网络的驱动映射工作，未来可成为 Magnum 网络的选择，实现容器网络的功能性能加强。</p>
-<p>参考 <a target="_blank" rel="noopener" href="https://wiki.openstack.org/wiki/Kuryr">https://wiki.openstack.org/wiki/Kuryr</a></p>
-<h3 id="Kolla"><a href="#Kolla" class="headerlink" title="Kolla"></a>Kolla</h3><p><img src="/images/openstack/kolla.png" srcset="/img/loading.gif" lazyload alt="Kolla"><br>前面谈到的方案均是 OpenStack 怎么与 COEs&#x2F;Docker 结合，提供不同形式的混合负载给上层使用的需求，而 Kolla 则是用于实现 OpenStack 这个“庞大复杂“的管理工具自身的部署&#x2F;升级&#x2F;维护的。虽然 OpenStack 也有许多的自动化运维项目，如 Fuel、Ansible、Puppet 等项目，然而随着 OpenStack 的日益发展和被管理的节点及环境日志扩张，在庞大的生产系统长期维护和运行一套&#x2F;多套 OpenDtack（Day 2 Operations） 也会日渐成为严重的问题。而随着容器化的发展，OpenStack 社区也想到自身使用容器进行部署将不仅解决上述问题，也证明自己充分拥抱容器的决心。</p>
-<p>目前 Kolla 通过容器化绝大部分的 OpenStack 组件，并通过 Ansible 来实现配置自动化管理。实现 OpenStack 自身的容器化管理。未来也会逐步成为国内企业 OpenStack 的管理方案首选。</p>
-<p>参考 <a target="_blank" rel="noopener" href="http://docs.openstack.org/developer/kolla/">http://docs.openstack.org/developer/kolla/</a></p>
+                <h3 id="JWT的认证流程图"><a href="#JWT的认证流程图" class="headerlink" title="JWT的认证流程图"></a>JWT的认证流程图</h3><p><img src="/images/jwt_token.jpg" srcset="/img/loading.gif" lazyload alt="JWT的认证流程图"></p>
+<p>流程说明：</p>
+<ul>
+<li><ol>
+<li>浏览器发起请求登录，携带用户名和密码。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>服务端验证身份，根据算法，将用户标识符打包生成 token。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>服务器返回JWT信息给浏览器，JWT不包含敏感信息。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>浏览器发起请求获取用户资料，把刚刚拿到的 token一起发送给服务器。</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>服务器发现数据中有 token，验证。</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>服务器返回该用户的用户资料。</li>
+</ol>
+</li>
+</ul>
+<h3 id="JWT组成及构建方式"><a href="#JWT组成及构建方式" class="headerlink" title="JWT组成及构建方式"></a>JWT组成及构建方式</h3><p><img src="/images/jwt_include.jpg" srcset="/img/loading.gif" lazyload alt="JWT组成及构建方式"></p>
+<h3 id="JWT-Options"><a href="#JWT-Options" class="headerlink" title="JWT Options"></a>JWT Options</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># headers headers = &#123;     &#x27;alg&#x27;: &quot;HS256&quot;,  # 声明所使用的算法</span><br>&#125;<br><span class="hljs-string">&quot;&quot;&quot;headers 中一些固定参数名称的意义&quot;&quot;&quot;</span><br><span class="hljs-comment"># jku: 发送JWK的地址；最好用HTTPS来传输</span><br><span class="hljs-comment"># jwk: 就是之前说的JWK</span><br><span class="hljs-comment"># kid: jwk的ID编号</span><br><span class="hljs-comment"># x5u: 指向一组X509公共证书的URL</span><br><span class="hljs-comment"># x5c: X509证书链</span><br><span class="hljs-comment"># x5t：X509证书的SHA-1指纹</span><br><span class="hljs-comment"># x5t#S256: X509证书的SHA-256指纹</span><br><span class="hljs-comment"># typ: 在原本未加密的JWT的基础上增加了 JOSE 和 JOSE+ JSON。JOSE序列化后文会说及。适用于JOSE标头的对象与此JWT混合的情况。</span><br><span class="hljs-comment"># crit: 字符串数组，包含声明的名称，用作实现定义的扩展，必须由 this-&gt;JWT的解析器处理。不常见。</span><br></code></pre></td></tr></table></figure>
 
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># payload token_dict = &#123;     &#x27;iat&#x27;: time.time(),  # 时间戳</span><br>　　 <span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;xyz&#x27;</span>  <span class="hljs-comment"># 自定义的参数</span><br>&#125;<br><span class="hljs-string">&quot;&quot;&quot;payload 中一些固定参数名称的意义, 同时可以在payload中自定义参数&quot;&quot;&quot;</span><br><span class="hljs-comment"># iss  【issuer】发布者的url地址</span><br><span class="hljs-comment"># sub 【subject】该JWT所面向的用户，用于处理特定应用，不是常用的字段</span><br><span class="hljs-comment"># aud 【audience】接受者的url地址</span><br><span class="hljs-comment"># exp 【expiration】 该jwt销毁的时间；unix时间戳</span><br><span class="hljs-comment"># nbf  【not before】 该jwt的使用时间不能早于该时间；unix时间戳</span><br><span class="hljs-comment"># iat   【issued at】 该jwt的发布时间；unix 时间戳</span><br><span class="hljs-comment"># jti    【JWT ID】 该jwt的唯一ID编号</span><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -323,15 +325,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Openstack/" class="category-chain-item">Openstack</a>
+  <a href="/categories/%E5%85%B6%E5%AE%83/" class="category-chain-item">其它</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Openstack/Docker/" class="category-chain-item">Docker</a>
-  
-  
-
   
 
       </span>
@@ -345,9 +340,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Openstack/" class="print-no-link">#Openstack</a>
-      
-        <a href="/tags/Docker/" class="print-no-link">#Docker</a>
+        <a href="/tags/%E5%85%B6%E5%AE%83/" class="print-no-link">#其它</a>
       
     </div>
   
@@ -359,8 +352,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Openstack与Docker的融合</div>
-      <div>http://maitianxin.github.io/2021/12/27/docker/openstack_docker/</div>
+      <div>JWT Token</div>
+      <div>http://maitianxin.github.io/2022/04/14/other/jwt_token/</div>
     </div>
     <div class="license-meta">
       
@@ -372,7 +365,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年12月27日</div>
+          <div>2022年4月14日</div>
         </div>
       
       
@@ -404,18 +397,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/14/other/jwt_token/" title="JWT Token">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JWT Token</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/11/30/vmware/vmware_vmdk/" title="Vmware vmdk合并转换">
-                        <span class="hidden-mobile">Vmware vmdk合并转换</span>
+                      <a href="/2021/12/27/docker/openstack_docker/" title="Openstack与Docker的融合">
+                        <span class="hidden-mobile">Openstack与Docker的融合</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
