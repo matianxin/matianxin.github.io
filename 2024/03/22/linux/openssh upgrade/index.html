@@ -24,7 +24,7 @@
 <meta property="og:description" content="openssh 7.4p1-16 &#x3D;&gt; 9.7p1-1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-22T07:00:00.000Z">
-<meta property="article:modified_time" content="2024-03-22T07:29:07.602Z">
+<meta property="article:modified_time" content="2024-03-22T07:31:21.865Z">
 <meta property="article:author" content="Matianxin">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="openssh">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          191 字
+          192 字
         
       </span>
     
@@ -290,7 +290,7 @@
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs subunit">[root@localhost ~]# rpm -qa |grep openssh<br>openssh-debuginfo<span class="hljs-string">-9</span>.7p1<span class="hljs-string">-1</span>.el7.centos.x86_64<br>openssh<span class="hljs-string">-9</span>.7p1<span class="hljs-string">-1</span>.el7.centos.x86_64<br>openssh-server<span class="hljs-string">-9</span>.7p1<span class="hljs-string">-1</span>.el7.centos.x86_64<br>openssh-clients<span class="hljs-string">-9</span>.7p1<span class="hljs-string">-1</span>.el7.centos.x86_64<br><br>[root@localhost ~]# ssh -V<br>OpenSSH_9.7p1, OpenSSL 1.1.1w  11 Sep 2023<br></code></pre></td></tr></table></figure>
 
 <p><strong>ssh配置备份恢复</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /etc/ssh<br><span class="hljs-built_in">mv</span> sshd_config sshd_config_new<br><span class="hljs-built_in">cp</span> sshd_config_bak sshd_config<br><span class="hljs-built_in">chmod</span> 600 /etc/ssh/ssh_host_rsa_key<br><span class="hljs-built_in">chmod</span> 600 /etc/ssh/ssh_host_ecdsa_key<br><span class="hljs-built_in">chmod</span> 600 /etc/ssh/ssh_host_ed25519_key<br>sed -i <span class="hljs-string">&#x27;s#UsePAM yes#UsePAM no#g&#x27;</span> /etc/ssh/sshd_config<br><span class="hljs-built_in">cat</span> /etc/ssh/sshd_config |grep UsePAM<br>ssh登录权限相关<br>vim  /etc/ssh/sshd_config<br>PermitRootLogin <span class="hljs-built_in">yes</span><br>PasswordAuthentication <span class="hljs-built_in">yes</span><br>ChallengeResponseAuthentication no<br>UsePAM <span class="hljs-built_in">yes</span><br>X11Forwarding <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /etc/ssh<br><span class="hljs-built_in">mv</span> sshd_config sshd_config_new<br><span class="hljs-built_in">cp</span> sshd_config_bak sshd_config<br><span class="hljs-built_in">chmod</span> 600 /etc/ssh/ssh_host_rsa_key<br><span class="hljs-built_in">chmod</span> 600 /etc/ssh/ssh_host_ecdsa_key<br><span class="hljs-built_in">chmod</span> 600 /etc/ssh/ssh_host_ed25519_key<br>sed -i <span class="hljs-string">&#x27;s#UsePAM yes#UsePAM no#g&#x27;</span> /etc/ssh/sshd_config<br><span class="hljs-built_in">cat</span> /etc/ssh/sshd_config |grep UsePAM<br><span class="hljs-comment"># ssh登录权限相关</span><br>vim /etc/ssh/sshd_config<br>PermitRootLogin <span class="hljs-built_in">yes</span><br>PasswordAuthentication <span class="hljs-built_in">yes</span><br>ChallengeResponseAuthentication no<br>UsePAM <span class="hljs-built_in">yes</span><br>X11Forwarding <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>重启ssh服务</strong><br><code>systemctl restart sshd</code></p>
 
